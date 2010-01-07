@@ -41,28 +41,6 @@ trawl () {
   xargs -0 grep -EHns "$@"
 }
 
-fstrawl () {
-  find 							\
-	~/work/vipadia/internal/Titoki/trunk/src	\
-	~/work/vipadia/internal/Titoki/trunk/libs	\
-  \(							\
-    -name '*.[chsSyli]' -o -name 'Make*' -o 		\
-    -name '*.cc' -o -name '*.cpp' -o -name '*.hh'-o 	\
-    -name '*.html' -o -name '*.xml' 			\
-  \) -print0 						|\
-  xargs -0 egrep -Hns "$@"		 		|\
-  awk -v PWD=`pwd` '{ s = $0; gsub(PWD, ".", s); printf("%s\n", s)  }'
-}
-
-#
-# display man page
-#
-
-lman () {
-#  nroff -man $1 | less ;
-   groff -mandoc -Tascii $1 | less ;
-}
-
 #
 # test existence of dangling symlinks; returns 1 on ok, 0 on dangling
 #
