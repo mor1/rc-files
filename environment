@@ -6,8 +6,8 @@
 #
 # Handy shell functions
 
-[ -r ~/src/sh/envfns.sh ]  && source ~/src/sh/envfns.sh
-[ -r ~/src/sh/filefns.sh ] && source ~/src/sh/filefns.sh
+[ -r ~/src/sh-scripts.git/envfns.sh ]  && source ~/src/sh-scripts.git/envfns.sh
+[ -r ~/src/sh-scripts.git/filefns.sh ] && source ~/src/sh-scripts.git/filefns.sh
 
 ## [ -r ~/src/sh/num.sh ]     && source ~/src/sh/num.sh
 ## [ -r ~/src/sh/scnfs.sh ]   && source ~/src/sh/scnfs.sh
