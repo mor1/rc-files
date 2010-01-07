@@ -1,0 +1,33 @@
+!*****************************************************************************
+!* $Id: .Xresources,v 1.2 2009/04/22 09:09:49 mort Exp mort $
+
+XTerm*metaSendsEscape:	true
+xterm*visualBell:	true
+XTerm*scrollBar:        true
+XTerm*saveLines:        10000
+XTerm*reverseWrap:      on
+XTerm*foreground:       black
+XTerm*background:       gray75
+!XTerm*font:		-schumacher-clean-bold-r-normal--10-100-75-75-c-80-iso8859-1
+!XTerm*font:		-b&h-lucida-medium-r-*-*-12-*-*-*-m-*-*-*
+!XTerm*font:		-*-fixed-medium-r-*-*-15-*-*-*-*-*-*-*
+XTerm*faceName:		Consolas
+XTerm*faceSize:		8
+
+Emacs.geometry:         80x54
+Emacs.foreground:	gray
+Emacs.background:       black
+Emacs.cursorColor:	white
+! Emacs.font:		-schumacher-clean-bold-r-normal--10-100-75-75-c-80-iso8859-1
+
+xclock*width:           80
+xclock*height:          80
+xclock*chime:           false
+xclock*background:      gray20
+xclock*foreground:      black
+xclock*hands:           black
+xclock*highlight:       black
+xclock*update:		1
+
+! Magic for xfontsel (from Bryan Chan (chanb@ecf.utoronto.ca))
+*fieldBox*field1.menu.options.showUnselectable: False

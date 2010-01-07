@@ -1,0 +1,178 @@
+######################################################################
+#
+# $Id: .environment,v 1.11 2008/10/14 10:48:57 mort Exp mort $
+
+######################################################################
+#
+# Handy shell functions
+
+[ -r ~/src/sh/envfns.sh ]  && source ~/src/sh/envfns.sh
+[ -r ~/src/sh/filefns.sh ] && source ~/src/sh/filefns.sh
+
+## [ -r ~/src/sh/num.sh ]     && source ~/src/sh/num.sh
+## [ -r ~/src/sh/scnfs.sh ]   && source ~/src/sh/scnfs.sh
+
+marian () {
+  slogin -X marian.cs.nott.ac.uk
+}
+
+fl01 () {
+  slogin -X fl01.clackpoint.com
+}
+
+fl02 () {
+  slogin -X fl02.clackpoint.com
+}
+
+fl03 () {
+  slogin -X fl03.clackpoint.com
+}
+
+ge02 () {
+  slogin -X ge02.clackpoint.com
+}
+
+ge03 () {
+  slogin -X ge03.clackpoint.com
+}
+
+sk01 () {
+  slogin -X sk01.clackpoint.com
+}
+
+vo01 () {
+  slogin -X vo01.clackpoint.com
+}
+
+vo03 () {
+  slogin -X vo03.clackpoint.com
+}
+
+ww02 () {
+  slogin -X ww02.clackpoint.com
+}
+
+ww03 () {
+  slogin -X ww03.clackpoint.com
+}
+
+xe02 () {
+  slogin -X xe02.clackpoint.com
+}
+
+xe03 () {
+  slogin -X xe03.clackpoint.com
+}
+
+grunty () {
+  slogin -X grunty.vipadia.com -p 2200
+}
+
+turf () {
+  slogin -X turf.vipadia.com
+}
+
+cucl () {
+  slogin -X rmm1002@slogin.cl.cam.ac.uk
+}
+
+rhee () {
+  slogin -X rmm1002@rhee.cl.cam.ac.uk
+}
+
+obelix () { 
+  slogin -X obelix 
+}
+web () { 
+  slogin -X web 
+}
+flash () { 
+  slogin -X flash 
+}
+xmpp () { 
+  slogin -X xmpp 
+}
+
+########################################################################
+
+ppkl () {
+  python -c "import pprint, cPickle; pprint.pprint(cPickle.load(file('$1')))"
+}
+
+ctime () {
+  python -c "import time; print time.ctime($1)"
+}
+
+########################################################################
+#
+# PS1 xterm magic
+
+PS1='\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\W\$; '
+export PS1
+
+ps1txt () {
+  PS1=': ${KERNEL} \u@\h:\W\$; ' 
+}
+
+ps1xt () {
+  PS1='\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\W\$; '
+}
+
+######################################################################
+#
+# General
+
+umask 0002
+
+CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../../../../../..:../../../../../../../..:../../../../../../../../..:../../../../../../../../../..:$HOME
+EDITOR=/usr/bin/vi
+PAGER=less
+MANPAGER="less -X"
+export CDPATH EDITOR PAGER MANPAGER 
+
+command_oriented_history=TRUE
+notify=TRUE
+
+# so bash doesn't do variable expansion on (eg.) \w in PS1 -- consider
+# the case of a dir. called "`rm -rf ~`" ... :-> (ask Austin)
+export NO_PROMPT_VARS
+set -o noclobber
+
+unset PATH
+aenv PATH /sbin
+aenv PATH /bin
+aenv PATH /usr/sbin
+aenv PATH /usr/bin
+aenv PATH /usr/local/sbin
+aenv PATH /usr/local/bin
+
+## fink
+aenv PATH /sw/sbin
+aenv PATH /sw/bin
+
+## macports
+aenv PATH /opt/local/sbin
+aenv PATH /opt/local/bin
+                        
+aenv PATH /usr/X11R6/bin
+aenv PATH /usr/local/share/air-sdk/bin 
+aenv PATH /usr/local/share/flex-sdk/bin
+aenv PATH ~/bin
+
+unset MANPATH
+aenv MANPATH /usr/local/man
+aenv MANPATH /usr/share/man
+aenv MANPATH /usr/X11R6/man
+aenv MANPATH /opt/local/man
+
+######################################################################
+#
+# LaTeX/BibTeX; trailing colons matter
+
+TEXINPUTS=.:~/tex/lib/:
+BIBINPUTS=.:~/tex/bibs/:
+BSTINPUTS=.:~/tex/lib/:
+export TEXINPUTS BIBINPUTS BSTINPUTS
+
+######################################################################
+######################################################################

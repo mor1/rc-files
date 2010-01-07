@@ -1,0 +1,18 @@
+[user]
+	name = Richard Mortier
+	email = mort@cantab.net
+[github]
+	user = mor1
+	token = f34f4313035ea023bd8d5d8f5a527175
+[alias]
+    serve = !git daemon --reuseaddr --verbose --base-path=. --export-all ./.git
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    debug = !GIT_PAGER= gdb --args git
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    lg = log -p
+    who = shortlog -s --
