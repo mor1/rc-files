@@ -1,15 +1,10 @@
 ######################################################################
 #
-# $Id: .environment,v 1.11 2008/10/14 10:48:57 mort Exp mort $
-
-######################################################################
-#
 # Handy shell functions
 
 [ -r ~/src/sh-scripts.git/envfns.sh ]  && source ~/src/sh-scripts.git/envfns.sh
 [ -r ~/src/sh-scripts.git/filefns.sh ] && source ~/src/sh-scripts.git/filefns.sh
-
-## [ -r ~/src/sh/num.sh ]     && source ~/src/sh/num.sh
+[ -r ~/src/sh-scripts.git/numfns.sh ]  && source ~/src/sh-scripts.git/numfns.sh
 ## [ -r ~/src/sh/scnfs.sh ]   && source ~/src/sh/scnfs.sh
 
 marian () {
@@ -76,21 +71,8 @@ cucl () {
   slogin -X rmm1002@slogin.cl.cam.ac.uk
 }
 
-rhee () {
-  slogin -X rmm1002@rhee.cl.cam.ac.uk
-}
-
 obelix () { 
   slogin -X obelix 
-}
-web () { 
-  slogin -X web 
-}
-flash () { 
-  slogin -X flash 
-}
-xmpp () { 
-  slogin -X xmpp 
 }
 
 ########################################################################
@@ -146,10 +128,6 @@ aenv PATH /usr/bin
 aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
 
-## fink
-aenv PATH /sw/sbin
-aenv PATH /sw/bin
-
 ## macports
 aenv PATH /opt/local/sbin
 aenv PATH /opt/local/bin
@@ -164,15 +142,3 @@ aenv MANPATH /usr/local/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
 aenv MANPATH /opt/local/man
-
-######################################################################
-#
-# LaTeX/BibTeX; trailing colons matter
-
-TEXINPUTS=.:~/tex/lib/:
-BIBINPUTS=.:~/tex/bibs/:
-BSTINPUTS=.:~/tex/lib/:
-export TEXINPUTS BIBINPUTS BSTINPUTS
-
-######################################################################
-######################################################################
