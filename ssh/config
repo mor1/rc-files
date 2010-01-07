@@ -1,0 +1,12 @@
+Host nott-smtp
+	HostName marian.cs.nott.ac.uk
+	LocalForward 25 128.243.21.16:25
+	User rmm
+	IdentityFile ~/.ssh/nott-key.pub
+
+Host marian.cs.nott.ac.uk
+	User rmm
+	IdentityFile ~/.ssh/nott-key
+
+Host *.vipadia.com,*.clackpoint.com
+	IdentityFile ~/.ssh/vipadia-key
