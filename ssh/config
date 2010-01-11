@@ -1,6 +1,6 @@
-Host nott-smtp
+Host github-tunnel
 	HostName marian.cs.nott.ac.uk
-	LocalForward 25 128.243.21.16:25
+	LocalForward 9418 github.com:9418
 	User rmm
 	IdentityFile ~/.ssh/nott-key.pub
 

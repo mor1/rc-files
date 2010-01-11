@@ -1,14 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; $Id: .emacs,v 1.5 2008/06/23 13:05:32 mort Exp mort $
-;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq load-path
       (append
        (list "~/.emacs.d"
              "~/.emacs.d/remember"
-;             "/sw/share/emacs/site-list/css-mode"
        )
        load-path
 ))
@@ -25,7 +21,6 @@
 (require 'scroll-in-place)
 (require 'crypt++)
 (require 'uniquify)
-;t(require 'desktop)
 (require 'flobl)
 (require 'calendar)
 (require 'php-mode)
@@ -502,7 +497,10 @@
 
 (add-hook 'c-mode-common-hook 
 	  '(lambda () 
-	     (c-set-style "bsd")	;Close enough!
+         (setq c-basic-offset 4)
+         (setq c-set-style "bsd")
+;         (c-add-style "bsd" (c-basic-offset . 4) 't)
+;	     (c-set-style "bsd")	;Close enough!
 	     ;; Case sensitive expansion/completion
 	     (set (make-local-variable 'dabbrev-case-fold-search) nil)
 	     (set (make-local-variable 'dabbrev-case-replace) nil)
@@ -727,10 +725,12 @@ of Trade and Industry (http://www.dti.gov.uk/er/bankhol.html).")
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(c-basic-offset 4)
+ '(c-basic-offset (quote set-from-style))
  '(c-default-style (quote ((java-mode . "java") (awk-mode . "awk") (other . "bsd"))))
  '(c-set-style "bsd")
  '(c-syntactic-indentation t)
+ '(filladapt-token-table (quote (("^" beginning-of-line) (">+" citation->) ("\\(\\w\\|[0-9]\\)[^'`\"< 	
+]*>[ 	]*" supercite-citation) (";+" lisp-comment) ("#+" sh-comment) ("%+" postscript-comment) ("^[ 	]*\\(//\\|\\*\\)[^ 	]*" c++-comment) ("@c[ \\t]" texinfo-comment) ("@comment[ 	]" texinfo-comment) ("[0-9]+\\.[ 	]" bullet) ("[0-9]+\\(\\.[0-9]+\\)+[ 	]" bullet) ("[A-Za-z]\\.[ 	]" bullet) ("(?[0-9]+)[ 	]" bullet) ("(?[A-Za-z])[ 	]" bullet) ("[0-9]+[A-Za-z]\\.[ 	]" bullet) ("(?[0-9]+[A-Za-z])[ 	]" bullet) ("[-~*+o]+[ 	]" bullet) ("o[ 	]" bullet) ("[\\@]\\(param\\|throw\\|exception\\|addtogroup\\|defgroup\\)[ 	]*[A-Za-z_][A-Za-z_0-9]*[ 	]+" bullet) ("\\\\item[ 	]*" bullet) ("[\\@][A-Za-z_]+[ 	]*" bullet) ("[ 	]+" space) ("$" end-of-line))))
  '(indent-tabs-mode nil)
  '(mac-command-modifier (quote meta))
  '(mouse-buffer-menu-mode-mult 1)
@@ -760,33 +760,7 @@ of Trade and Industry (http://www.dti.gov.uk/er/bankhol.html).")
  '(remember-handler-functions (quote (org-remember-handler)))
  '(tab-width 4)
  '(tool-bar-mode nil)
- '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
- '(filladapt-token-table
-   (quote (("^" beginning-of-line)
-           (">+" citation->)
-           ("\\(\\w\\|[0-9]\\)[^'`\"< \t\n]*>[ \t]*" supercite-citation)
-           (";+" lisp-comment)
-           ("#+" sh-comment)
-           ("%+" postscript-comment)
-           ("^[ \t]*\\(//\\|\\*\\)[^ \t]*" c++-comment)
-           ("@c[ \\t]" texinfo-comment)
-           ("@comment[ \t]" texinfo-comment)
-           ("[0-9]+\\.[ \t]" bullet)
-           ("[0-9]+\\(\\.[0-9]+\\)+[ \t]" bullet)
-           ("[A-Za-z]\\.[ \t]" bullet)
-           ("(?[0-9]+)[ \t]" bullet)
-           ("(?[A-Za-z])[ \t]" bullet)
-           ("[0-9]+[A-Za-z]\\.[ \t]" bullet)
-           ("(?[0-9]+[A-Za-z])[ \t]" bullet)
-           ("[-~*+o]+[ \t]" bullet)
-           ("o[ \t]" bullet)
-           ("[\\@]\\(param\\|throw\\|exception\\|addtogroup\\|defgroup\\)[ \t]*[A-Za-z_][A-Za-z_0-9]*[ \t]+" bullet)
-           ("\\\\item[ \t]*" bullet)
-           ("[\\@][A-Za-z_]+[ \t]*" bullet)
-           ("[ \t]+" space)
-           ("$" end-of-line))
-          ))
-)
+ '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify)))
 (european-calendar)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
