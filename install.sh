@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
 INSTALL_DIR=$(pwd)
 for f in ${INSTALL_DIR}/*; do
   [ "$(basename ${f})" = "install.sh" ] && continue

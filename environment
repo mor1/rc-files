@@ -11,68 +11,8 @@ marian () {
   slogin -X marian.cs.nott.ac.uk
 }
 
-fl01 () {
-  slogin -X fl01.clackpoint.com
-}
-
-fl02 () {
-  slogin -X fl02.clackpoint.com
-}
-
-fl03 () {
-  slogin -X fl03.clackpoint.com
-}
-
-ge02 () {
-  slogin -X ge02.clackpoint.com
-}
-
-ge03 () {
-  slogin -X ge03.clackpoint.com
-}
-
-sk01 () {
-  slogin -X sk01.clackpoint.com
-}
-
-vo01 () {
-  slogin -X vo01.clackpoint.com
-}
-
-vo03 () {
-  slogin -X vo03.clackpoint.com
-}
-
-ww02 () {
-  slogin -X ww02.clackpoint.com
-}
-
-ww03 () {
-  slogin -X ww03.clackpoint.com
-}
-
-xe02 () {
-  slogin -X xe02.clackpoint.com
-}
-
-xe03 () {
-  slogin -X xe03.clackpoint.com
-}
-
-grunty () {
-  slogin -X grunty.vipadia.com -p 2200
-}
-
-turf () {
-  slogin -X turf.vipadia.com
-}
-
 cucl () {
   slogin -X rmm1002@slogin.cl.cam.ac.uk
-}
-
-obelix () { 
-  slogin -X obelix 
 }
 
 ########################################################################
@@ -127,14 +67,9 @@ aenv PATH /usr/sbin
 aenv PATH /usr/bin
 aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
-
-## macports
 aenv PATH /opt/local/sbin
 aenv PATH /opt/local/bin
-                        
 aenv PATH /usr/X11R6/bin
-aenv PATH /usr/local/share/air-sdk/bin 
-aenv PATH /usr/local/share/flex-sdk/bin
 aenv PATH ~/bin
 
 unset MANPATH
@@ -142,3 +77,4 @@ aenv MANPATH /usr/local/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
 aenv MANPATH /opt/local/man
+aenv MANPATH /opt/local/share/man
