@@ -119,16 +119,16 @@ symt () {
 rfc () {
   if [ $# = 1 ]; then
     if [ "$1" = "-index" ]; then
-      wget -O ~/Documents/RFCs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt 
-    elif [ ! -s ~/Documents/RFCs/rfc${1}.txt ] ; then
-      wget -O ~/Documents/RFCs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt 
+      curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt 
+    elif [ ! -s ~/docs/rfcs/rfc${1}.txt ] ; then
+      curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt 
     fi
-    xterm -fs 12 -title "RFC ${1}" -e less ~/Documents/RFCs/rfc${1}.txt
+    xterm -fs 12 -title "RFC ${1}" -e less ~/docs/rfcs/rfc${1}.txt
   else
     case $1 in
       -print|-p) a2ps --highlight-level=normal --columns=4 \
                       --row=1 -l82 --interpret=no \
-                      ~/Documents/RFCs/rfc${2}.txt ;;
+                      ~/docs/rfcs/rfc${2}.txt ;;
     esac
   fi
 }
