@@ -4,9 +4,12 @@ DEST=$1
 UNAME=$2
 
 ssh ${DEST} mkdir -p ~${UNAME}/src
-scp -r ~/src/sh-scripts.git ${DEST}:~${UNAME}/src/sh-scripts.git
+ssh ${DEST} "rm -rf ~/src/sh-scripts.git"
+scp -r ~/src/sh-scripts.git ${DEST}:~/src/sh-scripts.git
+
 ssh ${DEST} mkdir -p ~${UNAME}/install
-scp -r ~/install/config.git ${DEST}:~${UNAME}/install/config.git
+ssh ${DEST} "rm -rf ~/install/config.git"
+scp -r ~/install/config.git ${DEST}:~/install/config.git
             
 # ssh ${DEST} mkdir -p /home/mort/src
 # ssh ${DEST} "chmod -R u+w ~/src/sh/*"

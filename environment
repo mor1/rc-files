@@ -1,11 +1,14 @@
-######################################################################
 #
-# Handy shell functions
+# handy shell functions
+#
 
 [ -r ~/src/sh-scripts.git/envfns.sh ]  && source ~/src/sh-scripts.git/envfns.sh
 [ -r ~/src/sh-scripts.git/filefns.sh ] && source ~/src/sh-scripts.git/filefns.sh
 [ -r ~/src/sh-scripts.git/numfns.sh ]  && source ~/src/sh-scripts.git/numfns.sh
-## [ -r ~/src/sh/scnfs.sh ]   && source ~/src/sh/scnfs.sh
+
+#
+# remote hosts
+#
 
 marian () {
   slogin -X marian.cs.nott.ac.uk
@@ -15,34 +18,9 @@ cucl () {
   slogin -X rmm1002@slogin.cl.cam.ac.uk
 }
 
-########################################################################
-
-ppkl () {
-  python -c "import pprint, cPickle; pprint.pprint(cPickle.load(file('$1')))"
-}
-
-ctime () {
-  python -c "import time; print time.ctime($1)"
-}
-
-########################################################################
 #
-# PS1 xterm magic
-
-PS1='\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\W\$; '
-export PS1
-
-ps1txt () {
-  PS1=': ${KERNEL} \u@\h:\W\$; ' 
-}
-
-ps1xt () {
-  PS1='\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\W\$; '
-}
-
-######################################################################
+# general
 #
-# General
 
 umask 0002
 
@@ -67,9 +45,9 @@ aenv PATH /usr/sbin
 aenv PATH /usr/bin
 aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
+aenv PATH /usr/X11R6/bin
 aenv PATH /opt/local/sbin
 aenv PATH /opt/local/bin
-aenv PATH /usr/X11R6/bin
 aenv PATH ~/bin
 
 unset MANPATH
@@ -78,3 +56,10 @@ aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
 aenv MANPATH /opt/local/man
 aenv MANPATH /opt/local/share/man
+
+# stupid UNott proxy settings
+unset http_proxy HTTP_PROXY no_proxy NO_PROXY
+export http_proxy="http://mainproxy.nottingham.ac.uk:8080"
+export HTTP_PROXY=${http_proxy}
+export no_proxy="localhost,127.0.0.1"
+export NO_PROXY=${no_proxy}
