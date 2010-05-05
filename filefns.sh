@@ -52,7 +52,8 @@ trawl () {
     -name '*.cs'        -o -name '*.java'  -o -name '*.php' -o  \
     -name '*.fs'        -o -name '*.fsx'   -o -name '*.fsi' -o  \
     -name '*.cfg'	-o -name '*.xml'   -o -name '*.inc' -o  \
-    -name '*.mxml'  -o -name '*.as'                             \
+    -name '*.mxml'	-o -name '*.as'	   -o  			\
+    -name '*.yaml' 	-o -name '*.yml'   -o -name '*.md'   	\
   \) -print0 |                                                  \
   xargs -0 grep -EHns "$@"
 }
@@ -142,10 +143,10 @@ mnm () {
 }
 
 #
-# "real" word count; a bit heuristic :-)
+# lines-of-code; a bit heuristic :-)
 #
 
-rwc () { 
+loc () { 
   owc=`cat "$1" | wc -l` ;
   cwc=`cat "$1" | egrep -v '(^[ [:cntrl:]]*$|[ [:cntrl:]]*//.*|^[ [:cntrl:]]*/\*|^[ [:cntrl:]]*(\{|\})[ [:cntrl:]]*|\*\*|^[ [:cntrl:]]*\*[ [:cntrl:]]*|^[ [:cntrl:]]*\*.*\*$|^#[ [:cntrl:]]*include)' | wc -l`
   ctwc=`cat "$1" | egrep -v '(CAM_TRACE\(|assert\(|TRC\(|DB\(|ENTER\(|LEAVE\(|^[ [:cntrl:]]*$|[ [:cntrl:]]*//.*|^[ [:cntrl:]]*/\*|^[ [:cntrl:]]*(\{|\})[ [:cntrl:]]*|\*\*|^[ [:cntrl:]]*\*[ [:cntrl:]]*|^[ [:cntrl:]]*\*.*\*$|^#[ [:cntrl:]]*include)' |wc -l`
