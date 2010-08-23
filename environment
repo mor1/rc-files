@@ -18,6 +18,10 @@ cucl () {
   slogin -X rmm1002@slogin.cl.cam.ac.uk
 }
 
+devbox () {
+  slogin -X ppsrm.nottingham.ac.uk
+}
+
 #
 # general
 #
@@ -49,6 +53,7 @@ aenv PATH /usr/X11R6/bin
 aenv PATH /opt/local/sbin
 aenv PATH /opt/local/bin
 aenv PATH ~/bin
+aenv PATH ~/bin/android-sdk-mac_86/tools
 
 unset MANPATH
 aenv MANPATH /usr/local/man
@@ -59,7 +64,7 @@ aenv MANPATH /opt/local/share/man
 
 # stupid UNott proxy settings
 unset http_proxy HTTP_PROXY no_proxy NO_PROXY
-export http_proxy="http://mainproxy.nottingham.ac.uk:8080"
+export http_proxy="http://proxy.nottingham.ac.uk:8080"
 export HTTP_PROXY=${http_proxy}
 export no_proxy="localhost,127.0.0.1"
 export NO_PROXY=${no_proxy}

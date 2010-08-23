@@ -1,12 +1,15 @@
-Host github-tunnel
-	HostName marian.cs.nott.ac.uk
-	LocalForward 9418 github.com:9418
-	User rmm
-	IdentityFile ~/.ssh/nott-key.pub
-
 Host marian.cs.nott.ac.uk
 	User rmm
-	IdentityFile ~/.ssh/nott-key
+	IdentityFile ~/.ssh/nottingham-key
+
+Host devbox,ppsrm.nottingham.ac.uk
+	User mort
+	IdentityFile ~/.ssh/nottingham-key
+
+Host *.cl.cam.ac.uk
+	User rmm1002
+	IdentityFile ~/.ssh/cambridge-key
 
 Host *.vipadia.com,*.clackpoint.com
+	User mort
 	IdentityFile ~/.ssh/vipadia-key

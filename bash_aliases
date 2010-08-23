@@ -18,6 +18,8 @@ alias bcat="hexdump -C"
 
 alias github-tunnel="ssh -f -N github-tunnel"
 alias nottsmtp-tunnel-stop="ps aux | grep nottsmtp-tunnel | grep -v 'grep nottsmtp-tunnel' | tr -s ' ' | cut -d ' ' -f 2 | sudo xargs kill -9"
-alias nottsmtp-tunnel='sudo kill -9 $(ps aux | grep nottsmtp-tunnel | grep -v "grep nottsmtp-tunnel" | tr -s " " | cut -d " " -f 2) ; sudo ssh -f -N nottsmtp-tunnel'
+alias nottsmtp-tunnel='sudo ssh -i /Users/mort/.ssh/nottingham-key -f -N nottsmtp-tunnel'
 
 alias curl="curl --noproxy localhost,127.0.0.1"
+alias update-gits='for n in *.git ; do cd $n ; git pull ; cd .. ; done'
+

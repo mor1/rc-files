@@ -1,6 +1,7 @@
 [user]
 	name = Richard Mortier
 	email = mort@cantab.net
+	signingkey = 87E85FF5
 [github]
 	user = mor1
 	token = f34f4313035ea023bd8d5d8f5a527175
