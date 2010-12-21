@@ -51,9 +51,10 @@ trawl () {
     -name '*.bib'       -o -name 'README*' -o -name '*.ns'  -o  \
     -name '*.cs'        -o -name '*.java'  -o -name '*.php' -o  \
     -name '*.fs'        -o -name '*.fsx'   -o -name '*.fsi' -o  \
-    -name '*.cfg'	-o -name '*.xml'   -o -name '*.inc' -o  \
-    -name '*.mxml'	-o -name '*.as'	   -o  			\
-    -name '*.yaml' 	-o -name '*.yml'   -o -name '*.md'   	\
+    -name '*.cfg'	-o -name '*.xml'	-o -name '*.inc' -o  	\
+    -name '*.mxml'	-o -name '*.as'		-o						\
+    -name '*.yaml' 	-o -name '*.yml'	-o -name '*.md' -o 		\
+    -name '*.ml' -o -name '*.mli' \
   \) -print0 |                                                  \
   xargs -0 grep -EHns "$@"
 }
