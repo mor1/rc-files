@@ -2,14 +2,15 @@
 
 DEST=$1
 UNAME=$2
+if [ ! -z "${UNAME}" ]; then UNAME=${UNAME}@ ; fi
 
-ssh ${DEST} mkdir -p ~${UNAME}/src
-ssh ${DEST} "rm -rf ~/src/sh-scripts.git"
-scp -r ~/src/sh-scripts.git ${DEST}:~/src/sh-scripts.git
+ssh ${UNAME}${DEST} "mkdir -p ~/src"
+ssh ${UNAME}${DEST} "rm -rf ~/src/sh-scripts.git"
+scp -r ~/src/sh-scripts.git ${UNAME}${DEST}:~/src/sh-scripts.git
 
-ssh ${DEST} mkdir -p ~${UNAME}/install
-ssh ${DEST} "rm -rf ~/install/config.git"
-scp -r ~/install/config.git ${DEST}:~/install/config.git
+ssh ${UNAME}${DEST} "mkdir -p ~/install"
+ssh ${UNAME}${DEST} "rm -rf ~/install/config.git"
+scp -r ~/install/config.git ${UNAME}${DEST}:~/install/config.git
             
 # ssh ${DEST} mkdir -p /home/mort/src
 # ssh ${DEST} "chmod -R u+w ~/src/sh/*"

@@ -11,7 +11,10 @@ export LHOST SHOST KERNEL
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
 
 if [ -f "$HOME/.ssh/sssha" ]; then
-  source $HOME/.ssh/sssha -k ~/.ssh/nottingham-key -k ~/.ssh/cambridge-key
+  source $HOME/.ssh/sssha \
+                -k ~/.ssh/nottingham-key \
+                -k ~/.ssh/cambridge-key  \
+                -k ~/.ssh/hw2-dreamplug-key
 fi
 
 if tty -s; then
@@ -24,3 +27,6 @@ fi
 
 ## PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
 ## export PATH
+
+## GIT bash completion
+source /usr/local/Cellar/git/1.7.9.5/etc/bash_completion.d/git-completion.bash
