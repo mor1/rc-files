@@ -29,13 +29,18 @@ notify=TRUE # support notifications
 # so bash doesn't do variable expansion on (eg.) \w in PS1 -- consider
 # the case of a dir. called "`rm -rf ~`" ... :-> (ask Austin)
 export NO_PROMPT_VARS
-
 set -o noclobber # require explicit overwrite when redirecting
+
+#
+# history settings
+#
+
 shopt -s histappend # continue appending, don't delete periodically
 export PROMPT_COMMAND="history -n; history -a" # add to history every command
-export HISTIGNORE="&:l[sl]:[bf]g:exit:[ \t]"
+export HISTIGNORE="&:l[sl][a]:[bf]g:exit:[ \t]"
 export HISTCONTROL=ignoreboth:erasedups
-
+export HISTSIZE=10000
+export HISTFILESIZE=10000
 
 #
 # paths
@@ -49,7 +54,7 @@ aenv PATH /usr/bin
 aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
 aenv PATH /usr/X11R6/bin
-aenv PATH /usr/local/texlive/2010/bin/x86_64-darwin
+aenv PATH /usr/local/texlive/2011/bin/x86_64-darwin
 aenv PATH ~/bin
 aenv PATH ~/bin/android-sdk-mac_86/tools
 aenv PATH /usr/local/share/python

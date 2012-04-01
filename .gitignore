@@ -1,2 +1,5 @@
 emacs.d/auto-save-list/
 *-key
+software
+isos
+emacs.d/org-clock-save.el
