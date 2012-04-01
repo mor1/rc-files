@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
+set -ex
 
 INSTALL_DIR=$(pwd)
-for f in "${INSTALL_DIR}/*"; do
-  [ "$(basename ${f})" = "install.sh" ] && continue
-  [ "$(basename ${f})" = "push-env.sh" ] && continue
-  [ "$(basename ${f})" = "solarized-dark-mort.itermcolors" ] && continue
-  [ -L "~/.$(basename ${f})" ] && rm -f ~/.$(basename ${f})
-  ln -s $f ~/.$(basename ${f})
+for f in ${INSTALL_DIR}/*; do
+  bf=$(basename $f)
+  case "$bf" in
+  "floatlg.jpg" | "install.sh" | \
+    "push-env.sh" | "solarized-dark-mort.itermcolors" ) 
+    ;;
+  * )
+    [ -L ~/.$bf ] && rm -f ~/.$bf || true
+    ln -s $f ~/.$bf
+    ;;
+  esac
 done
 #ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
 #ln -s ${INSTALL_DIR}/bash_profile ~/.bash_profile

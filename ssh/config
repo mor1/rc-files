@@ -1,9 +1,18 @@
-Host marian.cs.nott.ac.uk
+Host hw2
+        User root
+        Hostname ubuntu.local
+        IdentityFile ~/.ssh/hw2-dreamplug-key
+
+Host *.horizon.ac.uk
 	User rmm
 	IdentityFile ~/.ssh/nottingham-key
 
 Host devbox,ppsrm.nottingham.ac.uk
-	User mort
+	User rmm
+	IdentityFile ~/.ssh/nottingham-key
+
+Host *.cs.nott.ac.uk
+	User rmm
 	IdentityFile ~/.ssh/nottingham-key
 
 Host *.cl.cam.ac.uk
@@ -13,3 +22,19 @@ Host *.cl.cam.ac.uk
 Host *.vipadia.com,*.clackpoint.com
 	User mort
 	IdentityFile ~/.ssh/vipadia-key
+
+Host *.compute.amazonaws.com
+        User ec2-user
+        IdentityFile ~/.ssh/dataware-catalog-aws.pem
+
+Host irc-tunnel
+        User rmm
+        HostName marian.cs.nott.ac.uk
+        IdentityFile ~/.ssh/nottingham-key
+        LocalForward 7000 chat.freenode.net:7000
+
+# very handy for firewalls! :)
+Host github.com
+     User git
+     HostName ssh.github.com
+     Port 443
