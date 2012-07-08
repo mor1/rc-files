@@ -1,5 +1,7 @@
 ;; -*- mode: Emacs-Lisp; fill-column: 78; -*-
 
+;; TODO: latex; org-mode
+
 ;; package management
 (add-to-list 'load-path "/Users/mort/.emacs.d")
 (require 'package)
@@ -162,6 +164,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; mode hooks
+
+(add-hook 'org-mode-hook 
+          '(lambda () 
+;             (imenu-add-to-menubar "Imenu")
+;             (local-set-key [left] 'org-agenda-later)
+             ))
 
 (add-hook 'text-mode-hook
           '(lambda ()
@@ -424,7 +432,28 @@
  '(vc-follow-symlinks t)
  '(visible-bell t)
  '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
- '(x-select-enable-clipboard t))
+ '(x-select-enable-clipboard t)
+ '(org-agenda-custom-commands (quote (("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil) ("w" todo #("WAITING" 0 7 (face org-warning)) nil) ("W" agenda "" ((org-agenda-ndays 21))) ("A" agenda "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) (org-agenda-ndays 1) (org-agenda-overriding-header "Today's Priority #A tasks: "))) ("u" alltodo "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline) (quote regexp) "<[^>
+]+>"))) (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
+ '(org-agenda-files (quote ("~/.todo/todo.org")))
+ '(org-agenda-include-diary t)
+ '(org-agenda-ndays 7)
+ '(org-agenda-show-all-dates t)
+ '(org-agenda-skip-deadline-if-done t)
+ '(org-agenda-skip-scheduled-if-done t)
+ '(org-agenda-sorting-strategy (quote (time-up priority-down)))
+ '(org-agenda-start-on-weekday nil)
+ '(org-deadline-warning-days 14)
+ '(org-default-notes-file "~/.todo/notes.org")
+ '(org-fast-tag-selection-single-key (quote expert))
+ '(org-remember-store-without-prompt t)
+ '(org-remember-templates (quote ((116 "* %?
+  %u" "~/.todo/todo.org" "Tasks") (110 "* %u %?" "~/.todo/notes.org" "Notes"))))
+ '(org-reverse-note-order t)
+ '(org-tags-match-list-sublevels t)
+ '(remember-annotation-functions (quote (org-remember-annotation)))
+ '(remember-handler-functions (quote (org-remember-handler)))
+)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
