@@ -201,8 +201,6 @@
 (add-hook 'nxml-mode-hook
           '(lambda ()
              (fci-mode t)
-;             (define-key nxml-mode-map "\C-c\C-c" 'comment-region)
-;             (define-key nxml-mode-map "\C-c\C-q" 'indent-region)
              ))
 (push '("\\`<\\?xml" . nxml-mode) magic-mode-alist)
 
@@ -305,8 +303,18 @@
 ;; <http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs>
 
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
-
-(global-set-key "\C-xp" '(lambda () (interactive) (other-window -1)))
+(define-key my-keys-minor-mode-map (kbd "C-x C-c") 'my-kill-emacs)
+(define-key my-keys-minor-mode-map (kbd "C-x p") 
+  '(lambda () (interactive) (other-window -1)))
+(define-key my-keys-minor-mode-map (kbd "C-c C-g") 'goto-line)
+(define-key my-keys-minor-mode-map (kbd "C-c C-c") 'comment-region)
+(define-key my-keys-minor-mode-map (kbd "C-c C-q") 'indent-region)
+(define-key my-keys-minor-mode-map (kbd "%") 'match-paren)
+(define-key my-keys-minor-mode-map (kbd "M-C-q") 'unfill-paragraph)
+(define-key my-keys-minor-mode-map (kbd "M-%") 'replace-regexp)
+(define-key my-keys-minor-mode-map (kbd "C-z") 'nil)
+(define-key my-keys-minor-mode-map (kbd "C-<tab>") 'dabbrev-expand)
+(define-key my-keys-minor-mode-map (kbd "C-<return>") 'split-line)
 
 ;| point-to  | previous   | next        |
 ;|-----------+------------+-------------|
@@ -334,51 +342,27 @@
 
 ;;
 ;; for poxy macbook keyboard with only the arrow keys
-(global-set-key (kbd "M-<up>") 'warp-to-top-of-window)
-(global-set-key (kbd "M-<down>") 'warp-to-bottom-of-window)
-(global-set-key (kbd "C-M-<down>") 'line-to-top-of-window)
-(global-set-key (kbd "C-M-<up>") 'line-to-bottom-of-window)
+(define-key my-keys-minor-mode-map (kbd "M-<up>") 'warp-to-top-of-window)
+(define-key my-keys-minor-mode-map (kbd "M-<down>") 'warp-to-bottom-of-window)
+(define-key my-keys-minor-mode-map (kbd "C-M-<down>") 'line-to-top-of-window)
+(define-key my-keys-minor-mode-map (kbd "C-M-<up>") 'line-to-bottom-of-window)
 
 ;;
 ;; for a sensible pc keyboard with pgup|pgdn|home|end
 ;;
-(global-set-key [C-prior] 'warp-to-top-of-window)
-(global-set-key [C-next] 'warp-to-bottom-of-window)
-(global-set-key [C-home] 'line-to-top-of-window)
-(global-set-key [C-end] 'line-to-bottom-of-window)
-(global-set-key [home] 'beginning-of-buffer) ; also M-<
-(global-set-key [end] 'end-of-buffer) ; also M->
-
-(global-unset-key [C-return])
-(global-set-key [C-return] 'split-line)
-
-(global-set-key (kbd "C-c C-g") 'goto-line)
-(global-set-key (kbd "C-c C-c") 'comment-region)
-
-(global-set-key "%" 'match-paren)
-
-(global-unset-key (kbd "M-%"))
-(global-set-key   (kbd "M-%") 'replace-regexp)
-
-(global-unset-key (kbd "M-C-q"))
-(global-set-key   (kbd "M-C-q") 'unfill-paragraph)
-(global-set-key (kbd "C-z") 'nil) ; C-z don't iconify
-(global-unset-key [C-tab])
-(global-set-key [C-tab] 'dabbrev-expand)
-
-                                        ;(define-key my-keys-minor-mode-map
-                                        ;  (kbd "C-i") 'some-function
-                                        ;  )
-(global-set-key (kbd "C-x C-c") 'my-kill-emacs)
+(define-key my-keys-minor-mode-map (kbd "C-<prior>") 'warp-to-top-of-window)
+(define-key my-keys-minor-mode-map (kbd "C-<next>") 'warp-to-bottom-of-window)
+(define-key my-keys-minor-mode-map (kbd "C-<home>") 'line-to-top-of-window)
+(define-key my-keys-minor-mode-map (kbd "C-<end>") 'line-to-bottom-of-window)
+(define-key my-keys-minor-mode-map (kbd "<home>") 'beginning-of-buffer) ; also M-<
+(define-key my-keys-minor-mode-map (kbd "<end>") 'end-of-buffer) ; also M->
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   t " my-keys" 'my-keys-minor-mode-map)
 (my-keys-minor-mode 1)
-
 (defun my-minibuffer-setup-hook ()
   (my-keys-minor-mode 0))
-
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
 
 (defadvice load (after give-my-keybindings-priority)
@@ -388,7 +372,6 @@
         (assq-delete-all 'my-keys-minor-mode minor-mode-map-alist)
         (add-to-list 'minor-mode-map-alist mykeys))))
 (ad-activate 'load)
-
 
 ;; org-mode
 (define-key mode-specific-map [?a] 'org-agenda)
@@ -448,6 +431,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(caml-types-expr-face ((t (:foreground "slategray"))))
+
  '(font-lock-TRC-face ((t (:foreground "seagreen3"))))
  '(font-lock-alarm-face ((t (:foreground "red"))))
  '(font-lock-comment-face ((t (:foreground "goldenrod"))))
