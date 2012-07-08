@@ -175,54 +175,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; prb's ispell stuff
-
-(setq-default ispell-program-name "/usr/local/bin/aspell") 
-(autoload 'ispell-minor-mode "ispell.el" t t)
-
-(setq ispell-list-command "list")
-(setq ispell-extra-args '("--reverse")) ; sug-mode=ultra"))
-(setq ispell-local-dictionary "~/aspell.en.pws")
-(make-face 'spelling-mistake)
-(set-face-foreground 'spelling-mistake "white")
-(set-face-background 'spelling-mistake "red")
-(setq ispell-highlight-face 'spelling-mistake)
-(setq ispell-dictionary "british")
-;(setq-default ispell-local-dictionary "british")
-
-;(make-face 'ispell)
-;(set-face-foreground 'ispell "white")
-;(set-face-background 'ispell "red")
-
-(defun ispell-check-paragraph ()
-"Spell check each word in a paragraph"
-(interactive "*")
-(let ((ispell-minor-mode nil)
-    (ispell-check-only nil)
-    (ispell-quietly t)
-    )
-
-;    (save-excursion
-;      (forward-paragraph) (setq end (point))
-;      (forward-paragraph -1)
-;      (while (re-search-forward "[ \t\n\r]" end t)
-;        (save-restriction
-;          (narrow-to-region (point-min) (point))
-;          (ispell-word nil t))))
-
-(save-excursion
-    (forward-paragraph) (setq end (point))
-    (forward-paragraph -1) (setq start (point))
-    (ispell-region start end))
-
-))
-
-(defun fill-and-check ()
-"Fill a paragraph and spell check"
-(interactive)
-(fill-paragraph nil)
-(ispell-check-paragraph)
-)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -336,89 +288,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Tuareg/typerex OCaml/F# support
-
-;; (setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
-;; (setq auto-mode-alist (cons '("\\.fs[ix]?" . tuareg-mode) auto-mode-alist))
-;; (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
-;; (autoload 'camldebug "camldebug" "Run the Caml debugger" t)
-;; (autoload 'caml-types-show-type "caml-types" "Show type of expression / pattern at point." t)
-
-(add-hook 'tuareg-mode-hook
-          '(lambda ()
-             (fci-mode 1)
-;;              (setq tuareg-default-indent 2)
-             (setq tuareg-lazy-= t) ; indent `=' like a standard keyword
-             (setq tuareg-lazy-paren t) ; indent [({ like standard keywords
-             (setq tuareg-in-indent 0) ; no indentation after `in' keywords
-             (auto-fill-mode 1) ; turn on auto-fill minor mode
-;;              (if (featurep 'sym-lock)   ; Sym-Lock customization only
-;;                  (setq sym-lock-mouse-face-enabled nil))
-;;                                         ; turn off special face under mouse
-;;              (set-face-background caml-types-expr-face "slategray")
-             ))
-
-;; (eval-after-load 'caml-types
-;;   (progn
-;;     (face-spec-set 'caml-types-expr-face
-;;                    '((((class color) (type tty)) (:inverse-video t))
-;;                      (((class color) (background light)) (:background "gray73"))
-;;                      (((class color) (background dark))  (:background "darkslategray"))))
-;;     ))
-
-(add-hook 'typerex-mode-hook
-          (lambda ()
-            (fci-mode 1)
-            (auto-fill-mode 1)
-            ))
-
-;; Loading TypeRex mode for OCaml files
-;; (add-to-list 'load-path "/Users/mort/.emacs.d")
-(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . typerex-mode))
-(add-to-list 'auto-mode-alist '("\\.fs[ix]?" . typerex-mode))
-(autoload 'typerex-mode "typerex" "Major mode for editing Caml code" t)
-
-;; TypeRex mode configuration
-(setq ocp-server-command "/usr/local/bin/ocp-wizard")
-(setq typerex-in-indent 0)
-(setq-default indent-tabs-mode nil)
-
-;; Uncomment to enable typerex command menu by right click
-(setq ocp-menu-trigger [mouse-3])
-
-;; Uncomment make new syntax coloring look almost like Tuareg
-(setq ocp-theme "tuareg_like")
-;; Uncomment to disable new syntax coloring and use Tuareg
-;(setq ocp-syntax-coloring nil)
-
-;;;; Auto completion (experimental)
-;;;; Don't use M-x invert-face default with auto-complete! (emacs -r is OK)
-;;(add-to-list 'load-path "/Users/mort/.emacs.d/auto-complete-mode")
-;;(setq ocp-auto-complete t)
-
-;;;; Using <`> to complete whatever the context, and <C-`> for `
-;;(setq auto-complete-keys 'ac-keys-backquote-backslash)
-;;;; Options: nil (default), 'ac-keys-default-start-with-c-tab, 'ac-keys-two-dollar
-;;;; Note: this overrides individual auto-complete key settings
-
-;;;; I want immediate menu pop-up
-;;(setq ac-auto-show-menu 0.1)
-;;;; Short delay before showing help
-;;(setq ac-quick-help-delay 0.3)
-;;;; Number of characters required to start (nil to disable)
-;;(setq ac-auto-start 0)
-
-;;;; Uncomment to enable auto complete mode globally (independently of OCaml)
-;;(require 'auto-complete-config)
-;;(add-to-list 'ac-dictionary-directories "/Users/mort/.emacs.d/auto-complete-mode/ac-dict")
-;;(ac-config-default)
-;;(global-set-key (kbd "C-<tab>") 'auto-complete)
-
-;; For debugging only
-;;;;(setq ocp-debug t)
-;;;;(setq ocp-profile t)
-;;;;(setq ocp-dont-catch-errors t)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -937,8 +806,6 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(put 'eval-expression 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

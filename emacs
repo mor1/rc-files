@@ -1,7 +1,7 @@
 ;; -*- mode: Emacs-Lisp; fill-column: 78; -*-
 
 ;; package management
-(add-to-list 'load-path '("~/.emacs.d"))
+(add-to-list 'load-path "/Users/mort/.emacs.d")
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -15,12 +15,18 @@
 ;; colours
 (set-background-color "black")
 (set-foreground-color "gray85")
+
 (set-mouse-color "white")
 (set-cursor-color "white")
+
 (set-face-background 'region "grey32")
 (set-face-foreground 'region "white")
 (set-face-background 'highlight "grey32")
 (set-face-foreground 'highlight "white")
+
+;; ispell
+(setq-default ispell-program-name "/usr/local/bin/aspell")
+(setq ispell-dictionary "british")
 
 ;; default save encoding- ut8
 (set-language-environment "utf-8")
@@ -135,6 +141,24 @@
   (delete-trailing-whitespace)
   )
 
+;; prb ispell functions
+(defun ispell-check-paragraph () "Spell check each word in a paragraph"
+  (interactive "*")
+  (let ((ispell-check-only nil)
+        (ispell-quietly t)
+        )
+    (save-excursion
+      (forward-paragraph) (setq end (point))
+      (forward-paragraph -1) (setq start (point))
+      (ispell-region start end))    
+    ))
+
+(defun fill-and-check () "Fill a paragraph and spell check"
+  (interactive)
+  (fill-paragraph nil)
+  (ispell-check-paragraph)
+  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; mode hooks
@@ -143,10 +167,9 @@
           '(lambda ()
              (fci-mode t)
              (auto-fill-mode 1)
-             (ispell-minor-mode)
+             (flyspell-mode 1)
 ;             (turn-on-filladapt-mode)
-;             (local-set-key "\M-q" 'fill-and-check)
-;             (local-unset-key [C-return])
+             (local-set-key [M-q] 'fill-and-check)
              ))
 
 (add-hook 'java-mode-hook
@@ -158,13 +181,13 @@
 
 (add-hook 'emacs-lisp-mode-hook
           '(lambda ()
-             'turn-on-eldoc-mode
+             (turn-on-eldoc-mode)
              (fci-mode t)
              ))
 
 (add-hook 'lisp-interaction-mode-hook
           '(lambda ()
-             'turn-on-eldoc-mode
+             (turn-on-eldoc-mode)
              ))
 
 (add-hook 'ecmascript-mode-hook
@@ -209,6 +232,72 @@
           '(lambda ()
              (fci-mode t)
              ))
+
+;; tuareg-mode
+;; (add-hook 'tuareg-mode-hook
+;;           '(lambda ()
+;;              (fci-mode 1)
+;;              (setq tuareg-lazy-= t) ; indent `=' like a standard keyword
+;;              (setq tuareg-lazy-paren t) ; indent [({ like standard keywords
+;;              (setq tuareg-in-indent 0) ; no indentation after `in' keywords
+;;              (auto-fill-mode 1) ; turn on auto-fill minor mode
+;; ;;              (setq tuareg-default-indent 2)
+;; ;;              (if (featurep 'sym-lock)   ; Sym-Lock customization only
+;; ;;                  (setq sym-lock-mouse-face-enabled nil))
+;; ;;                                         ; turn off special face under mouse
+;; ;;              (set-face-background caml-types-expr-face "slategray")
+;;              ))
+
+;; typerex-mode (ocaml)
+(add-hook 'typerex-mode-hook
+          (lambda ()
+            (fci-mode 1)
+            (auto-fill-mode 1)
+            ))
+(autoload 'typerex-mode "typerex.el" "Major mode for editing Caml code" t)
+(push'("\\.ml[iylp]?" . typerex-mode) auto-mode-alist)
+(push '("\\.fs[ix]?" . typerex-mode) auto-mode-alist)
+
+;; TypeRex mode configuration
+(setq ocp-server-command "/usr/local/bin/ocp-wizard")
+(setq typerex-in-indent 0)
+(setq-default indent-tabs-mode nil)
+
+;; Uncomment to enable typerex command menu by right click
+(setq ocp-menu-trigger [mouse-3])
+
+;; Uncomment make new syntax coloring look almost like Tuareg
+(setq ocp-theme "tuareg_like")
+;; Uncomment to disable new syntax coloring and use Tuareg
+;(setq ocp-syntax-coloring nil)
+
+;;;; Auto completion (experimental)
+;;;; Don't use M-x invert-face default with auto-complete! (emacs -r is OK)
+;;(add-to-list 'load-path "/Users/mort/.emacs.d/auto-complete-mode")
+;;(setq ocp-auto-complete t)
+
+;;;; Using <`> to complete whatever the context, and <C-`> for `
+;;(setq auto-complete-keys 'ac-keys-backquote-backslash)
+;;;; Options: nil (default), 'ac-keys-default-start-with-c-tab, 'ac-keys-two-dollar
+;;;; Note: this overrides individual auto-complete key settings
+
+;;;; I want immediate menu pop-up
+;;(setq ac-auto-show-menu 0.1)
+;;;; Short delay before showing help
+;;(setq ac-quick-help-delay 0.3)
+;;;; Number of characters required to start (nil to disable)
+;;(setq ac-auto-start 0)
+
+;;;; Uncomment to enable auto complete mode globally (independently of OCaml)
+;;(require 'auto-complete-config)
+;;(add-to-list 'ac-dictionary-directories "/Users/mort/.emacs.d/auto-complete-mode/ac-dict")
+;;(ac-config-default)
+;;(global-set-key (kbd "C-<tab>") 'auto-complete)
+
+;; For debugging only
+;;;;(setq ocp-debug t)
+;;;;(setq ocp-profile t)
+;;;;(setq ocp-dont-catch-errors t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -318,78 +407,57 @@
 ;(set-default-font "-apple-consolas-bold-r-normal--0-0-0-0-m-0-iso10646-1")
 (set-default-font "-apple-Consolas-medium-normal-normal-*-11-*-*-*-m-0-fontset-auto3")
 
+(put 'eval-expression 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
+ '(default-major-mode (quote text-mode) t)
  '(fill-column 78)
- '(tab-width 4)
- '(tool-bar-mode nil)
- '(nxml-slash-auto-complete-flag t)
- '(ns-command-modifier (quote meta))
- '(msb-mode t)
+ '(frame-title-format "%b  %f" t)
+ '(global-visual-line-mode nil)
+ '(indent-tabs-mode nil)
+ '(interprogram-paste-function (quote x-selection-value) t)
+ '(make-backup-files nil)
  '(mouse-buffer-menu-mode-mult 1)
  '(msb-max-file-menu-items 1)
  '(msb-max-menu-items 35)
- '(global-visual-line-mode nil)
- '(indent-tabs-mode nil)
-
- '(nobreak-char-display t)
- '(x-select-enable-clipboard t)
- '(interprogram-paste-function 'x-selection-value)
+ '(msb-mode t)
+ '(nobreak-char-display t t)
+ '(ns-command-modifier (quote meta))
+ '(nxml-slash-auto-complete-flag t)
+ '(ocp-theme "tuareg_like")
  '(scroll-conservatively 100)
- '(frame-title-format "%b  %f")
- '(visible-bell t)
- '(make-backup-files nil)
- '(vc-follow-symlinks t)
- '(indent-tabs-mode nil)
- '(tab-width 4)
- '(default-major-mode 'text-mode)
- '(show-paren-style 'expression)
- '(show-paren-mode t)
  '(sentence-end-double-space nil)
- '(uniquify-buffer-name-style 'post-forward-angle-brackets nil (uniquify))
-
-
-                                        ; '(filladapt-token-table (quote (("^" beginning-of-line) (">+" citation->) ("\\(\\w\\|[0-9]\\)[^'`\"<  ]*>[    ]*" supercite-citation) (";+" lisp-comment) ("#+" sh-comment) ("%+" postscript-comment) ("^[    ]*\\(//\\|\\*\\)[^  ]*" c++-comment) ("@c[ \\t]" texinfo-comment) ("@comment[   ]" texinfo-comment) ("[0-9]+\\.[    ]" bullet) ("[0-9]+\\(\\.[0-9]+\\)+[    ]" bullet) ("[A-Za-z]\\.[   ]" bullet) ("(?[0-9]+)[     ]" bullet) ("(?[A-Za-z])[   ]" bullet) ("[0-9]+[A-Za-z]\\.[     ]" bullet) ("(?[0-9]+[A-Za-z])[     ]" bullet) ("[-~*+o]+[  ]" bullet) ("o[     ]" bullet) ("[\\@]\\(param\\|throw\\|exception\\|addtogroup\\|defgroup\\)[  ]*[A-Za-z_][A-Za-z_0-9]*[   ]+" bullet) ("\\\\item[     ]*" bullet) ("[\\@][A-Za-z_]+[  ]*" bullet) ("[     ]+" space) ("$" end-of-line))))
-
-
-                                        ; '(c-basic-offset 4)
-                                        ; '(c-default-style (quote ((java-mode . "java") (awk-mode . "awk") (other . "bsd"))))
-                                        ; '(c-set-style "bsd" t)
-                                        ; '(c-syntactic-indentation t)
-
-
-                                        ; '(org-agenda-custom-commands (quote (("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil) ("w" todo #("WAITING" 0 7 (face org-warning)) nil) ("W" agenda "" ((org-agenda-ndays 21))) ("A" agenda "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) (org-agenda-ndays 1) (org-agenda-overriding-header "Today's Priority #A tasks: "))) ("u" alltodo "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline) (quote regexp) "<[^>]+>"))) (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
-                                        ; '(org-agenda-files (quote ("~/.todo/todo.org")))
-                                        ; '(org-agenda-include-diary t)
-                                        ; '(org-agenda-ndays 7)
-                                        ; '(org-agenda-show-all-dates t)
-                                        ; '(org-agenda-skip-deadline-if-done t)
-                                        ; '(org-agenda-skip-scheduled-if-done t)
-                                        ; '(org-agenda-sorting-strategy (quote (time-up priority-down)))
-                                        ; '(org-agenda-start-on-weekday nil)
-                                        ; '(org-deadline-warning-days 14)
-                                        ; '(org-default-notes-file "~/.todo/notes.org")
-                                        ; '(org-fast-tag-selection-single-key (quote expert))
-                                        ; '(org-remember-store-without-prompt t)
-                                        ; '(org-remember-templates (quote ((116 "* %?  %u" "~/.todo/todo.org" "Tasks") (110 "* %u %?" "~/.todo/notes.org" "Notes"))))
-                                        ; '(org-reverse-note-order t)
-                                        ; '(org-tags-match-list-sublevels t)
-                                        
-                                        ; '(remember-annotation-functions (quote (org-remember-annotation)))
-                                        ; '(remember-handler-functions (quote (org-remember-handler)))
-                                        
-                                        
-                                        ; '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow))))
-
- )
+ '(show-paren-mode t)
+ '(show-paren-style (quote expression))
+ '(tab-width 4)
+ '(tool-bar-mode nil)
+ '(typerex-font-lock-symbols t)
+ '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
+ '(vc-follow-symlinks t)
+ '(visible-bell t)
+ '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
+ '(x-select-enable-clipboard t))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(font-lock-TRC-face ((t (:foreground "seagreen3"))))
+ '(font-lock-alarm-face ((t (:foreground "red"))))
+ '(font-lock-comment-face ((t (:foreground "goldenrod"))))
+ '(font-lock-define-face ((t (:foreground "aquamarine"))))
+ '(font-lock-faded-face ((t (:foreground "slategray"))))
+ '(font-lock-function-name-face ((t (:foreground "green"))))
+ '(font-lock-globals-face ((t (:foreground "orange"))))
+ '(font-lock-keyword-face ((t (:foreground "gold"))))
+ '(font-lock-preproc-face ((t (:foreground "aquamarine"))))
+ '(font-lock-prototype-face ((t (:foreground "palegreen"))))
+ '(font-lock-string-face ((t (:foreground "turquoise"))))
+ '(font-lock-type-face ((t (:foreground "orange"))))
+ '(font-lock-variable-name-face ((t (:foreground "LightGoldenrod")))))
