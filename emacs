@@ -1,30 +1,40 @@
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
+;(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(package-initialize)
+
+(add-to-list 'load-path '("~/.emacs.d"))
+(require 'fill-column-indicator)
+
+(if (= emacs-major-version 20)
+(set-scroll-bar-mode 'right))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 
-(setq load-path
-      (append
-       (list "~/.emacs.d"
-             "~/.emacs.d/remember"
-       )
-       load-path
-))
+;(setq load-path
+;    (append
+;    (list "~/.emacs.d"
+;            "~/.emacs.d/remember"
+;    )
+;    load-path
+;))
 
-(if (= emacs-major-version 20)
-    (set-scroll-bar-mode 'right))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; Required packages...
 
-(require 'filladapt)
+;(require 'filladapt)
 (require 'paren)	
-(require 'scroll-in-place)
-(require 'crypt++)
+;(require 'scroll-in-place)
+;(require 'crypt++)
 (require 'uniquify)
-(require 'flobl)
+;(require 'flobl)
 (require 'calendar)
-(require 'php-mode)
-(require 'fill-column-indicator)
+;(require 'php-mode)
+;(require 'fill-column-indicator)
 
 ;; cc-mode tweaks and fixes
 
@@ -39,16 +49,18 @@
 ;; (defmacro c-paren-re (re) `(concat "\\(" ,re "\\)"))
 ;; (defmacro c-identifier-re (re) `(concat "\\[^_]"))
 ;; (defconst c-protection-key "\\<\\(public\\|protected\\|private\\)\\>") 
- 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; General variable definitions, etc...
 
+(setq nobreak-char-display t)
+                            
 ;(setq default-input-method "MacOSX")
 ;(set-input-method "MacOSX")
 
 (setq x-select-enable-clipboard t)
-(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+(setq interprogram-paste-function 'x-selection-value)
 
 ;(when (eq 0 (string-match "*-apple-darwin*" system-configuration))
 ;  (setq x-select-enable-clipboard t))
@@ -56,7 +68,7 @@
 ;     interprogram-paste-function 'get-clipboard-foreign)
 ;(mac-key-mode 1)
 ;(add-hook 'minibuffer-setup-hook 'mac-change-language-to-us)
-                      
+                    
 ;; fonts and keyboard encoding
 ;(set-keyboard-coding-system 'mac-roman)
 
@@ -64,7 +76,7 @@
 (set-language-environment "utf-8")
 (set-coding-priority (list 'coding-category-utf-8))
 (prefer-coding-system 'utf-8)
-     
+    
 (column-number-mode 1)
 (setq scroll-margin 0)
 (setq scroll-step 0)
@@ -125,9 +137,9 @@
 ;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph       
 ;;; Takes a multi-line paragraph and makes it into a single line of text.       
 (defun unfill-paragraph ()
-  (interactive)
-  (let ((fill-column (point-max)))
-    (fill-paragraph nil)))
+(interactive)
+(let ((fill-column (point-max)))
+(fill-paragraph nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -135,24 +147,24 @@
 ;;; sanitized for powerbook keyboard (require fn for pgup/pgdn/home/end)
 
 (defun line-to-top-of-window ()
-  "Move the line that the point is on to the top of window."
-  (interactive) 
-  (recenter 0))
+"Move the line that the point is on to the top of window."
+(interactive) 
+(recenter 0))
 
 (defun line-to-bottom-of-window () ;; me, after above and below
-  "Move the line that the point is on to the bottom of window."
-  (interactive) 
-  (recenter (frame-height)))
+"Move the line that the point is on to the bottom of window."
+(interactive) 
+(recenter (frame-height)))
 
 (defun warp-to-top-of-window ()
-  "Move the point to line 0"
-  (interactive) 
-  (move-to-window-line 0))
+"Move the point to line 0"
+(interactive) 
+(move-to-window-line 0))
 
 (defun warp-to-bottom-of-window ()
-  "Move the point to line (frame-height)"
-  (interactive)
-  (move-to-window-line -1))
+"Move the point to line (frame-height)"
+(interactive)
+(move-to-window-line -1))
 
 ;| point-to  | previous   | next        |
 ;|-----------+------------+-------------|
@@ -239,12 +251,12 @@
 ;;; prb's mark-mode highlight stuff
 
 (progn
-  (setq transient-mark-mode t)
-  (set-face-background 'region "steelblue3")
-  (set-face-foreground 'region nil)
-  (set-face-background 'highlight "steelblue3")
-  (set-face-foreground 'highlight nil)
-  t)
+(setq transient-mark-mode t)
+(set-face-background 'region "steelblue3")
+(set-face-foreground 'region nil)
+(set-face-background 'highlight "steelblue3")
+(set-face-foreground 'highlight nil)
+t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -263,10 +275,10 @@
 ;;;
 ;;; Cyclic buffers
 
-(autoload 'cyclebuffer-forward "cyclebuffer" "cycle forward" t)
-(autoload 'cyclebuffer-backward "cyclebuffer" "cycle backward" t)
-(global-set-key (kbd "M-n") 'cyclebuffer-forward)
-(global-set-key (kbd "M-p") 'cyclebuffer-backward)
+;(autoload 'cyclebuffer-forward "cyclebuffer" "cycle forward" t)
+;(autoload 'cyclebuffer-backward "cyclebuffer" "cycle backward" t)
+;(global-set-key (kbd "M-n") 'cyclebuffer-forward)
+;(global-set-key (kbd "M-p") 'cyclebuffer-backward)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -297,12 +309,12 @@
 ;(set-face-background 'ispell "red")
 
 (defun ispell-check-paragraph ()
-  "Spell check each word in a paragraph"
-  (interactive "*")
-  (let ((ispell-minor-mode nil)
-        (ispell-check-only nil)
-        (ispell-quietly t)
-        )
+"Spell check each word in a paragraph"
+(interactive "*")
+(let ((ispell-minor-mode nil)
+    (ispell-check-only nil)
+    (ispell-quietly t)
+    )
 
 ;    (save-excursion
 ;      (forward-paragraph) (setq end (point))
@@ -312,19 +324,19 @@
 ;          (narrow-to-region (point-min) (point))
 ;          (ispell-word nil t))))
 
-    (save-excursion
-      (forward-paragraph) (setq end (point))
-      (forward-paragraph -1) (setq start (point))
-      (ispell-region start end))
+(save-excursion
+    (forward-paragraph) (setq end (point))
+    (forward-paragraph -1) (setq start (point))
+    (ispell-region start end))
 
 ))
 
 (defun fill-and-check ()
-  "Fill a paragraph and spell check"
-  (interactive)
-  (fill-paragraph nil)
-  (ispell-check-paragraph)
-  )
+"Fill a paragraph and spell check"
+(interactive)
+(fill-paragraph nil)
+(ispell-check-paragraph)
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -333,23 +345,23 @@
 (autoload 'align-regexp "align-regexp.el" "" t)
 
 (defun align-regexp-repeated (start stop regexp) 
-  "Like align-regexp, but repeated for multiple columns. See http://www.emacswiki.org/emacs/AlignCommands" 
-  (interactive "r\nsAlign regexp: ") 
-  (let ((spacing 1) 
-        (old-buffer-size (buffer-size))) 
-    ;; If our align regexp is just spaces, then we don't need any 
-    ;; extra spacing. 
-    (when (string-match regexp " ") 
-      (setq spacing 0)) 
-    (align-regexp start stop 
-                  ;; add space at beginning of regexp 
-                  (concat "\\([[:space:]]*\\)" regexp) 
-                  1 spacing t) 
-    ;; modify stop because align-regexp will add/remove characters 
-    (align-regexp start (+ stop (- (buffer-size) old-buffer-size)) 
-                  ;; add space at end of regexp 
-                  (concat regexp "\\([[:space:]]*\\)") 
-                  1 spacing t))) 
+"Like align-regexp, but repeated for multiple columns. See http://www.emacswiki.org/emacs/AlignCommands" 
+(interactive "r\nsAlign regexp: ") 
+(let ((spacing 1) 
+    (old-buffer-size (buffer-size))) 
+;; If our align regexp is just spaces, then we don't need any 
+;; extra spacing. 
+(when (string-match regexp " ") 
+    (setq spacing 0)) 
+(align-regexp start stop 
+                ;; add space at beginning of regexp 
+                (concat "\\([[:space:]]*\\)" regexp) 
+                1 spacing t) 
+;; modify stop because align-regexp will add/remove characters 
+(align-regexp start (+ stop (- (buffer-size) old-buffer-size)) 
+                ;; add space at end of regexp 
+                (concat regexp "\\([[:space:]]*\\)") 
+                1 spacing t))) 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -366,7 +378,7 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load "my-font-lock")
+;(load "my-font-lock")
 
 (autoload 'asm-mode      "asm-mode")
 (autoload 'bibtex-mode   "bibtex")
@@ -381,7 +393,6 @@
 (autoload 'tab-mode      "tabulature-mode")
 (autoload 'follow-mode   "follow" nil t)
 (autoload 'doctex-mode   "swiftex" "Major mode for LaTeX doc documents.")
-(autoload 'swiftex-mode  "swiftex" "Major mode for LaTeX documents.")
 (autoload 'csharp-mode   "csharp-mode" "Major mode for editing C# code." t)
 (autoload 'awk-mode        "cc-mode" nil t)
 (autoload 'ecmascript-mode "ecmascript-mode" nil t)
@@ -389,69 +400,64 @@
 (autoload 'js2-mode "js2" nil t)
 
 (setq auto-mode-alist 
-      (append
-       (list (cons "\\.asm$"      'asm-mode)
-             (cons "\\.awk$"	  'perl-mode)
-             (cons "\\.gawk$"	  'perl-mode)
-             (cons "\\.css$"	  'css-mode)
-             (cons "\\.s$"        'asm-mode) 
-             (cons "\\.S$"        'asm-mode) 
-             (cons "\\.bib$"      'bibtex-mode)
-             (cons "\\.java$"     'java-mode)
-             (cons "\\.class$"    'java-mode)
-             (cons "\\.bbl$"      'swiftex-mode)
-             (cons "\\.tex$"      'swiftex-mode)
-             (cons "\\.ltx$"      'swiftex-mode)
-             (cons "\\.aux$"      'swiftex-mode)
-             (cons "\\.ins$"      'swiftex-mode)
-             (cons "\\.cls$"      'doctex-mode)
-             (cons "\\.dtx$"      'doctex-mode)
-             (cons "\\.sto$"      'doctex-mode)
-             (cons "\\.clo$"      'doctex-mode)
-             (cons "\\.sty$"      'doctex-mode)
-             (cons "\\.fdd$"      'doctex-mode)
-             (cons "sources$"     'makefile-mode) 
-             (cons "Makefile$"    'makefile-mode) 
-             (cons "\\.mk$"       'makefile-mode) 
-             (cons "\\.if$"       'middl-mode)
-             (cons "\\.[im][g3]$" 'modula-3-mode)
-             (cons "\\.ps$"       'postscript-mode)
-             (cons "\\.py$"       'python-mode)
+    (append
+    (list (cons "\\.asm$"      'asm-mode)
+            (cons "\\.awk$"	  'perl-mode)
+            (cons "\\.gawk$"	  'perl-mode)
+            (cons "\\.css$"	  'css-mode)
+            (cons "\\.s$"        'asm-mode) 
+            (cons "\\.S$"        'asm-mode) 
+            (cons "\\.bib$"      'bibtex-mode)
+            (cons "\\.java$"     'java-mode)
+            (cons "\\.class$"    'java-mode)
+            (cons "\\.cls$"      'doctex-mode)
+            (cons "\\.dtx$"      'doctex-mode)
+            (cons "\\.sto$"      'doctex-mode)
+            (cons "\\.clo$"      'doctex-mode)
+            (cons "\\.sty$"      'doctex-mode)
+            (cons "\\.fdd$"      'doctex-mode)
+            (cons "sources$"     'makefile-mode) 
+            (cons "Makefile$"    'makefile-mode) 
+            (cons "\\.mk$"       'makefile-mode) 
+            (cons "\\.if$"       'middl-mode)
+            (cons "\\.[im][g3]$" 'modula-3-mode)
+            (cons "\\.ps$"       'postscript-mode)
+            (cons "\\.py$"       'python-mode)
 ;;             (cons "\\.ml$"       'sml-mode)
-             (cons "\\.sh$"       'sh-mode)
-             (cons "\\.ns$"       'tcl-mode)
-             (cons "\\.cc$"       'c++-mode)
-             (cons "\\.hh$"       'c++-mode)
-             (cons "\\.tc$"       'c++-mode)
-             (cons "\\.th$"       'c++-mode)
-             (cons "\\.idl$"      'c++-mode)
-             (cons "\\.l$"        'c-mode)
-             (cons "\\.ih$"       'c-mode)
-             (cons "\\.y$"        'yacc-mode)
-             (cons "\\.cs$"       'csharp-mode)
-             (cons "\\.js$"       'js2-mode)
-             (cons "\\.xml$"      'js2-mode)
-             )
-       auto-mode-alist))
+            (cons "\\.sh$"       'sh-mode)
+            (cons "\\.ns$"       'tcl-mode)
+            (cons "\\.cc$"       'c++-mode)
+            (cons "\\.hh$"       'c++-mode)
+            (cons "\\.tc$"       'c++-mode)
+            (cons "\\.th$"       'c++-mode)
+            (cons "\\.idl$"      'c++-mode)
+            (cons "\\.l$"        'c-mode)
+            (cons "\\.ih$"       'c-mode)
+            (cons "\\.y$"        'yacc-mode)
+            (cons "\\.cs$"       'csharp-mode)
+            (cons "\\.js$"       'js2-mode)
+            (cons "\\.xml$"      'js2-mode)
+            )
+    auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; ECMAScript support
 
 (add-hook 
- 'ecmascript-mode-hook 
- '(lambda ()
-    (fci-mode 1)
-    (setq c-basic-offset 4)
-    (c-set-style "java")
-    )
- )
+'ecmascript-mode-hook 
+'(lambda ()
+(fci-mode 1)
+(setq c-basic-offset 4)
+(c-set-style "java")
+)
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; XML support
 
-(load "nxml-mode/rng-auto.el")
+;(load "nxml-mode/rng-auto.el")
 (push '("\\`<\\?xml" . nxml-mode) magic-mode-alist)
 (add-hook 
  'nxml-mode-hook 
@@ -496,12 +502,13 @@
 (add-hook 'typerex-mode-hook
           (lambda ()
             (fci-mode 1)
+            (auto-fill-mode 1)
             ))
 
 ;; Loading TypeRex mode for OCaml files
 ;; (add-to-list 'load-path "/Users/mort/.emacs.d")
 (add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . typerex-mode))
-(setq auto-mode-alist (cons '("\\.fs[ix]?" . tuareg-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.fs[ix]?" . typerex-mode))
 (autoload 'typerex-mode "typerex" "Major mode for editing Caml code" t)
 
 ;; TypeRex mode configuration
@@ -519,8 +526,8 @@
 
 ;;;; Auto completion (experimental)
 ;;;; Don't use M-x invert-face default with auto-complete! (emacs -r is OK)
-(add-to-list 'load-path "/Users/mort/.emacs.d/auto-complete-mode")
-(setq ocp-auto-complete t)
+;;(add-to-list 'load-path "/Users/mort/.emacs.d/auto-complete-mode")
+;;(setq ocp-auto-complete t)
 
 ;;;; Using <`> to complete whatever the context, and <C-`> for `
 ;;(setq auto-complete-keys 'ac-keys-backquote-backslash)
@@ -528,7 +535,7 @@
 ;;;; Note: this overrides individual auto-complete key settings
 
 ;;;; I want immediate menu pop-up
-(setq ac-auto-show-menu 0.1)
+;;(setq ac-auto-show-menu 0.1)
 ;;;; Short delay before showing help
 ;;(setq ac-quick-help-delay 0.3)
 ;;;; Number of characters required to start (nil to disable)
@@ -538,8 +545,7 @@
 ;;(require 'auto-complete-config)
 ;;(add-to-list 'ac-dictionary-directories "/Users/mort/.emacs.d/auto-complete-mode/ac-dict")
 ;;(ac-config-default)
-
-(global-set-key (kbd "C-<tab>") 'auto-complete)
+;;(global-set-key (kbd "C-<tab>") 'auto-complete)
 
 ;; For debugging only
 ;;;;(setq ocp-debug t)
@@ -570,14 +576,25 @@
 ;;;
 ;;; Swiftex TeX support
 
+(autoload 'swiftex-mode "swiftex" "Major mode for LaTeX documents.")
+(setq auto-mode-alist
+      (append (list (cons "\\.bbl$" 'swiftex-mode)
+                    (cons "\\.tex$" 'swiftex-mode)
+                    (cons "\\.ltx$" 'swiftex-mode)
+                    (cons "\\.aux$" 'swiftex-mode)
+                    (cons "\\.ins$" 'swiftex-mode)
+                    )
+              auto-mode-alist))
+
 (add-hook 
  'swiftex-mode-hook 
  '(lambda ()
     (fci-mode 1)
+    (ispell-minor-mode)
     (define-key swiftex-mode-map "\M-q"     'fill-and-check)
     (define-key swiftex-mode-map "\C-c\C-c" 'comment-region)
     (define-key swiftex-mode-map "\C-cm"    'stx-emphasize)
-    (define-key swiftex-mode-map "\C-ce"    'stx-close-block-from-inside)
+;    (define-key swiftex-mode-map "\C-ce"    'stx-close-block-from-inside)
     (define-key swiftex-mode-map "\C-cB"    'stx-insert-block)
     (define-key swiftex-mode-map "\C-cb"    'stx-begin-block)
     (define-key swiftex-mode-map "\M-["     '(lambda () (interactive) (insert "{")))
@@ -1213,18 +1230,18 @@
 (put 'eval-expression 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(font-lock-comment-face ((t (:foreground "goldenrod")))))
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(c-basic-offset (quote set-from-style))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(c-basic-offset 4)
  '(c-default-style (quote ((java-mode . "java") (awk-mode . "awk") (other . "bsd"))))
  '(c-set-style "bsd" t)
  '(c-syntactic-indentation t)
