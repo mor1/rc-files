@@ -36,7 +36,7 @@ set -o noclobber # require explicit overwrite when redirecting
 #
 
 shopt -s histappend # continue appending, don't delete periodically
-export PROMPT_COMMAND="history -n; history -a" # add to history every command
+export PROMPT_COMMAND="history -a" # add every command to history
 export HISTIGNORE="&:l[sl][a]:[bf]g:exit:[ \t]"
 export HISTCONTROL=ignoreboth:erasedups
 export HISTSIZE=10000
@@ -103,14 +103,52 @@ export EC2_CERT="$(/bin/ls $HOME/.ec2/cert-*.pem)"
 export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.3-62308/jars"
 
 # mirage tools
-aenv PATH ~/research/mirage/install/bin
-aenv MIRAGELIB ~/research/mirage/install
+#aenv PATH ~/research/mirage/install/bin
+# no aenv - it adds a trailing :
+#export MIRAGELIB=~/research/mirage/install
 
-# ruby/rvm support
-aenv PATH ~/.rvm/bin
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
-
-# ocaml/odb
-aenv OCAMLPATH ~/.odb/lib
-aenv PATH ~/.odb/bin
+# ocaml
 export OCAMLRUNPARAM=b
+
+###-begin-npm-completion-###
+#
+# npm command completion script
+#
+# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
+# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
+#
+
+COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
+COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
+export COMP_WORDBREAKS
+
+if complete &>/dev/null; then
+  _npm_completion () {
+    local si="$IFS"
+    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
+                           COMP_LINE="$COMP_LINE" \
+                           COMP_POINT="$COMP_POINT" \
+                           npm completion -- "${COMP_WORDS[@]}" \
+                           2>/dev/null)) || return $?
+    IFS="$si"
+  }
+  complete -F _npm_completion npm
+elif compctl &>/dev/null; then
+  _npm_completion () {
+    local cword line point words si
+    read -Ac words
+    read -cn cword
+    let cword-=1
+    read -l line
+    read -ln point
+    si="$IFS"
+    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
+                       COMP_LINE="$line" \
+                       COMP_POINT="$point" \
+                       npm completion -- "${words[@]}" \
+                       2>/dev/null)) || return $?
+    IFS="$si"
+  }
+  compctl -K _npm_completion npm
+fi
+###-end-npm-completion-###

@@ -29,3 +29,5 @@ alias update-gits='for n in *.git ; do cd $n ; git pull ; cd .. ; done'
 
 alias odb="ocaml ~/research/mirage/src/odb/odb.ml"
 alias ocaml="rlwrap ocaml"
+alias use-rvm='aenv PATH ~/.rvm/bin && aenv PATH ~/.rvm/gems/ruby-1.9.3-p125/bin && [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"'
+

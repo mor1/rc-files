@@ -34,7 +34,7 @@ Host irc-tunnel
         LocalForward 7000 chat.freenode.net:7000
 
 # very handy for firewalls! :)
-Host github.com
-     User git
-     HostName ssh.github.com
-     Port 443
+#Host github.com
+#    User git
+#    HostName ssh.github.com
+#    Port 443

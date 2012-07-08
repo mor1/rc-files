@@ -25,5 +25,10 @@
 [color]
     ui = auto
 [core]
-	pager = less -r
-	autocrlf = input
+    pager = less -Ri
+    autocrlf = input
+[rerere]
+    enabled = true
+    autoupdate = true
+[push]
+    default = tracking
