@@ -1,7 +1,5 @@
 ;; -*- mode: Emacs-Lisp; fill-column: 78; -*-
 
-;; TODO: latex; org-mode
-
 ;; package management
 (add-to-list 'load-path "/Users/mort/.emacs.d")
 (require 'package)
@@ -11,7 +9,7 @@
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
-;; libraries
+;; non-package-managed libraries
 (require 'fill-column-indicator)
 
 ;; colours
@@ -161,6 +159,33 @@
   (ispell-check-paragraph)
   )
 
+;; modified from swiftex.el
+(defun tex-enclose-word (before after)
+  (interactive "*Mbefore: \nMafter: ")
+  (let* ((oldpoint (point))
+         (start oldpoint)
+         (end oldpoint))
+
+    ;; get the start and end of the current word
+    (skip-syntax-backward "w")
+    (setq start (point))
+    (goto-char oldpoint)
+    (skip-syntax-forward "w")
+    (setq end (point))
+    (if (and (eq start oldpoint) 
+             (eq end oldpoint))
+        ;; insert the command as nothing to enclose
+        (progn (insert before) (insert after) (backward-char))
+      
+      ;; enclose the word with the command
+      (progn 
+        (insert after)
+        (goto-char start)
+        (insert before)
+        (goto-char (+ oldpoint (length before)))
+        )
+      )))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; mode hooks
@@ -178,6 +203,26 @@
              (flyspell-mode 1)
 ;             (turn-on-filladapt-mode)
              (local-set-key [M-q] 'fill-and-check)
+             ))
+
+(add-hook 'latex-mode-hook
+          '(lambda () 
+             (local-set-key (kbd "M-q") 'fill-and-check)
+;             (local-set-key (kbd "C-c C-b") 'latex-insert-block)
+             (local-set-key (kbd "{") 'tex-insert-braces)
+             (local-set-key (kbd "M-[") 
+                            '(lambda () (interactive) (insert "{")))
+             (local-set-key (kbd "M-]") 
+                            '(lambda () (interactive) (insert "}")))
+             (local-set-key (kbd "C-c m") 
+                            '(lambda () (interactive "*") 
+                               (tex-enclose-word "\\emph{" "}")))
+             (local-set-key (kbd "C-c C-m") 
+                            '(lambda () (interactive "*") 
+                               (tex-enclose-word "\\emph{" "}")))
+             (local-set-key (kbd "C-c b") 
+                            '(lambda () (interactive "*") 
+                               (tex-enclose-word "{\\bf " "}")))
              ))
 
 (add-hook 'java-mode-hook
