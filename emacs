@@ -228,6 +228,11 @@
                                (tex-enclose-word "{\\bf " "}")))
              ))
 
+(add-hook 'prog-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "%") 'match-paren)
+             ))
+
 (add-hook 'java-mode-hook
           '(lambda ()
              (setq c-basic-offset 4)
@@ -365,7 +370,6 @@
 (define-key my-keys-minor-mode-map (kbd "C-c C-g") 'goto-line)
 (define-key my-keys-minor-mode-map (kbd "C-c C-c") 'comment-region)
 (define-key my-keys-minor-mode-map (kbd "C-c C-q") 'indent-region)
-(define-key my-keys-minor-mode-map (kbd "%") 'match-paren)
 (define-key my-keys-minor-mode-map (kbd "M-C-q") 'unfill-paragraph)
 (define-key my-keys-minor-mode-map (kbd "M-%") 'replace-regexp)
 (define-key my-keys-minor-mode-map (kbd "C-z") 'nil)
