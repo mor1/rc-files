@@ -189,14 +189,18 @@
         )
       )))
 
+(defun todo ()
+  (interactive)
+  (find-file "~/.todo/todo.org")
+  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; mode hooks
 
 (add-hook 'org-mode-hook 
           '(lambda () 
-;             (imenu-add-to-menubar "Imenu")
-;             (local-set-key [left] 'org-agenda-later)
+             (local-set-key (kbd "C-c a") 'org-agenda)
              ))
 
 (add-hook 'text-mode-hook
@@ -432,13 +436,6 @@
         (assq-delete-all 'my-keys-minor-mode minor-mode-map-alist)
         (add-to-list 'minor-mode-map-alist mykeys))))
 (ad-activate 'load)
-
-;; org-mode
-(define-key mode-specific-map [?a] 'org-agenda)
-(defun todo ()
-  (interactive)
-  (find-file "~/.todo/todo.org")
-  )
 
 ;; default font
 
