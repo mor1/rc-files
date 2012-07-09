@@ -1,7 +1,8 @@
 ;; -*- mode: Emacs-Lisp; fill-column: 78; -*-
 
-;; package management
 (add-to-list 'load-path "/Users/mort/.emacs.d")
+
+;; package management
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -11,6 +12,7 @@
 
 ;; evaluate locally if behind nottingham proxy
 ;(setq url-proxy-services '(("http" . "proxy.nottingham.ac.uk:8080")))
+;(setq url-proxy-services '(("http" . "wwwcache.cs.nott.ac.uk:3128")))
 
 ;; non-package-managed libraries
 (require 'fill-column-indicator)
@@ -98,11 +100,6 @@
   (if (y-or-n-p "Really kill emacs? ")
       (save-buffers-kill-emacs)
     (message "Aborted"))
-  )
-
-(defun wc () "Counts the number of words in the region"
-  (interactive)
-  (shell-command-on-region (point) (mark) "wc")
   )
 
 ;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph
@@ -198,18 +195,20 @@
 
 ;; mode hooks
 
-(add-hook 'org-mode-hook 
-          '(lambda () 
-             (local-set-key (kbd "C-c a") 'org-agenda)
-             ))
-
 (add-hook 'text-mode-hook
           '(lambda ()
              (fci-mode t)
              (auto-fill-mode 1)
              (flyspell-mode 1)
 ;             (turn-on-filladapt-mode)
-             (local-set-key [M-q] 'fill-and-check)
+             (local-set-key (kbd "M-q") 'fill-and-check)
+             ))
+
+(add-hook 'org-mode-hook 
+          '(lambda () 
+             (local-set-key (kbd "C-c a") 'org-agenda)
+             (local-set-key (kbd "S-<up>") 'org-move-line-up)
+             (local-set-key (kbd "S-<down>") 'org-move-line-down)
              ))
 
 (add-hook 'latex-mode-hook
@@ -439,12 +438,6 @@
 
 ;; default font
 
-;(set-default-font "-*-Lucida Console-normal-r-*-*-13-97-96-96-c-*-iso8859-1")
-;(set-default-font "-*-Lucida Console-bold-r-*-*-11-90-96-96-c-*-iso8859-1")
-;(set-default-font "-*-Lucida Console-normal-r-*-*-11-90-96-96-c-*-iso8859-1")
-;(set-default-font "-*-Lucida Console-normal-r-*-*-14-90-96-96-c-*-iso8859-1")
-;(set-default-font "-outline-Consolas-bold-r-*-*-11-*-*-*-c-*-iso8859-1")
-;(set-default-font "-apple-consolas-bold-r-normal--0-0-0-0-m-0-iso10646-1")
 (set-default-font "-apple-Consolas-medium-normal-normal-*-11-*-*-*-m-0-fontset-auto3")
 
 (put 'eval-expression 'disabled nil)
@@ -454,11 +447,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-hscroll-mode nil)
  '(column-number-mode t)
  '(default-major-mode (quote text-mode) t)
  '(fill-column 78)
  '(frame-title-format "%b  %f" t)
- '(global-visual-line-mode nil)
+ '(global-visual-line-mode t)
  '(indent-tabs-mode nil)
  '(interprogram-paste-function (quote x-selection-value) t)
  '(make-backup-files nil)
@@ -469,19 +463,7 @@
  '(nobreak-char-display t t)
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
- '(ocp-theme "tuareg_like")
- '(scroll-conservatively 100)
- '(sentence-end-double-space nil)
- '(show-paren-mode t)
- '(show-paren-style (quote expression))
- '(tab-width 4)
- '(tool-bar-mode nil)
- '(typerex-font-lock-symbols t)
- '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
- '(vc-follow-symlinks t)
- '(visible-bell t)
- '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
- '(x-select-enable-clipboard t)
+ '(ocp-theme "tuareg_like" t)
  '(org-agenda-custom-commands (quote (("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil) ("w" todo #("WAITING" 0 7 (face org-warning)) nil) ("W" agenda "" ((org-agenda-ndays 21))) ("A" agenda "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) (org-agenda-ndays 1) (org-agenda-overriding-header "Today's Priority #A tasks: "))) ("u" alltodo "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline) (quote regexp) "<[^>
 ]+>"))) (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
  '(org-agenda-files (quote ("~/.todo/todo.org")))
@@ -502,7 +484,18 @@
  '(org-tags-match-list-sublevels t)
  '(remember-annotation-functions (quote (org-remember-annotation)))
  '(remember-handler-functions (quote (org-remember-handler)))
-)
+ '(scroll-conservatively 100)
+ '(sentence-end-double-space nil)
+ '(show-paren-mode t)
+ '(show-paren-style (quote expression))
+ '(tab-width 4)
+ '(tool-bar-mode nil)
+ '(typerex-font-lock-symbols t)
+ '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
+ '(vc-follow-symlinks t)
+ '(visible-bell t)
+ '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
+ '(x-select-enable-clipboard t))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -510,7 +503,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(caml-types-expr-face ((t (:foreground "slategray"))))
-
  '(font-lock-TRC-face ((t (:foreground "seagreen3"))))
  '(font-lock-alarm-face ((t (:foreground "red"))))
  '(font-lock-comment-face ((t (:foreground "goldenrod"))))
