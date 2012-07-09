@@ -9,6 +9,9 @@
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
+;; evaluate locally if behind nottingham proxy
+;(setq url-proxy-services '(("http" . "proxy.nottingham.ac.uk:8080")))
+
 ;; non-package-managed libraries
 (require 'fill-column-indicator)
 
