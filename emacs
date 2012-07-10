@@ -1,6 +1,8 @@
 ;; -*- mode: Emacs-Lisp; fill-column: 78; -*-
 
 (add-to-list 'load-path "/Users/mort/.emacs.d")
+(setq-default word-wrap t)
+(global-visual-line-mode t)
 
 ;; package management
 (require 'package)
@@ -200,8 +202,15 @@
              (fci-mode t)
              (auto-fill-mode 1)
              (flyspell-mode 1)
+             (longlines-mode 1)
+;             (setq word-wrap t)
 ;             (turn-on-filladapt-mode)
              (local-set-key (kbd "M-q") 'fill-and-check)
+             ))
+
+(add-hook 'prog-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "%") 'match-paren)
              ))
 
 (add-hook 'org-mode-hook 
@@ -229,11 +238,6 @@
              (local-set-key (kbd "C-c b") 
                             '(lambda () (interactive "*") 
                                (tex-enclose-word "{\\bf " "}")))
-             ))
-
-(add-hook 'prog-mode-hook
-          '(lambda ()
-             (local-set-key (kbd "%") 'match-paren)
              ))
 
 (add-hook 'java-mode-hook
@@ -288,6 +292,7 @@
           '(lambda ()
              (fci-mode t)
              ))
+(push '("bash_" . sh-mode) auto-mode-alist)
 
 ;; python-mode
 (add-hook 'python-mode-hook
@@ -378,6 +383,8 @@
 (define-key my-keys-minor-mode-map (kbd "C-z") 'nil)
 (define-key my-keys-minor-mode-map (kbd "C-<tab>") 'dabbrev-expand)
 (define-key my-keys-minor-mode-map (kbd "C-<return>") 'split-line)
+(define-key my-keys-minor-mode-map (kbd "M-n") 'next-buffer)
+(define-key my-keys-minor-mode-map (kbd "M-p") 'previous-buffer)
 
 ;| point-to  | previous   | next        |
 ;|-----------+------------+-------------|
@@ -455,6 +462,7 @@
  '(global-visual-line-mode t)
  '(indent-tabs-mode nil)
  '(interprogram-paste-function (quote x-selection-value) t)
+ '(longlines-show-hard-newlines t)
  '(make-backup-files nil)
  '(mouse-buffer-menu-mode-mult 1)
  '(msb-max-file-menu-items 1)
@@ -495,7 +503,8 @@
  '(vc-follow-symlinks t)
  '(visible-bell t)
  '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
- '(x-select-enable-clipboard t))
+ '(x-select-enable-clipboard t)
+ '(x-stretch-cursor t))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
