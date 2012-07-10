@@ -1,7 +1,8 @@
+#*#
+*~
 emacs.d/auto-save-list/
-*-key
-*.pem
 software
 isos
 emacs.d/scrap.*
-ssh/known_hosts
+ssh/
+!ssh/config
