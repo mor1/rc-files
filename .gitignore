@@ -6,3 +6,4 @@ isos
 emacs.d/scrap.*
 ssh/
 !ssh/config
+!ssh/sssha
