@@ -209,10 +209,12 @@
 ;             (setq word-wrap t)
 ;             (turn-on-filladapt-mode)
              (local-set-key (kbd "M-q") 'fill-and-check)
+             (local-set-key (kbd "S-<tab>") 'flyspell-auto-correct-word)
              ))
 
 (add-hook 'prog-mode-hook
           '(lambda ()
+             (flyspell-prog-mode)
              (local-set-key (kbd "%") 'match-paren)
              ))
 
@@ -379,7 +381,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-x p") 
   '(lambda () (interactive) (other-window -1)))
 (define-key my-keys-minor-mode-map (kbd "C-c C-g") 'goto-line)
-(define-key my-keys-minor-mode-map (kbd "C-c C-c") 'comment-region)
+(define-key my-keys-minor-mode-map (kbd "C-c ;") 'comment-region)
 (define-key my-keys-minor-mode-map (kbd "C-c C-q") 'indent-region)
 (define-key my-keys-minor-mode-map (kbd "M-C-q") 'unfill-paragraph)
 (define-key my-keys-minor-mode-map (kbd "M-%") 'replace-regexp)
