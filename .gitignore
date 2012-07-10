@@ -1,6 +1,7 @@
 emacs.d/auto-save-list/
 *-key
+*.pem
 software
 isos
-emacs.d/org-clock-save.el
+emacs.d/scrap.*
 ssh/known_hosts
