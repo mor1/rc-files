@@ -1,9 +1,13 @@
 #*#
 *~
+software/
+isos/
+
 emacs.d/auto-save-list/
-software
-isos
 emacs.d/scrap.*
+emacs.d/elpa
+!emacs.d/elpa/archives
+
 ssh/
 !ssh/config
 !ssh/sssha
