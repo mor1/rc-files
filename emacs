@@ -1,8 +1,8 @@
 ;; -*- mode: Emacs-Lisp; fill-column: 78; -*-
 
 (add-to-list 'load-path "/Users/mort/.emacs.d")
-(setq-default word-wrap t)
-(global-visual-line-mode t)
+;(setq-default word-wrap t)
+;(global-visual-line-mode t)
 
 ;; package management
 (require 'package)
@@ -18,6 +18,8 @@
 
 ;; non-package-managed libraries
 (require 'fill-column-indicator)
+(require 'filladapt)
+(require 'scroll-in-place)
 
 ;; colours
 (set-background-color "black")
@@ -202,7 +204,8 @@
              (fci-mode t)
              (auto-fill-mode 1)
              (flyspell-mode 1)
-             (longlines-mode 1)
+;             (longlines-mode 1)
+             (turn-on-filladapt-mode)
 ;             (setq word-wrap t)
 ;             (turn-on-filladapt-mode)
              (local-set-key (kbd "M-q") 'fill-and-check)
@@ -459,10 +462,10 @@
  '(default-major-mode (quote text-mode) t)
  '(fill-column 78)
  '(frame-title-format "%b  %f" t)
- '(global-visual-line-mode t)
+; '(global-visual-line-mode t)
  '(indent-tabs-mode nil)
  '(interprogram-paste-function (quote x-selection-value) t)
- '(longlines-show-hard-newlines t)
+; '(longlines-show-hard-newlines t)
  '(make-backup-files nil)
  '(mouse-buffer-menu-mode-mult 1)
  '(msb-max-file-menu-items 1)
@@ -502,7 +505,7 @@
  '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
  '(vc-follow-symlinks t)
  '(visible-bell t)
- '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
+; '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
  '(x-select-enable-clipboard t)
  '(x-stretch-cursor t))
 
