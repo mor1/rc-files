@@ -1,4 +1,5 @@
 shopt -s checkwinsize
+shopt -s extglob
 
 PATH=/bin:/sbin/:/usr/bin:/usr/sbin
 
