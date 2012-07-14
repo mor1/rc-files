@@ -209,7 +209,7 @@
 ;             (setq word-wrap t)
 ;             (turn-on-filladapt-mode)
              (local-set-key (kbd "M-q") 'fill-and-check)
-             (local-set-key (kbd "S-<tab>") 'flyspell-auto-correct-word)
+             (local-set-key (kbd "S-<tab>") 'flyspell-auto-correct-previous-word)
              ))
 
 (add-hook 'prog-mode-hook
@@ -244,6 +244,7 @@
                             '(lambda () (interactive "*") 
                                (tex-enclose-word "{\\bf " "}")))
              ))
+(push '("\\.tex$" . latex-mode) auto-mode-alist)
 
 (add-hook 'java-mode-hook
           '(lambda ()
