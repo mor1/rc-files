@@ -122,25 +122,27 @@
 (defun buffer-untabify ()
   "Untabify an entire buffer"
   (interactive)
-  (untabify (point-min) (point-max)))
+  (untabify (point-min) (point-max))
+  )
 
 ;; re-indent buffer
-(defun buffer-indent()
+(defun buffer-indent ()
   "Reindent an entire buffer"
   (interactive)
-  (indent-region (point-min) (point-max) nil))
+  (indent-region (point-min) (point-max) nil)
+  )
 
 ;; Untabify, re-indent, make EOL be '\n' not '\r\n' and delete trailing
 ;; whitespace
-(defun buffer-cleanup()
+(defun buffer-cleanup ()
   "Untabify and re-indent an entire buffer"
   (interactive)
-  (if (equal buffer-file-coding-system 'undecided-unix )
-      nil
-    (set-buffer-file-coding-system 'undecided-unix))
-  (setq c-basic-offset 4
-        tab-width 4
-        indent-tabs-mode nil)
+  ;; (if (equal buffer-file-coding-system 'undecided-unix)
+  ;;     nil
+  ;;   (set-buffer-file-coding-system 'undecided-unix))
+  ;; (setq c-basic-offset 4
+  ;;       tab-width 4
+  ;;       indent-tabs-mode nil)
   (buffer-untabify)
   (buffer-indent)
   (delete-trailing-whitespace)
@@ -206,8 +208,8 @@
   With a prefix argument, the date is inserted without the day of
   the week."
   (interactive "P*")
-  (insert (calendar-date-string (calendar-current-date) nil
-                                omit-day-of-week-p))
+  (insert (calendar-date-string 
+           (calendar-current-date) nil omit-day-of-week-p))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -501,7 +503,8 @@
                            "Christmas Day Bank Holiday")))
               ((= d 0)
                (list (list (list 12 27 y)
-                           "Christmas Day Bank Holiday"))))))))
+                           "Christmas Day Bank Holiday")))
+              )))))
 
 ;;Comment out the Christian holidays that also have secular
 ;;significance in the UK (Shrove Tuesday, Good Friday, Easter Sunday,
@@ -655,7 +658,17 @@
  '(holiday-hebrew-holidays nil)
  '(holiday-islamic-holidays nil)
  '(holiday-oriental-holidays nil)
- '(holiday-other-holidays (quote ((holiday-float 1 1 3 "Martin Luther King Day") (holiday-float 2 1 3 "President's Day") (holiday-float 5 1 -1 "Memorial Day") (holiday-fixed 7 4 "Independence Day") (holiday-float 9 1 1 "Labor Day") (holiday-float 10 1 2 "Columbus Day") (holiday-fixed 11 11 "Veteran's Day") (holiday-float 11 4 4 "Thanksgiving"))))
+ '(holiday-other-holidays 
+   (quote 
+    ((holiday-float 1 1 3 "Martin Luther King Day")
+     (holiday-float 2 1 3 "President's Day")
+     (holiday-float 5 1 -1 "Memorial Day")
+     (holiday-fixed 7 4 "Independence Day") 
+     (holiday-float 9 1 1 "Labor Day") 
+     (holiday-float 10 1 2 "Columbus Day")
+     (holiday-fixed 11 11 "Veteran's Day")
+     (holiday-float 11 4 4 "Thanksgiving")
+     )))
  '(indent-tabs-mode nil)
  '(interprogram-paste-function (quote x-selection-value) t)
  '(make-backup-files nil)
@@ -667,8 +680,25 @@
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
  '(ocp-theme "tuareg_like" t)
- '(org-agenda-custom-commands (quote (("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil) ("w" todo #("WAITING" 0 7 (face org-warning)) nil) ("W" agenda "" ((org-agenda-ndays 21))) ("A" agenda "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) (org-agenda-ndays 1) (org-agenda-overriding-header "Today's Priority #A tasks: "))) ("u" alltodo "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline) (quote regexp) "<[^>
-]+>"))) (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
+ '(org-agenda-custom-commands 
+   (quote (("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil)
+           ("w" todo #("WAITING" 0 7 (face org-warning)) nil) 
+           ("W" agenda "" ((org-agenda-ndays 21))) 
+           ("A" agenda "" 
+            ((org-agenda-skip-function 
+              (lambda nil 
+                (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) 
+             (org-agenda-ndays 1)
+             (org-agenda-overriding-header "Today's Priority #A tasks: "))
+            ) 
+           ("u" alltodo "" 
+            ((org-agenda-skip-function
+              (lambda nil
+                (org-agenda-skip-entry-if
+                 (quote scheduled) (quote deadline) (quote regexp) "<[^>]+>"))
+              ) 
+             (org-agenda-overriding-header "Unscheduled TODO entries: "))
+            ))))
  '(org-agenda-files (quote ("~/.todo/todo.org")))
  '(org-agenda-include-diary t)
  '(org-agenda-ndays 7)
@@ -683,8 +713,8 @@
  '(org-remember-store-without-prompt t)
  '(org-remember-templates 
    (quote ((116 "* %? %u" "~/.todo/todo.org" "Tasks") 
-           (110 "* %u %?" "~/.todo/notes.org" "Notes")))
-   )
+           (110 "* %u %?" "~/.todo/notes.org" "Notes")
+           )))
  '(org-reverse-note-order t)
  '(org-tags-match-list-sublevels t)
  '(remember-annotation-functions (quote (org-remember-annotation)))
