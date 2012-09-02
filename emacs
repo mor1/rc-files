@@ -1,8 +1,6 @@
 ;; -*- mode: Emacs-Lisp; fill-column: 78; -*-
 
 (add-to-list 'load-path "/Users/mort/.emacs.d")
-;(setq-default word-wrap t)
-;(global-visual-line-mode t)
 
 ;; package management
 (require 'package)
@@ -18,7 +16,6 @@
 
 ;; non-package-managed libraries
 (require 'fill-column-indicator)
-(require 'filladapt)
 (require 'scroll-in-place)
 
 ;; colours
@@ -160,12 +157,6 @@
       (ispell-region start end))    
     ))
 
-(defun fill-and-check () "Fill a paragraph and spell check"
-  (interactive)
-  (fill-paragraph nil)
-  (ispell-check-paragraph)
-  )
-
 ;; modified from swiftex.el
 (defun tex-enclose-word (before after)
   (interactive "*Mbefore: \nMafter: ")
@@ -219,18 +210,17 @@
 (add-hook 'text-mode-hook
           '(lambda ()
              (fci-mode t)
-             (auto-fill-mode 1)
              (flyspell-mode 1)
-;             (longlines-mode 1)
-             (turn-on-filladapt-mode)
-;             (setq word-wrap t)
-;             (turn-on-filladapt-mode)
-             (local-set-key (kbd "M-q") 'fill-and-check)
+             (turn-on-visual-line-mode)
+             (local-set-key (kbd "M-q") 'ispell-check-paragraph) ;fill-and-check)
              (local-set-key (kbd "S-<tab>") 'flyspell-auto-correct-previous-word)
              ))
 
 (add-hook 'prog-mode-hook
           '(lambda ()
+             (fci-mode t)
+             (auto-fill-mode 1)
+             (turn-on-visual-line-mode)
              (flyspell-prog-mode)
              (local-set-key (kbd "%") 'match-paren)
              ))
@@ -247,7 +237,7 @@
 
 (add-hook 'latex-mode-hook
           '(lambda () 
-             (local-set-key (kbd "M-q") 'fill-and-check)
+             (local-set-key (kbd "M-q") 'ispell-check-paragraph) ;fill-and-check)
 ;             (local-set-key (kbd "C-c C-b") 'latex-insert-block)
              (local-set-key (kbd "{") 'tex-insert-braces)
              (local-set-key (kbd "M-[") 
@@ -270,13 +260,11 @@
           '(lambda ()
              (setq c-basic-offset 4)
              (setq c-set-style "java")
-             (fci-mode 1)
              ))
 
 (add-hook 'emacs-lisp-mode-hook
           '(lambda ()
              (turn-on-eldoc-mode)
-             (fci-mode t)
              ))
 
 (add-hook 'lisp-interaction-mode-hook
@@ -286,45 +274,39 @@
 
 (add-hook 'ecmascript-mode-hook
           '(lambda ()
-             (fci-mode t)
 ;             (setq c-basic-offset 4)
 ;             (c-set-style "java")
              ))
 
 ;; xml-mode
-(add-hook 'nxml-mode-hook
-          '(lambda ()
-             (fci-mode t)
-             ))
+;; (add-hook 'nxml-mode-hook
+;;           '(lambda ()
+;;              ))
 (push '("\\`<\\?xml" . nxml-mode) magic-mode-alist)
 
 ;; markdown-mode
-(add-hook 'markdown-mode-hook
-          '(lambda ()
-             (fci-mode t)
-             ))
+;; (add-hook 'markdown-mode-hook
+;;           '(lambda ()
+;;              ))
 (push '("\\.md$" . markdown-mode) auto-mode-alist)
 (push '("\\.markdown$" . markdown-mode) auto-mode-alist)
 
 ;; makefile-mode
-(add-hook 'makefile-mode-hook
-          '(lambda ()
-             (fci-mode t)
-             ))
+;; (add-hook 'makefile-mode-hook
+;;           '(lambda ()
+;;              ))
 (push '("sources$" . makefile-mode) auto-mode-alist)
 
 ;; sh-mode
-(add-hook 'sh-mode-hook
-          '(lambda ()
-             (fci-mode t)
-             ))
+;; (add-hook 'sh-mode-hook
+;;           '(lambda ()
+;;              ))
 (push '("bash_" . sh-mode) auto-mode-alist)
 
 ;; python-mode
-(add-hook 'python-mode-hook
-          '(lambda ()
-             (fci-mode t)
-             ))
+;; (add-hook 'python-mode-hook
+;;           '(lambda ()
+;;              ))
 
 ;; tuareg-mode
 ;; (add-hook 'tuareg-mode-hook
@@ -342,11 +324,9 @@
 ;;              ))
 
 ;; typerex-mode (ocaml)
-(add-hook 'typerex-mode-hook
-          (lambda ()
-            (fci-mode 1)
-            (auto-fill-mode 1)
-            ))
+;; (add-hook 'typerex-mode-hook
+;;           (lambda ()
+;;             ))
 (autoload 'typerex-mode "typerex.el" "Major mode for editing Caml code" t)
 (push'("\\.ml[iylp]?" . typerex-mode) auto-mode-alist)
 (push '("\\.fs[ix]?" . typerex-mode) auto-mode-alist)
@@ -652,23 +632,14 @@
  '(calendar-mark-holidays-flag t)
  '(column-number-mode t)
  '(default-major-mode (quote text-mode) t)
+ '(fci-rule-width 2)
  '(fill-column 78)
  '(frame-title-format "%b  %f" t)
  '(holiday-bahai-holidays nil)
  '(holiday-hebrew-holidays nil)
  '(holiday-islamic-holidays nil)
  '(holiday-oriental-holidays nil)
- '(holiday-other-holidays 
-   (quote 
-    ((holiday-float 1 1 3 "Martin Luther King Day")
-     (holiday-float 2 1 3 "President's Day")
-     (holiday-float 5 1 -1 "Memorial Day")
-     (holiday-fixed 7 4 "Independence Day") 
-     (holiday-float 9 1 1 "Labor Day") 
-     (holiday-float 10 1 2 "Columbus Day")
-     (holiday-fixed 11 11 "Veteran's Day")
-     (holiday-float 11 4 4 "Thanksgiving")
-     )))
+ '(holiday-other-holidays (quote ((holiday-float 1 1 3 "Martin Luther King Day") (holiday-float 2 1 3 "President's Day") (holiday-float 5 1 -1 "Memorial Day") (holiday-fixed 7 4 "Independence Day") (holiday-float 9 1 1 "Labor Day") (holiday-float 10 1 2 "Columbus Day") (holiday-fixed 11 11 "Veteran's Day") (holiday-float 11 4 4 "Thanksgiving"))))
  '(indent-tabs-mode nil)
  '(interprogram-paste-function (quote x-selection-value) t)
  '(make-backup-files nil)
@@ -680,25 +651,7 @@
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
  '(ocp-theme "tuareg_like" t)
- '(org-agenda-custom-commands 
-   (quote (("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil)
-           ("w" todo #("WAITING" 0 7 (face org-warning)) nil) 
-           ("W" agenda "" ((org-agenda-ndays 21))) 
-           ("A" agenda "" 
-            ((org-agenda-skip-function 
-              (lambda nil 
-                (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) 
-             (org-agenda-ndays 1)
-             (org-agenda-overriding-header "Today's Priority #A tasks: "))
-            ) 
-           ("u" alltodo "" 
-            ((org-agenda-skip-function
-              (lambda nil
-                (org-agenda-skip-entry-if
-                 (quote scheduled) (quote deadline) (quote regexp) "<[^>]+>"))
-              ) 
-             (org-agenda-overriding-header "Unscheduled TODO entries: "))
-            ))))
+ '(org-agenda-custom-commands (quote (("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil) ("w" todo #("WAITING" 0 7 (face org-warning)) nil) ("W" agenda "" ((org-agenda-ndays 21))) ("A" agenda "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) (org-agenda-ndays 1) (org-agenda-overriding-header "Today's Priority #A tasks: "))) ("u" alltodo "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline) (quote regexp) "<[^>]+>"))) (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
  '(org-agenda-files (quote ("~/.todo/todo.org")))
  '(org-agenda-include-diary t)
  '(org-agenda-ndays 7)
@@ -711,10 +664,7 @@
  '(org-default-notes-file "~/.todo/notes.org")
  '(org-fast-tag-selection-single-key (quote expert))
  '(org-remember-store-without-prompt t)
- '(org-remember-templates 
-   (quote ((116 "* %? %u" "~/.todo/todo.org" "Tasks") 
-           (110 "* %u %?" "~/.todo/notes.org" "Notes")
-           )))
+ '(org-remember-templates (quote ((116 "* %? %u" "~/.todo/todo.org" "Tasks") (110 "* %u %?" "~/.todo/notes.org" "Notes"))))
  '(org-reverse-note-order t)
  '(org-tags-match-list-sublevels t)
  '(remember-annotation-functions (quote (org-remember-annotation)))
@@ -728,7 +678,7 @@
  '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
  '(vc-follow-symlinks t)
  '(visible-bell t)
- '(x-select-enable-clipboard t)
+ '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow))) '(x-select-enable-clipboard t)
  '(x-stretch-cursor t))
 
 (custom-set-faces
