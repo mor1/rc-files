@@ -238,6 +238,9 @@
              (local-set-key (kbd "C-c a") 'org-agenda)
              (local-set-key (kbd "S-<up>") 'org-move-line-up)
              (local-set-key (kbd "S-<down>") 'org-move-line-down)
+             (local-unset-key (kbd "S-<tab>"))
+             (local-set-key (kbd "S-C-<tab>") 'flyspell-auto-correct-previous-word)
+             (local-set-key (kbd "C-x C-d") `insdate-insert-current-date)
              ))
 
 (add-hook 'latex-mode-hook
@@ -566,8 +569,10 @@
 (define-key my-keys-minor-mode-map (kbd "C-z") 'nil)
 (define-key my-keys-minor-mode-map (kbd "C-<tab>") 'dabbrev-expand)
 (define-key my-keys-minor-mode-map (kbd "C-<return>") 'split-line)
-(define-key my-keys-minor-mode-map (kbd "M-n") 'next-buffer)
-(define-key my-keys-minor-mode-map (kbd "M-p") 'previous-buffer)
+
+;; yes, the keybindings are counter intuitive. but hey, life is a stack.
+(define-key my-keys-minor-mode-map (kbd "M-p") 'next-buffer)
+(define-key my-keys-minor-mode-map (kbd "M-n") 'previous-buffer)
 
 ;| point-to  | previous   | next        |
 ;|-----------+------------+-------------|
