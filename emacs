@@ -552,10 +552,8 @@
 (define-key my-keys-minor-mode-map (kbd "C-z") 'nil)
 (define-key my-keys-minor-mode-map (kbd "C-<tab>") 'dabbrev-expand)
 (define-key my-keys-minor-mode-map (kbd "C-<return>") 'split-line)
-
-;; yes, the keybindings are counter intuitive. but hey, life is a stack.
-(define-key my-keys-minor-mode-map (kbd "M-p") 'next-buffer)
-(define-key my-keys-minor-mode-map (kbd "M-n") 'previous-buffer)
+(define-key my-keys-minor-mode-map (kbd "M-n") 'next-buffer)
+(define-key my-keys-minor-mode-map (kbd "M-p") 'previous-buffer)
 
 ;| point-to  | previous   | next        |
 ;|-----------+------------+-------------|
