@@ -6,8 +6,6 @@ isos/
 
 emacs.d/auto-save-list/
 emacs.d/scrap.*
-emacs.d/elpa
-!emacs.d/elpa/archives
 
 ssh/
 !ssh/config
