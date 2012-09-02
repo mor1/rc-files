@@ -22,16 +22,17 @@
 (require 'scroll-in-place)
 
 ;; colours
-(set-background-color "black")
-(set-foreground-color "gray85")
+(require 'color-theme)
+(color-theme-sanityinc-solarized-dark)
 
-(set-mouse-color "white")
-(set-cursor-color "white")
-
-(set-face-background 'region "grey32")
-(set-face-foreground 'region "white")
-(set-face-background 'highlight "grey32")
-(set-face-foreground 'highlight "white")
+(defun light () "light colour scheme" 
+  (interactive)
+  (color-theme-sanityinc-solarized-light)
+  )
+(defun dark () "dark colour scheme" 
+  (interactive)
+  (color-theme-sanityinc-solarized-dark)
+  )
 
 ;; ispell
 (setq-default ispell-program-name "/usr/local/bin/aspell")
@@ -517,17 +518,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(caml-types-expr-face ((t (:foreground "slategray"))))
- '(font-lock-TRC-face ((t (:foreground "seagreen3"))))
- '(font-lock-alarm-face ((t (:foreground "red"))))
- '(font-lock-comment-face ((t (:foreground "goldenrod"))))
- '(font-lock-define-face ((t (:foreground "aquamarine"))))
- '(font-lock-faded-face ((t (:foreground "slategray"))))
- '(font-lock-function-name-face ((t (:foreground "green"))))
- '(font-lock-globals-face ((t (:foreground "orange"))))
- '(font-lock-keyword-face ((t (:foreground "gold"))))
- '(font-lock-preproc-face ((t (:foreground "aquamarine"))))
- '(font-lock-prototype-face ((t (:foreground "palegreen"))))
- '(font-lock-string-face ((t (:foreground "turquoise"))))
- '(font-lock-type-face ((t (:foreground "orange"))))
- '(font-lock-variable-name-face ((t (:foreground "LightGoldenrod")))))
+ )
