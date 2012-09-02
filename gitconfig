@@ -1,34 +1,34 @@
 [user]
-    name = Richard Mortier
-    email = mort@cantab.net
-    signingkey = 87E85FF5
+	name = Richard Mortier
+	email = mort@cantab.net
+	signingkey = 87E85FF5
 [github]
-    user = mor1
-    token = f34f4313035ea023bd8d5d8f5a527175
+	user = mor1
+	token = f34f4313035ea023bd8d5d8f5a527175
 [alias]
-    serve = "!git daemon $1 --reuseaddr --verbose --base-path=. --export-all ./.git"
-    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
-    debug = !GIT_PAGER= gdb --args git
-    st = status
-    ci = commit
-    br = branch -av
-    co = checkout
-    df = diff
-    llg = log -p --decorate=full
-    lg = log --stat
-    who = shortlog -s --
-    human = "name-rev --name-only --refs=refs/heads/*"
-    onelog = "log --oneline --decorate --graph"
-    humin = "name-rev --refs=refs/heads/* --stdin"
-    timeline = log --oneline --graph --decorate
+	serve = "!git daemon $1 --reuseaddr --verbose --base-path=. --export-all ./.git"
+	whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+	debug = !GIT_PAGER= gdb --args git
+	st = status
+	ci = commit
+	br = branch -av
+	co = checkout
+	df = diff
+	llg = log -p --decorate=full
+	lg = log --stat
+	who = shortlog -s --
+	human = "name-rev --name-only --refs=refs/heads/*"
+	onelog = "log --oneline --decorate --graph"
+	humin = "name-rev --refs=refs/heads/* --stdin"
+	timeline = log --oneline --graph --decorate
 [color]
-    ui = auto
+	ui = auto
 [core]
-    pager = less -Ri
-    autocrlf = input
+	pager = less -+$LESS -FRX
+	autocrlf = input
 [rerere]
-    enabled = true
-    autoupdate = true
+	enabled = true
+	autoupdate = true
 [push]
-    default = tracking
+	default = tracking
