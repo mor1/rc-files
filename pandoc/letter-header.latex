@@ -1,0 +1,12 @@
+\usepackage{fullpage}
+\address{School of Computer Science,\\
+        Jubilee Campus,\\
+        Wollaton Road,\\
+        Nottingham, NG8 1BB\\
+        UK}
+           
+\signature{Dr.~Richard Mortier,\\
+        \quad\hbox{Horizon Transitional Fellow in Computer Science,}\\
+        University of Nottingham\\
+        e:\hbox{ \url{richard.mortier@nottingham.ac.uk}}\\
+        t: +44 115 8232552}
