@@ -64,10 +64,9 @@ aenv PATH /usr/X11R6/bin
 aenv PATH /usr/local/texlive/2011/bin/x86_64-darwin
 aenv PATH /usr/local/share/python
 aenv PATH ~/bin
-aenv PATH ~/bin/android-sdk-mac_86/tools
 
 unset MANPATH
-aenv MANPATH /usr/local/man
+aenv MANPATH /usr/local/share/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
 
