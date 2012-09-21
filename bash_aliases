@@ -24,3 +24,4 @@ alias curl="curl --noproxy localhost,127.0.0.1"
 alias ocaml="rlwrap ocaml"
 alias use-rvm='aenv PATH ~/.rvm/bin && aenv PATH ~/.rvm/gems/ruby-1.9.3-p125/bin && [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"'
 
+alias pdfmerge="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
