@@ -42,21 +42,27 @@ rgrep () {
 # specific file grep
 #
 
-trawl () { 
-  find . \(                                                     \
-    -name '*.[chsSyli]' -o -name 'Make*'   -o -name '*.cc'  -o  \
-    -name '*.hh'        -o -name '*.tcl'   -o -name '*.idl' -o  \
-    -name '*.el'        -o -name '*.mk'    -o -name '*.py'  -o  \
-    -name '*.html'      -o -name '*.cpp'   -o -name '*.tex' -o  \
-    -name '*.bib'       -o -name 'README*' -o -name '*.ns'  -o  \
-    -name '*.cs'        -o -name '*.java'  -o -name '*.php' -o  \
-    -name '*.fs'        -o -name '*.fsx'   -o -name '*.fsi' -o  \
-    -name '*.cfg'	-o -name '*.xml'	-o -name '*.inc' -o  	\
-    -name '*.mxml'	-o -name '*.as'		-o						\
-    -name '*.yaml' 	-o -name '*.yml'	-o -name '*.md' -o 		\
-    -name '*.ml' -o -name '*.mli' \
-  \) -print0 |                                                  \
-  xargs -0 grep -EHns "$@"
+trawl () {
+  find . \( \
+    -name "*.[chsSyli]"\
+    -or -name "Make*"\
+    -or -name "README*"\
+    -or -name "*.bib"\
+    -or -name "*.cc"\
+    -or -name "*.css"\
+    -or -name "*.el"\
+    -or -name "*.fs"\
+    -or -name "*.fs[xi]"\
+    -or -name "*.hh"\
+    -or -name "*.inc"\
+    -or -name "*.less"\
+    -or -name "*.md"\
+    -or -name "*.php"\
+    -or -name "*.py"\
+    -or -name "*.tex"\
+    -or -name "*.xml"\
+    -or \( \( -name "*.ml" -or -name "*.ml[yil]" -or -name "*.html" \) -not -path "*/_build/*" \) \
+  \) -print0 | xargs -0 grep -EHns "$@"
 }
 
 #
@@ -125,7 +131,7 @@ rfc () {
     elif [ ! -s ~/docs/rfcs/rfc${1}.txt ] ; then
       curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt 
     fi
-    xterm -fs 12 -title "RFC ${1}" -e less ~/docs/rfcs/rfc${1}.txt
+    less ~/docs/rfcs/rfc${1}.txt
   else
     case $1 in
       -print|-p) a2ps --highlight-level=normal --columns=4 \
@@ -158,3 +164,49 @@ loc () {
 
   echo "${owc} ${cwc} ${ctwc}" | awk -- 'END { print "Propn. real code: " $2/$1*100.0 ; print "Propn. real untraced code: " $3/$2*100.0 }' ;
 }
+
+## pandoc: markdown to pdf
+
+md2tex () {
+    pandoc -S --latex-engine=xelatex \
+        -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia \
+        -o ${1%.md}.latex ${1}
+}
+
+md2doc () {
+    pandoc -S --latex-engine=xelatex \
+        -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia \
+        -o ${1%.md}.docx ${1}
+}
+
+md2pdf () {
+    pandoc -S --latex-engine=xelatex \
+        -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia \
+        -o ${1%.md}.pdf ${1}
+}
+
+
+letter2tex () {
+    pandoc -S --latex-engine=xelatex \
+        -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
+        -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
+        -o ${1%.md}.latex ${1}
+}
+
+letter2doc () {
+    pandoc -S --latex-engine=xelatex \
+        -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
+        -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
+        -o ${1%.md}.docx ${1}
+}
+
+letter2pdf () {
+    pandoc -S --latex-engine=xelatex \
+        -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
+        -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
+        -o ${1%.md}.pdf ${1}
+}
+
+
+#transpose
+#: mort@greyjay:openflow$; for i in $(seq 1 $(awk -v FS="," ' { nf=((NF>nf)?NF:nf) } END {print nf}' controller.dat)) ; do cut -f $i -d "," controller.dat | paste -s - ; done | sed -E '/^[[:space:]]+$/d' > control
