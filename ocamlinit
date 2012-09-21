@@ -1,0 +1,8 @@
+(* -*- mode: typerex -*- *)
+
+#use "topfind";;
+#camlp4o;;
+#thread;;
+#require "re";;
+#require "uri";;
+#require "cohttp.lwt";;
