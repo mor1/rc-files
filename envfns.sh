@@ -108,18 +108,6 @@ cenv () {
 }
 
 #
-# misc
-#
-
-ppkl () {
-  python -c "import pprint, Pickle; pprint.pprint(cPickle.load(file('$1')))"
-}
-
-ctime () {
-  python -c "import time; print time.ctime($1)"
-}
-
-#
 # PS1 xterm magic
 #
 
@@ -132,4 +120,8 @@ ps1txt () {
 
 ps1xt () {
   PS1='\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\W\$; '
+}
+
+rsz () {
+  eval $(resize)
 }
