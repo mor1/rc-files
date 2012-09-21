@@ -42,6 +42,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun insert-euro () "Insert euro character"
+  (interactive)
+  (self-insert-command "€")
+  )
+
 (defun line-to-top-of-window () "Move line point is on to top of window"
   (interactive)
   (recenter 0)
@@ -109,7 +114,8 @@
 (defun unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
-    (fill-paragraph nil)))
+    (fill-paragraph nil))
+  )
 
 ;;; Code Cleanup for Emacs V1.0
 ;;; http://blog.modp.com/2008/11/handy-emacs-functions-for-code-cleanup.html
@@ -250,8 +256,15 @@
              (fci-mode t)
              (flyspell-mode 1)
              (turn-on-visual-line-mode)
-             (local-set-key (kbd "M-q") 'ispell-check-paragraph) ;fill-and-check)
-             (local-set-key (kbd "S-<tab>") 'flyspell-auto-correct-previous-word)
+             (set-visual-wrap-column (+ fill-column 2))
+             (local-set-key (kbd "M-q") '(lambda () 
+                                           (interactive)
+                                           (unfill-paragraph)
+                                           (ispell-check-paragraph)
+                                           ))
+;; 'fill-and-check)
+             (local-set-key (kbd "S-<tab>") 
+                            'flyspell-auto-correct-previous-word)
              ))
 
 (add-hook 'prog-mode-hook
@@ -268,15 +281,14 @@
              (local-set-key (kbd "C-c a") 'org-agenda)
              (local-set-key (kbd "S-<up>") 'org-move-line-up)
              (local-set-key (kbd "S-<down>") 'org-move-line-down)
-             (local-unset-key (kbd "S-<tab>"))
-             (local-set-key (kbd "S-C-<tab>") 'flyspell-auto-correct-previous-word)
+             (local-set-key (kbd "S-C-<tab>") 'org-shifttab)
              (local-set-key (kbd "C-x C-d") `insdate-insert-current-date)
              ))
 
 (add-hook 'latex-mode-hook
           '(lambda () 
-             (local-set-key (kbd "M-q") 'ispell-check-paragraph) ;fill-and-check)
-;             (local-set-key (kbd "C-c C-b") 'latex-insert-block)
+;;              (local-set-key (kbd "M-q") 'ispell-check-paragraph) ;fill-and-check)
+;; ;             (local-set-key (kbd "C-c C-b") 'latex-insert-block)
              (local-set-key (kbd "{") 'tex-insert-braces)
              (local-set-key (kbd "M-[") 
                             '(lambda () (interactive) (insert "{")))
@@ -714,7 +726,8 @@
  '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
  '(vc-follow-symlinks t)
  '(visible-bell t)
- '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow))) '(x-select-enable-clipboard t)
+ '(visual-line-fringe-indicators (quote (right-triangle right-curly-arrow)))
+ '(x-select-enable-clipboard t)
  '(x-stretch-cursor t))
 
 (custom-set-faces
