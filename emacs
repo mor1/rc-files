@@ -42,6 +42,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun screen-width nil -1) ;; squash some spurious error when using pgup, etc
+
 (defun insert-euro () "Insert euro character"
   (interactive)
   (self-insert-command "€")
