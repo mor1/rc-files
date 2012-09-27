@@ -14,7 +14,7 @@
 	ci = commit
 	br = branch -av
 	co = checkout
-	df = diff
+	df = diff --word-diff=color
 	llg = log -p --decorate=full
 	lg = log --stat
 	who = shortlog -s --
