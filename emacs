@@ -2,6 +2,15 @@
 
 (add-to-list 'load-path "/Users/mort/.emacs.d")
 
+;; PATH
+(setenv "PATH"
+  (concat
+   "/usr/local/bin" ":"
+   "/usr/local/sbin" ":"
+   (getenv "PATH")
+  )
+)
+
 ;; package management
 (require 'package)
 (add-to-list 'package-archives
@@ -328,6 +337,18 @@
           '(lambda ()
 ;             (setq c-basic-offset 4)
 ;             (c-set-style "java")
+             ))
+
+(add-hook 'coffee-mode-hook
+          '(lambda ()
+             (fci-mode t)
+             ;; Compile '.coffee' files on every save
+             ;; (and (file-exists-p (buffer-file-name))
+             ;;      (file-exists-p (coffee-compiled-file-name))
+             ;;      (coffee-cos-mode t))
+             (coffee-cos-mode t)
+             (setq coffee-tab-width 2)      
+             (setq coffee-command "/usr/local/bin/coffee")
              ))
 
 ;; xml-mode
@@ -680,6 +701,7 @@
  '(calendar-christian-all-holidays-flag t)
  '(calendar-date-style (quote iso))
  '(calendar-mark-holidays-flag t)
+ '(coffee-command "/usr/local/bin/coffee")
  '(column-number-mode t)
  '(default-major-mode (quote text-mode) t)
  '(fci-rule-width 2)
