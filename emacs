@@ -282,8 +282,10 @@
           '(lambda ()
              (fci-mode t)
              (auto-fill-mode 1)
-             (turn-on-visual-line-mode)
+;             (turn-on-visual-line-mode)
+             (set-visual-wrap-column 0)
              (flyspell-prog-mode)
+             (local-set-key (kbd "M-q") 'fill-paragraph)
              (local-set-key (kbd "%") 'match-paren)
              ))
 
@@ -294,6 +296,13 @@
              (local-set-key (kbd "S-<down>") 'org-move-line-down)
              (local-set-key (kbd "S-C-<tab>") 'org-shifttab)
              (local-set-key (kbd "C-x C-d") `insdate-insert-current-date)
+             (local-unset-key (kbd "M-<return>"))
+             ))
+
+(add-hook 'org-agenda-mode-hook 
+          '(lambda () 
+             (hl-line-mode 1)
+             (local-set-key (kbd "C-x .") 'org-agenda-reschedule-to-today)
              ))
 
 (add-hook 'latex-mode-hook
@@ -347,7 +356,7 @@
              ;;      (file-exists-p (coffee-compiled-file-name))
              ;;      (coffee-cos-mode t))
              (coffee-cos-mode t)
-             (setq coffee-tab-width 2)      
+             (setq coffee-tab-width 2)
              (setq coffee-command "/usr/local/bin/coffee")
              ))
 
@@ -356,6 +365,7 @@
 ;;           '(lambda ()
 ;;              ))
 (push '("\\`<\\?xml" . nxml-mode) magic-mode-alist)
+(push '("\\.tpl$" . nxml-mode) auto-mode-alist) ;; bottle templates
 
 ;; markdown-mode
 ;; (add-hook 'markdown-mode-hook
@@ -375,6 +385,9 @@
 ;;           '(lambda ()
 ;;              ))
 (push '("bash_" . sh-mode) auto-mode-alist)
+
+;; css-mode
+(push '("\\.less$" . css-mode) auto-mode-alist)
 
 ;; python-mode
 ;; (add-hook 'python-mode-hook
@@ -608,6 +621,74 @@
         (if all-christian-calendar-holidays
             (holiday-julian 12 25 "Eastern Orthodox Christmas"))))
 
+(setq org-agenda-custom-commands
+      '(
+        ;; ("O" "Office block agenda"
+        ;;  (
+        ;;   ;; limits the agenda display to a single day
+        ;;   (agenda "" ((org-agenda-ndays 1))) 
+          
+        ;;   (tags-todo "+PRIORITY=\"A\"")
+        ;;   (tags-todo "computer|office|phone")
+        ;;   (tags "project+CATEGORY=\"elephants\"")
+        ;;   (tags "review" ((org-agenda-files '("~/org/circuspeanuts.org"))))
+        ;;   ;; limits the tag search to the file circuspeanuts.org
+        ;;   (todo "WAITING"))
+
+        ;;  ;; options set here apply to the entire block
+        ;;  ((org-agenda-compact-blocks t))
+        ;;  ) 
+
+        ;; ("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil)
+        
+        ;; ("w" todo #("WAITING" 0 7 (face org-warning)) nil) 
+
+        ("a" "" 
+         ((agenda "" 
+                  ((org-agenda-ndays 7)
+                   (org-agenda-start-on-weekday 1)
+                   (org-agenda-time-grid nil)
+                   (org-agenda-repeating-timestamp-show-all t)
+                   (org-deadline-warning-days 15)
+                   (org-agenda-sorting-strategy 
+                    '(habit-up
+                      time-up
+                      category-keep
+                      priority-down
+                      todo-state-down
+                      alpha-up
+                      ))
+                   ))
+          )
+         ((org-agenda-compact-blocks t))
+         )
+
+        ;; ("W" agenda "" ((org-agenda-ndays 21))) 
+        
+        ("A" agenda ""
+         ((org-agenda-skip-function 
+           (lambda nil 
+             (org-agenda-skip-entry-if
+              (quote notregexp) "\\=.*\\[#A\\]"))) 
+          (org-agenda-ndays 1)
+          (org-agenda-overriding-header "Today's Priority #A tasks: "))
+         ) 
+
+        ;; ("u" alltodo "" 
+        ;;  ((org-agenda-skip-function 
+        ;;    (lambda nil
+        ;;      (org-agenda-skip-entry-if 
+        ;;       (quote scheduled) (quote deadline) 
+        ;;       (quote regexp) "<[^>]+>"))) 
+        ;;   (org-agenda-overriding-header "Unscheduled TODO entries: ")))
+        ))
+
+(defun org-agenda-reschedule-to-today ()
+  (interactive)
+  (flet ((org-read-date (&rest rest) (current-time)))
+    (call-interactively 'org-agenda-schedule)
+    ))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; make my key-bindings win, except in minibuffer
@@ -702,6 +783,7 @@
  '(calendar-date-style (quote iso))
  '(calendar-mark-holidays-flag t)
  '(coffee-command "/usr/local/bin/coffee")
+ '(coffee-tab-width 2)
  '(column-number-mode t)
  '(default-major-mode (quote text-mode) t)
  '(fci-rule-width 2)
@@ -722,8 +804,7 @@
  '(nobreak-char-display t t)
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
- '(ocp-theme "tuareg_like" t)
- '(org-agenda-custom-commands (quote (("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil) ("w" todo #("WAITING" 0 7 (face org-warning)) nil) ("W" agenda "" ((org-agenda-ndays 21))) ("A" agenda "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) (org-agenda-ndays 1) (org-agenda-overriding-header "Today's Priority #A tasks: "))) ("u" alltodo "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline) (quote regexp) "<[^>]+>"))) (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
+ '(ocp-theme "tuareg_like")
  '(org-agenda-files (quote ("~/.todo/todo.org")))
  '(org-agenda-include-diary t)
  '(org-agenda-ndays 7)
@@ -741,6 +822,7 @@
  '(org-tags-match-list-sublevels t)
  '(remember-annotation-functions (quote (org-remember-annotation)))
  '(remember-handler-functions (quote (org-remember-handler)))
+ '(safe-local-variable-values (quote ((TeX-master . "propB"))))
  '(scroll-conservatively 100)
  '(sentence-end-double-space nil)
  '(show-paren-mode t)
