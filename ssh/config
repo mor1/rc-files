@@ -33,6 +33,11 @@ Host irc-tunnel
         IdentityFile ~/.ssh/nottingham-key
         LocalForward 7000 chat.freenode.net:7000
 
+Host *.stthomasmorewollaton.org.uk
+        User stthnorg
+        Port 722
+        IdentityFile ~/.ssh/stmwww-key
+
 # very handy for firewalls! :)
 #Host github.com
 #    User git
