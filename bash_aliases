@@ -5,7 +5,7 @@ alias lla="ls -lA"
 alias l="ls"
 
 alias grep="grep -Hn"
-alias less="less -FRX"
+alias less="less -FRXi"
 alias m="less"
 
 alias cu="ci -u"
@@ -22,9 +22,9 @@ alias irc-tunnel="ps aux | grep irc-tunnel | grep -v 'grep irc-tunnel' | tr -s '
 
 alias curl="curl --noproxy localhost,127.0.0.1"
 
-alias ocaml="rlwrap ocaml"
+alias coffee="rlwrap coffee"
 alias use-rvm='aenv PATH ~/.rvm/bin && aenv PATH ~/.rvm/gems/ruby-1.9.3-p125/bin && [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"'
-alias use-ocaml='eval $(opam config -env)'
+alias use-ocaml='unset CAML_LD_LIBRARY_PATH && which opam && eval $(opam config env)'
 
 alias pdfmerge="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
 alias qv="qlmanage -p"
