@@ -23,7 +23,7 @@ KERNEL=`uname -r`
 CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../../../../../..:../../../../../../../..:../../../../../../../../..:../../../../../../../../../..:$HOME
 EDITOR=/usr/bin/vi
 PAGER=less
-MANPAGER="less -X"
+MANPAGER="less -FRXi"
 export LHOST SHOST KERNEL CDPATH EDITOR PAGER MANPAGER 
 
 #
