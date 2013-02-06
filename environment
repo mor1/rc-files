@@ -61,7 +61,7 @@ aenv PATH /usr/bin
 aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
 aenv PATH /usr/X11R6/bin
-aenv PATH /usr/local/texlive/2011/bin/x86_64-darwin
+aenv PATH /usr/local/texlive/2012/bin/x86_64-darwin
 aenv PATH /usr/local/share/python
 aenv PATH /usr/local/share/npm/bin
 aenv PATH ~/bin
