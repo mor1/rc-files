@@ -17,6 +17,7 @@
 	timeline = log --oneline --decorate --graph
 	human = "name-rev --refs=refs/heads/* --stdin"
 	who = shortlog -s --
+	patdiff = difftool -y -x patdiff
 [color]
 	ui = auto
 
