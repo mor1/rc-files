@@ -7,6 +7,7 @@
   (concat
    "/usr/local/bin" ":"
    "/usr/local/sbin" ":"
+;;    "/Users/mort/.opam/system/bin" ":"
    (getenv "PATH")
   )
 )
