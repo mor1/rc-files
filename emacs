@@ -655,20 +655,24 @@
          ((agenda "" 
                   ((org-agenda-ndays 7)
                    (org-agenda-start-on-weekday 1)
+                   (org-agenda-remove-tags t)
+                   (org-agenda-skip-deadline-if-done t)
+                   (org-agenda-skip-scheduled-if-done t)
+                   (org-agenda-skip-timestamp-if-done t)
                    (org-agenda-time-grid nil)
                    (org-agenda-repeating-timestamp-show-all t)
                    (org-deadline-warning-days 15)
                    (org-agenda-sorting-strategy 
-                    '(habit-up
-                      time-up
-                      category-keep
-                      priority-down
-                      todo-state-down
-                      alpha-up
-                      ))
+                     '(habit-up
+                       time-up
+                       priority-down
+                       category-keep
+                       todo-state-down
+                       ))
                    ))
           )
-         ((org-agenda-compact-blocks t))
+         ((org-agenda-compact-blocks t)
+          )
          )
 
         ;; ("W" agenda "" ((org-agenda-ndays 21))) 
@@ -691,11 +695,17 @@
         ;;   (org-agenda-overriding-header "Unscheduled TODO entries: ")))
         ))
 
+;; http://orgmode.org/worg/org-hacks.html
 (defun org-agenda-reschedule-to-today ()
   (interactive)
   (flet ((org-read-date (&rest rest) (current-time)))
     (call-interactively 'org-agenda-schedule)
     ))
+
+;; Patch org-mode to use vertical splitting, http://orgmode.org/worg/org-hacks.html
+;; (defadvice org-prepare-agenda (after org-fix-split)
+;;   (toggle-window-split))
+;; (ad-activate 'org-prepare-agenda)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -819,8 +829,6 @@
  '(org-agenda-include-diary t)
  '(org-agenda-ndays 7)
  '(org-agenda-show-all-dates t)
- '(org-agenda-skip-deadline-if-done t)
- '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-sorting-strategy (quote (time-up priority-down)))
  '(org-agenda-start-on-weekday nil)
  '(org-deadline-warning-days 14)
