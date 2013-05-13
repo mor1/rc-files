@@ -97,7 +97,10 @@ export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.3-62308/jars"
 # ocaml
 export OCAMLRUNPARAM=b
 opsw () {
-    opam switch $@ >/dev/null && eval $(opam config env)
+    opam switch $@ >/dev/null && unset MIRAGE_OS MIRAGE_NET && eval $(opam config env)
+}
+ope () {
+    eval $(opam config env)
 }
 
 # homebrew completion
@@ -158,3 +161,8 @@ fi
 
 ## GIT bash completion
 source /usr/local/Cellar/git/1.7.9.5/etc/bash_completion.d/git-completion.bash
+
+## homebrew yyandroid sdk
+#export ANDROID_SDK_ROOT=/usr/local/opt/android-sdk
+#Bash completion has been installed to:
+#  /usr/local/etc/bash_completion.d
