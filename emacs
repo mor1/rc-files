@@ -375,9 +375,10 @@
 (push '("\\.tpl$" . nxml-mode) auto-mode-alist) ;; bottle templates
 
 ;; markdown-mode
-;; (add-hook 'markdown-mode-hook
-;;           '(lambda ()
-;;              ))
+(add-hook 'markdown-mode-hook
+          '(lambda ()
+             (orgtbl-mode 1)
+             ))
 (push '("\\.md$" . markdown-mode) auto-mode-alist)
 (push '("\\.markdown$" . markdown-mode) auto-mode-alist)
 
