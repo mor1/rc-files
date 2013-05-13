@@ -327,6 +327,7 @@
                                (tex-enclose-word "{\\bf " "}")))
              ))
 (push '("\\.tex$" . latex-mode) auto-mode-alist)
+(push '("\\.latex$" . latex-mode) auto-mode-alist)
 
 (add-hook 'java-mode-hook
           '(lambda ()
@@ -361,6 +362,9 @@
              (setq coffee-tab-width 2)
              (setq coffee-command "/usr/local/bin/coffee")
              ))
+
+;; bibtex-mode
+(push '("\\.bibtex$" . bibtex-mode) auto-mode-alist)
 
 ;; xml-mode
 ;; (add-hook 'nxml-mode-hook
@@ -780,6 +784,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auto-hscroll-mode nil)
+ '(bibtex-autokey-titleword-separator ".")
+ '(bibtex-autokey-year-title-separator ":")
  '(calendar-bahai-all-holidays-flag nil)
  '(calendar-christian-all-holidays-flag t)
  '(calendar-date-style (quote iso))
