@@ -3,6 +3,7 @@
 #use "topfind";;
 #camlp4o;;
 #thread;;
+#require "core.top";;
 #require "re";;
 #require "uri";;
 #require "cohttp.lwt";;
