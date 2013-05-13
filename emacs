@@ -824,6 +824,7 @@
  '(nobreak-char-display t t)
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
+ '(ocp-server-command "/Users/mort/.opam/system/bin/ocp-wizard")
  '(ocp-theme "tuareg_like")
  '(org-agenda-files (quote ("~/.todo/todo.org")))
  '(org-agenda-include-diary t)
@@ -847,6 +848,9 @@
  '(show-paren-style (quote expression))
  '(tab-width 4)
  '(tool-bar-mode nil)
+ '(typerex-comment-end-extra-indent 1)
+ '(typerex-leading-star-in-doc t)
+ '(typerex-library-path "/usr/local/lib/ocaml")
  '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
  '(vc-follow-symlinks t)
  '(visible-bell t)
@@ -860,3 +864,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; (with-temp-buffer 
+;;   (insert
+;;    (shell-command-to-string "ocp-edit-mode emacs -load-global-config")
+;;    ) 
+;;   (eval-buffer)
+;;   )
