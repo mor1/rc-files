@@ -8,12 +8,13 @@
 	debug = !GIT_PAGER= gdb --args git
 	st = status
 	ci = commit
-	br = branch -av
+	br = branch -avv
 	co = checkout
 	df = diff --word-diff=color
-	lg = log --stat
-	llg = log -p --decorate=full --word-diff=color
-	wlog = log --graph --color-words
+        l = log --all --decorate=full
+        lg = log --all --graph --decorate=full --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+        llg = log --all --color-words --graph --decorate=full --stat
+	ldiff = log --all -p --decorate=full --word-diff=color
 	timeline = log --oneline --decorate --graph
 	human = "name-rev --refs=refs/heads/* --stdin"
 	who = shortlog -s --
@@ -31,3 +32,6 @@
 
 [push]
 	default = tracking
+
+[merge]
+	conflictstyle = diff3
