@@ -12,3 +12,8 @@ emacs.d/scrap.*
 ssh/
 !ssh/config
 !ssh/sssha
+
+emacs.d/ac-comphist.dat
+emacs.d/url/cookies
+
+ocp/
