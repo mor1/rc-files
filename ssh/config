@@ -1,3 +1,9 @@
+Host mirage-xen
+        User root
+        Hostname localhost
+        IdentityFile ~/.ssh/bitbucket-key
+        Port 2233
+
 Host hw2
         User root
         Hostname ubuntu.local
