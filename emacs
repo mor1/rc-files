@@ -27,6 +27,7 @@
 ;; non-package-managed libraries
 (require 'fill-column-indicator)
 (require 'scroll-in-place)
+(require 'simple)
 
 ;; colours
 (require 'color-theme)
@@ -263,6 +264,18 @@
 
 ;; mode hooks
 
+(defun unfill-and-check ()
+  (interactive)
+  (unfill-paragraph)
+  (ispell-check-paragraph)
+)
+
+(defun fill-and-check ()
+  (interactive)
+  (fill-paragraph)
+  (ispell-check-paragraph)
+)
+
 (add-hook 'text-mode-hook
           '(lambda ()
              (fci-mode t)
@@ -270,11 +283,9 @@
              (hl-line-mode 1)
              (turn-on-visual-line-mode)
              (set-visual-wrap-column (+ fill-column 2))
-             (local-set-key (kbd "M-q") '(lambda () 
-                                           (interactive)
-                                           (unfill-paragraph)
-                                           (ispell-check-paragraph)
-                                           ))
+             ;; (local-set-key (kbd "M-q") 'fill-paragraph)
+             (auto-fill-mode 1)
+             (local-set-key (kbd "M-q") 'unfill-and-check)
 ;; 'fill-and-check)
              (local-set-key (kbd "S-<tab>") 
                             'flyspell-auto-correct-previous-word)
@@ -283,10 +294,9 @@
 (add-hook 'prog-mode-hook
           '(lambda ()
              (fci-mode t)
-             (auto-fill-mode 1)
              (hl-line-mode 1)
 ;             (turn-on-visual-line-mode)
-             (set-visual-wrap-column 0)
+;             (set-visual-wrap-column 0)
              (flyspell-prog-mode)
              (local-set-key (kbd "M-q") 'fill-paragraph)
              (local-set-key (kbd "%") 'match-paren)
@@ -310,6 +320,7 @@
 
 (add-hook 'latex-mode-hook
           '(lambda () 
+             (auto-fill-mode 0)
 ;;              (local-set-key (kbd "M-q") 'ispell-check-paragraph) ;fill-and-check)
 ;; ;             (local-set-key (kbd "C-c C-b") 'latex-insert-block)
              (local-set-key (kbd "{") 'tex-insert-braces)
@@ -368,16 +379,19 @@
 (push '("\\.bibtex$" . bibtex-mode) auto-mode-alist)
 
 ;; xml-mode
-;; (add-hook 'nxml-mode-hook
-;;           '(lambda ()
-;;              ))
+(add-hook 'nxml-mode-hook
+          '(lambda ()
+             (set-visual-wrap-column 0)
+             ))
 (push '("\\`<\\?xml" . nxml-mode) magic-mode-alist)
+(push '("\\.html$" . nxml-mode) auto-mode-alist)
 (push '("\\.tpl$" . nxml-mode) auto-mode-alist) ;; bottle templates
 
 ;; markdown-mode
 (add-hook 'markdown-mode-hook
           '(lambda ()
              (orgtbl-mode 1)
+             (auto-fill-mode 0)
              ))
 (push '("\\.md$" . markdown-mode) auto-mode-alist)
 (push '("\\.markdown$" . markdown-mode) auto-mode-alist)
@@ -871,3 +885,4 @@
 ;;    ) 
 ;;   (eval-buffer)
 ;;   )
+
