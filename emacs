@@ -26,11 +26,12 @@ started from a shell."
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+
 (package-initialize)
 
 ;; evaluate locally if behind nottingham proxy
-;(setq url-proxy-services '(("http" . "proxy.nottingham.ac.uk:8080")))
-;(setq url-proxy-services '(("http" . "wwwcache.cs.nott.ac.uk:3128")))
+;; (setq url-proxy-services '(("http" . "proxy.nottingham.ac.uk:8080")))
+;; (setq url-proxy-services '(("http" . "wwwcache.cs.nott.ac.uk:3128")))
 
 ;; non-package-managed libraries
 (require 'fill-column-indicator)
@@ -41,11 +42,11 @@ started from a shell."
 (require 'color-theme)
 (color-theme-sanityinc-solarized-dark)
 
-(defun light () "light colour scheme" 
+(defun light () "light colour scheme"
   (interactive)
   (color-theme-sanityinc-solarized-light)
   )
-(defun dark () "dark colour scheme" 
+(defun dark () "dark colour scheme"
   (interactive)
   (color-theme-sanityinc-solarized-dark)
   )
@@ -156,22 +157,6 @@ started from a shell."
   (indent-region (point-min) (point-max) nil)
   )
 
-;; Untabify, re-indent, make EOL be '\n' not '\r\n' and delete trailing
-;; whitespace
-(defun buffer-cleanup ()
-  "Untabify and re-indent an entire buffer"
-  (interactive)
-  ;; (if (equal buffer-file-coding-system 'undecided-unix)
-  ;;     nil
-  ;;   (set-buffer-file-coding-system 'undecided-unix))
-  ;; (setq c-basic-offset 4
-  ;;       tab-width 4
-  ;;       indent-tabs-mode nil)
-  (buffer-untabify)
-  (buffer-indent)
-  (delete-trailing-whitespace)
-  )
-
 ;; prb ispell functions
 (defun ispell-check-paragraph () "Spell check each word in a paragraph"
   (interactive "*")
@@ -181,7 +166,7 @@ started from a shell."
     (save-excursion
       (forward-paragraph) (setq end (point))
       (forward-paragraph -1) (setq start (point))
-      (ispell-region start end))    
+      (ispell-region start end))
     ))
 
 ;; modified from swiftex.el
@@ -197,13 +182,13 @@ started from a shell."
     (goto-char oldpoint)
     (skip-syntax-forward "w")
     (setq end (point))
-    (if (and (eq start oldpoint) 
+    (if (and (eq start oldpoint)
              (eq end oldpoint))
         ;; insert the command as nothing to enclose
         (progn (insert before) (insert after) (backward-char))
-      
+
       ;; enclose the word with the command
-      (progn 
+      (progn
         (insert after)
         (goto-char start)
         (insert before)
@@ -226,7 +211,7 @@ started from a shell."
   With a prefix argument, the date is inserted without the day of
   the week."
   (interactive "P*")
-  (insert (calendar-date-string 
+  (insert (calendar-date-string
            (calendar-current-date) nil omit-day-of-week-p))
   )
 
@@ -250,9 +235,9 @@ started from a shell."
     to current buffer) by setting the right-hand margin on every
     window that displays BUFFER.  A value of NIL or 0 for
     NEW-WRAP-COLUMN disables this behavior."
-  (interactive 
-;; add the extra 2 below to account for fci-mode indicator
-   (list (read-number "New visual wrap column, 0 to disable: " 
+  (interactive
+   ;; add the extra 2 below to account for fci-mode indicator
+   (list (read-number "New visual wrap column, 0 to disable: "
                       (or visual-wrap-column (+ fill-column 2) 0))))
   (if (and (numberp new-wrap-column)
            (zerop new-wrap-column))
@@ -320,30 +305,30 @@ started from a shell."
              (local-unset-key (kbd "M-<return>"))
              ))
 
-(add-hook 'org-agenda-mode-hook 
-          '(lambda () 
+(add-hook 'org-agenda-mode-hook
+          '(lambda ()
              (hl-line-mode 1)
              (local-set-key (kbd "C-x .") 'org-agenda-reschedule-to-today)
              ))
 
 (add-hook 'latex-mode-hook
-          '(lambda () 
+          '(lambda ()
              (auto-fill-mode 0)
-;;              (local-set-key (kbd "M-q") 'ispell-check-paragraph) ;fill-and-check)
-;; ;             (local-set-key (kbd "C-c C-b") 'latex-insert-block)
+             ;; (local-set-key (kbd "M-q") 'ispell-check-paragraph) ;fill-and-check)
+             ;; (local-set-key (kbd "C-c C-b") 'latex-insert-block)
              (local-set-key (kbd "{") 'tex-insert-braces)
-             (local-set-key (kbd "M-[") 
+             (local-set-key (kbd "M-[")
                             '(lambda () (interactive) (insert "{")))
-             (local-set-key (kbd "M-]") 
+             (local-set-key (kbd "M-]")
                             '(lambda () (interactive) (insert "}")))
-             (local-set-key (kbd "C-c m") 
-                            '(lambda () (interactive "*") 
+             (local-set-key (kbd "C-c m")
+                            '(lambda () (interactive "*")
                                (tex-enclose-word "\\emph{" "}")))
-             (local-set-key (kbd "C-c C-m") 
-                            '(lambda () (interactive "*") 
+             (local-set-key (kbd "C-c C-m")
+                            '(lambda () (interactive "*")
                                (tex-enclose-word "\\emph{" "}")))
-             (local-set-key (kbd "C-c b") 
-                            '(lambda () (interactive "*") 
+             (local-set-key (kbd "C-c b")
+                            '(lambda () (interactive "*")
                                (tex-enclose-word "{\\bf " "}")))
              ))
 (push '("\\.tex$" . latex-mode) auto-mode-alist)
@@ -532,16 +517,16 @@ started from a shell."
 ;;holiday.
 (defun holiday-new-year-bank-holiday ()
   (let ((m displayed-month)
-	(y displayed-year))
+        (y displayed-year))
     (increment-calendar-month m y 1)
     (when (<= m 3)
       (let ((d (calendar-day-of-week (list 1 1 y))))
-	(cond ((= d 6)
-	       (list (list (list 1 3 y)
-			   "New Year's Day Bank Holiday")))
-	      ((= d 0)
-	       (list (list (list 1 2 y)
-			   "New Year's Day Bank Holiday"))))))))
+        (cond ((= d 6)
+               (list (list (list 1 3 y)
+                           "New Year's Day Bank Holiday")))
+              ((= d 0)
+               (list (list (list 1 2 y)
+                           "New Year's Day Bank Holiday"))))))))
 
 ;;N.B. It is assumed that 25th and 26th are defined with holiday-fixed -
 ;;this function only returns any extra bank holiday(s) that are
@@ -610,8 +595,8 @@ started from a shell."
 (setq christian-holidays
       '((if all-christian-calendar-holidays
             (holiday-fixed 1 6 "Epiphany"))
-;	(holiday-easter-etc 0 "Easter Sunday")
-;	(holiday-easter-etc -2 "Good Friday")
+        ;;   (holiday-easter-etc 0 "Easter Sunday")
+        ;;   (holiday-easter-etc -2 "Good Friday")
         (holiday-easter-etc -46 "Ash Wednesday")
         (if all-christian-calendar-holidays
             (holiday-easter-etc -63 "Septuagesima Sunday"))
@@ -621,8 +606,8 @@ started from a shell."
             (holiday-easter-etc -49 "Shrove Sunday"))
         (if all-christian-calendar-holidays
             (holiday-easter-etc -48 "Shrove Monday"))
-;	(if all-christian-calendar-holidays
-;	    (holiday-easter-etc -47 "Shrove Tuesday"))
+        ;;   (if all-christian-calendar-holidays
+        ;;       (holiday-easter-etc -47 "Shrove Tuesday"))
         (if all-christian-calendar-holidays
             (holiday-easter-etc -14 "Passion Sunday"))
         (if all-christian-calendar-holidays
@@ -647,7 +632,7 @@ started from a shell."
             (holiday-fixed 8 15 "Assumption"))
         (if all-christian-calendar-holidays
             (holiday-advent 0 "Advent"))
-;	(holiday-fixed 12 25 "Christmas")
+                                        ;   (holiday-fixed 12 25 "Christmas")
         (if all-christian-calendar-holidays
             (holiday-julian 12 25 "Eastern Orthodox Christmas"))))
 
@@ -656,8 +641,8 @@ started from a shell."
         ;; ("O" "Office block agenda"
         ;;  (
         ;;   ;; limits the agenda display to a single day
-        ;;   (agenda "" ((org-agenda-ndays 1))) 
-          
+        ;;   (agenda "" ((org-agenda-ndays 1)))
+
         ;;   (tags-todo "+PRIORITY=\"A\"")
         ;;   (tags-todo "computer|office|phone")
         ;;   (tags "project+CATEGORY=\"elephants\"")
@@ -667,14 +652,14 @@ started from a shell."
 
         ;;  ;; options set here apply to the entire block
         ;;  ((org-agenda-compact-blocks t))
-        ;;  ) 
+        ;;  )
 
         ;; ("c" todo #("DONE|CANCELLED" 0 14 (face org-warning)) nil)
-        
-        ;; ("w" todo #("WAITING" 0 7 (face org-warning)) nil) 
 
-        ("a" "" 
-         ((agenda "" 
+        ;; ("w" todo #("WAITING" 0 7 (face org-warning)) nil)
+
+        ("a" ""
+         ((agenda ""
                   ((org-agenda-ndays 7)
                    (org-agenda-start-on-weekday 1)
                    (org-agenda-remove-tags t)
@@ -684,36 +669,40 @@ started from a shell."
                    (org-agenda-time-grid nil)
                    (org-agenda-repeating-timestamp-show-all t)
                    (org-deadline-warning-days 15)
-                   (org-agenda-sorting-strategy 
-                     '(habit-up
-                       time-up
-                       priority-down
-                       category-keep
-                       todo-state-down
-                       ))
+                   (org-agenda-sorting-strategy
+                    '(habit-up
+                      time-up
+                      priority-down
+                      category-keep
+                      todo-state-down
+                      ))
                    ))
           )
          ((org-agenda-compact-blocks t)
           )
          )
 
-        ;; ("W" agenda "" ((org-agenda-ndays 21))) 
-        
+        ;; ("W" agenda "" ((org-agenda-ndays 21)))
+
         ("A" agenda ""
-         ((org-agenda-skip-function 
-           (lambda nil 
+         ((org-agenda-skip-function
+           (lambda nil
              (org-agenda-skip-entry-if
-              (quote notregexp) "\\=.*\\[#A\\]"))) 
+              (quote notregexp) "\\=.*\\[#A\\]")))
           (org-agenda-ndays 1)
           (org-agenda-overriding-header "Today's Priority #A tasks: "))
-         ) 
+         )
 
-        ;; ("u" alltodo "" 
-        ;;  ((org-agenda-skip-function 
+        ("u" "Unscheduled" todo ""
+         ((org-agenda-todo-ignore-scheduled t)))
+
+
+        ;; ("u" alltodo ""
+        ;;  ((org-agenda-skip-function
         ;;    (lambda nil
-        ;;      (org-agenda-skip-entry-if 
-        ;;       (quote scheduled) (quote deadline) 
-        ;;       (quote regexp) "<[^>]+>"))) 
+        ;;      (org-agenda-skip-entry-if
+        ;;       (quote scheduled) (quote deadline)
+        ;;       (quote regexp) "<[^>]+>")))
         ;;   (org-agenda-overriding-header "Unscheduled TODO entries: ")))
         ))
 
@@ -736,7 +725,7 @@ started from a shell."
 
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
 (define-key my-keys-minor-mode-map (kbd "C-x C-c") 'my-kill-emacs)
-(define-key my-keys-minor-mode-map (kbd "C-x p") 
+(define-key my-keys-minor-mode-map (kbd "C-x p")
   '(lambda () (interactive) (other-window -1)))
 (define-key my-keys-minor-mode-map (kbd "C-c C-g") 'goto-line)
 (define-key my-keys-minor-mode-map (kbd "C-c ;") 'comment-region)
@@ -749,29 +738,29 @@ started from a shell."
 (define-key my-keys-minor-mode-map (kbd "M-n") 'next-buffer)
 (define-key my-keys-minor-mode-map (kbd "M-p") 'previous-buffer)
 
-;| point-to  | previous   | next        |
-;|-----------+------------+-------------|
-;| char      | <left>     | <right>     |
-;| word      | C/M-<left> | C/M-<right> |
-;| line      | <up>       | <down>      |
-;| paragraph | C-<up>     | C-<down>    |
+;; | point-to  | previous   | next        |
+;; |-----------+------------+-------------|
+;; | char      | <left>     | <right>     |
+;; | word      | C/M-<left> | C/M-<right> |
+;; | line      | <up>       | <down>      |
+;; | paragraph | C-<up>     | C-<down>    |
 
-;| point-to | start  | end      |
-;|----------+--------+----------|
-;| line     | C-a    | C-e      |
-;| sentence | M-a    | M-e      |
-;| screen   | M-<up> | M-<down> |
-;| file     | M-\<   | M-\>     |
+;; | point-to | start  | end      |
+;; |----------+--------+----------|
+;; | line     | C-a    | C-e      |
+;; | sentence | M-a    | M-e      |
+;; | screen   | M-<up> | M-<down> |
+;; | file     | M-\<   | M-\>     |
 
-;| window-to | key        |
-;|-----------+------------|
-;| top       | C-M-<down> |
-;| bottom    | C-M-<up>   |
+;; | window-to | key        |
+;; |-----------+------------|
+;; | top       | C-M-<down> |
+;; | bottom    | C-M-<up>   |
 
-;| centre-current |     |
-;|----------------+-----|
-;| point          | M-r |
-;| window         | C-l |
+;; | centre-current |     |
+;; |----------------+-----|
+;; | point          | M-r |
+;; | window         | C-l |
 
 ;;
 ;; for poxy macbook keyboard with only the arrow keys
@@ -889,10 +878,9 @@ started from a shell."
  ;; If there is more than one, they won't work right.
  )
 
-;; (with-temp-buffer 
+;; (with-temp-buffer
 ;;   (insert
 ;;    (shell-command-to-string "ocp-edit-mode emacs -load-global-config")
-;;    ) 
+;;    )
 ;;   (eval-buffer)
 ;;   )
-
