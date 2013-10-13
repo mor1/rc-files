@@ -204,11 +204,11 @@ started from a shell."
 
 (defun todo ()
   (interactive)
-  (find-file "~/me.git/todo/todo.org")
+  (find-file "~/me/todo/todo.org")
   )
 (defun notes ()
   (interactive)
-  (find-file "~/me.git/todo/notes.org")
+  (find-file "~/me/todo/notes.org")
   )
 
 (require 'calendar)
