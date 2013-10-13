@@ -428,69 +428,41 @@ started from a shell."
 ;;           '(lambda ()
 ;;              ))
 
-;; tuareg-mode
-;; (add-hook 'tuareg-mode-hook
-;;           '(lambda ()
-;;              (fci-mode 1)
-;;              (setq tuareg-lazy-= t) ; indent `=' like a standard keyword
-;;              (setq tuareg-lazy-paren t) ; indent [({ like standard keywords
-;;              (setq tuareg-in-indent 0) ; no indentation after `in' keywords
-;;              (auto-fill-mode 1) ; turn on auto-fill minor mode
-;; ;;              (setq tuareg-default-indent 2)
-;; ;;              (if (featurep 'sym-lock)   ; Sym-Lock customization only
-;; ;;                  (setq sym-lock-mouse-face-enabled nil))
-;; ;;                                         ; turn off special face under mouse
-;; ;;              (set-face-background caml-types-expr-face "slategray")
-;;              ))
+;; ocaml
 
-;; typerex-mode (ocaml)
-;; (add-hook 'typerex-mode-hook
-;;           (lambda ()
-;;             ))
-(autoload 'typerex-mode "typerex.el" "Major mode for editing Caml code" t)
-(push'("\\.ml[iylp]?" . typerex-mode) auto-mode-alist)
-(push '("\\.fs[ix]?" . typerex-mode) auto-mode-alist)
+;; ocp-indent
+(load-file (concat
+            (substring (shell-command-to-string "opam config var prefix") 0 -1)
+            "/share/typerex/ocp-indent/ocp-indent.el"
+            ))
 
-;; TypeRex mode configuration
-(setq ocp-server-command "/usr/local/bin/ocp-wizard")
-(setq typerex-in-indent 0)
-(setq-default indent-tabs-mode nil)
+;; merlin-mode
+(push (concat
+       (substring (shell-command-to-string "opam config var share") 0 -1)
+       "/emacs/site-lisp"
+       )
+      load-path)
 
-;; Uncomment to enable typerex command menu by right click
-(setq ocp-menu-trigger [mouse-3])
+(setq merlin-command
+      (concat
+       (substring (shell-command-to-string "opam config var bin") 0 -1)
+       "/ocamlmerlin"
+       ))
+(autoload 'merlin-mode "merlin" "Merlin mode" t)
 
-;; Uncomment make new syntax coloring look almost like Tuareg
-(setq ocp-theme "tuareg_like")
-;; Uncomment to disable new syntax coloring and use Tuareg
-;(setq ocp-syntax-coloring nil)
-
-;;;; Auto completion (experimental)
-;;;; Don't use M-x invert-face default with auto-complete! (emacs -r is OK)
-;;(add-to-list 'load-path "/Users/mort/.emacs.d/auto-complete-mode")
-;;(setq ocp-auto-complete t)
-
-;;;; Using <`> to complete whatever the context, and <C-`> for `
-;;(setq auto-complete-keys 'ac-keys-backquote-backslash)
-;;;; Options: nil (default), 'ac-keys-default-start-with-c-tab, 'ac-keys-two-dollar
-;;;; Note: this overrides individual auto-complete key settings
-
-;;;; I want immediate menu pop-up
-;;(setq ac-auto-show-menu 0.1)
-;;;; Short delay before showing help
-;;(setq ac-quick-help-delay 0.3)
-;;;; Number of characters required to start (nil to disable)
-;;(setq ac-auto-start 0)
-
-;;;; Uncomment to enable auto complete mode globally (independently of OCaml)
-;;(require 'auto-complete-config)
-;;(add-to-list 'ac-dictionary-directories "/Users/mort/.emacs.d/auto-complete-mode/ac-dict")
-;;(ac-config-default)
-;;(global-set-key (kbd "C-<tab>") 'auto-complete)
-
-;; For debugging only
-;;;;(setq ocp-debug t)
-;;;;(setq ocp-profile t)
-;;;;(setq ocp-dont-catch-errors t)
+(add-hook 'tuareg-mode-hook
+          '(lambda ()
+             (merlin-mode)
+             (setq indent-line-function 'ocp-indent-line)
+             (setq merlin-use-auto-complete-mode t)
+             ;; (setq tuareg-lazy-= t) ; indent `=' like a standard keyword
+             ;; (setq tuareg-lazy-paren t) ; indent [({ like standard keywords
+             ;; (setq tuareg-in-indent 0) ; no indentation after `in' keywords
+             (local-set-key (kbd "C-S-<up>") 'merlin-type-enclosing-go-up)
+             (local-set-key (kbd "C-S-<down>") 'merlin-type-enclosing-go-down)
+             ))
+(push'("\\.ml[iylp]?" . tuareg-mode) auto-mode-alist)
+(push '("\\.fs[ix]?" . tuareg-mode) auto-mode-alist)
 
 ;; org-mode: Holidays -- from <http://www.gnomon.org.uk/diary.html>
 
