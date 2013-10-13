@@ -259,50 +259,64 @@ started from a shell."
             (update-visual-wrap-column)))
         (setq windows (cdr windows))))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; mode hooks
-
 (defun unfill-and-check ()
   (interactive)
   (unfill-paragraph)
   (ispell-check-paragraph)
-)
+  )
 
 (defun fill-and-check ()
   (interactive)
   (fill-paragraph)
   (ispell-check-paragraph)
-)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; mode hooks
+
+(add-hook 'find-file-hook
+          '(lambda ()
+             (message "running find-file-hook")
+             (fci-mode t)
+             (whitespace-mode t)
+             (turn-on-visual-line-mode)
+             (hl-line-mode t)
+             (force-my-keys-minor-mode)
+             ))
 
 (add-hook 'text-mode-hook
           '(lambda ()
-             (fci-mode t)
-             (flyspell-mode 1)
-             (hl-line-mode 1)
-             (turn-on-visual-line-mode)
+             (message "running text-mode-hook")
+             (flyspell-mode t)
              (set-visual-wrap-column (+ fill-column 2))
-             ;; (local-set-key (kbd "M-q") 'fill-paragraph)
-             (auto-fill-mode 1)
-             (local-set-key (kbd "M-q") 'unfill-and-check)
-;; 'fill-and-check)
-             (local-set-key (kbd "S-<tab>") 
+             (auto-fill-mode t)
+             (local-set-key (kbd "M-q") 'unfill-and-check) ;; 'fill-and-check)
+             (local-set-key (kbd "S-<tab>")
                             'flyspell-auto-correct-previous-word)
              ))
 
-(add-hook 'prog-mode-hook
-          '(lambda ()
-             (fci-mode t)
-             (hl-line-mode 1)
-;             (turn-on-visual-line-mode)
-;             (set-visual-wrap-column 0)
-             (flyspell-prog-mode)
-             (local-set-key (kbd "M-q") 'fill-paragraph)
-             (local-set-key (kbd "%") 'match-paren)
-             ))
+;; prog-mode is not yet universally supported, so apply manually where missing
+(defun prog-mode-hook-f ()
+  (interactive)
+  (message "running prog-mode-hook")
+  (linum-mode)
+  (set-visual-wrap-column 0)
+  (flyspell-prog-mode)
+  (whitespace-cleanup)
+  (auto-fill-mode nil)
+  (local-set-key (kbd "M-q") 'fill-paragraph)
+  (local-set-key (kbd "%") 'match-paren)
+  (local-unset-key (kbd "S-<tab>"))
+  )
+(add-hook 'prog-mode-hook 'prog-mode-hook-f)
+(mapc (lambda (mode-hook) (add-hook mode-hook 'prog-mode-hook-f))
+      '(tuareg-mode-hook
+        coffee-mode-hook
+        ))
 
-(add-hook 'org-mode-hook 
-          '(lambda () 
+(add-hook 'org-mode-hook
+          '(lambda ()
              (local-set-key (kbd "C-c a") 'org-agenda)
              (local-set-key (kbd "S-<up>") 'org-move-line-up)
              (local-set-key (kbd "S-<down>") 'org-move-line-down)
@@ -356,15 +370,14 @@ started from a shell."
              (turn-on-eldoc-mode)
              ))
 
-(add-hook 'ecmascript-mode-hook
-          '(lambda ()
-;             (setq c-basic-offset 4)
-;             (c-set-style "java")
-             ))
+;; (add-hook 'ecmascript-mode-hook
+;;           '(lambda ()
+;;              (setq c-basic-offset 4)
+;;              (c-set-style "java")
+;;              ))
 
 (add-hook 'coffee-mode-hook
           '(lambda ()
-             (fci-mode t)
              ;; Compile '.coffee' files on every save
              ;; (and (file-exists-p (buffer-file-name))
              ;;      (file-exists-p (coffee-compiled-file-name))
@@ -770,6 +783,8 @@ started from a shell."
 
 ;;
 ;; for poxy macbook keyboard with only the arrow keys
+(define-key my-keys-minor-mode-map (kbd "C-<up>") 'backward-paragraph)
+(define-key my-keys-minor-mode-map (kbd "C-<down>") 'forward-paragraph)
 (define-key my-keys-minor-mode-map (kbd "M-<up>") 'warp-to-top-of-window)
 (define-key my-keys-minor-mode-map (kbd "M-<down>") 'warp-to-bottom-of-window)
 (define-key my-keys-minor-mode-map (kbd "C-M-<down>") 'line-to-top-of-window)
@@ -788,18 +803,22 @@ started from a shell."
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   t " my-keys" 'my-keys-minor-mode-map)
-(my-keys-minor-mode 1)
+
+;; (my-keys-minor-mode 1)
+
 (defun my-minibuffer-setup-hook ()
   (my-keys-minor-mode 0))
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
 
-(defadvice load (after give-my-keybindings-priority)
-  "Try to ensure that my keybindings always have priority."
+;; (defadvice load (after give-my-keybindings-priority)
+;;   "Try to ensure that my keybindings always have priority."
+(defun force-my-keys-minor-mode ()
+  (interactive)
   (if (not (eq (car (car minor-mode-map-alist)) 'my-keys-minor-mode))
       (let ((mykeys (assq 'my-keys-minor-mode minor-mode-map-alist)))
         (assq-delete-all 'my-keys-minor-mode minor-mode-map-alist)
         (add-to-list 'minor-mode-map-alist mykeys))))
-(ad-activate 'load)
+;; (ad-activate 'load)
 
 ;; default font
 
