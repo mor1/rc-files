@@ -17,3 +17,6 @@ if tty -s; then
     cd
     echo
 fi
+
+# OPAM configuration
+. /Users/mort/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
