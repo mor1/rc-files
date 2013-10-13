@@ -74,9 +74,9 @@ aenv MANPATH /usr/X11R6/man
 aenv NODE_PATH /usr/local/lib/node
 
 ## stupid proxy settings
-# export http_proxy="http://proxy.nottingham.ac.uk:8080"
-# export http_proxy="http://wwwcache.cs.nott.ac.uk:3128"
-# export no_proxy="localhost,127.0.0.1"
+export http_proxy="http://proxy.nottingham.ac.uk:8080"
+export http_proxy="http://wwwcache.cs.nott.ac.uk:3128"
+export no_proxy="localhost,127.0.0.1"
 
 ## cabal, haskell package management (for pandoc)
 aenv MANPATH ~/.cabal/share/man
@@ -164,7 +164,5 @@ source /usr/local/Cellar/git/1.7.9.5/etc/bash_completion.d/git-completion.bash
 #export NIX_PATH=/nix/var/nix/profiles/per-user/$(whoami)/channels/nixos
 
 ## OPAM configuration
-
 . /Users/mort/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 export OCAMLRUNPARAM=b
-
