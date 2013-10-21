@@ -10,8 +10,8 @@
     ci = commit
     br = branch -avv
     co = checkout
-    dft = diff --word-diff=color
-    dfp = diff -R --color
+    df = diff --word-diff=color
+    dfw = diff -R --color
     l = log --all --decorate=full
     lg = log --all --graph --decorate=full --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
     llg = log --all --color-words --graph --decorate=full --stat
@@ -41,4 +41,3 @@
 
 [diff]
     renames = true
-
