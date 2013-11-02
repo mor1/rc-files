@@ -1,43 +1,44 @@
 [include]
-    path = ~/.gitlocal
+	path = ~/.gitlocal
 
 [alias]
-    serve = "!git daemon $1 --reuseaddr --verbose --base-path=. --export-all ./.git"
-    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
-    debug = !GIT_PAGER= gdb --args git
-    st = status
-    ci = commit
-    br = branch -avv
-    co = checkout
-    df = diff --word-diff=color
-    dfw = diff -R --color
-    l = log --all --decorate=full
-    lg = log --all --graph --decorate=full --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
-    llg = log --all --color-words --graph --decorate=full --stat
-    ldiff = log --all -p --decorate=full --word-diff=color
-    timeline = log --oneline --decorate --graph
-    human = "name-rev --refs=refs/heads/* --stdin"
-    who = shortlog -s --
-    patdiff = difftool -y -x patdiff
+	serve = "!git daemon $1 --reuseaddr --verbose --base-path=. --export-all ./.git"
+	whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+	debug = !GIT_PAGER= gdb --args git
+	st = status
+	ci = commit
+	br = branch -avv
+	co = checkout
+	df = diff --word-diff=color
+	dfw = diff -R --color
+	l = log --all --decorate=full
+	lg = log --all --graph --decorate=full --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+	llg = log --all --color-words --graph --decorate=full --stat
+	ldiff = log --all -p --decorate=full --word-diff=color
+	timeline = log --oneline --decorate --graph
+	human = "name-rev --refs=refs/heads/* --stdin"
+	who = shortlog -s --
+	patdiff = difftool -y -x patdiff
 
 [color]
-    ui = true
+	ui = true
+	diff = true
 
 [core]
-    pager = less -+$LESS -FRXi
-    autocrlf = input
-    whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	pager = less -+$LESS -FRXi
+	autocrlf = input
+	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
 [rerere]
-    enabled = true
-    autoupdate = true
+	enabled = true
+	autoupdate = true
 
 [push]
-    default = tracking
+	default = tracking
 
 [merge]
-    conflictstyle = diff3
+	conflictstyle = diff3
 
 [diff]
-    renames = true
+	renames = true
