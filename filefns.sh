@@ -57,6 +57,7 @@ trawl () {
     -or -name "*.inc"\
     -or -name "*.less"\
     -or -name "*.md"\
+    -or -name "*.nix"\
     -or -name "*.php"\
     -or -name "*.py"\
     -or -name "*.tex"\
@@ -173,7 +174,7 @@ md2tex () {
         -o ${1%.md}.latex ${1}
 }
 
-md2doc () {
+md2docx () {
     pandoc -S --latex-engine=xelatex \
         -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia \
         -o ${1%.md}.docx ${1}
@@ -190,6 +191,7 @@ letter2tex () {
     pandoc -S --latex-engine=xelatex \
         -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
         -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
+        -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in \
         -o ${1%.md}.latex ${1}
 }
 
@@ -197,6 +199,7 @@ letter2doc () {
     pandoc -S --latex-engine=xelatex \
         -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
         -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
+        -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in \
         -o ${1%.md}.docx ${1}
 }
 
@@ -204,6 +207,7 @@ letter2pdf () {
     pandoc -S --latex-engine=xelatex \
         -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
         -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
+        -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in \
         -o ${1%.md}.pdf ${1}
 }
 
