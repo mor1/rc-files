@@ -33,7 +33,7 @@ hw2 () {
 stmwww() {
   slogin -p 722 -X stthnorg@stthomasmorewollaton.org.uk
 }
-  
+
 mediapc () {
   slogin -X root@mediapc.home
 }

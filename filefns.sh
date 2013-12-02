@@ -28,8 +28,8 @@ rgrep () {
     return 1
   fi
   rgrep_pattern=$1 ; shift ; rgrep_fnames= ;
-  for n in `find . -type d -print` ; do 
-    for i in "$@" ; do 
+  for n in `find . -type d -print` ; do
+    for i in "$@" ; do
       rgrep_fnames="$rgrep_fnames"\ $n/"$i" ;
     done ;
     grep -s "$rgrep_pattern" $rgrep_fnames ;
@@ -116,7 +116,7 @@ symt () {
         && { symt $args ${1}/{*,.*} ; };
 
         shift ;
-    done 
+    done
 
     return $retval
 }
@@ -128,9 +128,9 @@ symt () {
 rfc () {
   if [ $# = 1 ]; then
     if [ "$1" = "-index" ]; then
-      curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt 
+      curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt
     elif [ ! -s ~/docs/rfcs/rfc${1}.txt ] ; then
-      curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt 
+      curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt
     fi
     less ~/docs/rfcs/rfc${1}.txt
   else
@@ -154,7 +154,7 @@ mnm () {
 # lines-of-code; a bit heuristic :-)
 #
 
-loc () { 
+loc () {
   owc=`cat "$1" | wc -l` ;
   cwc=`cat "$1" | egrep -v '(^[ [:cntrl:]]*$|[ [:cntrl:]]*//.*|^[ [:cntrl:]]*/\*|^[ [:cntrl:]]*(\{|\})[ [:cntrl:]]*|\*\*|^[ [:cntrl:]]*\*[ [:cntrl:]]*|^[ [:cntrl:]]*\*.*\*$|^#[ [:cntrl:]]*include)' | wc -l`
   ctwc=`cat "$1" | egrep -v '(CAM_TRACE\(|assert\(|TRC\(|DB\(|ENTER\(|LEAVE\(|^[ [:cntrl:]]*$|[ [:cntrl:]]*//.*|^[ [:cntrl:]]*/\*|^[ [:cntrl:]]*(\{|\})[ [:cntrl:]]*|\*\*|^[ [:cntrl:]]*\*[ [:cntrl:]]*|^[ [:cntrl:]]*\*.*\*$|^#[ [:cntrl:]]*include)' |wc -l`
