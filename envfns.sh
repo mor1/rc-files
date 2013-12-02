@@ -32,7 +32,7 @@ denv () {
 
         denv_tmp=${!1} ## bash v2+
         case "$denv_tmp" in
-          *:${2}:* ) 
+          *:${2}:* )
                    denv_tmp=${denv_tmp%:${2}:*}:${denv_tmp#*:${2}:}
                    ;;
 
@@ -49,7 +49,7 @@ denv () {
                    ;;
         esac
 
-        eval ${1}=$denv_tmp 
+        eval ${1}=$denv_tmp
         export ${1}
 }
 
@@ -92,18 +92,18 @@ cenv () {
                 echo "Usage: cenv <env_var>"
                 return 1
         fi
-        
+
         cenv_tmp=$(eval echo $\{$1\}) ;
 
-        while [ "$cenv_tmp" != "" ] ; do 
-                aenv $1 ${cenv_tmp##*:} > /dev/null 
+        while [ "$cenv_tmp" != "" ] ; do
+                aenv $1 ${cenv_tmp##*:} > /dev/null
 
                 # really want to "denv cenv_tmp {wotsit} but 4 sed procs?!
-                if [ "$cenv_tmp" = "${cenv_tmp%:*}" ]; then 
-                        cenv_tmp="" ; 
-                else 
-                        cenv_tmp=${cenv_tmp%:*} ; 
-                fi ; 
+                if [ "$cenv_tmp" = "${cenv_tmp%:*}" ]; then
+                        cenv_tmp="" ;
+                else
+                        cenv_tmp=${cenv_tmp%:*} ;
+                fi ;
         done
 }
 
@@ -115,7 +115,7 @@ PS1='\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\W\$; '
 export PS1
 
 ps1txt () {
-  PS1=': ${KERNEL} \u@\h:\W\$; ' 
+  PS1=': ${KERNEL} \u@\h:\W\$; '
 }
 
 ps1xt () {
