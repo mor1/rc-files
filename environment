@@ -78,7 +78,7 @@ export no_proxy="localhost,127.0.0.1"
 case $PLATFORM in
     Linux )
         ## GIT bash completion
-        source /etc/bash_completion.d/git-prompt.sh
+        source /etc/bash_completion.d/git-prompt
         ;;
 
     Darwin )
