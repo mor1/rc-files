@@ -25,7 +25,7 @@ alias curl="curl --noproxy localhost,127.0.0.1"
 
 alias coffee="rlwrap coffee"
 
-alias use-rvm='aenv PATH ~/.rvm/bin && aenv PATH ~/.rvm/gems/ruby-1.9.3-p125/bin && [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm" && rvm use 1.9.3@global'
+alias use-rvm='aenv PATH ~/.rvm/bin && aenv PATH ~/.rvm/gems/ruby-2.1.0/bin && aenv PATH ~/.rvm/gems/ruby-2.1.0@global/bin && [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm" && rvm use 2.1.0@global'
 alias use-ocaml='unset CAML_LD_LIBRARY_PATH && which opam && eval $(opam config env)'
 alias use-proxy='export http_proxy=http://wwwcache.cs.nott.ac.uk:3128'
 alias no-proxy='unset http_proxy'
