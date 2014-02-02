@@ -21,8 +21,8 @@
 # handy shell functions
 #
 
+[ -r $SD/envfns.sh ] && source ./envfns.sh
 SD=~/src/sh-scripts
-[ -r $SD/envfns.sh ] && source $SD/envfns.sh
 [ -r $SD/filefns.sh ] && source $SD/filefns.sh
 [ -r $SD/numfns.sh ] && source $SD/numfns.sh
 [ -r $SD/hosts.sh ] && source $SD/hosts.sh
