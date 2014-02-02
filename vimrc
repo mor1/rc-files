@@ -6,7 +6,7 @@ set ruler<
 runtime ftplugin/man.vim
 set autoindent
 set expandtab
-set nowrap
+set wrap
 set hlsearch
 set showmatch
 set ignorecase
