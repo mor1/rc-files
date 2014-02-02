@@ -1,3 +1,7 @@
+Host *.recoil.org
+     User mort
+     IdentityFile ~/.ssh/bitbucket-key
+
 Host mirage-xen
      User root
      Hostname localhost
