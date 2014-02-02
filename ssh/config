@@ -37,13 +37,6 @@ Host *.compute.amazonaws.com
      User ec2-user
      IdentityFile ~/.ssh/dataware-catalog-aws.pem
 
-## broken now marian decommissioned :(
-# Host irc-tunnel
-#      User rmm
-#      HostName marian.cs.nott.ac.uk
-#      IdentityFile ~/.ssh/nottingham-key
-#      LocalForward 7000 chat.freenode.net:7000
-
 Host *.stthomasmorewollaton.org.uk
      User stthnorg
      Port 722
