@@ -34,3 +34,6 @@ alias pdfmerge="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Re
 alias qv="qlmanage -p"
 alias emacs="open /usr/local/Cellar/emacs/24.2/Emacs.app"
 alias nixos="source /Users/$(whoami)/.nix-profile/etc/profile.d/nix.sh && export NIX_PATH=/nix/var/nix/profiles/per-user/$(whoami)/channels/nixos"
+
+alias mirage-version="\opam list | grep mirage"
+alias mirage-config='\opam list | grep mirage-net- | cut -d " " -f 1 | cut -d "-" -f 3'
