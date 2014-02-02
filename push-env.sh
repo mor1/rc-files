@@ -1,22 +1,29 @@
 #!/usr/bin/env bash
+#
+# Copyright (C) 2000--2014 Richard Mortier <mort@cantab.net>.  All Rights
+# Reserved.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as
+# published by the Free Software Foundation
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+# USA.
 
 DEST=$1
-UNAME=$2
+USER=$2
 if [ ! -z "${UNAME}" ]; then UNAME=${UNAME}@ ; fi
 
-ssh ${UNAME}${DEST} "mkdir -p ~/src"
-ssh ${UNAME}${DEST} "rm -rf ~/src/sh-scripts.git"
-scp -r ~/src/sh-scripts.git ${UNAME}${DEST}:~/src/sh-scripts.git
-
-ssh ${UNAME}${DEST} "mkdir -p ~/install"
-ssh ${UNAME}${DEST} "rm -rf ~/install/config.git"
-scp -r ~/install/config.git ${UNAME}${DEST}:~/install/config.git
-            
-# ssh ${DEST} mkdir -p /home/mort/src
-# ssh ${DEST} "chmod -R u+w ~/src/sh/*"
-# ssh ${DEST} "chmod u+w ~/.bash_aliases ~/.bash_profile ~/.bashrc ~/.environment"
-
-# scp -r ${HOME}/src/sh ${DEST}:~/src/
-# scp -r ${HOME}/.ssh/sssha ${DEST}:~/.ssh/
-
-# scp ${HOME}/.bash_aliases ${HOME}/.bash_profile ${HOME}/.bashrc ${HOME}/.environment ${DEST}:~
+ssh ${USER}${DEST}                              \
+    "mkdir -p ~/src                             \
+      && cd ~/src                               \
+      && git clone ${RCFILES}                   \
+      && ./install.sh                           \
+      && git clone ${SHFILES} "
