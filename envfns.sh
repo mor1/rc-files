@@ -106,22 +106,3 @@ cenv () {
                 fi ;
         done
 }
-
-#
-# PS1 xterm magic
-#
-
-PS1='\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\W\$; '
-export PS1
-
-ps1txt () {
-  PS1=': ${KERNEL} \u@\h:\W\$; '
-}
-
-ps1xt () {
-  PS1='\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\W\$; '
-}
-
-rsz () {
-  eval $(resize)
-}
