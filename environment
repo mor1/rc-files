@@ -72,15 +72,16 @@ aenv MANPATH /usr/X11R6/man
 
 aenv NODE_PATH /usr/local/lib/node
 
-## stupid proxy settings
-export http_proxy="http://proxy.nottingham.ac.uk:8080"
-export http_proxy="http://wwwcache.cs.nott.ac.uk:3128"
+## stupid proxy settings; default off!
+# export http_proxy="http://proxy.nottingham.ac.uk:8080"
+# export http_proxy="http://wwwcache.cs.nott.ac.uk:3128"
 export no_proxy="localhost,127.0.0.1"
 
 case $PLATFORM in
     Linux )
         ## GIT bash completion
-        source /etc/bash_completion.d/git-prompt
+        # source /etc/bash_completion.d/git-prompt
+        source /etc/bash_completion
         ;;
 
     Darwin )
