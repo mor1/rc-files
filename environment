@@ -85,7 +85,6 @@ case $PLATFORM in
         ;;
 
     Darwin )
-
         ## ec2 ami tools
         # export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
         # export EC2_PRIVATE_KEY="$(/bin/ls $HOME/.ec2/pk-*.pem)"
@@ -104,6 +103,9 @@ case $PLATFORM in
         ## GIT bash completion
         source /usr/local/Cellar/git/1.8.5.3/etc/bash_completion.d/git-completion.bash
         source /usr/local/Cellar/git/1.8.5.3/etc/bash_completion.d/git-prompt.sh
+
+        ## Android
+        export ANDROID_HOME=/usr/local/opt/android-sdk
 
         ## nix
         # no-go as nix dmg not mounted
