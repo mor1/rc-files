@@ -25,6 +25,7 @@ for f in ${INSTALL_DIR}/*; do
   case "$bf" in
       "floatlg.jpg" | "install.sh" | "push-env.sh"                  \
           | "solarized-dark-mort.itermcolors" | "macbook-uk.layout" \
+          | "envfns.sh"
           )
 
           ;;
@@ -37,5 +38,5 @@ for f in ${INSTALL_DIR}/*; do
 done
 
 ## i value consistency in my environemnts. so what?
-
+rm ~/.bashrc
 ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
