@@ -42,6 +42,13 @@ Host *.stthomasmorewollaton.org.uk
      Port 722
      IdentityFile ~/.ssh/stmwww-key
 
+Host irc-tunnel
+     User mort
+     HostName punk.recoil.org
+     IdentityFile ~/.ssh/bitbucket-key
+     LocalForward 7000 chat.freenode.net:7000
+
+
 ## very handy for firewalls! :)
 # Host github.com
 #    User git
