@@ -81,3 +81,6 @@ mediapcfs() {
 cuclfs () {
   sshfs rmm1002@slogin-serv.cl.cam.ac.uk:$1 ~/l/cucl
 }
+xenfs () {
+    sshfs -p 2233 localhost: ~/l/xen
+}
