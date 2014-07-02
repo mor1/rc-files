@@ -7,6 +7,7 @@
     whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
     debug = !GIT_PAGER= gdb --args git
     st = status
+    rev = rev-parse HEAD
     ci = commit
     br = branch -avv
     co = checkout
