@@ -43,7 +43,7 @@ LHOST=$(uname -n)
 SHOST=${LHOST%%.*}
 KERNEL=$(uname -r)
 CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../../../../../..:../../../../../../../..:../../../../../../../../..:../../../../../../../../../..:$HOME
-EDITOR=/usr/bin/vi
+EDITOR=emacsclient ## /usr/bin/vi
 PAGER="less -FRXi"
 MANPAGER="less -FRXi"
 export LHOST SHOST KERNEL CDPATH EDITOR PAGER MANPAGER
@@ -61,8 +61,9 @@ aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
 aenv PATH /usr/X11R6/bin
 aenv PATH /usr/local/texlive/2013/bin/x86_64-darwin
-aenv PATH /usr/local/share/python
 aenv PATH /usr/local/share/npm/bin
+
+aenv PATH $HOME/.rvm/bin
 aenv PATH ~/bin
 
 unset MANPATH
@@ -113,6 +114,46 @@ case $PLATFORM in
         #export NIX_PATH=/nix/var/nix/profiles/per-user/$(whoami)/channels/nixos
 
 esac
+
+#
+# bash settings
+#
+
+command_oriented_history=TRUE # multi-line commands become single line
+notify=TRUE # support notifications
+
+# so bash doesn't do variable expansion on (eg.) \w in PS1 -- consider
+# the case of a dir. called "`rm -rf ~`" ... :-> (ask Austin)
+export NO_PROMPT_VARS
+set -o noclobber # require explicit overwrite when redirecting
+
+#
+# history settings
+#
+
+shopt -s histappend # continue appending, don't delete periodically
+export PROMPT_COMMAND="history -a" # add every command to history
+export HISTIGNORE="&:l[sl][a]:[bf]g:exit:[ \t]"
+export HISTCONTROL=ignoreboth:erasedups
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+
+#
+# prompt settings
+#
+
+source ~/src/rc-files/colours.sh
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWUPSTREAM="auto"
+GIT_PS1_SHOWCOLORHINTS=false
+PROMPT_COMMAND='__git_ps1 \
+  "\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
+  "\[$COLOR_OFF\]\$; " \
+  "#%s "
+  '
+export PROMPT_COMMAND
 
 ## cabal, haskell package management (for pandoc)
 aenv MANPATH ~/.cabal/share/man
@@ -178,42 +219,8 @@ export OCAMLRUNPARAM=b
 ## asciidoc -- required to rung things via XML stage
 export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
 
-#
-# bash settings
-#
+# OPAM configuration
+. /Users/mort/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
-command_oriented_history=TRUE # multi-line commands become single line
-notify=TRUE # support notifications
-
-# so bash doesn't do variable expansion on (eg.) \w in PS1 -- consider
-# the case of a dir. called "`rm -rf ~`" ... :-> (ask Austin)
-export NO_PROMPT_VARS
-set -o noclobber # require explicit overwrite when redirecting
-
-#
-# history settings
-#
-
-shopt -s histappend # continue appending, don't delete periodically
-export PROMPT_COMMAND="history -a" # add every command to history
-export HISTIGNORE="&:l[sl][a]:[bf]g:exit:[ \t]"
-export HISTCONTROL=ignoreboth:erasedups
-export HISTSIZE=10000
-export HISTFILESIZE=10000
-
-#
-# prompt settings
-#
-
-source ~/src/rc-files/colours.sh
-GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWSTASHSTATE=true
-GIT_PS1_SHOWUNTRACKEDFILES=true
-GIT_PS1_SHOWUPSTREAM="auto"
-GIT_PS1_SHOWCOLORHINTS=false
-PROMPT_COMMAND='__git_ps1 \
-  "\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
-  "\[$COLOR_OFF\]\$; " \
-  "#%s "
-  '
-export PROMPT_COMMAND
+# added by travis gem
+[ -f /Users/mort/.travis/travis.sh ] && source /Users/mort/.travis/travis.sh
