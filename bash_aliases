@@ -5,6 +5,7 @@ alias la="ls -A"
 alias lla="ls -lA"
 alias l="ls"
 
+alias e="emacsclient"
 alias g="grep -Hn"
 alias less="less -FRXi"
 alias m="less -E"
@@ -19,7 +20,7 @@ alias ctime="python -c 'import sys,time; print time.ctime(float(sys.argv[1]))'"
 alias bcat="hexdump -C"
 
 alias github-tunnel="ssh -f -N github-tunnel"
-alias irc-tunnel="ps aux | \grep 'ssh -f -N irc-tunnel' | grep -v grep | tr -s ' ' | cut -d ' ' -f 2 | xargs kill -9 ; ssh -f -N irc-tunnel"
+alias irc-tunnels="ps aux | \grep -E -- '-tunnel$' | tr -s ' ' | cut -d ' ' -f 2 | xargs kill -9 ; ssh -f -N irc-tunnel ; ssh -f -N opw-tunnel"
 
 alias curl="curl --noproxy localhost,127.0.0.1"
 
@@ -37,3 +38,5 @@ alias nixos="source /Users/$(whoami)/.nix-profile/etc/profile.d/nix.sh && export
 
 alias mirage-version="\opam list | grep mirage"
 alias mirage-config='\opam list | grep mirage-net- | cut -d " " -f 1 | cut -d "-" -f 3'
+
+alias eject="diskutil unmount $1"
