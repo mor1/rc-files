@@ -26,6 +26,10 @@ mediapc () {
     slogin -X root@mediapc.home
 }
 
+paws () {
+    slogin paws@vpn.publicaccesswifi.org
+}
+
 recoil () {
     slogin -X punk.recoil.org
 }
