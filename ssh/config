@@ -1,3 +1,7 @@
+Host *.publicaccesswifi.org
+     User paws
+     IdentityFile ~/.ssh/bitbucket-key
+
 Host *.recoil.org
      User mort
      IdentityFile ~/.ssh/bitbucket-key
@@ -48,6 +52,11 @@ Host irc-tunnel
      IdentityFile ~/.ssh/bitbucket-key
      LocalForward 7000 chat.freenode.net:7000
 
+Host opw-tunnel
+     User mort
+     HostName punk.recoil.org
+     IdentityFile ~/.ssh/bitbucket-key
+     LocalForward 7070 irc.gnome.org:7000
 
 ## very handy for firewalls! :)
 # Host github.com
