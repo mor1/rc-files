@@ -80,8 +80,8 @@ case $PLATFORM in
         source /etc/bash_completion
         ## GIT bash completion
         source /etc/bash_completion.d/git
-        [ -r "~/.git-prompt.sh" ] && \
-            source ~/.git-prompt.sh ## for old debian with too oldgit completion
+        ## debian has too old git completion
+        [ -r ~/.git-prompt.sh ] && source ~/.git-prompt.sh
         ;;
 
     Darwin )
