@@ -23,9 +23,8 @@ INSTALL_DIR=$(pwd)
 for f in ${INSTALL_DIR}/*; do
   bf=$(basename $f)
   case "$bf" in
-      "floatlg.jpg" | "install.sh" | "push-env.sh"                  \
+      "floatlg.jpg" | "install.sh" | "push-env.sh" | "envfns.sh"    \
           | "solarized-dark-mort.itermcolors" | "macbook-uk.layout" \
-          | "envfns.sh"
           )
 
           ;;
