@@ -1,4 +1,10 @@
-Host *.publicaccesswifi.org
+Host ucn-server
+     HostName horizab4.memset.net
+     User mort
+     IdentityFile ~/.ssh/bitbucket-key
+
+Host paws-server
+     HostName vpn.publicaccesswifi.org
      User paws
      IdentityFile ~/.ssh/bitbucket-key
 
