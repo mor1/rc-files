@@ -77,9 +77,15 @@ export no_proxy="localhost,127.0.0.1"
 
 case $PLATFORM in
     Linux )
-        source /etc/bash_completion
-        ## GIT bash completion
-        source /etc/bash_completion.d/git
+        for d in \
+            /etc/bash_completion \ # ubuntu, debian
+            /etc/bash_completion.d \ # centos
+            ;
+        do
+            ## GIT bash completion
+            [ -d $d ] && source $d/git
+        done
+
         ## debian has too old git completion
         [ -r ~/.git-prompt.sh ] && source ~/.git-prompt.sh
         ;;
