@@ -78,8 +78,8 @@ export no_proxy="localhost,127.0.0.1"
 case $PLATFORM in
     Linux )
         for d in \
-            /etc/bash_completion \ # ubuntu, debian
-            /etc/bash_completion.d \ # centos
+            /etc/bash_completion \
+            /etc/bash_completion.d \
             ;
         do
             ## GIT bash completion
