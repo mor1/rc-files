@@ -17,7 +17,12 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 # USA.
 
+# NB. this script assumes it is run from the directory of the rc-files repo
+
 set -ex
+
+## capture any existing authorized keys
+[ -s ~/.ssh/authorized_keys ] && mv ~/.ssh/authorized_keys ssh
 
 INSTALL_DIR=$(pwd)
 for f in ${INSTALL_DIR}/*; do
@@ -37,5 +42,5 @@ for f in ${INSTALL_DIR}/*; do
 done
 
 ## i value consistency in my environemnts. so what?
-rm ~/.bashrc
+rm -f ~/.bashrc
 ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
