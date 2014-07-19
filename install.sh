@@ -44,3 +44,11 @@ done
 ## i value consistency in my environemnts. so what?
 rm -f ~/.bashrc
 ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
+
+## many linux distros appear to have old git-prompt.sh which breaks things
+GITPROMPT_SH=https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh
+case $(uname -s) in
+    Linux )
+        wget $GITPROMPT_SH -O ~/.git-prompt.sh
+        ;;
+esac
