@@ -5,7 +5,7 @@ Host ucn-server
 
 Host paws-server
      HostName vpn.publicaccesswifi.org
-     User paws
+     User mort
      IdentityFile ~/.ssh/bitbucket-key
 
 Host *.recoil.org
