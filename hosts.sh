@@ -27,7 +27,7 @@ mediapc () {
 }
 
 paws () {
-    slogin paws@vpn.publicaccesswifi.org
+    slogin paws-server
 }
 
 recoil () {
@@ -48,6 +48,10 @@ stmwww () {
 
 stratus () {
     slogin -X stratus.horizon.ac.uk
+}
+
+ucn () {
+    slogin -X ucn-server
 }
 
 #
