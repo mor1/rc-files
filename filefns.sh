@@ -1,41 +1,30 @@
 #
 # Some file related bash shell functions
 #
-# Copyright (C) 2000 Richard Mortier <mort@cantab.net>.  All Rights
+# Copyright (C) 2000-2014 Richard Mortier <mort@cantab.net>. All Rights
 # Reserved.
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License version 2 as published by the Free
+# Software Foundation
 #
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-# USA.
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307, USA.
 
 #
-# recursive grep; note need for quotes, and the existence of GNU grep
+# open emacs appropriately
 #
 
-rgrep () {
-  if [ $# -lt 2 ]; then
-    echo "Usage: rgrep <pattern> '<filespec1>' '<filespec2>' ..."
-    return 1
-  fi
-  rgrep_pattern=$1 ; shift ; rgrep_fnames= ;
-  for n in `find . -type d -print` ; do
-    for i in "$@" ; do
-      rgrep_fnames="$rgrep_fnames"\ $n/"$i" ;
-    done ;
-    grep -s "$rgrep_pattern" $rgrep_fnames ;
-    rgrep_fnames= ;
-  done ;
-  rgrep_pattern= ; rgrep_fnames= ;
+e () {
+    SERVER_SOCK=/tmp/emacs-$USER/server
+    [ -S $SERVER_SOCK ] && \
+        emacsclient -n -s $SERVER_SOCK "$@" || \
+            open -a /Applications/Emacs.app --args "$@"
 }
 
 #
@@ -48,12 +37,10 @@ trawl () {
     -or -name "Make*"\
     -or -name "README*"\
     -or -name "*.bib"\
-    -or -name "*.cc"\
-    -or -name "*.css"\
+    -or -name "*.cc" -or -name "*.hh"\
+    -or -name "*.xml" -or -name "*.html" -or -name "*.css"\
     -or -name "*.el"\
-    -or -name "*.fs"\
-    -or -name "*.fs[xi]"\
-    -or -name "*.hh"\
+    -or -name "*.fs" -or -name "*.fs[xi]"\
     -or -name "*.inc"\
     -or -name "*.less"\
     -or -name "*.md"\
@@ -61,8 +48,7 @@ trawl () {
     -or -name "*.php"\
     -or -name "*.py"\
     -or -name "*.tex"\
-    -or -name "*.xml"\
-    -or \( \( -name "*.ml" -or -name "*.ml[yil]" -or -name "*.html" \) -not -path "*/_build/*" \) \
+    -or \( \( -name "*.ml" -or -name "*.ml[yil]" \) -not -path "*/_build/*" \) \
   \) -print0 | xargs -0 grep -EHns "$@"
 }
 
@@ -143,30 +129,8 @@ rfc () {
 }
 
 #
-# multi-file nm with grep for $1
+# pandoc invocations
 #
-
-mnm () {
-  for i in *.o ; do echo $i ; nm $i | grep ${1} ; done ;
-}
-
-#
-# lines-of-code; a bit heuristic :-)
-#
-
-loc () {
-  owc=`cat "$1" | wc -l` ;
-  cwc=`cat "$1" | egrep -v '(^[ [:cntrl:]]*$|[ [:cntrl:]]*//.*|^[ [:cntrl:]]*/\*|^[ [:cntrl:]]*(\{|\})[ [:cntrl:]]*|\*\*|^[ [:cntrl:]]*\*[ [:cntrl:]]*|^[ [:cntrl:]]*\*.*\*$|^#[ [:cntrl:]]*include)' | wc -l`
-  ctwc=`cat "$1" | egrep -v '(CAM_TRACE\(|assert\(|TRC\(|DB\(|ENTER\(|LEAVE\(|^[ [:cntrl:]]*$|[ [:cntrl:]]*//.*|^[ [:cntrl:]]*/\*|^[ [:cntrl:]]*(\{|\})[ [:cntrl:]]*|\*\*|^[ [:cntrl:]]*\*[ [:cntrl:]]*|^[ [:cntrl:]]*\*.*\*$|^#[ [:cntrl:]]*include)' |wc -l`
-
-  echo "Total wc:             ${owc}"
-  echo "Real wc:              ${cwc}"
-  echo "Real wc less tracing: ${ctwc}"
-
-  echo "${owc} ${cwc} ${ctwc}" | awk -- 'END { print "Propn. real code: " $2/$1*100.0 ; print "Propn. real untraced code: " $3/$2*100.0 }' ;
-}
-
-## pandoc: markdown to pdf
 
 md2tex () {
     pandoc -S --latex-engine=xelatex \
