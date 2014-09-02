@@ -5,7 +5,6 @@ alias la="ls -A"
 alias lla="ls -lA"
 alias l="ls"
 
-alias e="emacsclient -n"
 alias g="grep -Hn"
 alias less="less -FRXi"
 alias m="less -E"
