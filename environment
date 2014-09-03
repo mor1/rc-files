@@ -21,13 +21,11 @@
 # handy shell functions
 #
 
-ROOT=$HOME/src
+[ -r ~/rc-files/envfns.sh  ] && source ~/rc-files/envfns.sh
+[ -r ~/rc-files/filefns.sh ] && source ~/rc-files/filefns.sh
+[ -r ~/rc-files/hosts.sh   ] && source ~/rc-files/hosts.sh
 
-[ -r $ROOT/rc-files/envfns.sh  ] && source $ROOT/rc-files/envfns.sh
-
-[ -r $ROOT/sh-scripts/filefns.sh ] && source $ROOT/sh-scripts/filefns.sh
-[ -r $ROOT/sh-scripts/numfns.sh  ] && source $ROOT/sh-scripts/numfns.sh
-[ -r $ROOT/sh-scripts/hosts.sh   ] && source $ROOT/sh-scripts/hosts.sh
+[ -r ~/src/sh-scripts/numfns.sh ] && source ~/src/sh-scripts/numfns.sh
 
 #
 # general
