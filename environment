@@ -125,17 +125,10 @@ esac
 # bash settings
 #
 
+# history
+
 command_oriented_history=TRUE # multi-line commands become single line
 notify=TRUE # support notifications
-
-# so bash doesn't do variable expansion on (eg.) \w in PS1 -- consider
-# the case of a dir. called "`rm -rf ~`" ... :-> (ask Austin)
-export NO_PROMPT_VARS
-set -o noclobber # require explicit overwrite when redirecting
-
-#
-# history settings
-#
 
 shopt -s histappend # continue appending, don't delete periodically
 export PROMPT_COMMAND="history -a" # add every command to history
@@ -144,11 +137,14 @@ export HISTCONTROL=ignoreboth:erasedups
 export HISTSIZE=10000
 export HISTFILESIZE=10000
 
-#
-# prompt settings
-#
+# prompt
 
-source ~/src/rc-files/colours.sh
+# so bash doesn't do variable expansion on (eg.) \w in PS1 -- consider
+# the case of a dir. called "`rm -rf ~`" ... :-> (ask Austin)
+export NO_PROMPT_VARS
+set -o noclobber # require explicit overwrite when redirecting
+
+source ~/rc-files/colours.sh
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
@@ -218,15 +214,13 @@ elif compctl &>/dev/null; then
 fi
 ###-end-npm-completion-###
 
-## OPAM configuration
-. ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-export OCAMLRUNPARAM=b
-
 ## asciidoc -- required to rung things via XML stage
 export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
 
-# OPAM configuration
-. /Users/mort/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+## OPAM configuration
+[ -f ~/.opam/opam-init/init.sh ] && \
+    source ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+export OCAMLRUNPARAM=b
 
-# added by travis gem
-[ -f /Users/mort/.travis/travis.sh ] && source /Users/mort/.travis/travis.sh
+## added by travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
