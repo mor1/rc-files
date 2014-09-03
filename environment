@@ -41,7 +41,7 @@ LHOST=$(uname -n)
 SHOST=${LHOST%%.*}
 KERNEL=$(uname -r)
 CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../../../../../..:../../../../../../../..:../../../../../../../../..:../../../../../../../../../..:$HOME
-EDITOR=emacsclient ## /usr/bin/vi
+EDITOR="emacsclient -s /tmp/emacs-$USER/server"
 PAGER="less -FRXi"
 MANPAGER="less -FRXi"
 export LHOST SHOST KERNEL CDPATH EDITOR PAGER MANPAGER
