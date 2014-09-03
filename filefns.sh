@@ -24,7 +24,7 @@ e () {
     SERVER_SOCK=/tmp/emacs-$USER/server
     [ -S $SERVER_SOCK ] && \
         emacsclient -n -s $SERVER_SOCK "$@" || \
-            open -a /Applications/Emacs.app --args "$@"
+            /Applications/Emacs.app/Contents/MacOS/Emacs "$@" &
 }
 
 #
