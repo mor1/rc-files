@@ -59,12 +59,13 @@ aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
 aenv PATH /usr/X11R6/bin
 aenv PATH /usr/local/share/npm/bin
-aenv PATH ~/bin
+aenv PATH ~/me/local/bin
 
 unset MANPATH
 aenv MANPATH /usr/local/share/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
+aenv MANPATH ~/me/local/man
 
 aenv NODE_PATH /usr/local/lib/node
 
@@ -81,7 +82,10 @@ case $PLATFORM in
             ;
         do
             ## GIT bash completion
-            [ -d $d ] && source $d/git
+            [ -d $d ] && (
+                ( [ -r $d/git ] && source $d/git )
+                ( [ -r $d/git-prompt ] && source $d/git-prompt )
+            )
         done
 
         ## debian has too old git completion
