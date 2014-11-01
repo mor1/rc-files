@@ -62,12 +62,16 @@ marianfs () {
   sshfs marian.cs.nott.ac.uk:/$1 ~/l/marian
 }
 
+pawsfs () {
+  sshfs paws-server:/$1 ~/l/paws
+}
+
 severnfs () {
   sshfs severn.cs.nott.ac.uk:/$1 ~/l/severn
 }
 
 stratusfs () {
-  sshfs stratus.cs.nott.ac.uk:/$1 ~/l/stratus
+  sshfs -o uid=503 -o gid=20 stratus.cs.nott.ac.uk:/$1 ~/l/stratus
 }
 
 hw2fs() {
@@ -89,6 +93,7 @@ mediapcfs() {
 cuclfs () {
   sshfs rmm1002@slogin-serv.cl.cam.ac.uk:$1 ~/l/cucl
 }
+
 xenfs () {
     sshfs -p 2233 localhost: ~/l/xen
 }
