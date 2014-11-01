@@ -27,6 +27,13 @@ e () {
             { /Applications/Emacs.app/Contents/MacOS/Emacs "$@" & }
 }
 
+emacspkg_update () {
+    git rm -r "$1" && \
+    git add "$2" && \
+    git commit -m "emacs: update $1 to $2"
+}
+
+
 #
 # specific file grep
 #
