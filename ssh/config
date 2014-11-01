@@ -66,6 +66,6 @@ Host opw-tunnel
 
 ## very handy for firewalls! :)
 # Host github.com
-#    User git
-#    HostName ssh.github.com
-#    Port 443
+#      User git
+#      HostName ssh.github.com
+#      Port 443
