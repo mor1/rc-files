@@ -47,8 +47,9 @@ ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
 
 ## many linux distros appear to have old git-prompt.sh which breaks things
 GITPROMPT_SH=https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh
+WGET="wget --no-check-certificate"
 case $(uname -s) in
     Linux )
-        wget $GITPROMPT_SH -O ~/.git-prompt.sh
+        $WGET $GITPROMPT_SH -O ~/.git-prompt.sh
         ;;
 esac
