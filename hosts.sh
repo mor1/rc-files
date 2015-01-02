@@ -3,8 +3,9 @@
 #
 
 cucl () {
-    ssh -tx rmm1002@slogin-serv.cl.cam.ac.uk 'kinit || cl-krenew --maxout'
-    slogin -X rmm1002@slogin-serv.cl.cam.ac.uk
+    CUCL=slogin-serv.cl.cam.ac.uk
+    ssh -tx rmm1002@$CUCL 'cl-krenew --maxout || /usr/kerberos/bin/kinit'
+    slogin -X rmm1002@$CUCL
 }
 
 devbox () {
@@ -44,7 +45,7 @@ severn () {
 }
 
 stmwww () {
-    slogin -X -p 722 stthnorg@stthomasmorewollaton.org.uk
+    slogin -p 722 stthnorg@stthomasmorewollaton.org.uk
 }
 
 stratus () {
