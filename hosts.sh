@@ -3,6 +3,7 @@
 #
 
 cucl () {
+    ssh -tx rmm1002@slogin-serv.cl.cam.ac.uk 'kinit || cl-krenew --maxout'
     slogin -X rmm1002@slogin-serv.cl.cam.ac.uk
 }
 

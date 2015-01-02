@@ -69,6 +69,8 @@ aenv MANPATH ~/me/local/man
 
 aenv NODE_PATH /usr/local/lib/node
 
+export SLIMERJSLAUNCHER=~/Applications/Firefox.app/Contents/MacOS/firefox
+
 ## stupid proxy settings; default off!
 # export http_proxy="http://proxy.nottingham.ac.uk:8080"
 # export http_proxy="http://wwwcache.cs.nott.ac.uk:3128"
@@ -123,6 +125,11 @@ case $PLATFORM in
         #source /Users/$(whoami)/.nix-profile/etc/profile.d/nix.sh
         #export NIX_PATH=/nix/var/nix/profiles/per-user/$(whoami)/channels/nixos
 
+esac
+
+case ${LHOST#*.} in
+    cl.cam.ac.uk )
+        aenv PATH /usr/kerberos/bin
 esac
 
 #
