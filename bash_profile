@@ -1,6 +1,6 @@
 PATH=/bin:/sbin/:/usr/bin:/usr/sbin
 
-[ -r ~/.environment ] && source ~/.environment
+[ -r ~/.environment  ] && source ~/.environment
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
 
 if [ -f "$HOME/.ssh/sssha" ]; then
