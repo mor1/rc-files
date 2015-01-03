@@ -39,3 +39,4 @@ alias mirage-version="\opam list | grep mirage"
 alias mirage-config='\opam list | grep mirage-net- | cut -d " " -f 1 | cut -d "-" -f 3'
 
 alias eject="diskutil unmount $1"
+alias reset="\reset -i ^C"
