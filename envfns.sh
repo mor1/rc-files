@@ -23,34 +23,34 @@
 #
 
 denv () {
-        if [ $# != 2 ]; then
-                echo "Usage: denv <env_var> <value>"
-                return 1
-        fi
+    if [ $# != 2 ]; then
+        echo "Usage: denv <env_var> <value>"
+        return 1
+    fi
 
-        ##        denv_tmp=$(eval echo \"\$\{$1\}\") # for sh compatability
+    ##        denv_tmp=$(eval echo \"\$\{$1\}\") # for sh compatability
 
-        denv_tmp=${!1} ## bash v2+
-        case "$denv_tmp" in
-          *:${2}:* )
-                   denv_tmp=${denv_tmp%:${2}:*}:${denv_tmp#*:${2}:}
-                   ;;
+    denv_tmp=${!1} ## bash v2+
+    case "$denv_tmp" in
+        *:${2}:* )
+            denv_tmp=${denv_tmp%:${2}:*}:${denv_tmp#*:${2}:}
+            ;;
 
-          *:${2}   )
-                   denv_tmp=${denv_tmp%:${2}}
-                   ;;
+        *:${2}   )
+            denv_tmp=${denv_tmp%:${2}}
+            ;;
 
-          ${2}:*   )
-                   denv_tmp=${denv_tmp#${2}:}
-                   ;;
+        ${2}:*   )
+            denv_tmp=${denv_tmp#${2}:}
+            ;;
 
-          ${2}     )
-                   denv_tmp=""
-                   ;;
-        esac
+        ${2}     )
+            denv_tmp=""
+            ;;
+    esac
 
-        eval ${1}=$denv_tmp
-        export ${1}
+    eval ${1}=$denv_tmp
+    export ${1}
 }
 
 #
@@ -58,14 +58,14 @@ denv () {
 #
 
 aenv () {
-        if [ $# != 2 ]; then
-                echo "Usage: aenv <env_var> <value>"
-                return 1
-        fi
+    if [ $# != 2 ]; then
+        echo "Usage: aenv <env_var> <value>"
+        return 1
+    fi
 
-        denv "$1" "$2"
-        eval ${1}="$2":$(echo $(eval echo "$\{$1\}"))
-        export ${1}
+    denv "$1" "$2"
+    eval ${1}="$2":$(echo $(eval echo "$\{$1\}"))
+    export ${1}
 }
 
 #
@@ -73,14 +73,14 @@ aenv () {
 #
 
 enva () {
-        if [ $# != 2 ]; then
-                echo "Usage: aenv <env_var> <value>"
-                return 1
-        fi
+    if [ $# != 2 ]; then
+        echo "Usage: aenv <env_var> <value>"
+        return 1
+    fi
 
-        denv $1 $2
-        eval ${1}=$(echo $(eval echo $\{$1\})):$2
-        export ${1}
+    denv $1 $2
+    eval ${1}=$(echo $(eval echo $\{$1\})):$2
+    export ${1}
 }
 
 #
@@ -88,21 +88,21 @@ enva () {
 #
 
 cenv () {
-        if [ $# != 1 ]; then
-                echo "Usage: cenv <env_var>"
-                return 1
-        fi
+    if [ $# != 1 ]; then
+        echo "Usage: cenv <env_var>"
+        return 1
+    fi
 
-        cenv_tmp=$(eval echo $\{$1\}) ;
+    cenv_tmp=$(eval echo $\{$1\}) ;
 
-        while [ "$cenv_tmp" != "" ] ; do
-                aenv $1 ${cenv_tmp##*:} > /dev/null
+    while [ "$cenv_tmp" != "" ] ; do
+        aenv $1 ${cenv_tmp##*:} > /dev/null
 
-                # really want to "denv cenv_tmp {wotsit} but 4 sed procs?!
-                if [ "$cenv_tmp" = "${cenv_tmp%:*}" ]; then
-                        cenv_tmp="" ;
-                else
-                        cenv_tmp=${cenv_tmp%:*} ;
-                fi ;
-        done
+        # really want to "denv cenv_tmp {wotsit} but 4 sed procs?!
+        if [ "$cenv_tmp" = "${cenv_tmp%:*}" ]; then
+            cenv_tmp="" ;
+        else
+            cenv_tmp=${cenv_tmp%:*} ;
+        fi ;
+    done
 }
