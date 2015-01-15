@@ -1,12 +1,13 @@
 \usepackage{fullpage}
-\address{School of Computer Science,\\
-        Jubilee Campus,\\
-        Wollaton Road,\\
-        Nottingham, NG8 1BB\\
-        UK}
+\address{University of Cambridge,\\
+  Computer Laboratory,\\
+  William Gates Building,\\
+  15 JJ Thomson Avenue,\\
+  Cambridge CB3 0FD\\
+  UK}
 
 \signature{Dr~Richard Mortier\\
-        \quad\hbox{Horizon Transitional Fellow in Computer Science,}\\
-        University of Nottingham\\
-        e:\hbox{ \url{richard.mortier@nottingham.ac.uk}}\\
-        t: +44 115 8232552}
+        \quad\hbox{University Lecturer,}\\
+        University of Cambridge\\
+        e:\hbox{ \url{richard.mortier@cl.cam.ac.uk}}\\
+        t: +44 1223 334419}
