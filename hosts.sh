@@ -2,100 +2,85 @@
 # remote hosts
 #
 
+CUCL=slogin-serv.cl.cam.ac.uk
+KRB5='cl-krenew --maxout || /usr/kerberos/bin/kinit'
 cucl () {
-    CUCL=slogin-serv.cl.cam.ac.uk
-    ssh -tx rmm1002@$CUCL 'cl-krenew --maxout || /usr/kerberos/bin/kinit'
-    slogin -X rmm1002@$CUCL
+    ssh -tx $CUCL $KRB5
+    slogin -X $CUCL
 }
-
-devbox () {
-    slogin -X ppsrm.nottingham.ac.uk
+cuclfs () {
+    ssh -tx $CUCL $KRB5
+    sshfs $CUCL:/home/rmm1002 ~/l/cucl
 }
-
-xen () {
-    slogin -X -p 2233 localhost
+netos () {
+    ssh -tx $CUCL $KRB5
+    sshfs -o uid=503 -o gid=20 $CUCL:/usr/groups/netos ~/l/netos
 }
 
 hw2 () {
     slogin -X root@ubuntu.local
 }
+hw2fs() {
+    sshfs ubuntu.local:/$1 ~/l/hw2
+}
 
 marian () {
     slogin -X marian.cs.nott.ac.uk
+}
+marianfs () {
+    sshfs marian.cs.nott.ac.uk:/$1 ~/l/marian
 }
 
 mediapc () {
     slogin -X root@mediapc.home
 }
+mediapcfs() {
+    sshfs root@mediapc.home:/$1 ~/l/mediapc
+}
 
 paws () {
     slogin paws-server
+}
+pawsfs () {
+    sshfs paws-server:/$1 ~/l/paws
 }
 
 recoil () {
     slogin -X punk.recoil.org
 }
 
-roach () {
-    slogin -X roach.cs.nott.ac.uk
-}
-
 severn () {
     slogin -X severn.cs.nott.ac.uk
+}
+severnfs () {
+    sshfs severn.cs.nott.ac.uk:/$1 ~/l/severn
 }
 
 stmwww () {
     slogin -p 722 stthnorg@stthomasmorewollaton.org.uk
 }
+stmwwwfs() {
+    sshfs -p 722 stthnorg@stthomasmorewollaton.org.uk: ~/l/stm-www
+}
 
 stratus () {
     slogin -X stratus.horizon.ac.uk
+}
+stratusfs () {
+    sshfs -o uid=503 -o gid=20 stratus.cs.nott.ac.uk:/$1 ~/l/stratus
 }
 
 ucn () {
     slogin -X ucn-server
 }
 
-#
-# remote fs
-#
-
-marianfs () {
-  sshfs marian.cs.nott.ac.uk:/$1 ~/l/marian
-}
-
-pawsfs () {
-  sshfs paws-server:/$1 ~/l/paws
-}
-
-severnfs () {
-  sshfs severn.cs.nott.ac.uk:/$1 ~/l/severn
-}
-
-stratusfs () {
-  sshfs -o uid=503 -o gid=20 stratus.cs.nott.ac.uk:/$1 ~/l/stratus
-}
-
-hw2fs() {
-  sshfs ubuntu.local:/$1 ~/l/hw2
-}
-
-stmwwwfs() {
-  sshfs -p 722 stthnorg@stthomasmorewollaton.org.uk: ~/l/stm-www
-}
-
 vagrantfs() {
-  sshfs -p 2222 vagrant@localhost: ~/l/vagrant
+    sshfs -p 2222 vagrant@localhost: ~/l/vagrant
 }
 
-mediapcfs() {
-  sshfs root@mediapc.home:/$1 ~/l/mediapc
+xen () {
+    slogin -X -p 2233 localhost
 }
-
-cuclfs () {
-  sshfs rmm1002@slogin-serv.cl.cam.ac.uk:$1 ~/l/cucl
-}
-
 xenfs () {
     sshfs -p 2233 localhost: ~/l/xen
 }
