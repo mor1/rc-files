@@ -139,47 +139,36 @@ rfc () {
 # pandoc invocations
 #
 
+PANDOC_MD="pandoc -S --latex-engine=xelatex \
+        -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia"
+
 md2tex () {
-    pandoc -S --latex-engine=xelatex \
-        -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia \
-        -o ${1%.md}.latex ${1}
+    $PANDOC_MD -o ${1%.md}.latex ${1}
 }
 
 md2docx () {
-    pandoc -S --latex-engine=xelatex \
-        -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia \
-        -o ${1%.md}.docx ${1}
+    $PANDOC_MD -o ${1%.md}.docx ${1}
 }
 
 md2pdf () {
-    pandoc -S --latex-engine=xelatex \
-        -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia \
-        -o ${1%.md}.pdf ${1}
+    $PANDOC_MD -o ${1%.md}.pdf ${1}
 }
 
-
-letter2tex () {
-    pandoc -S --latex-engine=xelatex \
+PANDOC_LETTER="pandoc -S --latex-engine=xelatex \
         -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
         -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
-        -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in \
-        -o ${1%.md}.latex ${1}
+        -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in"
+
+letter2tex () {
+    $PANDOC_LETTER -o ${1%.md}.latex ${1}
 }
 
 letter2doc () {
-    pandoc -S --latex-engine=xelatex \
-        -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
-        -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
-        -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in \
-        -o ${1%.md}.docx ${1}
+    $PANDOC_LETTER -o ${1%.md}.docx ${1}
 }
 
 letter2pdf () {
-    pandoc -S --latex-engine=xelatex \
-        -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
-        -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
-        -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in \
-        -o ${1%.md}.pdf ${1}
+    $PANDOC_LETTER -o ${1%.md}.pdf ${1}
 }
 
 
