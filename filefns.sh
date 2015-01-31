@@ -28,9 +28,9 @@ e () {
 }
 
 emacspkg_update () {
-    git rm -r "$1" && \
-    git add "$2" && \
-    git commit -m "emacs: update $1 to $2"
+    git rm "$1-*" && \
+    git add "$1-*" && \
+    git commit -m "emacs: update \`$1\`"
 }
 
 
