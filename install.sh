@@ -26,19 +26,19 @@ set -ex
 
 INSTALL_DIR=$(pwd)
 for f in ${INSTALL_DIR}/*; do
-  bf=$(basename $f)
-  case "$bf" in
-      "floatlg.jpg" | "install.sh" | "push-env.sh" | "envfns.sh"    \
-          | "solarized-dark-mort.itermcolors" | "macbook-uk.layout" \
-          )
+    bf=$(basename $f)
+    case "$bf" in
+        "floatlg.jpg" | "install.sh" | "push-env.sh" | "envfns.sh"    \
+            | "solarized-dark-mort.itermcolors" | "macbook-uk.layout" \
+        )
 
-          ;;
+        ;;
 
-      * )
-          [ -L ~/.$bf ] && rm -f ~/.$bf || true
-          ln -s $f ~/.$bf
-          ;;
-  esac
+        * )
+            [ -L ~/.$bf ] && rm -f ~/.$bf || true
+            ln -s $f ~/.$bf
+            ;;
+    esac
 done
 
 ## i value consistency in my environemnts. so what?

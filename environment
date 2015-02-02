@@ -80,7 +80,7 @@ case $PLATFORM in
     Linux )
         for d in \
             /etc/bash_completion \
-            /etc/bash_completion.d \
+                /etc/bash_completion.d \
             ;
         do
             ## GIT bash completion
@@ -176,8 +176,8 @@ aenv PATH ~/.cabal/bin
 _pip_completion()
 {
     COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-        COMP_CWORD=$COMP_CWORD \
-        PIP_AUTO_COMPLETE=1 $1 ) )
+                             COMP_CWORD=$COMP_CWORD \
+                             PIP_AUTO_COMPLETE=1 $1 ) )
 }
 complete -o default -F _pip_completion pip
 # pip bash completion end
@@ -198,10 +198,10 @@ if complete &>/dev/null; then
     _npm_completion () {
         local si="$IFS"
         IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
-            COMP_LINE="$COMP_LINE" \
-            COMP_POINT="$COMP_POINT" \
-            npm completion -- "${COMP_WORDS[@]}" \
-            2>/dev/null)) || return $?
+                                         COMP_LINE="$COMP_LINE" \
+                                         COMP_POINT="$COMP_POINT" \
+                                         npm completion -- "${COMP_WORDS[@]}" \
+                                         2>/dev/null)) || return $?
         IFS="$si"
     }
     complete -F _npm_completion npm
@@ -215,10 +215,10 @@ elif compctl &>/dev/null; then
         read -ln point
         si="$IFS"
         IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-            COMP_LINE="$line" \
-            COMP_POINT="$point" \
-            npm completion -- "${words[@]}" \
-            2>/dev/null)) || return $?
+                                     COMP_LINE="$line" \
+                                     COMP_POINT="$point" \
+                                     npm completion -- "${words[@]}" \
+                                     2>/dev/null)) || return $?
         IFS="$si"
     }
     compctl -K _npm_completion npm

@@ -41,24 +41,24 @@ emacspkg_update () {
 #
 
 trawl () {
-  find . \( \
-    -name "*.[chsSyli]"\
-    -or -name "Make*"\
-    -or -name "README*"\
-    -or -name "*.bib"\
-    -or -name "*.cc" -or -name "*.hh"\
-    -or -name "*.xml" -or -name "*.html" -or -name "*.css"\
-    -or -name "*.el"\
-    -or -name "*.fs" -or -name "*.fs[xi]"\
-    -or -name "*.inc"\
-    -or -name "*.less"\
-    -or -name "*.md"\
-    -or -name "*.nix"\
-    -or -name "*.php"\
-    -or -name "*.py"\
-    -or -name "*.tex"\
-    -or \( \( -name "*.ml" -or -name "*.ml[yil]" \) -not -path "*/_build/*" \) \
-  \) -print0 | xargs -0 grep -EHns "$@"
+    find . \( \
+         -name "*.[chsSyli]"\
+         -or -name "Make*"\
+         -or -name "README*"\
+         -or -name "*.bib"\
+         -or -name "*.cc" -or -name "*.hh"\
+         -or -name "*.xml" -or -name "*.html" -or -name "*.css"\
+         -or -name "*.el"\
+         -or -name "*.fs" -or -name "*.fs[xi]"\
+         -or -name "*.inc"\
+         -or -name "*.less"\
+         -or -name "*.md"\
+         -or -name "*.nix"\
+         -or -name "*.php"\
+         -or -name "*.py"\
+         -or -name "*.tex"\
+         -or \( \( -name "*.ml" -or -name "*.ml[yil]" \) -not -path "*/_build/*" \) \
+         \) -print0 | xargs -0 grep -EHns "$@"
 }
 
 #
@@ -86,29 +86,29 @@ symt () {
 
     while [ $argsdone != 1 ]; do
         case $1 in
-        -q)  cmd=":"     ; args="$args $1" ; shift ;;
-        -vv) verbose=2   ; args="$args $1" ; shift ;;
-        -v)  verbose=1   ; args="$args $1" ; shift ;;
-        -r)  subdirs=1   ; args="$args $1" ; shift ;;
-        -d)  cmd="rm -f" ; args="$args $1" ; shift ;;
-         *)  argsdone=1 ;;
+            -q)  cmd=":"     ; args="$args $1" ; shift ;;
+            -vv) verbose=2   ; args="$args $1" ; shift ;;
+            -v)  verbose=1   ; args="$args $1" ; shift ;;
+            -r)  subdirs=1   ; args="$args $1" ; shift ;;
+            -d)  cmd="rm -f" ; args="$args $1" ; shift ;;
+            *)  argsdone=1 ;;
         esac ;
     done
 
     while [ -n "$1" ]; do
         [ -L $1 ]                          \
-        && { [ ! -r $1 ]                   \
-             && { eval "$cmd $1 : dangling" ;    \
-                  retval=0 ;
-                }             \
-             || { [ $verbose = 1 ]         \
-                  && { eval "$cmd $1 : ok" ; } ; \
-                  retval=1 ; } ; }         \
-        || { [ $verbose = 2 ]              \
-             && { eval "$cmd $1 not a symlink" ; } ; } ;
+            && { [ ! -r $1 ]                   \
+                     && { eval "$cmd $1 : dangling" ;    \
+                          retval=0 ;
+                 }             \
+                     || { [ $verbose = 1 ]         \
+                              && { eval "$cmd $1 : ok" ; } ; \
+                          retval=1 ; } ; }         \
+            || { [ $verbose = 2 ]              \
+                     && { eval "$cmd $1 not a symlink" ; } ; } ;
 
         [ $subdirs = 1 ] && [ -d $1 ] && [ "$1" != ".." ] && [ "$1" != "." ] \
-        && { symt $args ${1}/{*,.*} ; };
+            && { symt $args ${1}/{*,.*} ; };
 
         shift ;
     done
@@ -121,20 +121,20 @@ symt () {
 #
 
 rfc () {
-  if [ $# = 1 ]; then
-    if [ "$1" = "-index" ]; then
-      curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt
-    elif [ ! -s ~/docs/rfcs/rfc${1}.txt ] ; then
-      curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt
+    if [ $# = 1 ]; then
+        if [ "$1" = "-index" ]; then
+            curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt
+        elif [ ! -s ~/docs/rfcs/rfc${1}.txt ] ; then
+            curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt
+        fi
+        less ~/docs/rfcs/rfc${1}.txt
+    else
+        case $1 in
+            -print|-p) a2ps --highlight-level=normal --columns=4 \
+                            --row=1 -l82 --interpret=no \
+                            ~/docs/rfcs/rfc${2}.txt ;;
+        esac
     fi
-    less ~/docs/rfcs/rfc${1}.txt
-  else
-    case $1 in
-      -print|-p) a2ps --highlight-level=normal --columns=4 \
-                      --row=1 -l82 --interpret=no \
-                      ~/docs/rfcs/rfc${2}.txt ;;
-    esac
-  fi
 }
 
 #
