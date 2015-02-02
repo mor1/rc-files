@@ -28,9 +28,11 @@ e () {
 }
 
 emacspkg_update () {
-    git rm "$1-*" && \
-    git add "$1-*" && \
-    git commit -m "emacs: update \`$1\`"
+    ( cd ~/rc-files/emacs.d/elpa &&
+            git rm "$1-*" &&
+            git add "$1-*" &&
+            git commit -m "emacs: update \`$1\`"
+    )
 }
 
 
