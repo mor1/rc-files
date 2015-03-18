@@ -3,7 +3,7 @@
 #
 
 CUCL=slogin-serv.cl.cam.ac.uk
-KRB5='cl-krenew --maxout || /usr/kerberos/bin/kinit'
+KRB5='cl-krenew --maxout || kinit || /usr/kerberos/bin/kinit'
 cucl () {
     ssh -tx $CUCL $KRB5
     slogin -X $CUCL
