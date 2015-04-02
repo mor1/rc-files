@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (C) 2000--2014 Richard Mortier <mort@cantab.net>.  All Rights
+# Copyright (C) 2000--2015 Richard Mortier <mort@cantab.net>.  All Rights
 # Reserved.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,8 @@
 set -ex
 
 ## capture any existing authorized keys
-[ -s ~/.ssh/authorized_keys ] && mv ~/.ssh/authorized_keys ssh
+[ -s ~/.ssh/authorized_keys ] \
+    && ( mv ~/.ssh/authorized_keys ssh && rmdir ~/.ssh )
 
 INSTALL_DIR=$(pwd)
 for f in ${INSTALL_DIR}/*; do
