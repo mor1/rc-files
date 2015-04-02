@@ -35,6 +35,13 @@ emacspkg_update () {
     )
 }
 
+emacspkg_add () {
+    ( cd ~/rc-files/emacs.d/elpa &&
+            git add "$1-*" &&
+            git commit -m "emacs: add \`$1\`"
+    )
+}
+
 
 #
 # specific file grep
