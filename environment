@@ -114,8 +114,9 @@ case $PLATFORM in
         source $(brew --prefix)/Library/Contributions/brew_bash_completion.sh
 
         ## GIT bash completion
-        source /usr/local/Cellar/git/1.8.5.3/etc/bash_completion.d/git-completion.bash
-        source /usr/local/Cellar/git/1.8.5.3/etc/bash_completion.d/git-prompt.sh
+        gitdir=$(dirname $(abspath $(which git)))
+        source ${gitdir}/../etc/bash_completion.d/git-completion.bash
+        source ${gitdir}/../etc/bash_completion.d/git-prompt.sh
 
         ## Android
         export ANDROID_HOME=/usr/local/opt/android-sdk
