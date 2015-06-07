@@ -17,33 +17,6 @@
 # Place - Suite 330, Boston, MA 02111-1307, USA.
 
 #
-# open emacs appropriately
-#
-
-e () {
-    SERVER_SOCK=/tmp/emacs-$USER/server
-    [ -S $SERVER_SOCK ] && \
-        emacsclient -n -s $SERVER_SOCK "$@" || \
-            { /Applications/Emacs.app/Contents/MacOS/Emacs "$@" & }
-}
-
-emacspkg_update () {
-    ( cd ~/rc-files/emacs.d/elpa &&
-            git rm "$1-*" &&
-            git add "$1-*" &&
-            git commit -m "emacs: update \`$1\`"
-    )
-}
-
-emacspkg_add () {
-    ( cd ~/rc-files/emacs.d/elpa &&
-            git add "$1-*" &&
-            git commit -m "emacs: add \`$1\`"
-    )
-}
-
-
-#
 # specific file grep
 #
 
@@ -64,7 +37,7 @@ trawl () {
          -or -name "*.php"\
          -or -name "*.py"\
          -or -name "*.tex"\
-         -or \( \( -name "*.ml" -or -name "*.ml[yil]" \) -not -path "*/_build/*" \) \
+         -or \( \( -name "*.ml" -or -name "*.ml[yil]" \) -not -path "*/_build/*" -not -name "setup.ml"  -not -name "myocamlbuild.ml" \) \
          \) -print0 | xargs -0 grep -EHns "$@"
 }
 
@@ -183,3 +156,88 @@ letter2pdf () {
 
 #transpose
 #: mort@greyjay:openflow$; for i in $(seq 1 $(awk -v FS="," ' { nf=((NF>nf)?NF:nf) } END {print nf}' controller.dat)) ; do cut -f $i -d "," controller.dat | paste -s - ; done | sed -E '/^[[:space:]]+$/d' > control
+
+#
+# open emacs appropriately
+#
+
+e () {
+    SERVER_SOCK=/tmp/emacs-$USER/server
+    [ -S $SERVER_SOCK ] && \
+        emacsclient -n -s $SERVER_SOCK "$@" || \
+            { /Applications/Emacs.app/Contents/MacOS/Emacs "$@" & }
+}
+
+function emacspkg-update {
+    ( cd ~/rc-files/emacs.d/elpa &&
+            git rm "$1-*" &&
+            git add "$1-*" &&
+            git commit -m "emacs: update \`$1\`"
+    )
+}
+
+function emacspkg-add {
+    ( cd ~/rc-files/emacs.d/elpa &&
+            git add "$1-*" &&
+            git commit -m "emacs: add \`$1\`"
+    )
+}
+
+#
+# abspath, of sorts handling relative symlinks
+#
+
+abspath () {
+    p=$1
+    pushd . > /dev/null
+    if [ -d "$1" ]; then
+        cd "$1"
+        dirs -l +0
+    else
+        cd $(dirname $(dirname $(which $p))/$(readlink $p))
+        cur_dir=`dirs -l +0`
+        if [ "$cur_dir" == "/" ]; then
+            echo "$cur_dir`basename \"$1\"`"
+        else
+            echo "$cur_dir/`basename \"$1\"`"
+        fi
+    fi
+    popd > /dev/null
+}
+
+#
+# some other randoms that seem too big to be aliases
+#
+
+function update-all {
+    brew update \
+        && brew upgrade && brew cleanup \
+        && brew upgrade brew-cask && brew cask cleanup
+    opam update -y -u
+    rvm get stable && gem update
+}
+
+function use-rvm {
+    aenv PATH ~/.rvm/bin
+    aenv PATH ~/.rvm/gems/ruby-2.1.0/bin
+    aenv PATH ~/.rvm/gems/ruby-2.1.0@global/bin
+    if [ -s "$HOME/.rvm/scripts/rvm" ]; then
+        source "$HOME/.rvm/scripts/rvm"
+        rvm use 2.1.0@global
+    fi
+}
+
+function use-ocaml {
+    unset CAML_LD_LIBRARY_PATH
+    if [ \! -z $(which opam) ]; then
+        eval $(opam config env)
+    fi
+}
+
+function make {
+    if [ -r "Makefile.mort" ] ; then
+        make -f Makefile.mort $@
+    else
+        make $@
+    fi
+}
