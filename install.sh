@@ -42,7 +42,7 @@ for f in ${INSTALL_DIR}/*; do
     esac
 done
 
-## i value consistency in my environemnts. so what?
+## i value consistency in my environments. so what?
 rm -f ~/.bashrc
 ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
 
