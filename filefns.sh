@@ -236,8 +236,8 @@ function use-ocaml {
 
 function make {
     if [ -r "Makefile.mort" ] ; then
-        make -f Makefile.mort $@
+        gnumake -f Makefile.mort $@
     else
-        make $@
+        gnumake $@
     fi
 }
