@@ -17,29 +17,62 @@
 
 [general]
 ui = TTYUI
-accounts = Gmail
+accounts = Gchat, Gmail
 pythonfile = ~/rc-files/offlineimap.py
-fsync = False
+fsync = no
 
 [Account Gmail]
 localrepository = Gmail-Local
 remoterepository = Gmail-Remote
 status_backend = sqlite
-postsynchook = notmuch new
+# postsynchook = notmuch new
 labelsheader = X-Keywords
+synclabels = yes
+ignorelabels = \Important, \Draft
 
 [Repository Gmail-Local]
-type = Maildir
+type = GmailMaildir
 localfolders = ~/me/footprint/mail/gmail
 nametrans = to_remotefolder
+sep = /
 
 [Repository Gmail-Remote]
-maxconnections = 2
 type = Gmail
+maxconnections = 1
+readonly = yes
+realdelete = no
+ssl = yes
+sslcacertfile = /usr/local/etc/openssl/osx_cert.pem
 remoteuser = richard.mortier@gmail.com
 remotepasseval = get_keychain_pass(
     account="richard.mortier@gmail.com", server="imap.gmail.com")
-realdelete = no
-sslcacertfile = /usr/local/etc/openssl/osx_cert.pem
-folderfilter = is_included
 nametrans = to_localfolder
+folderfilter = is_synced
+
+
+[Account Gchat]
+localrepository = Gchat-Local
+remoterepository = Gchat-Remote
+status_backend = sqlite
+
+synclabels = yes
+labelsheader = X-Keywords
+filterheaders = X-Keywords
+ignorelabels = \Important, \Draft
+
+[Repository Gchat-Local]
+type = GmailMaildir
+localfolders = ~/me/footprint/mail/gmail
+
+[Repository Gchat-Remote]
+type = Gmail
+maxconnections = 1
+readonly = yes
+realdelete = no
+ssl = yes
+sslcacertfile = /usr/local/etc/openssl/osx_cert.pem
+remoteuser = richard.mortier@gmail.com
+remotepasseval = get_keychain_pass(
+    account="richard.mortier@gmail.com", server="imap.gmail.com")
+nametrans = to_localfolder
+folderfilter = lambda folder: folder in ['[Google Mail]/Chats']

@@ -46,17 +46,17 @@ LocalRemoteNames = {
     'important': '[Google Mail]/Important',
     'sent': '[Google Mail]/Sent Mail',
     'trash': '[Google Mail]/Trash',
+    'bin': '[Google Mail]/Bin',
+    'spam': '[Google Mail]/Spam',
 }
 RemoteLocalNames = { r: l for (l, r) in LocalRemoteNames.items() }
 
 def to_remotefolder(folder): return LocalRemoteNames.get(folder, folder)
 def to_localfolder(folder): return RemoteLocalNames.get(folder, folder)
 
-def is_included(folder):
-    return folder not in [
+def is_synced(folder):
+    return folder in [
         '[Google Mail]/All Mail',
-        '[Google Mail]/Bin',
-        '[Google Mail]/Important',
-        '[Google Mail]/Spam',
         '[Google Mail]/Trash',
+        '[Google Mail]/Drafts',
     ]
