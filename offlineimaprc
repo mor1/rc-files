@@ -1,31 +1,165 @@
-# Copyright (C) 2015 Richard Mortier <mort@cantab.net>.  All Rights
-# Reserved.
+# Copyright (c) 2015 Richard Mortier <mort@cantab.net>
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
 #
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-# USA.
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 [general]
 ui = TTYUI
-accounts = Gchat, Gmail
+accounts = Live, Hotmail, VipadiaAlt, Vipadia, Gmail, Gchat
 pythonfile = ~/rc-files/offlineimap.py
 fsync = no
+
+[DEFAULT]
+postsynchook = ~/rc-files/offlineimap-postsynchook.sh
+presynchook = ~/rc-files/offlineimap-presynchook.sh
+sslcacertfile = /usr/local/etc/openssl/osx_cert.pem
+ssl = yes
+realdelete = no
+maxconnections = 1
+
+#
+# Live
+#
+
+[Account Live]
+localrepository = Live-Local
+remoterepository = Live-Remote
+status_backend = sqlite
+
+[Repository Live-Local]
+type = Maildir
+localfolders = ~/me/footprint/mail/live
+nametrans = to_remotefolder
+sep = /
+
+[Repository Live-Remote]
+type = IMAP
+maxconnections = 4
+remotehost = imap-mail.outlook.com
+remoteuser = mort@live.co.uk
+remotepasseval = get_keychain_pass(
+    account="mort@live.co.uk", server="imap-mail.outlook.com")
+
+#
+# Hotmail
+#
+
+[Account Hotmail]
+localrepository = Hotmail-Local
+remoterepository = Hotmail-Remote
+status_backend = sqlite
+
+[Repository Hotmail-Local]
+type = Maildir
+localfolders = ~/me/footprint/mail/hotmail
+nametrans = to_remotefolder
+sep = /
+
+[Repository Hotmail-Remote]
+type = IMAP
+maxconnections = 4
+remotehost = imap-mail.outlook.com
+remoteuser = richard_mortier@hotmail.com
+remotepasseval = get_keychain_pass(
+    account="richard_mortier@hotmail.com", server="imap-mail.outlook.com")
+folderfilter = hotmail_is_synced
+
+#
+# Vipadia- alternate account
+#
+
+[Account VipadiaAlt]
+localrepository = VipadiaAlt-Local
+remoterepository = VipadiaAlt-Remote
+status_backend = sqlite
+labelsheader = X-Keywords
+synclabels = yes
+ignorelabels = \Important, \Draft
+
+[Repository VipadiaAlt-Local]
+type = GmailMaildir
+localfolders = ~/me/footprint/mail/vipadia-alt
+nametrans = to_remotefolder
+sep = /
+
+[Repository VipadiaAlt-Remote]
+type = Gmail
+remoteuser = mort.vipadia
+remotepasseval = get_keychain_pass(
+    account="mort.vipadia", server="imap.gmail.com")
+nametrans = to_localfolder
+folderfilter = gmail_is_synced
+
+#
+# Vipadia
+#
+
+[Account Vipadia]
+localrepository = Vipadia-Local
+remoterepository = Vipadia-Remote
+status_backend = sqlite
+labelsheader = X-Keywords
+synclabels = yes
+ignorelabels = \Important, \Draft
+
+[Repository Vipadia-Local]
+type = GmailMaildir
+localfolders = ~/me/footprint/mail/vipadia
+nametrans = to_remotefolder
+sep = /
+
+[Repository Vipadia-Remote]
+type = Gmail
+remoteuser = mort@vipadia.com
+remotepasseval = get_keychain_pass(
+    account="mort@vipadia.com", server="imap.gmail.com")
+nametrans = to_localfolder
+folderfilter = gmail_is_synced
+
+#
+# Gchat
+#
+
+[Account Gchat]
+localrepository = Gchat-Local
+remoterepository = Gchat-Remote
+status_backend = sqlite
+labelsheader = X-Keywords
+synclabels = yes
+ignorelabels = \Important, \Draft
+
+[Repository Gchat-Local]
+type = GmailMaildir
+localfolders = ~/me/footprint/mail/gmail
+nametrans = to_remotefolder
+sep = /
+
+[Repository Gchat-Remote]
+type = Gmail
+readonly = yes
+remoteuser = richard.mortier@gmail.com
+remotepasseval = get_keychain_pass(
+    account="richard.mortier@gmail.com", server="imap.gmail.com")
+nametrans = to_localfolder
+folderfilter = lambda folder: folder in ['[Google Mail]/Chats']
+
+#
+# Gmail
+#
 
 [Account Gmail]
 localrepository = Gmail-Local
 remoterepository = Gmail-Remote
 status_backend = sqlite
-# postsynchook = notmuch new
 labelsheader = X-Keywords
 synclabels = yes
 ignorelabels = \Important, \Draft
@@ -38,41 +172,8 @@ sep = /
 
 [Repository Gmail-Remote]
 type = Gmail
-maxconnections = 1
-readonly = yes
-realdelete = no
-ssl = yes
-sslcacertfile = /usr/local/etc/openssl/osx_cert.pem
 remoteuser = richard.mortier@gmail.com
 remotepasseval = get_keychain_pass(
     account="richard.mortier@gmail.com", server="imap.gmail.com")
 nametrans = to_localfolder
-folderfilter = is_synced
-
-
-[Account Gchat]
-localrepository = Gchat-Local
-remoterepository = Gchat-Remote
-status_backend = sqlite
-
-synclabels = yes
-labelsheader = X-Keywords
-filterheaders = X-Keywords
-ignorelabels = \Important, \Draft
-
-[Repository Gchat-Local]
-type = GmailMaildir
-localfolders = ~/me/footprint/mail/gmail
-
-[Repository Gchat-Remote]
-type = Gmail
-maxconnections = 1
-readonly = yes
-realdelete = no
-ssl = yes
-sslcacertfile = /usr/local/etc/openssl/osx_cert.pem
-remoteuser = richard.mortier@gmail.com
-remotepasseval = get_keychain_pass(
-    account="richard.mortier@gmail.com", server="imap.gmail.com")
-nametrans = to_localfolder
-folderfilter = lambda folder: folder in ['[Google Mail]/Chats']
+folderfilter = gmail_is_synced

@@ -1,40 +1,33 @@
 #!/usr/bin/python
 #
-# Copyright (C) 2015 Richard Mortier <mort@cantab.net>.  All Rights
-# Reserved.
+# Copyright (c) 2015 Richard Mortier <mort@cantab.net>
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
 #
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-# USA.
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import re, subprocess
 
 def get_keychain_pass(account=None, server=None):
     ## based off from http://stevelosh.com/blog/2012/10/the-homely-mutt/
-
-    localname = 'mort'
     params = {
-        'localname': localname,
+        'userid': 'mort',
         'security': '/usr/bin/security',
         'command': 'find-internet-password',
         'account': account,
         'server': server,
-        'keychain': '/Users/%s/Library/Keychains/login.keychain' % localname,
     }
-    command = "sudo -u %(localname)s %(security)s -v %(command)s -g -a %(account)s -s %(server)s %(keychain)s" % params
+    command = "sudo -u %(userid)s %(security)s -v %(command)s -g -a %(account)s -s %(server)s" % params
     output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
-    outtext = [l for l in output.splitlines()
-               if l.startswith('password: ')][0]
+    outtext = [l for l in output.splitlines() if l.startswith('password: ')][0]
 
     return re.match(r'password: "(.*)"', outtext).group(1)
 
@@ -54,9 +47,14 @@ RemoteLocalNames = { r: l for (l, r) in LocalRemoteNames.items() }
 def to_remotefolder(folder): return LocalRemoteNames.get(folder, folder)
 def to_localfolder(folder): return RemoteLocalNames.get(folder, folder)
 
-def is_synced(folder):
+def gmail_is_synced(folder):
     return folder in [
         '[Google Mail]/All Mail',
         '[Google Mail]/Trash',
         '[Google Mail]/Drafts',
+    ]
+
+def hotmail_is_synced(folder):
+    return folder not in [
+        'vipadia - mort',
     ]
