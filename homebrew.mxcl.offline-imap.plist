@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>KeepAlive</key>
+    <false/>
+    <key>Label</key>
+    <string>homebrew.mxcl.offline-imap</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/local/opt/offline-imap/bin/offlineimap</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>900</integer>
+    <key>RunAtLoad</key>
+    <true />
+    <key>StandardErrorPath</key>
+    <string>/Users/mort/.offlineimap/offlineimap-mort-stderr.log</string>
+    <key>StandardOutPath</key>
+    <string>/Users/mort/.offlineimap/offlineimap-mort-stdout.log</string>
+  </dict>
+</plist>
