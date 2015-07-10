@@ -183,6 +183,13 @@ function emacspkg-add {
     )
 }
 
+function emacspkg-rm {
+    ( cd ~/rc-files/emacs.d/elpa &&
+            git rm "$1-*" &&
+            git commit -m "emacs: remove \`$1\`"
+    )
+}
+
 #
 # abspath, of sorts handling relative symlinks
 #
