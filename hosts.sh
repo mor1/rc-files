@@ -4,13 +4,15 @@
 
 CUCL=slogin-serv.cl.cam.ac.uk
 KRB5='cl-krenew -q --ensuretgt --maxout || kinit || /usr/kerberos/bin/kinit'
+SSHFS="sshfs -o follow_symlinks"
 cucl () {
     ssh -tx $CUCL $KRB5
     slogin -X $CUCL
 }
 cuclfs () {
     ssh -tx $CUCL $KRB5
-    sshfs $CUCL:/home/rmm1002 ~/l/cucl
+    $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
+    $SSHFS $CUCL:/ ~/l/cucl
 }
 netos () {
     ssh -tx $CUCL $KRB5
