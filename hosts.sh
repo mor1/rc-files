@@ -47,7 +47,7 @@ pawsfs () {
     sshfs paws-server:/$1 ~/l/paws
 }
 
-recoil () {
+punk () {
     slogin -X punk.recoil.org
 }
 
