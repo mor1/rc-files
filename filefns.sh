@@ -121,19 +121,19 @@ rfc () {
 # pandoc invocations
 #
 
-PANDOC_MD="pandoc -S --latex-engine=xelatex \
+PANDOC_MD="pandoc -S --latex-engine=xelatex --number-sections \
         -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia"
 
 md2tex () {
-    $PANDOC_MD -o ${1%.md}.latex ${1}
+    $PANDOC_MD -o ${1%.md}.latex $@
 }
 
 md2docx () {
-    $PANDOC_MD -o ${1%.md}.docx ${1}
+    $PANDOC_MD -o ${1%.md}.docx $@
 }
 
 md2pdf () {
-    $PANDOC_MD -o ${1%.md}.pdf ${1}
+    $PANDOC_MD -o ${1%.md}.pdf $@
 }
 
 PANDOC_LETTER="pandoc -S --latex-engine=xelatex \
@@ -142,15 +142,15 @@ PANDOC_LETTER="pandoc -S --latex-engine=xelatex \
         -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in"
 
 letter2tex () {
-    $PANDOC_LETTER -o ${1%.md}.latex ${1}
+    $PANDOC_LETTER -o ${1%.md}.latex $@
 }
 
 letter2doc () {
-    $PANDOC_LETTER -o ${1%.md}.docx ${1}
+    $PANDOC_LETTER -o ${1%.md}.docx $@
 }
 
 letter2pdf () {
-    $PANDOC_LETTER -o ${1%.md}.pdf ${1}
+    $PANDOC_LETTER -o ${1%.md}.pdf $@
 }
 
 
@@ -221,7 +221,8 @@ function update-all {
         && brew upgrade && brew cleanup \
         && brew upgrade brew-cask && brew cask cleanup
     opam update -y -u
-    rvm get stable && gem update
+    rvm get stable && use-rvm && gem update
+    rm ~/.profile
 }
 
 function use-rvm {
