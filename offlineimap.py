@@ -53,8 +53,3 @@ def gmail_is_synced(folder):
         '[Google Mail]/Trash',
         '[Google Mail]/Drafts',
     ]
-
-def hotmail_is_synced(folder):
-    return folder not in [
-        'vipadia - mort',
-    ]

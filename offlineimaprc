@@ -14,7 +14,7 @@
 
 [general]
 ui = TTYUI
-accounts = Live, Hotmail, VipadiaAlt, Vipadia, Gmail, Gchat
+accounts = Gmail, Gchat, VipadiaAlt, Vipadia, Live, Hotmail
 pythonfile = ~/rc-files/offlineimap.py
 fsync = no
 
@@ -43,7 +43,6 @@ sep = /
 
 [Repository Live-Remote]
 type = IMAP
-maxconnections = 4
 remotehost = imap-mail.outlook.com
 remoteuser = mort@live.co.uk
 remotepasseval = get_keychain_pass(
@@ -66,12 +65,10 @@ sep = /
 
 [Repository Hotmail-Remote]
 type = IMAP
-maxconnections = 4
 remotehost = imap-mail.outlook.com
 remoteuser = richard_mortier@hotmail.com
 remotepasseval = get_keychain_pass(
     account="richard_mortier@hotmail.com", server="imap-mail.outlook.com")
-folderfilter = hotmail_is_synced
 
 #
 # Vipadia- alternate account
