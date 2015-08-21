@@ -11,7 +11,7 @@
       <string>/usr/local/opt/offline-imap/bin/offlineimap</string>
     </array>
     <key>StartInterval</key>
-    <integer>900</integer>
+    <integer>1800</integer>
     <key>RunAtLoad</key>
     <true />
     <key>StandardErrorPath</key>
