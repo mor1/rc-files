@@ -122,7 +122,7 @@ rfc () {
 #
 
 PANDOC_MD="pandoc -S --latex-engine=xelatex --number-sections \
-        -Vgeometry=margin=2cm -Vfontsize=11 -Vmainfont=Constantia"
+        -Vgeometry=margin=2cm -Vfontsize=12 -Vmainfont=Constantia"
 
 md2tex () {
     $PANDOC_MD -o ${1%.md}.latex $@
@@ -137,7 +137,7 @@ md2pdf () {
 }
 
 PANDOC_LETTER="pandoc -S --latex-engine=xelatex \
-        -Vpapersize=a4paper -Vfontsize=11 -Vmainfont=Constantia \
+        -Vpapersize=a4paper -Vfontsize=12 -Vmainfont=Constantia \
         -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
         -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in"
 
