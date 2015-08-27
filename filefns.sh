@@ -222,7 +222,7 @@ function update-all {
         && brew upgrade brew-cask && brew cask cleanup
     opam update -y -u
     rvm get stable && use-rvm && gem update
-    rm ~/.profile
+    rm -f ~/.profile
 }
 
 function use-rvm {
