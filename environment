@@ -174,13 +174,13 @@ aenv MANPATH ~/.cabal/share/man
 aenv PATH ~/.cabal/bin
 
 # pip bash completion start
-_pip_completion()
-{
-    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-                             COMP_CWORD=$COMP_CWORD \
-                             PIP_AUTO_COMPLETE=1 $1 ) )
-}
-complete -o default -F _pip_completion pip
+## _pip_completion()
+## {
+##     COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+##                              COMP_CWORD=$COMP_CWORD \
+##                              PIP_AUTO_COMPLETE=1 $1 ) )
+## }
+## complete -o default -F _pip_completion pip
 # pip bash completion end
 
 ###-begin-npm-completion-###
@@ -191,39 +191,39 @@ complete -o default -F _pip_completion pip
 # Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
 #
 
-COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
-COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
-export COMP_WORDBREAKS
-
-if complete &>/dev/null; then
-    _npm_completion () {
-        local si="$IFS"
-        IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
-                                         COMP_LINE="$COMP_LINE" \
-                                         COMP_POINT="$COMP_POINT" \
-                                         npm completion -- "${COMP_WORDS[@]}" \
-                                         2>/dev/null)) || return $?
-        IFS="$si"
-    }
-    complete -F _npm_completion npm
-elif compctl &>/dev/null; then
-    _npm_completion () {
-        local cword line point words si
-        read -Ac words
-        read -cn cword
-        let cword-=1
-        read -l line
-        read -ln point
-        si="$IFS"
-        IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-                                     COMP_LINE="$line" \
-                                     COMP_POINT="$point" \
-                                     npm completion -- "${words[@]}" \
-                                     2>/dev/null)) || return $?
-        IFS="$si"
-    }
-    compctl -K _npm_completion npm
-fi
+## COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
+## COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
+## export COMP_WORDBREAKS
+## 
+## if complete &>/dev/null; then
+##     _npm_completion () {
+##         local si="$IFS"
+##         IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
+##                                          COMP_LINE="$COMP_LINE" \
+##                                          COMP_POINT="$COMP_POINT" \
+##                                          npm completion -- "${COMP_WORDS[@]}" \
+##                                          2>/dev/null)) || return $?
+##         IFS="$si"
+##     }
+##     complete -F _npm_completion npm
+## elif compctl &>/dev/null; then
+##     _npm_completion () {
+##         local cword line point words si
+##         read -Ac words
+##         read -cn cword
+##         let cword-=1
+##         read -l line
+##         read -ln point
+##         si="$IFS"
+##         IFS=$'\n' reply=($(COMP_CWORD="$cword" \
+##                                      COMP_LINE="$line" \
+##                                      COMP_POINT="$point" \
+##                                      npm completion -- "${words[@]}" \
+##                                      2>/dev/null)) || return $?
+##         IFS="$si"
+##     }
+##     compctl -K _npm_completion npm
+## fi
 ###-end-npm-completion-###
 
 ## asciidoc -- required to rung things via XML stage
@@ -235,4 +235,5 @@ export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
 export OCAMLRUNPARAM=b
 
 ## added by travis gem
-[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+## remove as only for `travis` CLI completion
+## [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
