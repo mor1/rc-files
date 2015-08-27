@@ -1,16 +1,4 @@
-Host ucn-server
-     HostName horizab4.memset.net
-     User mort
-     IdentityFile ~/.ssh/bitbucket-key
-
-Host paws-server
-     HostName vpn.publicaccesswifi.org
-     User mort
-     IdentityFile ~/.ssh/bitbucket-key
-
-Host *.recoil.org
-     User mort
-     IdentityFile ~/.ssh/bitbucket-key
+## local
 
 Host mirage-xen
      User root
@@ -23,34 +11,42 @@ Host hw2
      Hostname ubuntu.local
      IdentityFile ~/.ssh/hw2-dreamplug-key
 
-Host *.horizon.ac.uk
-     User rmm
-     IdentityFile ~/.ssh/nottingham-key
+## cucl
 
-Host devbox,ppsrm.nottingham.ac.uk
-     User rmm
-     IdentityFile ~/.ssh/nottingham-key
-
-Host *.cs.nott.ac.uk
-     User rmm
-     IdentityFile ~/.ssh/nottingham-key
-
-Host *.cl.cam.ac.uk
+Host slogin-serv.cl.cam.ac.uk sandy.cl.cam.ac.uk
      User rmm1002
      IdentityFile ~/.ssh/cambridge-key
+     ForwardX11 yes
 
-Host *.vipadia.com,*.clackpoint.com
-     User mort
-     IdentityFile ~/.ssh/vipadia-key
+Host *.cl
+     User rmm1002
+     HostName %h
+     IdentityFile ~/.ssh/cambridge-key
+     ProxyCommand ssh -W %h.cam.ac.uk:%p rmm1002@slogin-serv.cl.cam.ac.uk
+     ForwardX11 yes
+     ForwardAgent yes
+
+## nottingham
+
+Host *.horizon.ac.uk devbox ppsrm.nottingham.ac.uk *.cs.nott.ac.uk
+     User rmm
+     IdentityFile ~/.ssh/nottingham-key
 
 Host *.compute.amazonaws.com
      User ec2-user
      IdentityFile ~/.ssh/dataware-catalog-aws.pem
 
-Host *.stthomasmorewollaton.org.uk
-     User stthnorg
-     Port 722
-     IdentityFile ~/.ssh/stmwww-key
+Host ucn-server
+     User mort
+     HostName horizab4.memset.net
+     IdentityFile ~/.ssh/bitbucket-key
+
+Host paws-server
+     User mort
+     HostName vpn.publicaccesswifi.org
+     IdentityFile ~/.ssh/bitbucket-key
+
+## tunnels
 
 Host irc-tunnel
      User mort
@@ -63,6 +59,21 @@ Host opw-tunnel
      HostName punk.recoil.org
      IdentityFile ~/.ssh/bitbucket-key
      LocalForward 7070 irc.gnome.org:7000
+
+## other
+
+Host *.recoil.org
+     User mort
+     IdentityFile ~/.ssh/bitbucket-key
+
+Host *.vipadia.com *.clackpoint.com
+     User mort
+     IdentityFile ~/.ssh/vipadia-key
+
+Host *.stthomasmorewollaton.org.uk
+     User stthnorg
+     Port 722
+     IdentityFile ~/.ssh/stmwww-key
 
 ## very handy for firewalls! :)
 # Host github.com
