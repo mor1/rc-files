@@ -49,7 +49,12 @@ def to_localfolder(folder): return RemoteLocalNames.get(folder, folder)
 
 def gmail_is_synced(folder):
     return folder in [
+        ## uk-based gmail accounts via Google Mail
         '[Google Mail]/All Mail',
         '[Google Mail]/Trash',
         '[Google Mail]/Drafts',
+        ## google apps via Gmail
+        '[Gmail]/All Mail',
+        '[Gmail]/Trash',
+        '[Gmail]/Drafts',
     ]
