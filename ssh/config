@@ -23,7 +23,7 @@ Host *.cl
      HostName %h
      IdentityFile ~/.ssh/cambridge-key
      ProxyCommand ssh -W %h.cam.ac.uk:%p rmm1002@slogin-serv.cl.cam.ac.uk
-     ForwardX11 yes
+     ForwardX11 no
      ForwardAgent yes
 
 ## nottingham
@@ -74,6 +74,11 @@ Host *.stthomasmorewollaton.org.uk
      User stthnorg
      Port 722
      IdentityFile ~/.ssh/stmwww-key
+
+Host github.com
+     User git
+     HostName ssh.github.com
+     IdentityFile ~/.ssh/github-key
 
 ## very handy for firewalls! :)
 # Host github.com
