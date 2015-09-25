@@ -190,6 +190,15 @@ function emacspkg-rm {
     )
 }
 
+function emacspkg-commit {
+    for n in $(git st | grep -E "^\s+emacs.d.*/$" | cut -f 3 -d "/") ; do
+        emacspkg-update ${n%-*}
+    done
+    for n in $(git st | grep -E "^\s+emacs.d.*/$" | cut -f 3 -d "/") ; do
+        emacspkg-add ${n%-*}
+    done
+}
+
 #
 # abspath, of sorts handling relative symlinks
 #
