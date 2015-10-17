@@ -190,7 +190,7 @@ function emacspkg-rm {
     )
 }
 
-function emacspkg-commit {
+function emacspkgs-commit-all {
     for n in $(git st | grep -E "^\s+emacs.d.*/$" | cut -f 3 -d "/") ; do
         emacspkg-update ${n%-*}
     done
