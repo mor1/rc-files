@@ -108,7 +108,8 @@ case $PLATFORM in
         # export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.3-62308/jars"
 
         ## homebrew completion
-        source $(brew --prefix)/Library/Contributions/brew_bash_completion.sh
+        # source $(brew --prefix)/Library/Contributions/brew_bash_completion.sh
+        source /usr/local/Library/Contributions/brew_bash_completion.sh
 
         ## GIT bash completion
         gitdir=$(dirname $(abspath $(which git)))
@@ -117,12 +118,7 @@ case $PLATFORM in
 
         ## Android
         export ANDROID_HOME=/usr/local/opt/android-sdk
-
-        ## nix
-        # no-go as nix dmg not mounted
-        #source /Users/$(whoami)/.nix-profile/etc/profile.d/nix.sh
-        #export NIX_PATH=/nix/var/nix/profiles/per-user/$(whoami)/channels/nixos
-
+        ;;
 esac
 
 case ${LHOST#*.} in
@@ -155,15 +151,29 @@ set -o noclobber # require explicit overwrite when redirecting
 
 source ~/rc-files/colours.sh
 GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWSTASHSTATE=true
-GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWSTASHSTATE=
+GIT_PS1_SHOWUNTRACKEDFILES=
+GIT_PS1_SHOWCOLORHINTS=true
 GIT_PS1_SHOWUPSTREAM="auto"
-GIT_PS1_SHOWCOLORHINTS=false
-PROMPT_COMMAND='__git_ps1 \
-  "\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
-  "\[$COLOR_OFF\]\$; " \
-  "#%s "
-  '
+
+case $TERM in
+    dumb )
+        PROMPT_COMMAND='__git_ps1 \
+          ": \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
+          "\[$COLOR_OFF\]\$; " \
+          "#%s "
+          '
+        ;;
+
+    * )
+        PROMPT_COMMAND='__git_ps1 \
+          "\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
+          "\[$COLOR_OFF\]\$; " \
+          "#%s "
+          '
+        ;;
+esac
+
 export PROMPT_COMMAND
 
 ## cabal, haskell package management (for pandoc)
@@ -171,13 +181,13 @@ aenv MANPATH ~/.cabal/share/man
 aenv PATH ~/.cabal/bin
 
 # pip bash completion start
-## _pip_completion()
-## {
-##     COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-##                              COMP_CWORD=$COMP_CWORD \
-##                              PIP_AUTO_COMPLETE=1 $1 ) )
-## }
-## complete -o default -F _pip_completion pip
+_pip_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                             COMP_CWORD=$COMP_CWORD \
+                             PIP_AUTO_COMPLETE=1 $1 ) )
+}
+complete -o default -F _pip_completion pip
 # pip bash completion end
 
 ###-begin-npm-completion-###
@@ -188,39 +198,39 @@ aenv PATH ~/.cabal/bin
 # Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
 #
 
-## COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
-## COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
-## export COMP_WORDBREAKS
-##
-## if complete &>/dev/null; then
-##     _npm_completion () {
-##         local si="$IFS"
-##         IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
-##                                          COMP_LINE="$COMP_LINE" \
-##                                          COMP_POINT="$COMP_POINT" \
-##                                          npm completion -- "${COMP_WORDS[@]}" \
-##                                          2>/dev/null)) || return $?
-##         IFS="$si"
-##     }
-##     complete -F _npm_completion npm
-## elif compctl &>/dev/null; then
-##     _npm_completion () {
-##         local cword line point words si
-##         read -Ac words
-##         read -cn cword
-##         let cword-=1
-##         read -l line
-##         read -ln point
-##         si="$IFS"
-##         IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-##                                      COMP_LINE="$line" \
-##                                      COMP_POINT="$point" \
-##                                      npm completion -- "${words[@]}" \
-##                                      2>/dev/null)) || return $?
-##         IFS="$si"
-##     }
-##     compctl -K _npm_completion npm
-## fi
+COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
+COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
+export COMP_WORDBREAKS
+
+if complete &>/dev/null; then
+    _npm_completion () {
+        local si="$IFS"
+        IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
+                                         COMP_LINE="$COMP_LINE" \
+                                         COMP_POINT="$COMP_POINT" \
+                                         npm completion -- "${COMP_WORDS[@]}" \
+                                         2>/dev/null)) || return $?
+        IFS="$si"
+    }
+    complete -F _npm_completion npm
+elif compctl &>/dev/null; then
+    _npm_completion () {
+        local cword line point words si
+        read -Ac words
+        read -cn cword
+        let cword-=1
+        read -l line
+        read -ln point
+        si="$IFS"
+        IFS=$'\n' reply=($(COMP_CWORD="$cword" \
+                                     COMP_LINE="$line" \
+                                     COMP_POINT="$point" \
+                                     npm completion -- "${words[@]}" \
+                                     2>/dev/null)) || return $?
+        IFS="$si"
+    }
+    compctl -K _npm_completion npm
+fi
 ###-end-npm-completion-###
 
 ## asciidoc -- required to rung things via XML stage
@@ -233,4 +243,4 @@ export OCAMLRUNPARAM=b
 
 ## added by travis gem
 ## remove as only for `travis` CLI completion
-## [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
