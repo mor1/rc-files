@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<root>
+  <symbol_map type="KeyCode" name="MY_HASH" value="0x23" />
+  <symbol_map type="KeyCode" name="MY_TILDE" value="0x7e" />
+
+  <device_only>
+    DeviceVendor::APPLE_COMPUTER,
+    DeviceProduct::MACBOOK_PRO_UK_KEYBOARD
+  </device>
+
+  <deviceproductdef>
+    <productname>MACBOOK_PRO_UK_KEYBOARD</productname>
+    <productid>0x0253</productid>
+  </deviceproductdef>
+
+  <deviceproductdef>
+    <productname>DIGITAL_MEDIA_KEYBOARD</productname>
+    <productid>0x00b4</productid>
+  </deviceproductdef>
+
+  <item>
+    <name>Keyboard mappings for Microsoft keyboard</name>
+    <identifier>private.io.mort.microsoft_keyboard</identifier>
+    <device_only>
+      DeviceVendor::MICROSOFT,
+      DeviceProduct::DIGITAL_MEDIA_KEYBOARD
+    </device>
+
+  </item>
+
+  <item>
+    <name>Keyboard mappings for MBP UK keyboard</name>
+    <identifier>private.io.mort.macbook_pro_uk_keyboard</identifier>
+    <device_only>
+      DeviceVendor::APPLE_COMPUTER,
+      DeviceProduct::MACBOOK_PRO_UK_KEYBOARD
+    </device>
+    <!--
+         <autogen>
+         __KeyToKey__
+         KeyCode::KEY_3, ModifierFlag::OPTION_L,
+         KeyCode::HASH
+         </autogen>
+       -->
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::NONE,
+      KeyCode::BACKQUOTE
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::OPTION_R
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L
+    </autogen>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE,
+      KeyCode::BACKSLASH
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::NONE,
+      KeyCode::KEY_3, ModifierFlag::OPTION_R
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE
+    </autogen>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::QUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::QUOTE, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::SHIFT_R
+    </autogen>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEY_2, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::QUOTE, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEY_2, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::QUOTE, ModifierFlag::SHIFT_R
+    </autogen>
+
+  </item>
+
+</root>
