@@ -1,13 +1,5 @@
 <?xml version="1.0"?>
 <root>
-  <symbol_map type="KeyCode" name="MY_HASH" value="0x23" />
-  <symbol_map type="KeyCode" name="MY_TILDE" value="0x7e" />
-
-  <device_only>
-    DeviceVendor::APPLE_COMPUTER,
-    DeviceProduct::MACBOOK_PRO_UK_KEYBOARD
-  </device>
-
   <deviceproductdef>
     <productname>MACBOOK_PRO_UK_KEYBOARD</productname>
     <productid>0x0253</productid>
@@ -18,6 +10,11 @@
     <productid>0x00b4</productid>
   </deviceproductdef>
 
+  <deviceproductdef>
+    <productname>FIVE_BUTTON_MOUSE_WITH_INTELLIEYE</productname>
+    <productid>0x0039</productid>
+  </deviceproductdef>
+
   <item>
     <name>Keyboard mappings for Microsoft keyboard</name>
     <identifier>private.io.mort.microsoft_keyboard</identifier>
@@ -25,6 +22,64 @@
       DeviceVendor::MICROSOFT,
       DeviceProduct::DIGITAL_MEDIA_KEYBOARD
     </device>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::OPTION_R
+    </autogen>
+
+    <!-- swap ` and \ keys -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::NONE,
+      KeyCode::KEY_3, ModifierFlag::OPTION_R
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE
+    </autogen>
+
+    <!--  -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::NONE,
+      KeyCode::BACKSLASH
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_R
+    </autogen>
+
+    <!-- swap " and @ -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::QUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::QUOTE, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::SHIFT_R
+    </autogen>
+
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEY_2, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::QUOTE, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEY_2, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::QUOTE, ModifierFlag::SHIFT_R
+    </autogen>
 
   </item>
 
@@ -35,14 +90,8 @@
       DeviceVendor::APPLE_COMPUTER,
       DeviceProduct::MACBOOK_PRO_UK_KEYBOARD
     </device>
-    <!--
-         <autogen>
-         __KeyToKey__
-         KeyCode::KEY_3, ModifierFlag::OPTION_L,
-         KeyCode::HASH
-         </autogen>
-       -->
 
+    <!-- stupid top-left § key -->
     <autogen>
       __KeyToKey__
       KeyCode::DANISH_DOLLAR, ModifierFlag::NONE,
@@ -64,6 +113,7 @@
       KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L
     </autogen>
 
+    <!-- swap ` and \ keys -->
     <autogen>
       __KeyToKey__
       KeyCode::BACKQUOTE,
@@ -80,6 +130,7 @@
       KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE
     </autogen>
 
+    <!-- swap " and @ -->
     <autogen>
       __KeyToKey__
       KeyCode::QUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
