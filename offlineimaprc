@@ -19,8 +19,8 @@ pythonfile = ~/rc-files/offlineimap.py
 fsync = no
 
 [DEFAULT]
-postsynchook = ~/rc-files/offlineimap-postsynchook.sh
 presynchook = ~/rc-files/offlineimap-presynchook.sh
+postsynchook = ~/rc-files/offlineimap-postsynchook.sh
 sslcacertfile = /usr/local/etc/openssl/osx_cert.pem
 ssl = yes
 realdelete = no
@@ -127,6 +127,7 @@ folderfilter = gmail_is_synced
 #
 
 [Account Gchat]
+postsynchook = ~/rc-files/offlineimap-postsynchook.sh --index
 localrepository = Gchat-Local
 remoterepository = Gchat-Remote
 status_backend = sqlite
