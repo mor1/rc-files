@@ -107,7 +107,7 @@ rfc () {
         elif [ ! -s ~/docs/rfcs/rfc${1}.txt ] ; then
             curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt
         fi
-        less ~/docs/rfcs/rfc${1}.txt
+        less -i ~/docs/rfcs/rfc${1}.txt
     else
         case $1 in
             -print|-p) a2ps --highlight-level=normal --columns=4 \
