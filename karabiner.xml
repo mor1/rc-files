@@ -91,46 +91,86 @@
       DeviceProduct::MACBOOK_PRO_UK_KEYBOARD
     </device>
 
-    <!-- stupid top-left § key -->
+    <!-- top-left "section marker" to ` -->
     <autogen>
       __KeyToKey__
       KeyCode::DANISH_DOLLAR, ModifierFlag::NONE,
       KeyCode::BACKQUOTE
     </autogen>
+    <!-- ...with shift, to € -->
     <autogen>
       __KeyToKey__
       KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
-      KeyCode::KEY_2, ModifierFlag::OPTION_R
+      KeyCode::KEY_2, ModifierFlag::OPTION_R | ModifierFlag::SHIFT_R
     </autogen>
     <autogen>
       __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::OPTION_R | ModifierFlag::SHIFT_R
+    </autogen>
+
+    <!-- ...with COMMAND/SHIFT, so that cycle-window-{forward,back} work -->
+    <autogen>
+      __KeyToKey__
       KeyCode::DANISH_DOLLAR, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
-      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_R
     </autogen>
     <autogen>
       __KeyToKey__
       KeyCode::DANISH_DOLLAR, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L | ModifierFlag::NONE,
-      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_R | ModifierFlag::SHIFT_R
     </autogen>
 
-    <!-- swap ` and \ keys -->
-    <autogen>
-      __KeyToKey__
-      KeyCode::BACKQUOTE,
-      KeyCode::BACKSLASH
-    </autogen>
+    <!-- \ to # -->
     <autogen>
       __KeyToKey__
       KeyCode::BACKSLASH, ModifierFlag::NONE,
+      KeyCode::KEY_3, ModifierFlag::SHIFT_L
+    </autogen>
+
+    <!-- shift-3 to £ -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEY_3, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
       KeyCode::KEY_3, ModifierFlag::OPTION_R
     </autogen>
     <autogen>
       __KeyToKey__
-      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
-      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE
+      KeyCode::KEY_3, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::KEY_3, ModifierFlag::OPTION_R
     </autogen>
 
-    <!-- swap " and @ -->
+    <!-- shift-| to ~ -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L
+    </autogen>
+
+    <!-- ` to \ -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::NONE,
+      KeyCode::BACKSLASH
+    </autogen>
+    <!-- shift-` to | -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::NONE,
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_R
+    </autogen>
+
+    <!-- shift-' to @ -->
     <autogen>
       __KeyToKey__
       KeyCode::QUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
@@ -142,6 +182,7 @@
       KeyCode::KEY_2, ModifierFlag::SHIFT_R
     </autogen>
 
+    <!-- shift-2 to " -->
     <autogen>
       __KeyToKey__
       KeyCode::KEY_2, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
@@ -152,7 +193,6 @@
       KeyCode::KEY_2, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
       KeyCode::QUOTE, ModifierFlag::SHIFT_R
     </autogen>
-
   </item>
 
 </root>
