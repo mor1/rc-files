@@ -34,3 +34,5 @@ alias mirage-config='\opam list | grep mirage-net- | cut -d " " -f 1 | cut -d "-
 
 alias eject="diskutil unmount $1"
 alias reset="\reset -i ^C"
+
+alias docker-start="( docker-machine restart default || docker-machine start default ) && eval $(docker-machine env default)"
