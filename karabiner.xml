@@ -118,7 +118,7 @@
       DeviceProduct::MACBOOK_PRO_UK_KEYBOARD
     </device>
 
-    <!-- top-left "section marker" to ` -->
+    <!-- top-left § to ` -->
     <autogen>
       __KeyToKey__
       KeyCode::DANISH_DOLLAR, ModifierFlag::NONE,
