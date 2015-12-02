@@ -40,6 +40,10 @@ mediapcfs() {
     sshfs root@mediapc.home:/$1 ~/l/mediapc
 }
 
+monk () {
+    slogin -X monk.recoil.org
+}
+
 paws () {
     slogin paws-server
 }
