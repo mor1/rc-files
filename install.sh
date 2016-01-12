@@ -39,7 +39,7 @@ for f in ${INSTALL_DIR}/*; do
             | "karabiner.xml"                       \
             | "offlineimap-*" | "offlineimap.py*"   \
             | "push-env.sh"                         \
-            | "solarized-*"
+            | "solarized-*"                         \
         )
 
         ;;
