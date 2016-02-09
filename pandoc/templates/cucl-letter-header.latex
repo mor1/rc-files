@@ -1,0 +1,179 @@
+%% Based on Simon Moore's "Lab Letter Class for 1998"
+%% Hacked about by mort <mort@cantab.net>
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{url}
+\usepackage[absolute]{textpos}
+
+\usepackage{graphicx}
+\graphicspath{ {/Users/mort/.pandoc/templates/} }
+
+%% fonts
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{eurosym}
+\usepackage{upquote}
+\usepackage{microtype}
+\usepackage{fontspec}
+\usepackage{xltxtra,xunicode}
+\defaultfontfeatures{Mapping=tex-text,Scale=MatchUppercase}
+\renewcommand{\familydefault}{\rmdefault}
+\setmainfont{Times New Roman}
+\setmonofont{Consolas}
+
+%% geometry
+\pagestyle{plain}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+% use -31mm for official skip, -25mm for window envelopes
+\setlength{\topmargin}{-25mm}
+\setlength{\textwidth}{16cm}
+\setlength{\textheight}{265mm}  %235mm if address in footer
+%\setlength{\footskip}{25mm}
+\parskip 10pt
+\parindent 0.0pt
+
+%% sender
+\newcommand{\fromnamedetails}{}
+\newcommand{\fromquoldetails}{}
+\newcommand{\fromjobdetails}{}
+\newcommand{\fromemaildetails}{}
+\newcommand{\fromphonedetails}{}
+\newcommand{\fromfaxdetails}{}
+\newcommand{\fromwhom}[6]{
+  \renewcommand{\fromnamedetails}{#1}
+  \renewcommand{\fromquoldetails}{#2}
+  \renewcommand{\fromjobdetails}{#3}
+  \renewcommand{\fromemaildetails}{\url{#4}}
+  \renewcommand{\fromphonedetails}{#5}
+  \renewcommand{\fromfaxdetails}{#6}
+}
+
+%% recipient
+\newcommand{\towhomname}{}
+\newcommand{\towhomaddress}{}
+\newcommand{\towhom}[3]{
+  \renewcommand{\towhomname}{#1}
+  \renewcommand{\towhomaddress}{#2}
+}
+
+\newcommand{\addressdetails}{
+  \towhomname\par
+  \towhomaddress
+}
+
+%% salutations
+\newcommand{\greetingdetails}{To Whom It May Concern:}
+\newcommand{\greeting}[1]{
+  \renewcommand{\greetingdetails}{#1}
+}
+
+\newcommand{\closingdetails}{Yours faithfully,}
+\newcommand{\closing}[1]{
+  \renewcommand{\closingdetails}{#1}
+}
+
+\newcommand{\signeddetails}{\fromnamedetails}
+\newcommand{\setsigned}[2]{
+  \renewcommand{\closing}{#1}\renewcommand{\signeddetails}{#2}
+}
+
+%% date
+\newcommand{\datedetails}{\today}
+\renewcommand{\date}[1]{\renewcommand{\datedetails}{#1}}
+
+\newcommand{\cclistdetails}{}
+\newcommand{\cclist}[1]{
+  \renewcommand{\cclistdetails}{
+    \vspace*{1em}cc:~~\begin{minipage}[t]{100mm}#1\end{minipage}
+}}
+
+\newcommand{\cuarms}{\includegraphics{figures/CUni3.eps}}
+\newcommand{\bwarms}{
+  \typeout{Using B&W version of the arms}
+  \renewcommand{\cuarms}{\includegraphics{figures/BWUni3.eps}}
+}
+
+\newcommand{\ComputerLaboratory}{
+  \fontsize{14pt}{14pt}\bf Computer Laboratory
+}
+
+\newcommand{\titledetails}{}
+\renewcommand{\title}[1]{
+  \renewcommand{\titledetails}{\begin{center}\bf #1\end{center}}
+}
+
+\newcommand{\dolettertop}{%
+  \begin{textblock*}{\paperwidth}(25mm,13mm)
+    \bf\fromnamedetails\fromquoldetails\\\it\fromjobdetails
+  \end{textblock*}
+  \begin{textblock*}{\paperwidth}(124mm,13mm)
+    \includegraphics{figures/CUni3.eps}
+  \end{textblock*}
+  \begin{textblock*}{\paperwidth}(136.5mm,28mm)
+    \ComputerLaboratory
+  \end{textblock*}
+
+  \parbox[t][12mm][s]{\textwidth}{}
+
+  \parbox[t][20mm][s]{0.4\textwidth}{\addressdetails}
+
+  \datedetails
+
+  \titledetails
+
+  \thispagestyle{empty}%
+  \enlargethispage{10mm}%
+  \begin{figure}[b!]
+    \swmfoot
+  \end{figure}
+
+  \greetingdetails
+}
+
+\renewcommand{\footnoterule}{}
+\renewcommand{\thefootnote}{}
+
+\newcommand{\swmfoot}{\fontsize{9pt}{10pt}\rm\hfill\begin{tabular}{@{}l@{ }l@{}}
+  & \\
+  \multicolumn{2}{@{}l@{}}{Computer Laboratory}\\
+  \multicolumn{2}{@{}l@{}}{William Gates Building}\\
+  \multicolumn{2}{@{}l@{}}{JJ Thompson Avenue}\\
+  \multicolumn{2}{@{}l@{}}{Cambridge~~~CB3 0FD}\\
+  \multicolumn{2}{@{}l@{}}{U.K.}\\
+  & \\
+  Tel: & \fromphonedetails\\
+  Fax: & \fromfaxdetails\\
+  E-mail: & \fromemaildetails\\
+  \end{tabular}
+}
+
+
+\newcommand{\doletterbottom}{
+  \begin{minipage}{150mm}%\textwidth}
+    \centering
+
+    \closingdetails
+
+    \vspace*{48pt}
+
+    \signeddetails
+
+    \cclistdetails
+  \end{minipage}
+  \cleardoublepage
+}
+
+\newenvironment{letter}{\dolettertop}{\doletterbottom}
+
+\begin{document}
+
+\fromwhom{Richard~Mortier}{~Ph.D.}
+         {University Lecturer}{richard.mortier@cl.cam.ac.uk}
+         {+44 1223 334419}{+44 1223 334678}
+
+$body$
+
+\end{document}
