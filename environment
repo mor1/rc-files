@@ -154,9 +154,9 @@ export NO_PROMPT_VARS
 set -o noclobber # require explicit overwrite when redirecting
 
 source ~/rc-files/colours.sh
-GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWSTASHSTATE=
-GIT_PS1_SHOWUNTRACKEDFILES=
+GIT_PS1_SHOWDIRTYSTATE=false
+GIT_PS1_SHOWSTASHSTATE=false
+GIT_PS1_SHOWUNTRACKEDFILES=false
 GIT_PS1_SHOWCOLORHINTS=true
 GIT_PS1_SHOWUPSTREAM="auto"
 
