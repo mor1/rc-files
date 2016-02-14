@@ -1,3 +1,8 @@
+## global
+
+# mitigate CVE-2016-0778 and CVE-2016-0777
+UseRoaming no
+
 ## local
 
 Host mirage-xen
