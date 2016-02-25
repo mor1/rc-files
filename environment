@@ -248,3 +248,8 @@ export OCAMLRUNPARAM=b
 ## added by travis gem
 ## remove as only for `travis` CLI completion
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+
+## GO
+export GOPATH=~/go
+aenv PATH ~/go/bin
+
