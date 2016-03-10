@@ -26,6 +26,7 @@
 [ -r ~/rc-files/hosts.sh   ] && source ~/rc-files/hosts.sh
 
 [ -r ~/src/sh-scripts/numfns.sh ] && source ~/src/sh-scripts/numfns.sh
+[ -r ~/rc-files/dockerfns.sh    ] && source ~/rc-files/dockerfns.sh
 
 #
 # general
@@ -252,4 +253,3 @@ export OCAMLRUNPARAM=b
 ## GO
 export GOPATH=~/go
 aenv PATH ~/go/bin
-
