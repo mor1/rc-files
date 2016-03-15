@@ -22,6 +22,7 @@
     who = shortlog -s --
     patdiff = difftool -y -x patdiff
     pull-theirs = pull -s recursive -X theirs
+    appraise = !/Users/mort/go/bin/git-appraise
 
 [color]
     ui = true
@@ -44,3 +45,5 @@
 
 [diff]
     renames = true
+[transfer]
+	fsckObjects = true
