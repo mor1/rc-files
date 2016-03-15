@@ -28,6 +28,7 @@ if [ "$1" == "--index" ] ; then
        --my-address=mort@sprintlabs.com                 \
        --my-address=mort@vipadia.com                    \
        --my-address=richard.mortier@cl.cam.ac.uk        \
+       --my-address=richard.mortier@docker.com          \
        --my-address=richard.mortier@gmail.com           \
        --my-address=richard.mortier@hotmail.com         \
        --my-address=richard.mortier@nottingham.ac.uk    \

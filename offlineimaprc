@@ -14,7 +14,7 @@
 
 [general]
 ui = TTYUI
-accounts = Uniks, Live, Hotmail, VipadiaAlt, Vipadia, Gmail, Gchat
+accounts = Docker, Uniks, Live, Hotmail, VipadiaAlt, Vipadia, Gmail, Gchat
 pythonfile = ~/rc-files/offlineimap.py
 fsync = no
 
@@ -206,5 +206,32 @@ remoteuser = richard.mortier@unikernel.com
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="richard.mortier@unikernel.com", server="imap.gmail.com")
+nametrans = to_localfolder
+folderfilter = gmail_is_synced
+
+#
+# Docker
+#
+
+[Account Docker]
+localrepository = Docker-Local
+remoterepository = Docker-Remote
+status_backend = sqlite
+labelsheader = X-Keywords
+synclabels = yes
+ignorelabels = \Important, \Draft
+
+[Repository Docker-Local]
+type = GmailMaildir
+localfolders = ~/me/footprint/mail/docker
+nametrans = to_remotefolder
+sep = /
+
+[Repository Docker-Remote]
+type = Gmail
+remoteuser = richard.mortier@docker.com
+auth_mechanisms = LOGIN
+remotepasseval = get_keychain_pass(
+    account="richard.mortier@docker.com", server="imap.gmail.com")
 nametrans = to_localfolder
 folderfilter = gmail_is_synced
