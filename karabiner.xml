@@ -6,6 +6,11 @@
   </deviceproductdef>
 
   <deviceproductdef>
+    <productname>MACBOOK_PRO_UK_RETINA_KEYBOARD</productname>
+    <productid>0x0273</productid>
+  </deviceproductdef>
+
+  <deviceproductdef>
     <productname>DIGITAL_MEDIA_KEYBOARD</productname>
     <productid>0x00b4</productid>
   </deviceproductdef>
@@ -17,6 +22,7 @@
 
   <!-- Microsoft Digital Media Keyboard -->
   <item>
+    <!-- now identical to MBP Retina UK layout (!) -->
     <name>Keyboard mappings for Microsoft keyboard</name>
     <identifier>private.io.mort.microsoft_keyboard</identifier>
     <device_only>
@@ -24,16 +30,73 @@
       DeviceProduct::DIGITAL_MEDIA_KEYBOARD
     </device>
 
-    <!-- shift-` to € -->
+    <!-- top-left § to ` -->
     <autogen>
       __KeyToKey__
-      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
-      KeyCode::KEY_2, ModifierFlag::OPTION_R | ModifierFlag::SHIFT_R
+      KeyCode::DANISH_DOLLAR, ModifierFlag::NONE,
+      KeyCode::BACKQUOTE
+    </autogen>
+    <!-- ...with shift, to € -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::OPTION_R
     </autogen>
     <autogen>
       __KeyToKey__
-      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
-      KeyCode::KEY_2, ModifierFlag::OPTION_R | ModifierFlag::SHIFT_R
+      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::OPTION_R
+    </autogen>
+
+    <!-- ...with COMMAND/SHIFT, so that cycle-window-{forward,back} work -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_R
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR,
+      ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_R | ModifierFlag::SHIFT_R
+    </autogen>
+
+    <!-- \ to # -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::NONE,
+      KeyCode::KEY_3, ModifierFlag::OPTION_R
+    </autogen>
+
+    <!-- shift-| to ~ -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L
+    </autogen>
+
+    <!-- ` to \ -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::NONE,
+      KeyCode::BACKSLASH
+    </autogen>
+
+    <!-- shift-` to | -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::NONE,
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_R
     </autogen>
 
     <!-- shift-' to @ -->
@@ -58,55 +121,6 @@
       __KeyToKey__
       KeyCode::KEY_2, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
       KeyCode::QUOTE, ModifierFlag::SHIFT_R
-    </autogen>
-
-    <!-- shift-3 to £ -->
-    <autogen>
-      __KeyToKey__
-      KeyCode::KEY_3, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
-      KeyCode::KEY_3, ModifierFlag::OPTION_R
-    </autogen>
-    <autogen>
-      __KeyToKey__
-      KeyCode::KEY_3, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
-      KeyCode::KEY_3, ModifierFlag::OPTION_R
-    </autogen>
-
-    <!-- # detected as \, should be # -->
-    <autogen>
-      __KeyToKey__
-      KeyCode::BACKSLASH, ModifierFlag::NONE,
-      KeyCode::KEY_3, ModifierFlag::SHIFT_L
-    </autogen>
-
-    <!-- shift-# to ~ -->
-    <autogen>
-      __KeyToKey__
-      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
-      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L
-    </autogen>
-    <autogen>
-      __KeyToKey__
-      KeyCode::BACKSLASH, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
-      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L
-    </autogen>
-
-    <!-- \ detected as danish-dollar, should be \  -->
-    <autogen>
-      __KeyToKey__
-      KeyCode::DANISH_DOLLAR, ModifierFlag::NONE,
-      KeyCode::BACKSLASH
-    </autogen>
-    <!-- shift-\ similarly, should be | -->
-    <autogen>
-      __KeyToKey__
-      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
-      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L
-    </autogen>
-    <autogen>
-      __KeyToKey__
-      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
-      KeyCode::BACKSLASH, ModifierFlag::SHIFT_R
     </autogen>
   </item>
 
@@ -185,6 +199,108 @@
       KeyCode::BACKQUOTE, ModifierFlag::NONE,
       KeyCode::BACKSLASH
     </autogen>
+    <!-- shift-` to | -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::NONE,
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_R
+    </autogen>
+
+    <!-- shift-' to @ -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::QUOTE, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::QUOTE, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::SHIFT_R
+    </autogen>
+
+    <!-- shift-2 to " -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEY_2, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::QUOTE, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEY_2, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::QUOTE, ModifierFlag::SHIFT_R
+    </autogen>
+  </item>
+
+  <item>
+    <name>Keyboard mappings for MBP Retina UK keyboard</name>
+    <identifier>private.io.mort.macbook_pro_retina_uk_keyboard</identifier>
+    <device_only>
+      DeviceVendor::APPLE_COMPUTER,
+      DeviceProduct::MACBOOK_PRO_UK_RETINA_KEYBOARD
+    </device>
+
+    <!-- top-left § to ` -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::NONE,
+      KeyCode::BACKQUOTE
+    </autogen>
+    <!-- ...with shift, to € -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::OPTION_R
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::KEY_2, ModifierFlag::OPTION_R
+    </autogen>
+
+    <!-- ...with COMMAND/SHIFT, so that cycle-window-{forward,back} work -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR, ModifierFlag::COMMAND_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_R
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR,
+        ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::COMMAND_R | ModifierFlag::SHIFT_R
+    </autogen>
+
+    <!-- \ to # -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::NONE,
+      KeyCode::KEY_3, ModifierFlag::OPTION_R
+    </autogen>
+
+    <!-- shift-| to ~ -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_L | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKSLASH, ModifierFlag::SHIFT_R | ModifierFlag::NONE,
+      KeyCode::BACKQUOTE, ModifierFlag::SHIFT_L
+    </autogen>
+
+    <!-- ` to \ -->
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE, ModifierFlag::NONE,
+      KeyCode::BACKSLASH
+    </autogen>
+
     <!-- shift-` to | -->
     <autogen>
       __KeyToKey__
