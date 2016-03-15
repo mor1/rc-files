@@ -20,3 +20,4 @@ ssh/
 
 ocp/
 /offlineimap.pyc
+pandoc/templates/auto
