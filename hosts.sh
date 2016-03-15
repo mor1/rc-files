@@ -2,12 +2,15 @@
 # remote hosts
 #
 
+SLOGIN="slogin -X"
+
 CUCL=slogin-serv.cl.cam.ac.uk
 KRB5='cl-krenew -q --ensuretgt --maxout || kinit || /usr/kerberos/bin/kinit'
-SSHFS="sshfs -o follow_symlinks"
+SSHFS="sshfs -o follow_symlinks -o uid=503 -o gid=20"
+
 cucl () {
     ssh -tx $CUCL $KRB5
-    slogin -X $CUCL
+    $SLOGIN $CUCL
 }
 cuclfs () {
     ssh -tx $CUCL $KRB5
@@ -16,32 +19,30 @@ cuclfs () {
 }
 netos () {
     ssh -tx $CUCL $KRB5
-    sshfs -o uid=503 -o gid=20 $CUCL:/usr/groups/netos ~/l/netos
-}
-
-hw2 () {
-    slogin -X root@ubuntu.local
-}
-hw2fs() {
-    sshfs ubuntu.local:/$1 ~/l/hw2
+    $SSHFS $CUCL:/usr/groups/netos ~/l/netos
 }
 
 marian () {
-    slogin -X marian.cs.nott.ac.uk
+    $SLOGIN marian.cs.nott.ac.uk
 }
 marianfs () {
     sshfs marian.cs.nott.ac.uk:/$1 ~/l/marian
 }
 
 mediapc () {
-    slogin -X root@mediapc.home
+    $SLOGIN root@mediapc.home
 }
 mediapcfs() {
     sshfs root@mediapc.home:/$1 ~/l/mediapc
 }
 
 monk () {
-    slogin -X monk.recoil.org
+    $SLOGIN monk.recoil.org
+}
+
+office () {
+    ssh -tx $CUCL $KRB5
+    $SLOGIN daugleddau.cl
 }
 
 paws () {
@@ -52,14 +53,21 @@ pawsfs () {
 }
 
 punk () {
-    slogin -X punk.recoil.org
+    $SLOGIN punk.recoil.org
 }
 
 severn () {
-    slogin -X severn.cs.nott.ac.uk
+    $SLOGIN severn.cs.nott.ac.uk
 }
 severnfs () {
     sshfs severn.cs.nott.ac.uk:/$1 ~/l/severn
+}
+
+srcf () {
+    $SLOGIN rmm1002@shell.srcf.net
+}
+srcffs () {
+    sshfs rmm1002@shell.srcf.net:/$1 ~/l/srcf
 }
 
 stmwww () {
@@ -70,14 +78,14 @@ stmwwwfs() {
 }
 
 stratus () {
-    slogin -X stratus.horizon.ac.uk
+    $SLOGIN stratus.horizon.ac.uk
 }
 stratusfs () {
     sshfs -o uid=503 -o gid=20 stratus.cs.nott.ac.uk:/$1 ~/l/stratus
 }
 
 ucn () {
-    slogin -X ucn-server
+    $SLOGIN ucn-server
 }
 
 vagrantfs() {
@@ -85,7 +93,7 @@ vagrantfs() {
 }
 
 xen () {
-    slogin -X -p 2233 localhost
+    $SLOGIN -p 2233 localhost
 }
 xenfs () {
     sshfs -p 2233 localhost: ~/l/xen
