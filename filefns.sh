@@ -1,7 +1,7 @@
 #
 # Some file related bash shell functions
 #
-# Copyright (C) 2000-2014 Richard Mortier <mort@cantab.net>. All Rights
+# Copyright (C) 2000-2016 Richard Mortier <mort@cantab.net>. All Rights
 # Reserved.
 #
 # This program is free software; you can redistribute it and/or modify it under
@@ -24,12 +24,14 @@ trawl () {
     find . \( \
          -name "*.[chsSyli]"\
          -or -name "Make*"\
+         -or -name "Dockerfile"\
          -or -name "README*"\
          -or -name "*.bib"\
          -or -name "*.cc" -or -name "*.hh"\
          -or -name "*.xml" -or -name "*.html" -or -name "*.css"\
          -or -name "*.el"\
          -or -name "*.fs" -or -name "*.fs[xi]"\
+         -or -name "*.go"\
          -or -name "*.inc"\
          -or -name "*.less"\
          -or -name "*.md"\
@@ -122,7 +124,7 @@ rfc () {
 #
 
 PANDOC_MD="pandoc -S --latex-engine=xelatex --number-sections \
-        -Vgeometry=margin=2cm -Vfontsize=12 -Vmainfont=Constantia"
+        -Vgeometry=margin=2cm -Vfontsize=12 -Vmainfont=Calibri"
 
 md2tex () {
     $PANDOC_MD -o ${1%.md}.latex $@
@@ -197,6 +199,9 @@ function emacspkgs-commit-all {
     for n in $(git st | grep -E "^\s+emacs.d.*/$" | cut -f 3 -d "/") ; do
         emacspkg-add ${n%-*}
     done
+    ( cd ~/rc-files/emacs.d/elpa/archives \
+            && git commit -m "emacs: update archives" */archive-contents*
+    )
 }
 
 #
@@ -230,7 +235,6 @@ function update-all {
         && brew upgrade && brew cleanup \
         && brew upgrade brew-cask && brew cask cleanup
     opam update -y -u
-    rvm get stable && use-rvm && gem update
     rm -f ~/.profile
 }
 
