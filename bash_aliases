@@ -5,11 +5,8 @@ alias la="ls -A"
 alias lla="ls -lA"
 alias l="ls"
 
-alias g="grep -Hn"
 alias less="less -FRXi"
 alias m="less -E"
-
-alias cu="ci -u"
 alias bc="bc -l"
 
 alias src2ps="a2ps --highlight-level=normal --columns=4 --rows=1 -L190 -l90"
@@ -21,18 +18,7 @@ alias bcat="hexdump -C"
 alias github-tunnel="ssh -f -N github-tunnel"
 alias irc-tunnels="ps aux | \grep -E -- '-tunnel$' | tr -s ' ' | cut -d ' ' -f 2 | xargs kill -9 ; ssh -f -N irc-tunnel ; ssh -f -N opw-tunnel"
 
-alias curl="curl --noproxy localhost,127.0.0.1"
-
-alias coffee="rlwrap coffee"
-
-alias qv="qlmanage -p"
-
-alias nixos="source /Users/$(whoami)/.nix-profile/etc/profile.d/nix.sh && export NIX_PATH=/nix/var/nix/profiles/per-user/$(whoami)/channels/nixos"
-
-alias mirage-version="\opam list | grep mirage"
-alias mirage-config='\opam list | grep mirage-net- | cut -d " " -f 1 | cut -d "-" -f 3'
+alias qv="qlmanage -px"
 
 alias eject="diskutil unmount $1"
 alias reset="\reset -i ^C"
-
-alias docker-start="( docker-machine restart default || docker-machine start default ) && eval $(docker-machine env default)"
