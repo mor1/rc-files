@@ -63,3 +63,11 @@ case $(uname -s) in
         $WGET $GITPROMPT_SH -O ~/.git-prompt.sh
         ;;
 esac
+
+## install any launchers
+ln -sfv ~/rc-files/*.plist ~/Library/LaunchAgents
+
+## offlineimap
+brew install offlineimap
+mkdir -p ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.offlineimap.plist

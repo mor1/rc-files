@@ -21,7 +21,7 @@ fsync = no
 [DEFAULT]
 presynchook = ~/rc-files/offlineimap-presynchook.sh
 postsynchook = ~/rc-files/offlineimap-postsynchook.sh
-sslcacertfile = /usr/local/etc/openssl/osx_cert.pem
+sslcacertfile = /usr/local/etc/openssl/cert.pem
 ssl = yes
 realdelete = no
 maxconnections = 1
@@ -45,6 +45,7 @@ sep = /
 type = IMAP
 remotehost = imap-mail.outlook.com
 remoteuser = mort@live.co.uk
+auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="mort@live.co.uk", server="imap-mail.outlook.com")
 
@@ -67,6 +68,7 @@ sep = /
 type = IMAP
 remotehost = imap-mail.outlook.com
 remoteuser = richard_mortier@hotmail.com
+auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="richard_mortier@hotmail.com", server="imap-mail.outlook.com")
 
@@ -91,6 +93,7 @@ sep = /
 [Repository VipadiaAlt-Remote]
 type = Gmail
 remoteuser = mort.vipadia
+auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="mort.vipadia", server="imap.gmail.com")
 nametrans = to_localfolder
@@ -117,6 +120,7 @@ sep = /
 [Repository Vipadia-Remote]
 type = Gmail
 remoteuser = mort@vipadia.com
+auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="mort@vipadia.com", server="imap.gmail.com")
 nametrans = to_localfolder
@@ -145,6 +149,7 @@ sep = /
 type = Gmail
 readonly = yes
 remoteuser = richard.mortier@gmail.com
+auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="richard.mortier@gmail.com", server="imap.gmail.com")
 nametrans = to_localfolder
@@ -171,6 +176,7 @@ sep = /
 [Repository Gmail-Remote]
 type = Gmail
 remoteuser = richard.mortier@gmail.com
+auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="richard.mortier@gmail.com", server="imap.gmail.com")
 nametrans = to_localfolder
@@ -197,6 +203,7 @@ sep = /
 [Repository Uniks-Remote]
 type = Gmail
 remoteuser = richard.mortier@unikernel.com
+auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="richard.mortier@unikernel.com", server="imap.gmail.com")
 nametrans = to_localfolder
