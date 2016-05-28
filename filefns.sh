@@ -255,6 +255,23 @@ function use-ocaml {
     fi
 }
 
-function make {
-    [ -r "Makefile.mort" ] && $MAKE -f Makefile.mort $@ || $MAKE $@
+#
+# clone remote
+#
+
+function git-cloner {
+    git clone "$1"
+    B=$(basename -s .git "$1")
+    cd $B
+    git remote add upstream "git://github.com/$2/$B.git"
+    git pull upstream master
+}
+
+#
+# make dd display progress
+#
+
+function ddstatus {
+    PID=$(ps -ax | grep "[0-9] dd" | tr -s ' ' | cut -f 1 -d ' ')
+    sudo kill -INFO $PID
 }
