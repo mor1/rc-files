@@ -21,7 +21,7 @@
 \defaultfontfeatures{Mapping=tex-text,Scale=MatchUppercase}
 \renewcommand{\familydefault}{\rmdefault}
 \setmainfont{Times New Roman}
-\setmonofont{Consolas}
+\setmonofont{Hack}
 
 %% geometry
 \pagestyle{plain}
@@ -127,7 +127,7 @@ $endif$
 
   \parbox[t][12mm][s]{\textwidth}{\quad}
 
-  \parbox[t][12mm][s]{0.5\textwidth}{\addressdetails}
+  \parbox[t][18mm][s]{0.5\textwidth}{\addressdetails}
 
   \datedetails
   \titledetails
