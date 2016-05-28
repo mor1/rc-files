@@ -59,7 +59,6 @@ aenv PATH /usr/bin
 aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
 aenv PATH /usr/X11R6/bin
-aenv PATH ~/me/local/bin
 
 unset MANPATH
 aenv MANPATH /usr/local/share/man
@@ -93,7 +92,9 @@ case $PLATFORM in
 
         ## homebrew completion
         # source $(brew --prefix)/Library/Contributions/brew_bash_completion.sh
-        source /usr/local/Library/Contributions/brew_bash_completion.sh
+        if [ -f $(brew --prefix)/etc/bash_completion ]; then
+            source $(brew --prefix)/etc/bash_completion
+        fi
 
         ## GIT bash completion
         gitdir=$(dirname $(abspath $(which git)))
@@ -177,3 +178,6 @@ export OCAMLRUNPARAM=b
 ## GO
 export GOPATH=~/go
 aenv PATH ~/go/bin
+
+## Finally, my PATH wins:
+aenv PATH ~/me/local/bin
