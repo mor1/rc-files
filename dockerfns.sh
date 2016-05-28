@@ -16,10 +16,35 @@
 # Place - Suite 330, Boston, MA 02111-1307, USA.
 
 function docker-kill {
-    docker ps --all --quiet | xargs docker stop -t 2 --quiet
+    docker ps --all --quiet | xargs docker stop -t 2
     docker ps --all --quiet | xargs docker rm
 }
 
 function docker-clean {
-    docker images | grep "<none>" | xargs docker rmi
+    docker images | grep "<none>" | tr -s " " | cut -d" " -f 3 \
+        | xargs docker rmi
+}
+
+function d {
+    docker run -ti --rm -v $(pwd -P):/cwd -w /cwd "$@"
+}
+
+function linux {
+    d alpine sh -c "$*"
+}
+
+function coffee {
+    d mor1/alpine-coffeescript:latest "$@"
+}
+
+function jekyll {
+    d mor1/alpine-jekyll:latest "$@"
+}
+
+function python3 {
+    d mor1/alpine-python3:latest "$@"
+}
+
+function casperjs {
+    d casperjs-local casperjs "$@"
 }
