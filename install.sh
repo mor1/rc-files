@@ -58,9 +58,9 @@ ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
 case $(uname -s) in
     Linux )
         ## many linux distros appear to have old git-prompt.sh which breaks things
-        GITPROMPT_SH=https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh
-        WGET="wget --no-check-certificate"
-        $WGET $GITPROMPT_SH -O ~/.git-prompt.sh
+        curl
+        https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh \
+            -o ~/.git-prompt.sh
         ;;
 
     Darwin )
@@ -71,5 +71,5 @@ case $(uname -s) in
         brew install offlineimap
         mkdir -p ~/Library/LaunchAgents
         launchctl load ~/Library/LaunchAgents/homebrew.mxcl.offlineimap.plist
-        ;;    
+        ;;
 esac
