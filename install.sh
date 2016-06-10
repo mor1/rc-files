@@ -57,10 +57,11 @@ ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
 
 case $(uname -s) in
     Linux )
-        ## many linux distros appear to have old git-prompt.sh which breaks things
-        curl
-        https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh \
-            -o ~/.git-prompt.sh
+        ## many linux distros appear to have old git-prompt.sh which breaks
+        ## things
+        GITHUB=https://raw.githubusercontent.com
+        curl $GITHUB/git/git/master/contrib/completion/git-prompt.sh \
+             -o ~/.git-prompt.sh
         ;;
 
     Darwin )
