@@ -55,19 +55,21 @@ done
 rm -f ~/.bashrc
 ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
 
-## many linux distros appear to have old git-prompt.sh which breaks things
-GITPROMPT_SH=https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh
-WGET="wget --no-check-certificate"
 case $(uname -s) in
     Linux )
+        ## many linux distros appear to have old git-prompt.sh which breaks things
+        GITPROMPT_SH=https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh
+        WGET="wget --no-check-certificate"
         $WGET $GITPROMPT_SH -O ~/.git-prompt.sh
         ;;
+
+    Darwin )
+        ## install any launchers
+        ln -sfv ~/rc-files/*.plist ~/Library/LaunchAgents
+
+        ## offlineimap
+        brew install offlineimap
+        mkdir -p ~/Library/LaunchAgents
+        launchctl load ~/Library/LaunchAgents/homebrew.mxcl.offlineimap.plist
+        ;;    
 esac
-
-## install any launchers
-ln -sfv ~/rc-files/*.plist ~/Library/LaunchAgents
-
-## offlineimap
-brew install offlineimap
-mkdir -p ~/Library/LaunchAgents
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.offlineimap.plist
