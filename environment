@@ -45,7 +45,9 @@ CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../..
 EDITOR="emacsclient -s /tmp/emacs-$USER/server"
 PAGER="less -FRXi"
 MANPAGER="less -FRXi"
-export LHOST SHOST KERNEL CDPATH EDITOR PAGER MANPAGER
+LANG=C.UTF-8
+
+export LHOST SHOST KERNEL CDPATH EDITOR PAGER MANPAGER LANG
 
 #
 # paths
