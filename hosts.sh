@@ -4,9 +4,13 @@
 
 SLOGIN="slogin -X"
 
-CUCL=slogin-serv.cl.cam.ac.uk
+CUCL=slogin.cl.cam.ac.uk
 KRB5='cl-krenew -q --ensuretgt --maxout || kinit || /usr/kerberos/bin/kinit'
 SSHFS="sshfs -o follow_symlinks -o uid=503 -o gid=20"
+
+aod () {
+    $SLOGIN armyofdockerness.cl.cam.ac.uk
+}
 
 cucl () {
     ssh -tx $CUCL $KRB5

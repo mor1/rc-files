@@ -18,16 +18,16 @@ Host hw2
 
 ## cucl
 
-Host slogin-serv.cl.cam.ac.uk sandy.cl.cam.ac.uk
+Host slogin.cl.cam.ac.uk slogin-serv.cl.cam.ac.uk sandy.cl.cam.ac.uk slogin-new.cl.cam.ac.uk
      User rmm1002
-     IdentityFile ~/.ssh/cambridge-key
+     IdentityFile ~/.ssh/cucl-key
      ForwardX11 yes
 
 Host *.cl
      User rmm1002
      HostName %h
-     IdentityFile ~/.ssh/cambridge-key
-     ProxyCommand ssh -W %h.cam.ac.uk:%p rmm1002@slogin-serv.cl.cam.ac.uk
+     IdentityFile ~/.ssh/cucl-key
+     ProxyCommand ssh -W %h.cam.ac.uk:%p rmm1002@slogin.cl.cam.ac.uk
      ForwardX11 no
      ForwardAgent yes
 
