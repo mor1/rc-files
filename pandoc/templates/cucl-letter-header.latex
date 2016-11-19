@@ -54,10 +54,10 @@
 %% recipient
 \newcommand{\towhomname}{$towhom$}
 \newcommand{\towhomaddress}{$toaddr$}
-% \newcommand{\towhom}[3]{
-%   \renewcommand{\towhomname}{#1}
-%   \renewcommand{\towhomaddress}{#2}
-% }
+\newcommand{\towhom}[3]{
+  \renewcommand{\towhomname}{#1}
+  \renewcommand{\towhomaddress}{#2}
+}
 
 \newcommand{\fromwhomname}{Richard~Mortier~Ph.D.}
 $if(fromwhom)$
