@@ -45,7 +45,7 @@ monk () {
 }
 
 office () {
-    ssh -tx $CUCL $KRB5
+    ssh -tx daugleddau.cl.cam.ac.uk $KRB5
     $SLOGIN daugleddau.cl
 }
 
