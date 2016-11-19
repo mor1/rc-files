@@ -23,6 +23,9 @@
     patdiff = difftool -y -x patdiff
     pull-theirs = pull -s recursive -X theirs
     appraise = !/Users/mort/go/bin/git-appraise
+    ignore-unknown = status -s | grep "^?? " | cut -f 2 -d " " >> .gitignore
+    # http://megakemp.com/2016/08/25/git-undo/
+    undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
 
 [color]
     ui = true
