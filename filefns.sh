@@ -123,11 +123,13 @@ rfc () {
 # pandoc invocations
 #
 
-PANDOC_MD="pandoc -S --latex-engine=xelatex --number-sections \
-        -Vgeometry=margin=2cm -Vfontsize=12 -Vmainfont=Calibri"
+PANDOC_BASE='
+  d mor1/pandoc -S --latex-engine=xelatex -Vfontsize=12 -Vpapersize=a4paper'
+
+PANDOC_MD="$PANDOC_BASE --number-sections -Vgeometry=margin=2cm"
 
 md2tex () {
-    $PANDOC_MD -o ${1%.md}.latex $@
+    $PANDOC_MD -o ${1%.md}.tex $@
 }
 
 md2docx () {
@@ -138,13 +140,13 @@ md2pdf () {
     $PANDOC_MD -o ${1%.md}.pdf $@
 }
 
-PANDOC_LETTER="pandoc -S --latex-engine=xelatex \
-        -Vpapersize=a4paper -Vfontsize=12 -Vmainfont=Constantia \
-        -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
-        -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in"
+PANDOC_LETTER="\
+    $PANDOC_BASE -Vdocumentclass=letter -H ~/.pandoc/letter-header.latex \
+      -Vgeometry=left=1in,right=1in,top=0.75in,bottom=0.75in \
+    "
 
 letter2tex () {
-    $PANDOC_LETTER -o ${1%.md}.latex $@
+    $PANDOC_LETTER -o ${1%.md}.tex $@
 }
 
 letter2doc () {
@@ -248,6 +250,11 @@ function use-rvm {
     fi
 }
 
+function opam-switch {
+    opam switch "$@"
+    use-ocaml
+}
+
 function use-ocaml {
     unset CAML_LD_LIBRARY_PATH
     if [ \! -z $(which opam) ]; then
@@ -272,6 +279,44 @@ function git-cloner {
 #
 
 function ddstatus {
-    PID=$(ps -ax | grep "[0-9] dd" | tr -s ' ' | cut -f 1 -d ' ')
+    PID=$(ps -ax | grep "[0-9] dd" | tr -s ' ' | cut -f 1 -d ' ' | xargs)
     sudo kill -INFO $PID
+}
+
+#
+# photo manipulation
+#
+
+function photos-rename {
+    jhead -exonly -ft -n%Y%m%d-%H%M%S-%03i "$@"
+}
+
+function photos-subdir {
+    for n in *.jpg ; do
+        d=${n%%-*}-- && ( [ \! -d $d ] && mkdir $d || true ) && mv $n $d
+    done
+    # for n in *.jpg ; do
+    #    mv $n $(echo $n | cut -b1-4)-$(echo $n | cut -b5-6)-$(echo $n | cut -b7-8)--
+    # done
+}
+
+function photos-mirror {
+    rsync -av --delete ./pictures/ ~/l/mediapc/storage/pictures
+}
+
+#
+# network configuration
+#
+
+function v6-off {
+    while read -r line ; do
+        echo "XXX: $line"
+    done <<< $(networksetup -listallnetworkservices | tail -n+2)
+}
+
+function v6-on {
+    for i in "$(networksetup -listallnetworkservices | tail -n+2)"; do
+        echo "sudo networksetup -setv6automatic \"$i\" || true"
+        sudo networksetup -setv6automatic "$i" || true
+    done
 }
