@@ -4,17 +4,18 @@ PATH=/bin:/sbin/:/usr/bin:/usr/sbin
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
 
 if [ -f "$HOME/.ssh/sssha" ]; then
-    source $HOME/.ssh/sssha \
-           -k ~/.ssh/nottingham-key \
-           -k ~/.ssh/bitbucket-key \
-           -k ~/.ssh/github-key \
-           -k ~/.ssh/cambridge-key
+    source $HOME/.ssh/sssha                     \
+           -k ~/.ssh/nottingham-key             \
+           -k ~/.ssh/bitbucket-key              \
+           -k ~/.ssh/github-key                 \
+           -k ~/.ssh/cambridge-key              \
+           -k ~/.ssh/cucl-key
 fi
 
 if tty -s; then
     stty sane
     uname -a
     date
-    cd
+    complete -r make # hack until fix bash_completion properly
     echo
 fi
