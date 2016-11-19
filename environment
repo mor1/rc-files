@@ -45,9 +45,11 @@ CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../..
 EDITOR="emacsclient -s /tmp/emacs-$USER/server"
 PAGER="less -FRXi"
 MANPAGER="less -FRXi"
-LANG=C.UTF-8
 
-export LHOST SHOST KERNEL CDPATH EDITOR PAGER MANPAGER LANG
+LANG="en_GB.UTF-8"
+LC_ALL="C"
+
+export LHOST SHOST KERNEL CDPATH EDITOR PAGER MANPAGER LANG LC_ALL
 
 #
 # paths
@@ -176,6 +178,7 @@ complete -o default -F _pip_completion pip
 [ -f ~/.opam/opam-init/init.sh ] && \
     source ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 export OCAMLRUNPARAM=b
+export OPAMBUILDDOC=true
 
 ## GO
 export GOPATH=~/go
