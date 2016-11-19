@@ -5,16 +5,15 @@ UseRoaming no
 
 ## local
 
-Host mirage-xen
+Host ucn-dev
      User root
-     Hostname localhost
+     Hostname ucn-cb2.local
      IdentityFile ~/.ssh/bitbucket-key
-     Port 2233
 
-Host hw2
+Host ucn-dev-truck
      User root
-     Hostname ubuntu.local
-     IdentityFile ~/.ssh/hw2-dreamplug-key
+     Hostname ucn-cb3.local
+     IdentityFile ~/.ssh/bitbucket-key
 
 ## cucl
 
@@ -22,6 +21,11 @@ Host slogin.cl.cam.ac.uk slogin-serv.cl.cam.ac.uk sandy.cl.cam.ac.uk slogin-new.
      User rmm1002
      IdentityFile ~/.ssh/cucl-key
      ForwardX11 yes
+
+Host tfc-app2.cl.cam.ac.uk
+     User rita
+     IdentityFile ~/.ssh/cucl-key
+     ForwardX11 no
 
 Host *.cl
      User rmm1002
