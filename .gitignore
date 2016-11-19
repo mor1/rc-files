@@ -7,7 +7,7 @@ isos/
 
 emacs.d/.emacs.desktop
 emacs.d/auto-save-list/
-emacs.d/scrap.*
+emacs.d/scrap/
 emacs.d/places
 emacs.d/ac-comphist.dat
 emacs.d/url/
