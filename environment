@@ -149,7 +149,7 @@ case $TERM in
     dumb )
         PROMPT_COMMAND='__git_ps1 \
           ": \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
-          "\[$COLOR_OFF\]\$; " \
+          "\[$COLOR_OFF\]\\$; " \
           "#%s "
           '
         ;;
@@ -157,7 +157,7 @@ case $TERM in
     * )
         PROMPT_COMMAND='__git_ps1 \
           "\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
-          "\[$COLOR_OFF\]\$; " \
+          "\[$COLOR_OFF\]\\$; " \
           "#%s "
           '
         ;;
