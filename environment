@@ -24,7 +24,8 @@
 [ -r ~/rc-files/envfns.sh    ] && source ~/rc-files/envfns.sh
 [ -r ~/rc-files/filefns.sh   ] && source ~/rc-files/filefns.sh
 [ -r ~/rc-files/hosts.sh     ] && source ~/rc-files/hosts.sh
-[ -r ~/rc-files/dockerfns.sh ] && source ~/rc-files/dockerfns.sh
+
+[ -r ~/src/dockerfiles/dockerfns.sh ] && source ~/src/dockerfiles/dockerfns.sh
 
 [ -r ~/src/sh-scripts/numfns.sh ] && source ~/src/sh-scripts/numfns.sh
 
