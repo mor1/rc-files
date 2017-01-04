@@ -47,57 +47,45 @@ trawl () {
 }
 
 #
-# test existence of dangling symlinks; returns 1 on ok, 0 on dangling
+# test existence of dangling symlinks
 #
 
 symt () {
-
-    local retval=0
     local argsdone=0
     local verbose=0
-    local cmd="echo"
-    local subdirs=0
-    local args=""
-
-    if [ $# = 0 ]; then
-        echo 'symt: test for dangling symlinks' ;
-        echo 'Usage: symt [option] <filename>' ;
-        echo '       -q  : quiet (just set return value)' ;
-        echo '       -d  : delete file *** CAUTION ***' ;
-        echo '       -r  : recurse down subdirectories' ;
-        echo '       -v  : report ok symlinks as well' ;
-        echo '       -vv : as -v, report non-symlinks as well' ;
-    fi
+    local quiet=0
 
     while [ $argsdone != 1 ]; do
         case $1 in
-            -q)  cmd=":"     ; args="$args $1" ; shift ;;
-            -vv) verbose=2   ; args="$args $1" ; shift ;;
-            -v)  verbose=1   ; args="$args $1" ; shift ;;
-            -r)  subdirs=1   ; args="$args $1" ; shift ;;
-            -d)  cmd="rm -f" ; args="$args $1" ; shift ;;
+            -q) quiet=1 ;;
+            -v) verbose=1 ;;
             *)  argsdone=1 ;;
-        esac ;
+        esac
+
+        args="$args $1"
+        if [ $argsdone = 0 ]; then
+            shift
+        fi
     done
 
-    while [ -n "$1" ]; do
-        [ -L $1 ]                          \
-            && { [ ! -r $1 ]                   \
-                     && { eval "$cmd $1 : dangling" ;    \
-                          retval=0 ;
-                 }             \
-                     || { [ $verbose = 1 ]         \
-                              && { eval "$cmd $1 : ok" ; } ; \
-                          retval=1 ; } ; }         \
-            || { [ $verbose = 2 ]              \
-                     && { eval "$cmd $1 not a symlink" ; } ; } ;
-
-        [ $subdirs = 1 ] && [ -d $1 ] && [ "$1" != ".." ] && [ "$1" != "." ] \
-            && { symt $args ${1}/{*,.*} ; };
-
-        shift ;
+    for f in "$@"; do
+        if [ -L "$f" ] ; then
+            if [ ! -r $f ]; then
+                echo "$f: dangling"
+                retval=1
+            else
+                if [ $quiet = 0 ]; then
+                    echo "$f: ok"
+                    retval=0
+                fi
+            fi
+        else
+            if [ $verbose = 1 ]; then
+                echo "$f: not a symlink"
+                retval=0
+            fi
+        fi
     done
-
     return $retval
 }
 
