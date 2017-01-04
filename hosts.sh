@@ -21,9 +21,10 @@ cuclfs () {
     $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
     $SSHFS $CUCL:/ ~/l/cucl
 }
-netos () {
+
+gitlab () {
     ssh -tx $CUCL $KRB5
-    $SSHFS $CUCL:/usr/groups/netos ~/l/netos
+    $SLOGIN svr-rmm1002-git.cl
 }
 
 marian () {
@@ -42,6 +43,11 @@ mediapcfs() {
 
 monk () {
     $SLOGIN monk.recoil.org
+}
+
+netos () {
+    ssh -tx $CUCL $KRB5
+    $SSHFS $CUCL:/usr/groups/netos ~/l/netos
 }
 
 office () {
