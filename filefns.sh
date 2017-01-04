@@ -244,9 +244,7 @@ abspath () {
 #
 
 function update-all {
-    brew update \
-        && brew upgrade && brew cleanup \
-        && brew upgrade brew-cask && brew cask cleanup
+    brew update && brew upgrade --cleanup && brew cask cleanup
     opam update -y -u
     rm -f ~/.profile
 }
