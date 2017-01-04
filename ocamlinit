@@ -17,8 +17,11 @@ let root =
   in search (Sys.getcwd ())
 in Sys.chdir root;;
 
-#use "topfind";;
 #thread;;
 
 #require "ppx_deriving,sexplib,ppx_sexp_conv";;
 #directory "_build";;
+
+(* ## added by OPAM user-setup for ocamltop / base ## 3ec62baf6f9c219ae06d9814069da862 ## you can edit, but keep this line *)
+#use "topfind";;
+(* ## end of OPAM user-setup addition for ocamltop / base ## keep this line *)
