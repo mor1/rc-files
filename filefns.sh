@@ -21,25 +21,28 @@
 #
 
 trawl () {
-    find . \( \
-         -name "*.[chsSyli]"\
-         -or -name "Make*"\
-         -or -name "Dockerfile"\
-         -or -name "README*"\
-         -or -name "*.bib"\
-         -or -name "*.cc" -or -name "*.hh"\
-         -or -name "*.xml" -or -name "*.html" -or -name "*.css"\
-         -or -name "*.el"\
-         -or -name "*.fs" -or -name "*.fs[xi]"\
-         -or -name "*.go"\
-         -or -name "*.inc"\
-         -or -name "*.less"\
-         -or -name "*.md"\
-         -or -name "*.nix"\
-         -or -name "*.php"\
-         -or -name "*.py"\
-         -or -name "*.tex"\
-         -or \( \( -name "*.ml" -or -name "*.ml[yil]" \) -not -path "*/_build/*" -not -name "setup.ml"  -not -name "myocamlbuild.ml" \) \
+    find . \(                                                       \
+         -name '*.[chsSyli]'                                        \
+         -or -name 'Make*'                                          \
+         -or -name 'Dockerfile'                                     \
+         -or -name 'README*'                                        \
+         -or -name '*.bib'                                          \
+         -or -name '*.cc' -or -name '*.hh'                          \
+         -or -name '*.xml' -or -name '*.html' -or -name '*.css'     \
+         -or -name '*.el'                                           \
+         -or -name '*.fs' -or -name '*.fs[xi]'                      \
+         -or -name '*.go'                                           \
+         -or -name '*.inc'                                          \
+         -or -name '*.less'                                         \
+         -or -name '*.md'                                           \
+         -or -name '*.nix'                                          \
+         -or -name '*.php'                                          \
+         -or -name '*.py'                                           \
+         -or -name '*.tex'                                          \
+         -or \( \( -name '*.ml' -or -name '*.ml[yil]' \)            \
+               -not -path '*/_build/*'                              \
+               -not -name 'setup.ml' -not -name 'myocamlbuild.ml'   \
+               \)                                                   \
          \) -print0 | xargs -0 grep -EHns "$@"
 }
 
