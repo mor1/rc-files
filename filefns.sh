@@ -177,35 +177,43 @@ e () {
 
 function emacspkg-update {
     ( cd ~/rc-files/emacs.d/elpa &&
-            git rm "$1-*" &&
-            git add "$1-*" &&
-            git commit -m "emacs: update \`$1\`"
+          git rm "$1-*" &&
+          git add "$1-*" &&
+          git commit -m "emacs: update \`$1\`"
     )
 }
 
 function emacspkg-add {
     ( cd ~/rc-files/emacs.d/elpa &&
-            git add "$1-*" &&
-            git commit -m "emacs: add \`$1\`"
+          git add "$1-*" &&
+          git commit -m "emacs: add \`$1\`"
     )
 }
 
 function emacspkg-rm {
     ( cd ~/rc-files/emacs.d/elpa &&
-            git rm "$1-*" &&
-            git commit -m "emacs: remove \`$1\`"
+          git rm "$1-*" &&
+          git commit -m "emacs: remove \`$1\`"
     )
 }
 
 function emacspkgs-commit-all {
-    for n in $(git st | grep -E "^\s+emacs.d.*/$" | cut -f 3 -d "/") ; do
+    pushd ~/rc-files
+    PKGS=$(git status -s | grep -E "^   emacs.d/.*$" | cut -f 3 -d "/" | uniq)
+    for n in $PKGS; do
         emacspkg-update ${n%-*}
     done
-    for n in $(git st | grep -E "^\s+emacs.d.*/$" | cut -f 3 -d "/") ; do
+    PKGS=$(git status -s | grep -E "^[?][?] emacs.d/.*$" | cut -f 3 -d "/" | uniq)
+    for n in $PKGS; do
         emacspkg-add ${n%-*}
     done
+    PKGS=$(git status -s | grep -E "^ D emacs.d/.*$" | cut -f 3 -d "/" | uniq)
+    for n in $PKGS; do
+        emacspkg-rm ${n%-*}
+    done
+    popd
     ( cd ~/rc-files/emacs.d/elpa/archives \
-            && git commit -m "emacs: update archives" */archive-contents*
+          && git commit -m "emacs: update archives" */archive-contents*
     )
 }
 
