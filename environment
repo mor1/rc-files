@@ -21,9 +21,9 @@
 # handy shell functions
 #
 
-[ -r ~/rc-files/envfns.sh    ] && source ~/rc-files/envfns.sh
-[ -r ~/rc-files/filefns.sh   ] && source ~/rc-files/filefns.sh
-[ -r ~/rc-files/hosts.sh     ] && source ~/rc-files/hosts.sh
+[ -r ~/rc-files/envfns.sh  ] && source ~/rc-files/envfns.sh
+[ -r ~/rc-files/filefns.sh ] && source ~/rc-files/filefns.sh
+[ -r ~/rc-files/hosts.sh   ] && source ~/rc-files/hosts.sh
 
 [ -r ~/src/dockerfiles/dockerfns.sh ] && source ~/src/dockerfiles/dockerfns.sh
 
