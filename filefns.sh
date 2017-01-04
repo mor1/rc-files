@@ -267,7 +267,7 @@ function git-cloner {
     git clone "$1"
     B=$(basename -s .git "$1")
     cd $B
-    git remote add upstream "git://github.com/$2/$B.git"
+    git remote add upstream "$2/$B.git"
     git pull upstream master
 }
 
