@@ -27,11 +27,19 @@ Host tfc-app2.cl.cam.ac.uk
      IdentityFile ~/.ssh/cucl-key
      ForwardX11 no
 
+Host armyofdockerness.cl
+     User mort
+     HostName %h.cam.ac.uk
+     IdentityFile ~/.ssh/cucl-key
+     # ProxyCommand ssh -W %h.cam.ac.uk:%p rmm1002@slogin.cl.cam.ac.uk
+     ForwardX11 no
+     ForwardAgent yes
+
 Host *.cl
      User rmm1002
-     HostName %h
+     HostName %h.cam.ac.uk
      IdentityFile ~/.ssh/cucl-key
-     ProxyCommand ssh -W %h.cam.ac.uk:%p rmm1002@slogin.cl.cam.ac.uk
+     # ProxyCommand ssh -W %h.cam.ac.uk:%p rmm1002@slogin.cl.cam.ac.uk
      ForwardX11 no
      ForwardAgent yes
 
@@ -89,4 +97,9 @@ Host github.com
      HostName ssh.github.com
      IdentityFile ~/.ssh/github-key
      ## handy for firewalls!
-     ##   Port 443
+     Port 443
+
+Host moby-dev.packet
+     User root
+     HostName 147.75.32.134
+     IdentityFile ~/.ssh/packetnet-key
