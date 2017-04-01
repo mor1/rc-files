@@ -1,4 +1,8 @@
 syntax enable
+set background=dark
+colorscheme solarized
+set g:solarized_termcolors=256
+
 set showmode
 set showcmd
 set wildmenu
