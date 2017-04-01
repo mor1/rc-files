@@ -2,57 +2,76 @@
 # remote hosts
 #
 
-SLOGIN="slogin -X"
+SSH="ssh -KX"
 
-CUCL=slogin.cl.cam.ac.uk
-KRB5='cl-krenew -q --ensuretgt --maxout || kinit || /usr/kerberos/bin/kinit'
+SLOGIN="slogin"
+CLOGIN="slogin -KX"
+if [ "${LHOST%.cam.ac.uk}" = "$LHOST" ]; then
+    CLOGIN="ssh -At slogin.cl ssh -t"
+fi
+
+CUCL=ely.cl
+ACCT=rmm1002@AD.CL.CAM.AC.UK
+KINIT="cl-krenew -q --ensuretgt --maxout"                      # common case
+KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
+KINIT="ssh -tx rmm1002@slogin.cl.cam.ac.uk $KINIT" # run on SSH gateway
+
 SSHFS="sshfs -o follow_symlinks -o uid=503 -o gid=20"
 
+# CUCL
+
 aod () {
-    $SLOGIN armyofdockerness.cl.cam.ac.uk
+    $KINIT
+    $CLOGIN armyofdockerness.cl
+}
+aodfs () {
+    $KINIT
+    $SSHFS armyofdockerness.cl:/ ~/l/aod
+}
+
+cron-serv () {
+    $KINIT
+    $CLOGIN cron-serv$1.cl
 }
 
 cucl () {
-    ssh -tx $CUCL $KRB5
-    $SLOGIN $CUCL
+    $KINIT
+    $CLOGIN $CUCL
 }
 cuclfs () {
-    ssh -tx $CUCL $KRB5
+    $KINIT
     $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
     $SSHFS $CUCL:/ ~/l/cucl
 }
 
 gitlab () {
-    ssh -tx $CUCL $KRB5
-    $SLOGIN svr-rmm1002-git.cl
+    $KINIT
+    $CLOGIN svr-rmm1002-git.cl
 }
+
+netos () {
+    $KINIT
+    $SSHFS $CUCL:/usr/groups/netos ~/l/netos
+}
+
+office () {
+    $KINIT
+    $CLOGIN daugleddau.cl
+}
+
+lab () {
+    H=$1
+    $KINIT
+    $CLOGIN $H.cl
+}
+
+# Nottingham
 
 marian () {
     $SLOGIN marian.cs.nott.ac.uk
 }
 marianfs () {
     sshfs marian.cs.nott.ac.uk:/$1 ~/l/marian
-}
-
-mediapc () {
-    $SLOGIN root@mediapc.home
-}
-mediapcfs() {
-    sshfs root@mediapc.home:/$1 ~/l/mediapc
-}
-
-monk () {
-    $SLOGIN monk.recoil.org
-}
-
-netos () {
-    ssh -tx $CUCL $KRB5
-    $SSHFS $CUCL:/usr/groups/netos ~/l/netos
-}
-
-office () {
-    ssh -tx daugleddau.cl.cam.ac.uk $KRB5
-    $SLOGIN daugleddau.cl
 }
 
 paws () {
@@ -62,15 +81,43 @@ pawsfs () {
     sshfs paws-server:/$1 ~/l/paws
 }
 
-punk () {
-    $SLOGIN punk.recoil.org
-}
-
 severn () {
     $SLOGIN severn.cs.nott.ac.uk
 }
 severnfs () {
     sshfs severn.cs.nott.ac.uk:/$1 ~/l/severn
+}
+
+stratus () {
+    $SLOGIN stratus.horizon.ac.uk
+}
+stratusfs () {
+    sshfs -o uid=503 -o gid=20 stratus.cs.nott.ac.uk:/$1 ~/l/stratus
+}
+
+ucn () {
+    $SLOGIN ucn-server
+}
+
+# Other
+
+mediapc () {
+    $SLOGIN root@mediapc.home
+}
+mediapcfs() {
+    sshfs root@mediapc.home:/$1 ~/l/mediapc
+}
+
+moby-dev () {
+    $SLOGIN -A moby-dev.packet
+}
+
+monk () {
+    $SLOGIN monk.recoil.org
+}
+
+punk () {
+    $SLOGIN punk.recoil.org
 }
 
 srcf () {
@@ -85,17 +132,6 @@ stmwww () {
 }
 stmwwwfs() {
     sshfs -p 722 stthnorg@stthomasmorewollaton.org.uk: ~/l/stm-www
-}
-
-stratus () {
-    $SLOGIN stratus.horizon.ac.uk
-}
-stratusfs () {
-    sshfs -o uid=503 -o gid=20 stratus.cs.nott.ac.uk:/$1 ~/l/stratus
-}
-
-ucn () {
-    $SLOGIN ucn-server
 }
 
 vagrantfs() {
