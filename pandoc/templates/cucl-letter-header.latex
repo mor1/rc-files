@@ -88,7 +88,7 @@ $endif$
 %% date
 \newcommand{\datedetails}{\today}
 $if(date)$
-\renewcommand{\date}[1]{\renewcommand{\datedetails}{$date$}}
+\renewcommand{\datedetails}{$date$}
 $endif$
 
 \newcommand{\cclistdetails}{}
