@@ -6,6 +6,7 @@ PATH=/bin:/sbin/:/usr/bin:/usr/sbin
 if [ -f "$HOME/.ssh/sssha" ]; then
     source $HOME/.ssh/sssha                     \
            -k ~/.ssh/nottingham-key             \
+           -k ~/.ssh/packetnet-key              \
            -k ~/.ssh/bitbucket-key              \
            -k ~/.ssh/github-key                 \
            -k ~/.ssh/cambridge-key              \
