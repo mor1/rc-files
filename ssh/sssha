@@ -38,7 +38,7 @@
 #DEBUG "args: '$*'"
 
 # Canonicalize hostname to just the short name
-if [ -z "$HOSTNAME" ]; then 
+if [ -z "$HOSTNAME" ]; then
   HOSTNAME=`hostname`
 fi
 HOSTNAME=`echo $HOSTNAME | sed 's/\..*//'`
@@ -92,7 +92,7 @@ sssha_start_agent () {
   ssh-agent ${SSSHA_ARGS} | sed 's/^echo/#echo/' >| ${SSSHA_ENV}
   chmod 600 ${SSSHA_ENV}
   . ${SSSHA_ENV}
-  # if -x option passed, since THIS shell started the agent, 
+  # if -x option passed, since THIS shell started the agent,
   # then stop the agent when this shell exits
   if [ "${SSSHA_STOP_ON_EXIT}" ]; then
     trap "sssha_stop_agent" EXIT
@@ -119,7 +119,7 @@ sssha_add_keys () {
 
   # return if no keys to add
   [ -z "${keys[*]}" ] && return
-    
+
   # add the missing keys, but kill the agent if add fails
   ( trap "" SIGINT
     ssh-add "${keys[@]}" || sssha_stop_agent
@@ -137,7 +137,7 @@ sssha_agent_up () {
   test `ps -x | grep ssh-agent | grep -v grep | wc -l` -eq 1
 }
 
-# 2. If we can't connect to existing (forwarded?) agent, 
+# 2. If we can't connect to existing (forwarded?) agent,
 #    source the existing environment cache, if available
 if ! sssha_agent_running && [ -f "${SSSHA_ENV}" ]; then
   #echo "Loading '${SSSHA_ENV}'"
@@ -155,13 +155,13 @@ if [[ "$-" == *i* ]] && [ -n "${SSSHA_KEYS[*]}" ]; then
     # 3.2.1 Have a TTY on an interactive, non commanded shell - ask directly
     #echo "Adding missing private keys from current ssh-agent."
     sssha_add_keys ${SSSHA_KEYS[@]}
-    
+
 #  elif [[ "$-" =~ "i" && "$-" =~ "c" && `uname -o` =~ '^Cygwin$' ]]; then
 #    # 3.2.2 No tty - can we bring up a secondary window?
 #    echo "NO tty - can we cygstart a shell?"
 #    cygstart bash
 #
-#  else 
+#  else
 #    # 3.2.3 No way to prompt the user for the keys, so just let the agent run
 #    echo "No way to query user for key passphrases - leaving agent emtpy"
   fi

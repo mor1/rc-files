@@ -96,9 +96,11 @@ symt () {
 rfc () {
     if [ $# = 1 ]; then
         if [ "$1" = "-index" ]; then
-            curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt
+            curl -o ~/docs/rfcs/rfc${1}.txt \
+                 http://www.rfc-editor.org/rfc/rfc${1}.txt
         elif [ ! -s ~/docs/rfcs/rfc${1}.txt ] ; then
-            curl -o ~/docs/rfcs/rfc${1}.txt http://www.rfc-editor.org/rfc/rfc${1}.txt
+            curl -o ~/docs/rfcs/rfc${1}.txt \
+                 http://www.rfc-editor.org/rfc/rfc${1}.txt
         fi
         less -i ~/docs/rfcs/rfc${1}.txt
     else
