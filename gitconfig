@@ -50,3 +50,5 @@
     renames = true
 [transfer]
 	fsckObjects = true
+[user]
+	signingkey = 6D6612A7F8827E91
