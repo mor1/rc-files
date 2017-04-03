@@ -66,7 +66,7 @@ case $(uname -s) in
         ;;
 esac
 
-for f in TARGETS; do
+for f in $TARGETS; do
     bf=$(basename $f)
     [ -L ~/.$bf ] && rm -f ~/.$bf || true
     ln -s $f ~/.$bf
