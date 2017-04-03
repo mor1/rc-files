@@ -17,6 +17,6 @@ if tty -s; then
     stty sane
     uname -a
     date
-    complete -r make # hack until fix bash_completion properly
+    [ "$PLATFORM" = "Darwin" ] && complete -r make # hack
     echo
 fi
