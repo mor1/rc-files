@@ -21,10 +21,10 @@
 
 set -ex
 INDIR=$(dirname "$(readlink -f "$0")") # cd to script directory
-pushd INDIR
+pushd $INDIR
 
 ## capture any existing SSH state
-for file in ~.ssh/{authorized_keys,known_hosts} ; do
+for file in ~/.ssh/{authorized_keys,known_hosts} ; do
     [ -s $file ] && mv $file ssh
 done
 rmdir ~/.ssh
