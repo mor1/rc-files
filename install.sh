@@ -65,9 +65,8 @@ case $(uname -s) in
 esac
 
 for f in $TARGETS; do
-    bf=$(basename $f)
-    [ -L ~/.$bf ] && rm -f ~/.$bf || true
-    ln -s $f ~/.$bf
+    [ -L ~/.$f ] && rm -f ~/.$f || true
+    ln -s $INDIR/$f ~/.$f
 done
 
 popd
