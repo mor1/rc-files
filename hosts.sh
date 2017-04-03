@@ -12,6 +12,7 @@ fi
 
 CUCL=ely.cl
 ACCT=rmm1002@AD.CL.CAM.AC.UK
+
 KINIT="cl-krenew -q --ensuretgt --maxout"                      # common case
 KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
 KINIT="ssh -tx rmm1002@slogin.cl.cam.ac.uk $KINIT" # run on SSH gateway

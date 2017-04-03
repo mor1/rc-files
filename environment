@@ -88,7 +88,7 @@ case $PLATFORM in
             )
         done
 
-        ## debian has too old git completion
+        ## debian has ancient git completion
         [ -r ~/.git-prompt.sh ] && source ~/.git-prompt.sh
         ;;
 
