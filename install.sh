@@ -29,7 +29,8 @@ pushd $INDIR
 
     [ -s $file ] && mv $file ssh
 done
-rmdir ~/.ssh && ln -s ~/.ssh $INDIR/ssh
+[ -d ~/.ssh ] && rmdir ~/.ssh
+ln -s ~/.ssh $INDIR/ssh
 
 ## i value consistency in my environments. so what?
 rm -f ~/.bashrc
