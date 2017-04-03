@@ -20,51 +20,28 @@
 # NB. this script assumes it is run from the directory of the rc-files repo
 
 set -ex
+INDIR=$(dirname "$(readlink -f "$0")") # cd to script directory
+pushd INDIR
 
-## capture any existing authorized keys
-[ -s ~/.ssh/authorized_keys ] \
-    && ( mv ~/.ssh/authorized_keys ssh && rmdir ~/.ssh )
-
-INSTALL_DIR=$(pwd)
-for f in ${INSTALL_DIR}/*; do
-    bf=$(basename $f)
-    case "$bf" in                                   \
-        "colours.sh"                                \
-            | "envfns.sh"                           \
-            | "filefns.sh"                          \
-            | "floatlg.jpg"                         \
-            | "homebrew.mxcl.offline-imap.plist"    \
-            | "hosts.sh"                            \
-            | "install.sh"                          \
-            | "karabiner.xml"                       \
-            | "offlineimap-*" | "offlineimap.py*"   \
-            | "push-env.sh"                         \
-            | "solarized-*"                         \
-        )
-
-        ;;
-
-        * )
-            [ -L ~/.$bf ] && rm -f ~/.$bf || true
-            ln -s $f ~/.$bf
-            ;;
-    esac
+## capture any existing SSH state
+for file in ~.ssh/{authorized_keys,known_hosts} ; do
+    [ -s $file ] && mv $file ssh
 done
+rmdir ~/.ssh
 
 ## i value consistency in my environments. so what?
 rm -f ~/.bashrc
-ln -s ${INSTALL_DIR}/bash_profile ~/.bashrc
+ln -s $INDIR/bash_profile ~/.bashrc
 
 case $(uname -s) in
-    Linux )
-        ## many linux distros appear to have old git-prompt.sh which breaks
-        ## things
-        GITHUB=https://raw.githubusercontent.com
-        curl $GITHUB/git/git/master/contrib/completion/git-prompt.sh \
-             -o ~/.git-prompt.sh
-        ;;
 
-    Darwin )
+    Darwin ) ## likely to be my (new) laptop
+        TARGETS="bash_* colours.sh envfns.sh filefns.sh hosts.sh environment \
+                 gitconfig gitlocal indent.pro iocamlinit ocamlinit pandoc \
+                 pythonrc screenrc vimrc wgetrc Xresources floatlg.jpg \
+                 solarized-* karabiner.xml offlineimap-* offlineimap.py* \
+                 emacs.d \
+                 "
         ## install any launchers
         ln -sfv ~/rc-files/*.plist ~/Library/LaunchAgents
 
@@ -73,4 +50,24 @@ case $(uname -s) in
         mkdir -p ~/Library/LaunchAgents
         launchctl load ~/Library/LaunchAgents/homebrew.mxcl.offlineimap.plist
         ;;
+
+    Linux ) ## likely to be a random server
+        TARGETS="bash_* colours.sh envfns.sh filefns.sh hosts.sh environment \
+                 gitconfig gitlocal \
+                 "
+        ## many linux distros appear to have old git-prompt.sh which breaks
+        ## things
+        GITHUB=https://raw.githubusercontent.com
+        curl $GITHUB/git/git/master/contrib/completion/git-prompt.sh \
+             -o ~/.git-prompt.sh
+        ;;
 esac
+
+for f in TARGETS; do
+    bf=$(basename $f)
+    [ -L ~/.$bf ] && rm -f ~/.$bf || true
+    ln -s $f ~/.$bf
+    ;;
+done
+
+popd
