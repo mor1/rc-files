@@ -39,11 +39,10 @@ ln -s $INDIR/bash_profile ~/.bashrc
 case $(uname -s) in
 
     Darwin ) ## likely to be my (new) laptop
-        TARGETS="bash_* colours.sh envfns.sh filefns.sh hosts.sh environment \
-                 gitconfig gitlocal indent.pro iocamlinit ocamlinit pandoc \
-                 pythonrc screenrc vimrc wgetrc Xresources floatlg.jpg \
-                 solarized-* karabiner.xml offlineimap-* offlineimap.py* \
-                 emacs.d \
+        TARGETS="bash_* environment gitconfig gitlocal indent.pro iocamlinit \
+                 ocamlinit pandoc pythonrc screenrc vimrc wgetrc Xresources \
+                 floatlg.jpg solarized-* karabiner.xml offlineimap-* \
+                 offlineimap.py* emacs.d \
                  "
         ## install any launchers
         ln -sfv ~/rc-files/*.plist ~/Library/LaunchAgents
@@ -55,9 +54,8 @@ case $(uname -s) in
         ;;
 
     Linux ) ## likely to be a random server
-        TARGETS="bash_* colours.sh envfns.sh filefns.sh hosts.sh environment \
-                 gitconfig gitlocal \
-                 "
+        TARGETS="bash_* environment gitconfig gitlocal"
+
         ## many linux distros appear to have old git-prompt.sh which breaks
         ## things
         GITHUB=https://raw.githubusercontent.com
