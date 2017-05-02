@@ -6,9 +6,6 @@ SSH="ssh -KX"
 
 SLOGIN="slogin"
 CLOGIN="slogin -KX"
-if [ "${LHOST%.cam.ac.uk}" = "$LHOST" ]; then
-    CLOGIN="ssh -At slogin.cl ssh -t"
-fi
 
 CUCL=ely.cl
 ACCT=rmm1002@AD.CL.CAM.AC.UK
@@ -17,7 +14,16 @@ KINIT="cl-krenew -q --ensuretgt --maxout"                      # common case
 KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
 KINIT="ssh -tx rmm1002@slogin.cl.cam.ac.uk $KINIT" # run on SSH gateway
 
-SSHFS="sshfs -o follow_symlinks -o uid=503 -o gid=20"
+SSHFSOPTS="\
+  -o follow_symlinks\
+  -o auto_cache\
+  -o reconnect\
+  -o defer_permissions\
+  -o noappledouble\
+  -o nolocalcaches\
+  -o no_readahead"
+SSHFS="sshfs $SSHFSOPTS"
+# -o uid=503 -o gid=20"
 
 # CUCL
 
@@ -28,6 +34,10 @@ aod () {
 aodfs () {
     $KINIT
     $SSHFS armyofdockerness.cl:/ ~/l/aod
+}
+
+cf () {
+    finger $1@hermes.cam.ac.uk
 }
 
 cron-serv () {
@@ -109,8 +119,11 @@ mediapcfs() {
     sshfs root@mediapc.home:/$1 ~/l/mediapc
 }
 
-moby-dev () {
-    $SLOGIN -A moby-dev.packet
+mobydev () {
+    $SLOGIN moby-dev.packet
+}
+mobydevfs () {
+    $SSHFS moby-dev.packet:/$1 ~/l/mobydev
 }
 
 monk () {

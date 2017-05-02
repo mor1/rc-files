@@ -3,43 +3,31 @@
 # mitigate CVE-2016-0778 and CVE-2016-0777
 UseRoaming no
 
-## local
-
-Host ucn-dev
-     User root
-     Hostname ucn-cb2.local
-     IdentityFile ~/.ssh/bitbucket-key
-
-Host ucn-dev-truck
-     User root
-     Hostname ucn-cb3.local
-     IdentityFile ~/.ssh/bitbucket-key
-
 ## cucl
-
-Host slogin.cl.cam.ac.uk slogin-serv.cl.cam.ac.uk sandy.cl.cam.ac.uk slogin-new.cl.cam.ac.uk
-     User rmm1002
+Host armyofdockerness.cl
+     User mort
+     HostName %h.cam.ac.uk
      IdentityFile ~/.ssh/cucl-key
-     ForwardX11 yes
+     ForwardX11 no
+     ForwardAgent yes
 
 Host tfc-app2.cl.cam.ac.uk
      User rita
      IdentityFile ~/.ssh/cucl-key
      ForwardX11 no
-
-Host armyofdockerness.cl
-     User mort
-     HostName %h.cam.ac.uk
-     IdentityFile ~/.ssh/cucl-key
-     # ProxyCommand ssh -W %h.cam.ac.uk:%p rmm1002@slogin.cl.cam.ac.uk
-     ForwardX11 no
-     ForwardAgent yes
+     ForwardAgent no
 
 Host *.cl
      User rmm1002
      HostName %h.cam.ac.uk
      IdentityFile ~/.ssh/cucl-key
-     # ProxyCommand ssh -W %h.cam.ac.uk:%p rmm1002@slogin.cl.cam.ac.uk
+     ForwardX11 no
+     ForwardAgent yes
+     ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
+
+Host *.cl.cam.ac.uk
+     User rmm1002
+     IdentityFile ~/.ssh/cucl-key
      ForwardX11 no
      ForwardAgent yes
 
@@ -103,3 +91,11 @@ Host moby-dev.packet
      User root
      HostName 147.75.32.134
      IdentityFile ~/.ssh/packetnet-key
+     ForwardX11 no
+     ForwardAgent yes
+
+Host *
+     ForwardX11 no
+     ForwardAgent no
+     ControlMaster auto
+     ControlPath ~/.ssh/master-%r@%h:%p
