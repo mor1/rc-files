@@ -43,14 +43,13 @@ LHOST=$(uname -n)
 SHOST=${LHOST%%.*}
 KERNEL=$(uname -r)
 CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../../../../../..:../../../../../../../..:../../../../../../../../..:../../../../../../../../../..:$HOME
-EDITOR="emacsclient -s /tmp/emacs-$USER/server"
 PAGER="less -FRXi"
 MANPAGER="less -FRXi"
 
 LANG="en_GB.UTF-8"
 LC_ALL="C"
 
-export LHOST SHOST KERNEL CDPATH EDITOR PAGER MANPAGER LANG LC_ALL
+export LHOST SHOST KERNEL CDPATH PAGER MANPAGER LANG LC_ALL
 
 #
 # paths
@@ -78,6 +77,7 @@ aenv MANPATH ~/me/local/man
 case $PLATFORM in
     Linux )
         MAKE=make
+        export EDITOR=vi
 
         for d in /etc/bash_completion /etc/bash_completion.d ;
         do
@@ -94,6 +94,7 @@ case $PLATFORM in
 
     Darwin )
         aenv PATH /usr/local/texlive/2015/bin/x86_64-darwin
+        export EDITOR="emacsclient -s /tmp/emacs-$USER/server"
 
         ## homebrew completion
         # source $(brew --prefix)/Library/Contributions/brew_bash_completion.sh
