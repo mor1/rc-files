@@ -33,7 +33,6 @@ maxconnections = 1
 [Account Live]
 localrepository = Live-Local
 remoterepository = Live-Remote
-status_backend = sqlite
 
 [Repository Live-Local]
 type = Maildir
@@ -56,7 +55,6 @@ remotepasseval = get_keychain_pass(
 [Account Hotmail]
 localrepository = Hotmail-Local
 remoterepository = Hotmail-Remote
-status_backend = sqlite
 
 [Repository Hotmail-Local]
 type = Maildir
@@ -79,7 +77,6 @@ remotepasseval = get_keychain_pass(
 [Account VipadiaAlt]
 localrepository = VipadiaAlt-Local
 remoterepository = VipadiaAlt-Remote
-status_backend = sqlite
 labelsheader = X-Keywords
 synclabels = yes
 ignorelabels = \Important, \Draft
@@ -106,7 +103,6 @@ folderfilter = gmail_is_synced
 [Account Vipadia]
 localrepository = Vipadia-Local
 remoterepository = Vipadia-Remote
-status_backend = sqlite
 labelsheader = X-Keywords
 synclabels = yes
 ignorelabels = \Important, \Draft
@@ -134,7 +130,6 @@ folderfilter = gmail_is_synced
 postsynchook = ~/rc-files/offlineimap-postsynchook.sh --index
 localrepository = Gchat-Local
 remoterepository = Gchat-Remote
-status_backend = sqlite
 labelsheader = X-Keywords
 synclabels = yes
 ignorelabels = \Important, \Draft
@@ -162,7 +157,6 @@ folderfilter = lambda folder: folder in ['[Google Mail]/Chats']
 [Account Gmail]
 localrepository = Gmail-Local
 remoterepository = Gmail-Remote
-status_backend = sqlite
 labelsheader = X-Keywords
 synclabels = yes
 ignorelabels = \Important, \Draft
@@ -189,7 +183,6 @@ folderfilter = gmail_is_synced
 [Account Uniks]
 localrepository = Uniks-Local
 remoterepository = Uniks-Remote
-status_backend = sqlite
 labelsheader = X-Keywords
 synclabels = yes
 ignorelabels = \Important, \Draft
@@ -216,7 +209,6 @@ folderfilter = gmail_is_synced
 [Account Docker]
 localrepository = Docker-Local
 remoterepository = Docker-Remote
-status_backend = sqlite
 labelsheader = X-Keywords
 synclabels = yes
 ignorelabels = \Important, \Draft
