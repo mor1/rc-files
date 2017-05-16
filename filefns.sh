@@ -234,19 +234,10 @@ abspath () {
 #
 
 function update-all {
-    brew update && brew upgrade --cleanup && brew cask cleanup
+    brew update && brew upgrade --cleanup \
+        && brew cask reinstall $(brew cask outdated) && brew cask cleanup
     opam update -y -u
     rm -f ~/.profile
-}
-
-function use-rvm {
-    aenv PATH ~/.rvm/bin
-    aenv PATH ~/.rvm/gems/ruby-2.1.0/bin
-    aenv PATH ~/.rvm/gems/ruby-2.1.0@global/bin
-    if [ -s "$HOME/.rvm/scripts/rvm" ]; then
-        source "$HOME/.rvm/scripts/rvm"
-        rvm use 2.1.0@global
-    fi
 }
 
 function opam-switch {
