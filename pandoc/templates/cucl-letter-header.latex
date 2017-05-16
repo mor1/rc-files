@@ -178,6 +178,10 @@ $endif$
 
 \newenvironment{letter}{\dolettertop}{\doletterbottom}
 
+%% now inserted by Pandoc conversion
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 \begin{document}
 
 \fromwhom{Richard~Mortier}{,~Ph.D.}
