@@ -1,4 +1,4 @@
-alias ls="/bin/ls -FC"
+alias ls="\ls -FC --group-directories-first"
 alias ll="ls -l"
 alias lll="ls -lT"
 alias la="ls -A"
