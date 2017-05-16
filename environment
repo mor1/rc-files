@@ -94,7 +94,7 @@ case $PLATFORM in
         ;;
 
     Darwin )
-        aenv PATH /usr/local/texlive/2015/bin/x86_64-darwin
+        aenv PATH /usr/local/texlive/2016/bin/x86_64-darwin
         export EDITOR="emacsclient -s /tmp/emacs-$USER/server"
 
         ## homebrew completion
@@ -183,9 +183,12 @@ complete -o default -F _pip_completion pip
 export OCAMLRUNPARAM=b
 export OPAMBUILDDOC=true
 
-## GO
+## Go
 export GOPATH=~/go
 aenv PATH ~/go/bin
 
-## Finally, my PATH wins:
-aenv PATH ~/me/local/bin
+## Finally, my PATHs win:
+aenv PATH    ~/me/local/bin
+aenv MANPATH ~/me/local/man
+
+[ -r ~/.bash_aliases ] && source ~/.bash_aliases
