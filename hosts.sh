@@ -37,7 +37,7 @@ aodfs () {
 }
 
 cf () {
-    finger $1@hermes.cam.ac.uk
+    $SSH $CUCL finger $1@hermes.cam.ac.uk
 }
 
 cron-serv () {
