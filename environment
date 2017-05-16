@@ -60,15 +60,16 @@ aenv PATH /sbin
 aenv PATH /bin
 aenv PATH /usr/sbin
 aenv PATH /usr/bin
+aenv PATH /usr/X11R6/bin
 aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
-aenv PATH /usr/X11R6/bin
+aenv PATH /usr/local/opt/coreutils/libexec/gnubin
 
 unset MANPATH
 aenv MANPATH /usr/local/share/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
-aenv MANPATH ~/me/local/man
+aenv MANPATH /usr/local/opt/coreutils/libexec/gnuman
 
 #
 # platform specific configuration
