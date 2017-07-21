@@ -63,13 +63,11 @@ aenv PATH /usr/bin
 aenv PATH /usr/X11R6/bin
 aenv PATH /usr/local/sbin
 aenv PATH /usr/local/bin
-aenv PATH /usr/local/opt/coreutils/libexec/gnubin
 
 unset MANPATH
 aenv MANPATH /usr/local/share/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
-aenv MANPATH /usr/local/opt/coreutils/libexec/gnuman
 
 #
 # platform specific configuration
@@ -186,6 +184,10 @@ export OPAMBUILDDOC=true
 ## Go
 export GOPATH=~/go
 aenv PATH ~/go/bin
+
+## GNU coreutils
+# aenv PATH /usr/local/opt/coreutils/libexec/gnubin
+# aenv MANPATH /usr/local/opt/coreutils/libexec/gnuman
 
 ## Finally, my PATHs win:
 aenv PATH    ~/me/local/bin

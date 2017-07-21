@@ -1,4 +1,4 @@
-alias ls="\ls -FC --group-directories-first"
+alias ls="\gls -FC --group-directories-first"
 alias ll="ls -l"
 alias lll="ls -lT"
 alias la="ls -A"
