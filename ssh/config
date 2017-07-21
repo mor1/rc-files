@@ -17,6 +17,19 @@ Host tfc-app2.cl.cam.ac.uk
      ForwardX11 no
      ForwardAgent no
 
+Host gitlab.srg.cl.cam.ac.uk
+     User git
+     Port 2222
+     IdentityFile ~/.ssh/cucl-key
+     ForwardX11 no
+     ForwardAgent no
+
+Host gitlab-shell.srg.cl.cam.ac.uk
+     User rmm1002
+     IdentityFile ~/.ssh/cucl-key
+     ForwardX11 no
+     ForwardAgent no
+
 Host *.cl
      User rmm1002
      HostName %h.cam.ac.uk
