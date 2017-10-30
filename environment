@@ -48,8 +48,9 @@ MANPAGER="less -FRXi"
 
 LANG="en_GB.UTF-8"
 LC_ALL="C"
+LESSCHARSET=utf-8
 
-export LHOST SHOST KERNEL CDPATH PAGER MANPAGER LANG LC_ALL
+export LHOST SHOST KERNEL CDPATH PAGER MANPAGER LANG LC_ALL LESSCHARSET
 
 #
 # paths
@@ -92,7 +93,7 @@ case $PLATFORM in
         ;;
 
     Darwin )
-        aenv PATH /usr/local/texlive/2016/bin/x86_64-darwin
+        aenv PATH /usr/local/texlive/2017/bin/x86_64-darwin
         export EDITOR="emacsclient -s /tmp/emacs-$USER/server"
 
         ## homebrew completion
