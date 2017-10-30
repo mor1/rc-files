@@ -1,4 +1,9 @@
-alias ls="\gls -FC --group-directories-first"
+if [[ -x "$(which gls)" ]]; then
+  alias ls="\gls -FC --group-directories-first"
+else
+  alias ls="ls -FC --group-directories-first"
+fi
+
 alias ll="ls -l"
 alias lll="ls -lT"
 alias la="ls -A"
@@ -20,5 +25,5 @@ alias irc-tunnels="ps aux | \grep -E -- '-tunnel$' | tr -s ' ' | cut -d ' ' -f 2
 
 alias qv="qlmanage -px"
 
-alias eject="diskutil unmount $1"
+alias eject="diskutil unmount"
 alias reset="\reset -i ^C"
