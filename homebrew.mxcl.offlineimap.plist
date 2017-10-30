@@ -14,6 +14,8 @@
     <key>ProgramArguments</key>
     <array>
       <string>/usr/local/opt/offlineimap/bin/offlineimap</string>
+      <string>-u</string>
+      <string>basic</string>
     </array>
     <key>StartInterval</key>
     <integer>1800</integer>
