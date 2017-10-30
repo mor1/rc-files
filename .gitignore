@@ -21,3 +21,6 @@ ssh/
 ocp/
 /offlineimap.pyc
 pandoc/templates/auto
+
+karabiner/**
+!karabiner/README.md
