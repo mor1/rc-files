@@ -45,10 +45,15 @@
 
 [merge]
     conflictstyle = diff3
+    tool = ediff
+[mergetool "ediff"]
+    cmd = emacs --eval \"(ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\")\"
 
 [diff]
     renames = true
 [transfer]
-	fsckObjects = true
+    fsckObjects = true
 [user]
-	signingkey = 6D6612A7F8827E91
+    signingkey = 6D6612A7F8827E91
+    name = Richard Mortier
+    email = mort@cantab.net
