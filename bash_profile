@@ -5,6 +5,7 @@ PATH=/bin:/sbin/:/usr/bin:/usr/sbin
 if [ -f "$HOME/.ssh/sssha" -a "$PLATFORM" = "Darwin" ]; then
     source $HOME/.ssh/sssha                     \
            -k ~/.ssh/nottingham-key             \
+           -k ~/.ssh/nottingham-key-rsa         \
            -k ~/.ssh/packetnet-key              \
            -k ~/.ssh/bitbucket-key              \
            -k ~/.ssh/github-key                 \
