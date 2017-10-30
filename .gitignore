@@ -1,26 +1,14 @@
 .DS_Store
-\#*#
-*~
-
-software/
-isos/
-
-emacs.d/.emacs.desktop
-emacs.d/auto-save-list/
-emacs.d/scrap/
-emacs.d/places
-emacs.d/ac-comphist.dat
-emacs.d/url/
-
-/gitlocal
+ocp/
+*.pyc
+pandoc/templates/auto/
 
 ssh/
 !ssh/config
 !ssh/sssha
 
-ocp/
-/offlineimap.pyc
-pandoc/templates/auto
-
-karabiner/**
+karabiner/
 !karabiner/README.md
+
+emacs.d/
+!emacs.d/README.md
