@@ -2,16 +2,16 @@
 # remote hosts
 #
 
-SSH="ssh -KX"
+SSH="ssh -K"
 
 SLOGIN="slogin"
-CLOGIN="slogin -KX"
+CLOGIN="slogin -K"
 
 CUCL=ely.cl
 ACCT=rmm1002@AD.CL.CAM.AC.UK
 
 KINIT="cl-krenew -q --ensuretgt --maxout"                      # common case
-KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
+# KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
 KINIT="ssh -tx rmm1002@slogin.cl.cam.ac.uk $KINIT" # run on SSH gateway
 
 SSHFSOPTS="\
@@ -37,7 +37,7 @@ aodfs () {
 }
 
 cf () {
-    $SSH $CUCL finger $1@hermes.cam.ac.uk
+  $SSH $CUCL finger $1@hermes.cam.ac.uk
 }
 
 cron-serv () {
@@ -77,6 +77,13 @@ lab () {
 }
 
 # Nottingham
+
+homeiot () {
+    $SLOGIN berezin.mrl.nottingham.ac.uk
+}
+homeiotfs () {
+    sshfs berezin.mrl.nottingham.ac.uk:/$1 ~/l/homeiot
+}
 
 marian () {
     $SLOGIN marian.cs.nott.ac.uk

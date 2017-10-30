@@ -11,6 +11,14 @@ Host armyofdockerness.cl
      ForwardX11 no
      ForwardAgent yes
 
+Host *.cl
+     User rmm1002
+     HostName %h.cam.ac.uk
+     IdentityFile ~/.ssh/cucl-key
+     ForwardX11 no
+     ForwardAgent yes
+     ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
+
 Host tfc-app2.cl.cam.ac.uk
      User rita
      IdentityFile ~/.ssh/cucl-key
@@ -23,6 +31,7 @@ Host gitlab.srg.cl.cam.ac.uk
      IdentityFile ~/.ssh/cucl-key
      ForwardX11 no
      ForwardAgent no
+     ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
 
 Host gitlab-shell.srg.cl.cam.ac.uk
      User rmm1002
@@ -30,21 +39,19 @@ Host gitlab-shell.srg.cl.cam.ac.uk
      ForwardX11 no
      ForwardAgent no
 
-Host *.cl
-     User rmm1002
-     HostName %h.cam.ac.uk
-     IdentityFile ~/.ssh/cucl-key
-     ForwardX11 no
-     ForwardAgent yes
-     ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
-
 Host *.cl.cam.ac.uk
      User rmm1002
      IdentityFile ~/.ssh/cucl-key
      ForwardX11 no
      ForwardAgent yes
+     StrictHostKeyChecking no
+     UserKnownHostsFile=/dev/null
 
 ## nottingham
+
+Host berezin.mrl.nottingham.ac.uk
+     User mort
+     IdentityFile ~/.ssh/nottingham-key-rsa
 
 Host *.horizon.ac.uk devbox ppsrm.nottingham.ac.uk *.cs.nott.ac.uk
      User rmm
@@ -64,19 +71,19 @@ Host paws-server
      HostName vpn.publicaccesswifi.org
      IdentityFile ~/.ssh/bitbucket-key
 
-## tunnels
+# ## tunnels
 
-Host irc-tunnel
-     User mort
-     HostName punk.recoil.org
-     IdentityFile ~/.ssh/bitbucket-key
-     LocalForward 7000 chat.freenode.net:7000
+# Host irc-tunnel
+#      User mort
+#      HostName punk.recoil.org
+#      IdentityFile ~/.ssh/bitbucket-key
+#      LocalForward 7000 chat.freenode.net:7000
 
-Host opw-tunnel
-     User mort
-     HostName punk.recoil.org
-     IdentityFile ~/.ssh/bitbucket-key
-     LocalForward 7070 irc.gnome.org:7000
+# Host opw-tunnel
+#      User mort
+#      HostName punk.recoil.org
+#      IdentityFile ~/.ssh/bitbucket-key
+#      LocalForward 7070 irc.gnome.org:7000
 
 ## other
 
@@ -88,10 +95,10 @@ Host *.vipadia.com *.clackpoint.com
      User mort
      IdentityFile ~/.ssh/vipadia-key
 
-Host *.stthomasmorewollaton.org.uk
-     User stthnorg
-     Port 722
-     IdentityFile ~/.ssh/stmwww-key
+# Host *.stthomasmorewollaton.org.uk
+#      User stthnorg
+#      Port 722
+#      IdentityFile ~/.ssh/stmwww-key
 
 Host github.com
      User git
@@ -106,6 +113,8 @@ Host moby-dev.packet
      IdentityFile ~/.ssh/packetnet-key
      ForwardX11 no
      ForwardAgent yes
+
+## default
 
 Host *
      ForwardX11 no
