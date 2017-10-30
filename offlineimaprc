@@ -14,9 +14,9 @@
 
 [general]
 ui = TTYUI
-accounts = Docker, Uniks, Live, Hotmail, VipadiaAlt, Vipadia, Gmail, Gchat
+accounts = Hermes, Docker, Uniks, Live, Hotmail, VipadiaAlt, Vipadia, Gmail, Gchat
 pythonfile = ~/rc-files/offlineimap.py
-fsync = no
+fsync = false
 
 [DEFAULT]
 presynchook = ~/rc-files/offlineimap-presynchook.sh
@@ -25,6 +25,28 @@ sslcacertfile = /usr/local/etc/openssl/cert.pem
 ssl = yes
 realdelete = no
 maxconnections = 1
+maxage = 90
+
+#
+# Hermes
+#
+
+[Account Hermes]
+localrepository = Hermes-Local
+remoterepository = Hermes-Remote
+
+[Repository Hermes-Local]
+type = Maildir
+localfolders = ~/me/footprint/mail/hermes
+sep = /
+
+[Repository Hermes-Remote]
+type = IMAP
+remotehost = imap.hermes.cam.ac.uk
+remoteuser = rmm1002
+auth_mechanisms = LOGIN
+remotepasseval = get_keychain_pass(
+    account="rmm1002@hermes.cam.ac.uk", server="imap.hermes.cam.ac.uk")
 
 #
 # Live

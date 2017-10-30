@@ -31,7 +31,7 @@ def get_keychain_pass(account=None, server=None):
 
     return re.match(r'password: "(.*)"', outtext).group(1)
 
-LocalRemoteNames = {
+Gmail_LocalRemoteNames = {
     'archive': '[Google Mail]/All Mail',
     'chats': '[Google Mail]/Chats',
     'drafts': '[Google Mail]/Drafts',
@@ -42,10 +42,12 @@ LocalRemoteNames = {
     'bin': '[Google Mail]/Bin',
     'spam': '[Google Mail]/Spam',
 }
-RemoteLocalNames = { r: l for (l, r) in LocalRemoteNames.items() }
+Gmail_RemoteLocalNames = { r: l for (l, r) in Gmail_LocalRemoteNames.items() }
 
-def to_remotefolder(folder): return LocalRemoteNames.get(folder, folder)
-def to_localfolder(folder): return RemoteLocalNames.get(folder, folder)
+def to_remotefolder(folder):
+    return Gmail_LocalRemoteNames.get(folder, folder)
+def to_localfolder(folder):
+    return Gmail_RemoteLocalNames.get(folder, folder)
 
 def gmail_is_synced(folder):
     return folder in [
