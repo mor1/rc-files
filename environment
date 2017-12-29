@@ -176,12 +176,6 @@ _pip_completion()
 complete -o default -F _pip_completion pip
 # pip bash completion end
 
-## OPAM configuration
-[ -f ~/.opam/opam-init/init.sh ] && \
-    source ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-export OCAMLRUNPARAM=b
-export OPAMBUILDDOC=true
-
 ## Go
 export GOPATH=~/go
 aenv PATH ~/go/bin
@@ -190,8 +184,18 @@ aenv PATH ~/go/bin
 # aenv PATH /usr/local/opt/coreutils/libexec/gnubin
 # aenv MANPATH /usr/local/opt/coreutils/libexec/gnuman
 
-## Finally, my PATHs win:
+## my PATHs mostly win:
 aenv PATH    ~/me/local/bin
 aenv MANPATH ~/me/local/man
 
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
+
+## ...except OPAM configuration because OPAM whines
+[ -f ~/.opam/opam-init/init.sh ] && \
+    source ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+export OCAMLRUNPARAM=b
+export OPAMBUILDDOC=true
+eval $(opam config env)
+
+# direnv
+eval "$(direnv hook bash)"
