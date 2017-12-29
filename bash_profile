@@ -8,6 +8,7 @@ if [ -f "$HOME/.ssh/sssha" -a "$PLATFORM" = "Darwin" ]; then
            -k ~/.ssh/nottingham-key-rsa         \
            -k ~/.ssh/packetnet-key              \
            -k ~/.ssh/bitbucket-key              \
+           -k ~/.ssh/bitbucket-key-rsa          \
            -k ~/.ssh/github-key                 \
            -k ~/.ssh/cambridge-key              \
            -k ~/.ssh/cucl-key
