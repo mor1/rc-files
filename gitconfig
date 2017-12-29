@@ -8,13 +8,13 @@
     debug = !GIT_PAGER= gdb --args git
     st = status
     rev = rev-parse HEAD
-    ci = commit
+    ci = commit -s
     br = branch -avv
     co = checkout
     df = diff --word-diff=color
     dfw = diff -R --color
     l = log --all --decorate=full
-    lg = log --all --graph --decorate=full --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+    lg = log --all --graph --decorate=full --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ai (%ar)%Creset'
     llg = log --all --color-words --graph --decorate=full --stat
     ldiff = log --all -p --decorate=full --word-diff=color
     timeline = log --oneline --decorate --graph
