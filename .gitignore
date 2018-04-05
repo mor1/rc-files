@@ -1,7 +1,9 @@
 .DS_Store
 ocp/
 *.pyc
+
 pandoc/templates/auto/
+pandoc/templates/default.latex
 
 ssh/
 !ssh/config

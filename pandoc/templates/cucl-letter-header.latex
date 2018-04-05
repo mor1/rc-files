@@ -106,7 +106,7 @@ $endif$
 }
 
 \newcommand{\ComputerLaboratory}{
-  \fontsize{14pt}{14pt}\bf Computer Laboratory
+  \fontsize{9.75pt}{9.75pt}\bf Dept. of Computer Science \& Technology
 }
 
 \newcommand{\titledetails}{}
@@ -121,7 +121,7 @@ $endif$
   \begin{textblock*}{124mm}(124mm,10mm)
     \cuarms
   \end{textblock*}
-  \begin{textblock*}{\paperwidth}(137.5mm,25mm)
+  \begin{textblock*}{\paperwidth}(123.5mm,25mm)
     \ComputerLaboratory
   \end{textblock*}
 
