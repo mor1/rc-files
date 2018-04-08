@@ -31,7 +31,7 @@ trawl () {
        -or -name '*.xml' -or -name '*.html' -or -name '*.css'     \
        -or -name '*.el'                                           \
        -or -name '*.fs' -or -name '*.fs[xi]'                      \
-       -or -name '*.go'                                           \
+       -or \( -name '*.go' -and -not -path './vendor/*' \) \
        -or -name '*.inc'                                          \
        -or -name '*.less'                                         \
        -or -name '*.md'                                           \
@@ -308,5 +308,48 @@ function v6-on {
   for i in "$(networksetup -listallnetworkservices | tail -n+2)"; do
     echo "sudo networksetup -setv6automatic \"$i\" || true"
     sudo networksetup -setv6automatic "$i" || true
+  done
+}
+
+#
+# OSX Logs
+#
+
+function logs {
+  _predicate=""
+  if [ -z "$1" ]; then
+    _predicate=--predicate 'senderImagePath contains[cd] "'$1'"'
+  fi
+  shift
+
+  log stream --style syslog --info $_predicate
+}
+
+function logv {
+  _predicate=""
+  if [ -z "$1" ]; then
+    _predicate=--predicate 'senderImagePath contains[cd] "$1"'
+  fi
+  shift
+
+  log show --style syslog --info $_predicate
+}
+
+#
+# API invocations
+#
+
+ghapi () {
+  PS=$(echo "https://api.github.com/$@" | tr -s "/")
+  curl -H "Authorization: token $(cat ~/.github/token)" $PS
+}
+
+#
+# VBox
+#
+
+vbox-killall () {
+  for m in $(VBoxManage list vms | cut -f 1 -d " " | tr -d '"') ; do
+    VBoxManage controlvm $m poweroff ; VBoxManage unregistervm --delete $m ;
   done
 }
