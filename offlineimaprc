@@ -23,7 +23,6 @@ presynchook = ~/rc-files/offlineimap-presynchook.sh
 postsynchook = ~/rc-files/offlineimap-postsynchook.sh
 sslcacertfile = /usr/local/etc/openssl/cert.pem
 ssl = yes
-realdelete = no
 maxconnections = 1
 maxage = 90
 
@@ -47,6 +46,7 @@ remoteuser = rmm1002
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="rmm1002@hermes.cam.ac.uk", server="imap.hermes.cam.ac.uk")
+sync_deletes = no
 
 #
 # Live
