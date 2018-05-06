@@ -1,6 +1,6 @@
 PATH=/bin:/sbin/:/usr/bin:/usr/sbin
 
-[ -r ~/.environment  ] && source ~/.environment
+[ -r ~/.environment ] && source ~/.environment
 
 if [ -f "$HOME/.ssh/sssha" -a "$PLATFORM" = "Darwin" ]; then
     source $HOME/.ssh/sssha                     \

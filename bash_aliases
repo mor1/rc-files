@@ -1,8 +1,9 @@
-if [[ -x "$(which gls)" ]]; then
-  alias ls="\gls -FC --group-directories-first"
-else
-  alias ls="ls -FC --group-directories-first"
-fi
+# if [[ -x "$(which gls)" ]]; then
+#   alias ls="\gls -FC --group-directories-first"
+# else
+#   alias ls="ls -FC --group-directories-first"
+# fi
+alias ls="ls -FC"
 
 alias ll="ls -l"
 alias lll="ls -lT"

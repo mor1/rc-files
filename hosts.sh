@@ -8,9 +8,9 @@ SLOGIN="slogin"
 CLOGIN="slogin -K"
 
 CUCL=ely.cl
-ACCT=rmm1002@AD.CL.CAM.AC.UK
 
-KINIT="cl-krenew -q --ensuretgt --maxout"                      # common case
+KINIT="cl-krenew -q --ensuretgt --maxout" # common case
+# ACCT=rmm1002@AD.CL.CAM.AC.UK
 # KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
 KINIT="ssh -tx rmm1002@slogin.cl.cam.ac.uk $KINIT" # run on SSH gateway
 
@@ -40,7 +40,7 @@ cf () {
   $SSH $CUCL finger $1@hermes.cam.ac.uk
 }
 
-cron-serv () {
+cronserv () {
     $KINIT
     $CLOGIN cron-serv$1.cl
 }
