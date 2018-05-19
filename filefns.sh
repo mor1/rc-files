@@ -43,7 +43,7 @@ trawl () {
        -not -path '*/_build/*'                              \
        -not -name 'setup.ml' -not -name 'myocamlbuild.ml'   \
        \)                                                   \
-       \) -print0 | xargs -0 grep -EHns "$@"
+       \) -print0 | xargs -0 grep -EHns "$@" | grep -v "^\./vendor/"
 }
 
 #
@@ -235,7 +235,8 @@ abspath () {
 
 function update-all {
   brew update && brew upgrade --cleanup \
-    && brew cask reinstall $(brew cask outdated) && brew cask cleanup
+    && brew cask reinstall $(brew cask outdated)
+  brew cask cleanup
   opam update -y -u
   rm -f ~/.profile
 }
