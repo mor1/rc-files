@@ -93,7 +93,7 @@ case $PLATFORM in
         ;;
 
     Darwin )
-        aenv PATH /usr/local/texlive/2017/bin/x86_64-darwin
+        aenv PATH /usr/local/texlive/2018/bin/x86_64-darwin
         export EDITOR="emacsclient -s /tmp/emacs-$USER/server"
 
         ## homebrew completion
