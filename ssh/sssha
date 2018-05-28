@@ -45,8 +45,8 @@ HOSTNAME=`echo $HOSTNAME | sed 's/\..*//'`
 
 # Prevent stupidity - would like to do this, but other scripts I have use this
 #test ! `echo "$0" | egrep 'bash$'` && \
-#  echo "RTFM|RTFS! Do not execute this file - source it from your shell" && \
-#  exit 1
+  #  echo "RTFM|RTFS! Do not execute this file - source it from your shell" && \
+  #  exit 1
 
 # default file in which to store environment info
 SSSHA_ENV=$HOME/.ssh/agent-env.$HOSTNAME
@@ -111,7 +111,7 @@ sssha_add_keys () {
     # If we get a fingerprint, add the key if not already in the agent.
     fingerprint=`ssh-keygen -f ${key} -l 2>/dev/null | awk '{print $2}'`
     if [ "$?" = "0" ] && [ -n "$fingerprint" ] && \
-       ! (ssh-add -l | grep "$fingerprint" > /dev/null); then
+         ! (ssh-add -l | grep "$fingerprint" > /dev/null); then
       #echo ${key} missing - ${fingerprint}
       keys[${#keys[*]}]="$key"
     fi
@@ -156,14 +156,14 @@ if [[ "$-" == *i* ]] && [ -n "${SSSHA_KEYS[*]}" ]; then
     #echo "Adding missing private keys from current ssh-agent."
     sssha_add_keys ${SSSHA_KEYS[@]}
 
-#  elif [[ "$-" =~ "i" && "$-" =~ "c" && `uname -o` =~ '^Cygwin$' ]]; then
-#    # 3.2.2 No tty - can we bring up a secondary window?
-#    echo "NO tty - can we cygstart a shell?"
-#    cygstart bash
-#
-#  else
-#    # 3.2.3 No way to prompt the user for the keys, so just let the agent run
-#    echo "No way to query user for key passphrases - leaving agent emtpy"
+    #  elif [[ "$-" =~ "i" && "$-" =~ "c" && `uname -o` =~ '^Cygwin$' ]]; then
+    #    # 3.2.2 No tty - can we bring up a secondary window?
+    #    echo "NO tty - can we cygstart a shell?"
+    #    cygstart bash
+    #
+    #  else
+    #    # 3.2.3 No way to prompt the user for the keys, so just let the agent run
+    #    echo "No way to query user for key passphrases - leaving agent emtpy"
   fi
 fi
 
