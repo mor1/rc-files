@@ -114,6 +114,9 @@ Host moby-dev.packet
      ForwardX11 no
      ForwardAgent yes
 
+Host mediapc.lan
+     User root
+
 ## default
 
 Host *

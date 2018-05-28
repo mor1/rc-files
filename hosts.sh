@@ -120,10 +120,10 @@ ucn () {
 # Other
 
 mediapc () {
-    $SLOGIN root@mediapc.home
+    $SLOGIN root@mediapc.lan
 }
 mediapcfs() {
-    sshfs root@mediapc.home:/$1 ~/l/mediapc
+    sshfs root@mediapc.lan:/$1 ~/l/mediapc
 }
 
 mobydev () {
