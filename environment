@@ -202,3 +202,6 @@ eval "$(direnv hook bash)"
 
 # awscli completion
 complete -C aws_completer aws
+
+# direnv reload
+direnv reload
