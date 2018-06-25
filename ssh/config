@@ -27,19 +27,20 @@ Host tfc-app2.cl.cam.ac.uk
 
 Host gitlab.srg.cl.cam.ac.uk
      User git
+     IdentityFile ~/.ssh/cucl-key
+     ForwardX11 no
+     ForwardAgent no
+
+Host gitlab-shell.srg svr-rmm1002-git.cl svr-rmm1002-git.cl.cam.ac.uk
+     Hostname svr-rmm1002-git.cl.cam.ac.uk
+     User rmm1002
      Port 2222
      IdentityFile ~/.ssh/cucl-key
      ForwardX11 no
      ForwardAgent no
-     ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
+     # ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
 
-Host gitlab-shell.srg.cl.cam.ac.uk
-     User rmm1002
-     IdentityFile ~/.ssh/cucl-key
-     ForwardX11 no
-     ForwardAgent no
-
-Host *.cl.cam.ac.uk
+Host *.cl.cam.ac.uk linux.cl.ds.cam.ac.uk linux.ds.cam.ac.uk
      User rmm1002
      IdentityFile ~/.ssh/cucl-key
      ForwardX11 no

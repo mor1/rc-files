@@ -76,6 +76,11 @@ lab () {
     $CLOGIN $H.cl
 }
 
+mcs () {
+  $KINIT
+  $CLOGIN linux.cl.ds.cam.ac.uk
+}
+
 # Nottingham
 
 homeiot () {
