@@ -46,7 +46,12 @@ remoteuser = rmm1002
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="rmm1002@hermes.cam.ac.uk", server="imap.hermes.cam.ac.uk")
+
+# do not send deletes from Remote to Local
 sync_deletes = no
+
+# do not accept writes to Remote from Local
+readonly = true
 
 #
 # Live

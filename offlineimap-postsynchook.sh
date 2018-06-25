@@ -27,15 +27,21 @@ if [ "$1" == "--index" ] ; then
        --my-address=mort@microsoft.com                  \
        --my-address=mort@sprintlabs.com                 \
        --my-address=mort@vipadia.com                    \
+       --my-address=pszrmm@exmail.nottingham.ac.uk      \
+       --my-address=pszrmm@nottingham.ac.uk             \
+       --my-address=richard.mortier@cdbb.cam.ac.uk      \
        --my-address=richard.mortier@cl.cam.ac.uk        \
        --my-address=richard.mortier@docker.com          \
        --my-address=richard.mortier@gmail.com           \
        --my-address=richard.mortier@hotmail.com         \
        --my-address=richard.mortier@nottingham.ac.uk    \
+       --my-address=richard.mortier@nottingham.ac.uk    \
        --my-address=richard.mortier@unikernel.com       \
        --my-address=rmm1002@cam.ac.uk                   \
        --my-address=rmm1002@hermes.cam.ac.uk            \
        --my-address=rmm@cs.nott.ac.uk
+
+    ~/src/sh-scripts/rsync-email
 fi
 
 logger -t offlineimap -p mail.info "Sync of mail account completed"
