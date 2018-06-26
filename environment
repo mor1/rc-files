@@ -195,13 +195,10 @@ aenv MANPATH ~/me/local/man
     source ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 export OCAMLRUNPARAM=b
 # export OPAMBUILDDOC=true ## breaks tyxml update every time ... :(
-eval $(opam config env)
+[ -x "$(which opam)" ] && eval $(opam config env)
 
 # direnv
-eval "$(direnv hook bash)"
+[ -x "$(which direnv)" ] && ( eval "$(direnv hook bash)" ; direnv reload )
 
 # awscli completion
 complete -C aws_completer aws
-
-# direnv reload
-direnv reload
