@@ -236,7 +236,7 @@ abspath () {
 function update-all {
   brew update && brew upgrade --cleanup \
     && brew cask reinstall $(brew cask outdated)
-  brew cask cleanup
+  brew cleanup
   opam update -y -u
   rm -f ~/.profile
 }
