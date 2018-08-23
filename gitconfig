@@ -2,31 +2,32 @@
     path = ~/.gitlocal
 
 [alias]
-    serve = "!git daemon $1 --reuseaddr --verbose --base-path=. --export-all ./.git"
-    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
-    debug = !GIT_PAGER= gdb --args git
-    st = status
-    rev = rev-parse HEAD
-    ci = commit -s
+    appraise = !/Users/mort/go/bin/git-appraise
     br = branch -avv
+    ci = commit -s
     co = checkout
+    debug = !GIT_PAGER= gdb --args git
     df = diff --word-diff=color
     dfw = diff -R --color
-    log = log --color-words
+    human = "name-rev --refs=refs/heads/* --stdin"
+    ignore-unknown = status -s | grep "^?? " | cut -f 2 -d " " >> .gitignore
     l = log --all --decorate=full
+    ldiff = log --all -p --decorate=full --word-diff=color
     lg = log --all --decorate=full --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ai (%ar)%Creset'
     llg = log --all --decorate --graph --stat
-    ldiff = log --all -p --decorate=full --word-diff=color
-    timeline = log --oneline --decorate --graph
-    human = "name-rev --refs=refs/heads/* --stdin"
-    who = shortlog -s --
+    log = log --color-words
     patdiff = difftool -y -x patdiff
     pull-theirs = pull -s recursive -X theirs
-    appraise = !/Users/mort/go/bin/git-appraise
-    ignore-unknown = status -s | grep "^?? " | cut -f 2 -d " " >> .gitignore
+    rev = rev-parse HEAD
+    serve = "!git daemon $1 --reuseaddr --verbose --base-path=. --export-all ./.git"
+    st = status
+    timeline = log --oneline --decorate --graph
+    track-all = "!f() { for remote in `git branch -r | grep -v /HEAD`; do git checkout --track $remote ; done; }; f"
     # http://megakemp.com/2016/08/25/git-undo/
     undo = "!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    who = shortlog -s --
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
 
 [color]
     ui = true
