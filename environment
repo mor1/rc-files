@@ -198,7 +198,7 @@ export OCAMLRUNPARAM=b
 [ -x "$(which opam)" ] && eval $(opam config env)
 
 # direnv
-[ -x "$(which direnv)" ] && ( eval "$(direnv hook bash)" ; direnv reload )
+[ -x "$(which direnv)" ] && { eval "$(direnv hook bash)" ; direnv reload ; }
 
 # awscli completion
 complete -C aws_completer aws
