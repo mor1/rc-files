@@ -119,7 +119,7 @@ rfc () {
 PANDOC_BASE='
   dr mor1/pandoc -S --latex-engine=xelatex -Vfontsize=12 -Vpapersize=a4paper'
 
-PANDOC_MD="$PANDOC_BASE --number-sections -Vgeometry=margin=2cm"
+PANDOC_MD="$PANDOC_BASE --number-sections -Vgeometry=margin=2cm -Vcolorlinks"
 
 md2tex () {
   $PANDOC_MD -o ${1%.md}.tex $@
@@ -272,27 +272,6 @@ function git-cloner {
 function ddstatus {
   PID=$(ps -ax | grep "[0-9] dd" | tr -s ' ' | cut -f 1 -d ' ' | xargs)
   sudo kill -INFO $PID
-}
-
-#
-# photo manipulation
-#
-
-function photos-rename {
-  jhead -exonly -ft -n%Y%m%d-%H%M%S-%03i "$@"
-}
-
-function photos-subdir {
-  for n in *.jpg ; do
-    d=${n%%-*}-- && ( [ \! -d $d ] && mkdir $d || true ) && mv $n $d
-  done
-  # for n in *.jpg ; do
-  #    mv $n $(echo $n | cut -b1-4)-$(echo $n | cut -b5-6)-$(echo $n | cut -b7-8)--
-  # done
-}
-
-function photos-mirror {
-  rsync -av --delete ./pictures/ ~/l/mediapc/storage/pictures
 }
 
 #
