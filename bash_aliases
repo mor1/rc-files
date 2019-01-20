@@ -15,7 +15,7 @@ alias f="find . \! -path \*/.git/\* -a -name"
 alias less="less -FRXi"
 alias m="less -E"
 alias bc="bc -l"
-alias df="git df --no-index --"
+alias df="git df --minimal --no-index --"
 
 alias src2ps="a2ps --highlight-level=normal --columns=4 --rows=1 -L190 -l90"
 alias rfc2ps="a2ps --highlight-level=normal --columns=4 --row=1 -l82 --interpret=no"
