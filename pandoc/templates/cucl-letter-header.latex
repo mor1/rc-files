@@ -106,7 +106,7 @@ $endif$
 }
 
 \newcommand{\ComputerLaboratory}{
-  \fontsize{9.75pt}{9.75pt}\bf Dept. of Computer Science \& Technology
+  \fontsize{9.73pt}{12pt}\bf Dept of Computer Science \& Technology
 }
 
 \newcommand{\titledetails}{}
@@ -121,7 +121,7 @@ $endif$
   \begin{textblock*}{124mm}(124mm,10mm)
     \cuarms
   \end{textblock*}
-  \begin{textblock*}{\paperwidth}(123.5mm,25mm)
+  \begin{textblock*}{\paperwidth}(124mm,25mm)
     \ComputerLaboratory
   \end{textblock*}
 
@@ -185,7 +185,7 @@ $endif$
 \begin{document}
 
 \fromwhom{Richard~Mortier}{,~Ph.D.}
-         {University Lecturer}{richard.mortier@cl.cam.ac.uk}
+         {Reader in Computing \& Human-Data Interaction}{richard.mortier@cl.cam.ac.uk}
          {+44 1223 334419}{+44 1223 334678}
 
 \begin{letter}

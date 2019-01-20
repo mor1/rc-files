@@ -117,7 +117,7 @@ rfc () {
 #
 
 PANDOC_BASE='
-  dr mor1/pandoc -S --latex-engine=xelatex -Vfontsize=12 -Vpapersize=a4paper'
+  dr mor1/pandoc -S --latex-engine=xelatex -Vpapersize=a4paper'
 
 PANDOC_MD="$PANDOC_BASE --number-sections -Vgeometry=margin=2cm -Vcolorlinks"
 
