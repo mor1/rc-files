@@ -45,12 +45,15 @@ KERNEL=$(uname -r)
 CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../../../../../..:../../../../../../../..:../../../../../../../../..:../../../../../../../../../..:$HOME
 PAGER="less -FRXi"
 MANPAGER="less -FRXi"
+export LHOST SHOST KERNEL CDPATH PAGER MANPAGER
 
+LC_ALL="en_GB.UTF-8"
 LANG="en_GB.UTF-8"
-LC_ALL="C"
-LESSCHARSET=utf-8
+LANGUAGE="en_GB.UTF-8"
+export LC_ALL LANG LANGUAGE
 
-export LHOST SHOST KERNEL CDPATH PAGER MANPAGER LANG LC_ALL LESSCHARSET
+LESSCHARSET=utf-8
+export LESSCHARSET
 
 #
 # paths
@@ -69,6 +72,7 @@ unset MANPATH
 aenv MANPATH /usr/local/share/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
+aenv MANPATH $(opam var man)
 
 #
 # platform specific configuration
@@ -191,11 +195,8 @@ aenv MANPATH ~/me/local/man
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
 
 ## ...except OPAM configuration because OPAM whines
-[ -f ~/.opam/opam-init/init.sh ] && \
-    source ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+[[ -r ~/.opam/opam-init/init.sh ]] && . ~/.opam/opam-init/init.sh 
 export OCAMLRUNPARAM=b
-# export OPAMBUILDDOC=true ## breaks tyxml update every time ... :(
-[ -x "$(which opam)" ] && eval $(opam config env)
 
 # direnv
 [ -x "$(which direnv)" ] && { eval "$(direnv hook bash)" ; direnv reload ; }
