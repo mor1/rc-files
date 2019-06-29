@@ -106,7 +106,7 @@ Host github.com
      HostName ssh.github.com
      IdentityFile ~/.ssh/github-key
      ## handy for firewalls!
-     Port 443
+     # Port 443
 
 Host moby-dev.packet
      User root

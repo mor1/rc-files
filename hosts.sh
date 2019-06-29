@@ -36,6 +36,11 @@ aodfs () {
     $SSHFS armyofdockerness.cl:/ ~/l/aod
 }
 
+binky () {
+    $KINIT
+    $CLOGIN binky.cl
+}
+
 cf () {
   $SSH $CUCL finger $1@hermes.cam.ac.uk
 }
@@ -58,6 +63,11 @@ cuclfs () {
 gitlab () {
     $KINIT
     $CLOGIN svr-rmm1002-git.cl
+}
+
+uksystems () {
+  $KINIT
+  $CLOGIN svr-rmm1002-uksystems2018.cl
 }
 
 netos () {
