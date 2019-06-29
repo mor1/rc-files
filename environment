@@ -97,7 +97,7 @@ case $PLATFORM in
         ;;
 
     Darwin )
-        aenv PATH /usr/local/texlive/2018/bin/x86_64-darwin
+        aenv PATH /usr/local/texlive/2019/bin/x86_64-darwin
         export EDITOR="emacsclient -s /tmp/emacs-$USER/server"
 
         ## homebrew completion
@@ -195,7 +195,7 @@ aenv MANPATH ~/me/local/man
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
 
 ## ...except OPAM configuration because OPAM whines
-[[ -r ~/.opam/opam-init/init.sh ]] && . ~/.opam/opam-init/init.sh 
+[[ -r ~/.opam/opam-init/init.sh ]] && . ~/.opam/opam-init/init.sh
 export OCAMLRUNPARAM=b
 
 # direnv

@@ -24,6 +24,7 @@ trawl () {
   find . \(                                                       \
        -name '*.[chsSyli]'                                        \
        -or -name 'Make*'                                          \
+       -or -name 'APKBUILD'                                       \
        -or -name 'Dockerfile'                                     \
        -or -name 'README*'                                        \
        -or -name '*.bib'                                          \
@@ -234,9 +235,8 @@ abspath () {
 #
 
 function update-all {
-  brew update && brew upgrade --cleanup \
+  brew update && brew upgrade \
     && brew cask reinstall $(brew cask outdated)
-  brew cleanup
   opam update -y -u
   rm -f ~/.profile
 }
