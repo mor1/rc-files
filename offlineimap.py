@@ -26,10 +26,19 @@ def get_keychain_pass(account=None, server=None):
         'server': server,
     }
     command = "sudo -u %(userid)s %(security)s -v %(command)s -g -a %(account)s -s %(server)s" % params
-    output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
-    outtext = [l for l in output.splitlines() if l.startswith('password: ')][0]
+    output = subprocess.check_output(
+        command, shell=True, stderr=subprocess.STDOUT
+    )
+    outtext = [
+        l for l in output.splitlines() if l.startswith('password: ')
+    ][0]
+    password = re.match(r'password:\s+"(.*)"', outtext)
+    if password: return password.group(1)
 
-    return re.match(r'password: "(.*)"', outtext).group(1)
+    password = re.match(
+        r'password: 0x[0-9A-Z]+  "(.*)"', outtext
+    )
+    return password.group(1).split('\\012')[0]
 
 Gmail_LocalRemoteNames = {
     'archive': '[Google Mail]/All Mail',
@@ -59,4 +68,10 @@ def gmail_is_synced(folder):
         '[Gmail]/All Mail',
         '[Gmail]/Trash',
         '[Gmail]/Drafts',
+    ]
+
+def hermes_is_synced(folder):
+    return folder not in [
+        'Archive',
+
     ]
