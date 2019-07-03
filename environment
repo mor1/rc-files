@@ -72,7 +72,7 @@ unset MANPATH
 aenv MANPATH /usr/local/share/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
-aenv MANPATH $(opam var man)
+[ -x "$(which opam)" ] && aenv MANPATH $(opam var man)
 
 #
 # platform specific configuration
