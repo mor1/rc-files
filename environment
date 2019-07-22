@@ -38,7 +38,6 @@ umask 0002
 shopt -s checkwinsize
 shopt -s extglob
 
-PLATFORM=$(uname -s)
 LHOST=$(uname -n)
 SHOST=${LHOST%%.*}
 KERNEL=$(uname -r)
@@ -78,7 +77,7 @@ aenv MANPATH /usr/X11R6/man
 # platform specific configuration
 #
 
-case $PLATFORM in
+case $(uname -s) in
   Linux )
     MAKE=make
     export EDITOR=vi

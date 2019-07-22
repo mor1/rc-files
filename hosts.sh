@@ -3,16 +3,12 @@
 #
 
 SSH="ssh -K"
+CUCL="slogin.cl"
 
-SLOGIN="slogin"
-CLOGIN="slogin -K"
-
-CUCL=ely.cl
-
-KINIT="cl-krenew -q --ensuretgt --maxout" # common case
-# ACCT=rmm1002@AD.CL.CAM.AC.UK
-# KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
-KINIT="ssh -tx rmm1002@slogin.cl.cam.ac.uk $KINIT" # run on SSH gateway
+KINIT="cl-krenew -q --ensurehome" # common case
+ACCT=rmm1002@DC.CL.CAM.AC.UK
+KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
+KINIT="ssh -tvx $CUCL $KINIT" # run on SSH gateway
 
 SSHFSOPTS="\
   -o follow_symlinks\
@@ -28,17 +24,17 @@ SSHFS="sshfs $SSHFSOPTS"
 # CUCL
 
 aod () {
-    $KINIT
-    $CLOGIN armyofdockerness.cl
+  $KINIT
+  $SSH armyofdockerness.cl
 }
 aodfs () {
-    $KINIT
-    $SSHFS armyofdockerness.cl:/ ~/l/aod
+  $KINIT
+  $SSHFS armyofdockerness.cl:/ ~/l/aod
 }
 
 binky () {
-    $KINIT
-    $CLOGIN binky.cl
+  $KINIT
+  $SSH binky.cl
 }
 
 cf () {
@@ -46,137 +42,63 @@ cf () {
 }
 
 cronserv () {
-    $KINIT
-    $CLOGIN cron-serv$1.cl
+  $KINIT
+  $SSH cron-serv$1.cl
 }
 
 cucl () {
-    $KINIT
-    $CLOGIN $CUCL
+  $KINIT
+  $SSH $CUCL
 }
 cuclfs () {
-    $KINIT
-    $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
-    $SSHFS $CUCL:/ ~/l/cucl
+  $KINIT
+  $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
+  $SSHFS $CUCL:/ ~/l/cucl
 }
 
 gitlab () {
-    $KINIT
-    $CLOGIN svr-rmm1002-git.cl
+  $KINIT
+  $SSH svr-rmm1002-git.cl
 }
 
 uksystems () {
   $KINIT
-  $CLOGIN svr-rmm1002-uksystems2018.cl
+  $SSH svr-rmm1002-uksystems2018.cl
 }
 
 netos () {
-    $KINIT
-    $SSHFS $CUCL:/usr/groups/netos ~/l/netos
+  $KINIT
+  $SSHFS $CUCL:/usr/groups/netos ~/l/netos
 }
 
 office () {
-    $KINIT
-    $CLOGIN daugleddau.cl
+  $KINIT
+  $SSH daugleddau.cl
 }
 
 lab () {
-    H=$1
-    $KINIT
-    $CLOGIN $H.cl
+  H=$1
+  $KINIT
+  $SSH $H.cl
 }
 
 mcs () {
   $KINIT
-  $CLOGIN linux.cl.ds.cam.ac.uk
-}
-
-# Nottingham
-
-homeiot () {
-    $SLOGIN berezin.mrl.nottingham.ac.uk
-}
-homeiotfs () {
-    sshfs berezin.mrl.nottingham.ac.uk:/$1 ~/l/homeiot
-}
-
-marian () {
-    $SLOGIN marian.cs.nott.ac.uk
-}
-marianfs () {
-    sshfs marian.cs.nott.ac.uk:/$1 ~/l/marian
-}
-
-paws () {
-    slogin paws-server
-}
-pawsfs () {
-    sshfs paws-server:/$1 ~/l/paws
-}
-
-severn () {
-    $SLOGIN severn.cs.nott.ac.uk
-}
-severnfs () {
-    sshfs severn.cs.nott.ac.uk:/$1 ~/l/severn
-}
-
-stratus () {
-    $SLOGIN stratus.horizon.ac.uk
-}
-stratusfs () {
-    sshfs -o uid=503 -o gid=20 stratus.cs.nott.ac.uk:/$1 ~/l/stratus
-}
-
-ucn () {
-    $SLOGIN ucn-server
+  $SSH linux.cl.ds.cam.ac.uk
 }
 
 # Other
 
 mediapc () {
-    $SLOGIN root@mediapc.lan
+  $SSH -k root@mediapc.lan
 }
 mediapcfs() {
-    sshfs root@mediapc.lan:/$1 ~/l/mediapc
-}
-
-mobydev () {
-    $SLOGIN moby-dev.packet
-}
-mobydevfs () {
-    $SSHFS moby-dev.packet:/$1 ~/l/mobydev
-}
-
-monk () {
-    $SLOGIN monk.recoil.org
-}
-
-punk () {
-    $SLOGIN punk.recoil.org
+  sshfs root@mediapc.lan:/$1 ~/l/mediapc
 }
 
 srcf () {
-    $SLOGIN rmm1002@shell.srcf.net
+  $SSH -k rmm1002@shell.srcf.net
 }
 srcffs () {
-    sshfs rmm1002@shell.srcf.net:/$1 ~/l/srcf
-}
-
-stmwww () {
-    slogin -p 722 stthnorg@stthomasmorewollaton.org.uk
-}
-stmwwwfs() {
-    sshfs -p 722 stthnorg@stthomasmorewollaton.org.uk: ~/l/stm-www
-}
-
-vagrantfs() {
-    sshfs -p 2222 vagrant@localhost: ~/l/vagrant
-}
-
-xen () {
-    $SLOGIN -p 2233 localhost
-}
-xenfs () {
-    sshfs -p 2233 localhost: ~/l/xen
+  sshfs rmm1002@shell.srcf.net:/$1 ~/l/srcf
 }
