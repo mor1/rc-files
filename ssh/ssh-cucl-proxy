@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Copyright (C) 2017 Richard Mortier <mort@cantab.net>
+#
+# Detect if remote and need to hop through the slogin.cl gateway; otherwise use
+# bash `/dev/tcp` magic to setup a transparent tunnel. Could probably do this
+# with `netcat` too if you wanted.
+
+if [ "${LHOST%.cam.ac.uk}" = "$LHOST" ]; then
+  ssh -A -KqW $1:$2 rmm1002@slogin.cl.cam.ac.uk
+else
+  exec 3<>/dev/tcp/$1/$2 ; cat <&3 & cat >&3 ; kill $!
+fi

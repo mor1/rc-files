@@ -5,13 +5,15 @@ ocp/
 pandoc/templates/auto/
 pandoc/templates/default.latex
 
-ssh/
+ssh/**
 !ssh/config
 !ssh/sssha
+!ssh/ssh-cucl-proxy
 
-karabiner/
-!karabiner/README.md
+karabiner/**
+!karabiner/README.md,
 
-emacs.d/
+emacs.d/**
 !emacs.d/README.md
+
 gitlocal
