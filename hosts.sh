@@ -5,10 +5,9 @@
 SSH="ssh -K"
 CUCL="slogin.cl"
 
-KINIT="cl-krenew -q --ensuretgt" # common case
 ACCT=rmm1002@DC.CL.CAM.AC.UK
+KINIT="cl-krenew -q --ensuretgt" # common case
 KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
-KINIT="ssh -tx $CUCL $KINIT" # run on SSH gateway
 
 SSHFSOPTS="\
   -o follow_symlinks\
@@ -23,17 +22,21 @@ SSHFS="sshfs $SSHFSOPTS"
 
 # CUCL
 
-aod () {
-  $KINIT
-  $SSH armyofdockerness.cl
-}
-aodfs () {
-  $KINIT
-  $SSHFS armyofdockerness.cl:/ ~/l/aod
+# aod () {
+#   $KINIT
+#   $SSH armyofdockerness.cl
+# }
+# aodfs () {
+#   $KINIT
+#   $SSHFS armyofdockerness.cl:/ ~/l/aod
+# }
+
+_kinit () {
+  ssh -t $1 sh -c "$KINIT"
 }
 
 binky () {
-  $KINIT
+  _kinit binky.cl
   $SSH binky.cl
 }
 
@@ -42,12 +45,12 @@ cf () {
 }
 
 cronserv () {
-  $KINIT
+  _kinit cronserv$1.cl
   $SSH cron-serv$1.cl
 }
 
 cucl () {
-  $KINIT
+  _kinit $CUCL
   $SSH $CUCL
 }
 cuclfs () {
@@ -57,19 +60,18 @@ cuclfs () {
 }
 
 gitlab () {
-  $KINIT
   $SSH svr-rmm1002-git.cl
 }
 
 uksystems () {
-  $KINIT
+  _kinit svr-rmm1002-uksystems2018.cl
   $SSH svr-rmm1002-uksystems2018.cl
 }
 
-netos () {
-  $KINIT
-  $SSHFS $CUCL:/usr/groups/netos ~/l/netos
-}
+# netos () {
+#   $KINIT
+#   $SSHFS $CUCL:/usr/groups/netos ~/l/netos
+# }
 
 office () {
   $KINIT
@@ -78,12 +80,12 @@ office () {
 
 lab () {
   H=$1
-  $KINIT
+  _kinit $H.cl
   $SSH $H.cl
 }
 
 mcs () {
-  $KINIT
+  _kinit linux.cl.ds.cam.ac.uk
   $SSH linux.cl.ds.cam.ac.uk
 }
 
