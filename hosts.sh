@@ -5,10 +5,10 @@
 SSH="ssh -K"
 CUCL="slogin.cl"
 
-KINIT="cl-krenew -q --ensurehome" # common case
+KINIT="cl-krenew -q --ensuretgt" # common case
 ACCT=rmm1002@DC.CL.CAM.AC.UK
 KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
-KINIT="ssh -tvx $CUCL $KINIT" # run on SSH gateway
+KINIT="ssh -tx $CUCL $KINIT" # run on SSH gateway
 
 SSHFSOPTS="\
   -o follow_symlinks\
