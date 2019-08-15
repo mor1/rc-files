@@ -38,13 +38,16 @@ umask 0002
 shopt -s checkwinsize
 shopt -s extglob
 
-LHOST=$(uname -n)
-SHOST=${LHOST%%.*}
-KERNEL=$(uname -r)
 CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../../../../../..:../../../../../../../..:../../../../../../../../..:../../../../../../../../../..:$HOME
-PAGER="less -FRXi"
+KERNEL=$(uname -r)
+LHOST=$(uname -n)
+PLATFORM=$(uname -s)
+SHOST=${LHOST%%.*}
+export LHOST SHOST KERNEL CDPATH
+
 MANPAGER="less -FRXi"
-export LHOST SHOST KERNEL CDPATH PAGER MANPAGER
+PAGER="less -FRXi"
+export PAGER MANPAGER
 
 LC_ALL="en_GB.UTF-8"
 LANG="en_GB.UTF-8"
@@ -77,7 +80,7 @@ aenv MANPATH /usr/X11R6/man
 # platform specific configuration
 #
 
-case $(uname -s) in
+case $PLATFORM in
   Linux )
     MAKE=make
     export EDITOR=vi

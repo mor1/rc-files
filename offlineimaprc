@@ -81,6 +81,11 @@ remotepasseval = get_keychain_pass(
 nametrans = to_localfolder
 folderfilter = gmail_is_synced
 
+# do not send deletes from Remote to Local
+sync_deletes = no
+# do not accept writes to Remote from Local
+readonly = true
+
 #
 # Vipadia
 #
