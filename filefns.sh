@@ -333,3 +333,17 @@ vbox-killall () {
     VBoxManage controlvm $m poweroff ; VBoxManage unregistervm --delete $m ;
   done
 }
+
+#
+# Kvasira!
+#
+
+function kvasira {
+  api="https://demo.kvasira.com/api/0.0.1"
+  content="Content-Type: application/json"
+  auth="Authorization: Bearer"
+  token=$(curl -s -H "$content" -H "$auth a07171c0-a95e-11e9-bb4e-89313d1ed85a" "$api/corpora" | \
+            jq -r --arg ID "$1" '.data|map(select(.id==$ID))|.[0].token')
+  curl -X POST -s -d "{\"doc\": \"$2\"}" -H "$content" -H "$auth $token" "$api/query?query_type=url&k=${3:-5}" \
+    | jq -r '.response.results|map("\(.title) - \(.uri)", "\(.summary)", "")|.[]'|sed '$ d';
+}
