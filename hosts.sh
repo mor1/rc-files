@@ -3,7 +3,7 @@
 #
 
 SSH="ssh -K"
-CUCL="slogin.cl"
+CUCL="ely.cl"
 
 ACCT=rmm1002@DC.CL.CAM.AC.UK
 KINIT="cl-krenew -q --ensuretgt" # common case
@@ -57,6 +57,11 @@ cuclfs () {
   $KINIT
   $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
   $SSHFS $CUCL:/ ~/l/cucl
+}
+
+ely () {
+  _kinit ely.cl
+  $SSH ely.cl
 }
 
 gitlab () {

@@ -20,12 +20,9 @@ Host gitlab.srg.cl.cam.ac.uk
 
 Host svr-rmm1002-git.cl
      Hostname svr-rmm1002-git.cl.cam.ac.uk
-     # User rmm1002
-     Port 2222
      IdentityFile ~/.ssh/gitlabrsync-key
-     # ForwardX11 no
-     # ForwardAgent no
-     # ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
+     Port 2222
+     ForwardAgent no
 
 Host *.cl
      User rmm1002
@@ -35,12 +32,6 @@ Host *.cl
      ForwardAgent yes
      ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
 
-# Host tfc-app2.cl.cam.ac.uk
-#      User rita
-#      IdentityFile ~/.ssh/cucl-key
-#      ForwardX11 no
-#      ForwardAgent no
-
 Host *.cl.cam.ac.uk linux.cl.ds.cam.ac.uk linux.ds.cam.ac.uk
      User rmm1002
      IdentityFile ~/.ssh/cucl-key
@@ -48,6 +39,12 @@ Host *.cl.cam.ac.uk linux.cl.ds.cam.ac.uk linux.ds.cam.ac.uk
      ForwardAgent yes
      StrictHostKeyChecking no
      UserKnownHostsFile=/dev/null
+
+# Host tfc-app2.cl.cam.ac.uk
+#      User rita
+#      IdentityFile ~/.ssh/cucl-key
+#      ForwardX11 no
+#      ForwardAgent no
 
 # ## tunnels
 
@@ -84,6 +81,7 @@ Host mediapc.lan
 Host *
      ForwardX11 no
      ForwardAgent no
+     IdentitiesOnly yes
      # ControlMaster auto
      # ControlPath ~/.ssh/master-%r@%h:%p
      # ControlPersist 30

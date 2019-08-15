@@ -6,8 +6,10 @@
 # bash `/dev/tcp` magic to setup a transparent tunnel. Could probably do this
 # with `netcat` too if you wanted.
 
-if [ "${LHOST%.cam.ac.uk}" = "$LHOST" ]; then
-  ssh -AKqW $1:$2 rmm1002@slogin.cl.cam.ac.uk
-else
+IP0=$(ipconfig getifaddr en0)
+IP1=$(ipconfig getifaddr en1)
+if [[ "$IP0" == 128.232.* || "$IP1" == 128.232.* ]]; then
   exec 3<>/dev/tcp/$1/$2 ; cat <&3 & cat >&3 ; kill $!
+else
+  ssh -AKqW $1:$2 rmm1002@slogin.cl.cam.ac.uk
 fi
