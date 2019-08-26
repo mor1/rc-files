@@ -5,20 +5,16 @@
 SSH="ssh -K"
 CUCL="ely.cl"
 
-ACCT=rmm1002@DC.CL.CAM.AC.UK
-KINIT="cl-krenew -q --ensuretgt" # common case
-KINIT="$KINIT || kinit $ACCT || /usr/kerberos/bin/kinit $ACCT" # oddities
-
-SSHFSOPTS="\
-  -o follow_symlinks\
-  -o auto_cache\
-  -o reconnect\
-  -o defer_permissions\
-  -o noappledouble\
-  -o nolocalcaches\
-  -o no_readahead"
-SSHFS="sshfs $SSHFSOPTS"
-# -o uid=503 -o gid=20"
+# SSHFSOPTS="\
+#   -o follow_symlinks\
+#   -o auto_cache\
+#   -o reconnect\
+#   -o defer_permissions\
+#   -o noappledouble\
+#   -o nolocalcaches\
+#   -o no_readahead"
+# SSHFS="sshfs $SSHFSOPTS"
+# # -o uid=503 -o gid=20"
 
 # CUCL
 
@@ -32,7 +28,8 @@ SSHFS="sshfs $SSHFSOPTS"
 # }
 
 _kinit () {
-  ssh -t $1 sh -c "$KINIT"
+  _A=rmm1002@DC.CL.CAM.AC.UK
+  ssh -t $1 "cl-krenew --ensuretgt || kinit $_A || /usr/kerberos/bin/kinit $_A"
 }
 
 binky () {
@@ -53,11 +50,11 @@ cucl () {
   _kinit $CUCL
   $SSH $CUCL
 }
-cuclfs () {
-  $KINIT
-  $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
-  $SSHFS $CUCL:/ ~/l/cucl
-}
+# cuclfs () {
+#   _kinit $CUCL
+#   $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
+#   $SSHFS $CUCL:/ ~/l/cucl
+# }
 
 ely () {
   _kinit ely.cl
