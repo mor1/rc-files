@@ -172,6 +172,12 @@ case $TERM in
 esac
 export PROMPT_COMMAND
 
+ps1nogit() {
+  unset PROMPT_COMMAND
+  PS1="\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]\\$; "
+  export PS1
+}
+
 # pip bash completion start
 _pip_completion()
 {
