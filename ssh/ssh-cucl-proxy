@@ -14,8 +14,7 @@ for i in $(seq 1 6); do
   IP=$(ipconfig getifaddr en$i)
   if [[ "$IP" == 128.232.* ]]; then
     exec 3<>/dev/tcp/$1/$2 ; cat <&3 & cat >&3 ; kill $!
-    exit
   fi
 done
 
-ssh -AKqW $1:$2 rmm1002@slogin.cl.cam.ac.uk
+ssh -AKqW $1:$2 rmm1002@ely.cl.cam.ac.uk

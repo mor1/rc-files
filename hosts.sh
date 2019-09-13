@@ -62,6 +62,7 @@ ely () {
 }
 
 gitlab () {
+  _kinit $CUCL
   $SSH svr-rmm1002-git.cl
 }
 
