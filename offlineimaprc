@@ -47,6 +47,7 @@ sep = /
 
 [Repository Gchat-Remote]
 type = Gmail
+ssl_version = tls1_2
 readonly = yes
 remoteuser = richard.mortier@gmail.com
 auth_mechanisms = LOGIN
@@ -74,6 +75,7 @@ sep = /
 
 [Repository Gmail-Remote]
 type = Gmail
+ssl_version = tls1_2
 remoteuser = richard.mortier@gmail.com
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
@@ -105,6 +107,7 @@ sep = /
 
 [Repository Vipadia-Remote]
 type = Gmail
+ssl_version = tls1_2
 remoteuser = mort@vipadia.com
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
@@ -131,6 +134,7 @@ sep = /
 
 [Repository VipadiaAlt-Remote]
 type = Gmail
+ssl_version = tls1_2
 remoteuser = mort.vipadia
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
@@ -201,6 +205,7 @@ sep = /
 
 [Repository Uniks-Remote]
 type = Gmail
+ssl_version = tls1_2
 remoteuser = richard.mortier@unikernel.com
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
@@ -227,6 +232,7 @@ sep = /
 
 [Repository Kvasira-Remote]
 type = Gmail
+ssl_version = tls1_2
 remoteuser = mort@kvasira.com
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
@@ -253,6 +259,7 @@ sep = /
 
 [Repository Docker-Remote]
 type = Gmail
+ssl_version = tls1_2
 remoteuser = richard.mortier@docker.com
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
