@@ -1,0 +1,2 @@
+export GIT_AUTHOR_EMAIL=mort@cantab.net
+export GIT_COMMITTER_EMAIL=mort@cantab.net
