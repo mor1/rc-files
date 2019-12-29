@@ -3,7 +3,7 @@
 
 \documentclass[11pt,a4paper]{article}
 
-\usepackage{url}
+\usepackage{hyperref}
 \usepackage[absolute]{textpos}
 
 \usepackage{graphicx}
@@ -21,7 +21,7 @@
 \defaultfontfeatures{Mapping=tex-text,Scale=MatchUppercase}
 \renewcommand{\familydefault}{\rmdefault}
 \setmainfont{Times New Roman}
-\setmonofont{Hack}
+\setmonofont{Hack Nerd Font}
 
 %% geometry
 \pagestyle{plain}
@@ -150,7 +150,7 @@ $endif$
   \begin{tabular}{@{}l@{ }l@{}}
     \multicolumn{2}{@{}l@{}}{Computer Laboratory,}\\
     \multicolumn{2}{@{}l@{}}{William Gates Building,}\\
-    \multicolumn{2}{@{}l@{}}{JJ Thompson Avenue,}\\
+    \multicolumn{2}{@{}l@{}}{15, JJ Thompson Avenue,}\\
     \multicolumn{2}{@{}l@{}}{Cambridge CB3 0FD. UK}\\
  & \\
     Tel: & \fromphonedetails\\
