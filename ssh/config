@@ -73,6 +73,10 @@ Host github.com
      ## handy for firewalls!
      # Port 443
 
+Host git.alpinelinux.org
+     User git
+     IdentityFile ~/.ssh/github-key
+
 Host gitlab.alpinelinux.org
      User git
      IdentityFile ~/.ssh/bitbucket-key-rsa
