@@ -79,7 +79,7 @@ Host git.alpinelinux.org
 
 Host gitlab.alpinelinux.org
      User git
-     IdentityFile ~/.ssh/bitbucket-key-rsa
+     IdentityFile ~/.ssh/github-key
 
 Host mediapc.lan
      User root
