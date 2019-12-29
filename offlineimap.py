@@ -73,5 +73,4 @@ def gmail_is_synced(folder):
 def hermes_is_synced(folder):
     return folder not in [
         'Archive',
-
     ]

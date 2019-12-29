@@ -15,7 +15,7 @@
 [general]
 ui = TTYUI
 # accounts = Uniks
-accounts = Hermes, Docker, Kvasira, Live, Hotmail, VipadiaAlt, Vipadia, Gmail, Gchat
+accounts = Hermes, Docker, Kvasira, Live, Hotmail, VipadiaAlt, Vipadia, Gmail
 pythonfile = ~/rc-files/offlineimap.py
 fsync = false
 
@@ -28,39 +28,11 @@ maxconnections = 1
 maxage = 90
 
 #
-# Gchat
-#
-
-[Account Gchat]
-postsynchook = ~/rc-files/offlineimap-postsynchook.sh --index
-localrepository = Gchat-Local
-remoterepository = Gchat-Remote
-labelsheader = X-Keywords
-synclabels = yes
-ignorelabels = \Important, \Draft
-
-[Repository Gchat-Local]
-type = GmailMaildir
-localfolders = ~/me/footprint/mail/gmail
-nametrans = to_remotefolder
-sep = /
-
-[Repository Gchat-Remote]
-type = Gmail
-ssl_version = tls1_2
-readonly = yes
-remoteuser = richard.mortier@gmail.com
-auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="richard.mortier@gmail.com", server="imap.gmail.com")
-nametrans = to_localfolder
-folderfilter = lambda folder: folder in ['[Google Mail]/Chats']
-
-#
 # Gmail
 #
 
 [Account Gmail]
+postsynchook = ~/rc-files/offlineimap-postsynchook.sh --index
 localrepository = Gmail-Local
 remoterepository = Gmail-Remote
 labelsheader = X-Keywords
@@ -115,6 +87,9 @@ remotepasseval = get_keychain_pass(
 nametrans = to_localfolder
 folderfilter = gmail_is_synced
 
+# do not accept writes to Remote from Local
+readonly = true
+
 #
 # Vipadia- alternate account
 #
@@ -142,6 +117,9 @@ remotepasseval = get_keychain_pass(
 nametrans = to_localfolder
 folderfilter = gmail_is_synced
 
+# do not accept writes to Remote from Local
+readonly = true
+
 #
 # Hotmail
 #
@@ -163,6 +141,9 @@ remoteuser = richard_mortier@hotmail.com
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="richard_mortier@hotmail.com", server="imap-mail.outlook.com")
+
+# do not accept writes to Remote from Local
+readonly = true
 
 #
 # Live
@@ -186,32 +167,8 @@ auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="mort@live.co.uk", server="imap-mail.outlook.com")
 
-#
-# Uniks
-#
-
-[Account Uniks]
-localrepository = Uniks-Local
-remoterepository = Uniks-Remote
-labelsheader = X-Keywords
-synclabels = yes
-ignorelabels = \Important, \Draft
-
-[Repository Uniks-Local]
-type = GmailMaildir
-localfolders = ~/me/footprint/mail/uniks
-nametrans = to_remotefolder
-sep = /
-
-[Repository Uniks-Remote]
-type = Gmail
-ssl_version = tls1_2
-remoteuser = richard.mortier@unikernel.com
-auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="richard.mortier@unikernel.com", server="imap.gmail.com")
-nametrans = to_localfolder
-folderfilter = gmail_is_synced
+# do not accept writes to Remote from Local
+readonly = true
 
 #
 # Kvasira
@@ -240,6 +197,9 @@ remotepasseval = get_keychain_pass(
 nametrans = to_localfolder
 folderfilter = gmail_is_synced
 
+# do not accept writes to Remote from Local
+readonly = true
+
 #
 # Docker
 #
@@ -266,6 +226,9 @@ remotepasseval = get_keychain_pass(
     account="richard.mortier@docker.com", server="imap.gmail.com")
 nametrans = to_localfolder
 folderfilter = gmail_is_synced
+
+# do not accept writes to Remote from Local
+readonly = true
 
 #
 # Hermes
