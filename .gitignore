@@ -11,7 +11,7 @@ ssh/**
 !ssh/ssh-cucl-proxy
 
 karabiner/**
-!karabiner/README.md,
+!karabiner/README.md
 
 emacs.d/**
 !emacs.d/README.md
