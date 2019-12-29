@@ -20,3 +20,10 @@ post](http://mort.io/blog/2017/10/30/spring-loading-karabiner/) for an
 explanation of what's going on.
 
 [Karabiner]: https://pqrs.org/osx/karabiner/
+
+Per pages above, to reload Karabiner:
+
+```bash
+launchctl kickstart \
+  -k gui/$(id -u)/org.pqrs.karabiner.karabiner_console_user_server
+```
