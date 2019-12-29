@@ -20,7 +20,12 @@
 # NB. this script assumes it is run from the directory of the rc-files repo
 
 set -ex
-INDIR=$(dirname "$(readlink -f "$0")") # cd to script directory
+READLINK=readlink
+if [ "$(uname -s)" = "Darwin" ]; then
+  READLINK=greadlink
+fi
+
+INDIR=$(dirname "$($READLINK -f "$0")") # cd to script directory
 pushd $INDIR
 
 ## capture any existing SSH state
@@ -32,18 +37,28 @@ done
 [ -d ~/.ssh -a ! -L ~/.ssh ] \
     && ( rmdir ~/.ssh ; ln -s $INDIR/ssh ~/.ssh )
 
-## i value consistency in my environments. so what?
-rm -f ~/.bashrc
-ln -s $INDIR/bash_profile ~/.bashrc
-
 case $(uname -s) in
 
     Darwin ) ## likely to be my (new) laptop
-        TARGETS="bash_* environment gitconfig gitlocal indent.pro iocamlinit \
-                 ocamlinit pandoc pythonrc screenrc vimrc wgetrc Xresources \
-                 floatlg.jpg solarized-* karabiner.xml offlineimap-* \
-                 offlineimap.py* emacs.d \
-                 "
+        TARGETS="
+          Xresources
+          bash_*
+          emacs.d
+          environment
+          envrc
+          gitconfig
+          gitlocal
+          indent.pro
+          iocamlinit
+          karabiner.xml
+          ocamlinit
+          offlineimap*
+          pandoc
+          pythonrc
+          screenrc
+          vimrc
+          wgetrc
+          "
         ## install any launchers
         ln -sfv ~/rc-files/*.plist ~/Library/LaunchAgents
 
@@ -68,5 +83,9 @@ for f in $TARGETS; do
     [ -L ~/.$f ] && rm -f ~/.$f || true
     ln -s $INDIR/$f ~/.$f
 done
+
+## i value consistency in my environments. so what?
+rm -f ~/.bashrc
+ln -s $INDIR/bash_profile ~/.bashrc
 
 popd
