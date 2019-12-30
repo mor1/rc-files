@@ -3,7 +3,18 @@
 
 \documentclass[11pt,a4paper]{article}
 
-\usepackage{hyperref}
+\usepackage[hyphens]{url}
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+  breaklinks=true,
+  bookmarksopen=true,
+  pdfauthor={},
+  pdftitle={},
+  colorlinks=true,
+  urlcolor=blue,
+  citecolor=blue,
+  pdfborder={0 0 0}
+}
 \usepackage[absolute]{textpos}
 
 \usepackage{graphicx}
