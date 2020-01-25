@@ -132,12 +132,24 @@ esac
 command_oriented_history=TRUE # multi-line commands become single line
 notify=TRUE # support notifications
 
-shopt -s histappend # continue appending, don't delete periodically
-export PROMPT_COMMAND="history -a" # add every command to history
-export HISTIGNORE="&:l[sl][a]:[bf]g:exit:[ \t]"
+export HISTIGNORE="&:l?([sl])?(a):[bf]g:exit:[ \t]:history"
 export HISTCONTROL=ignoreboth:erasedups
 export HISTSIZE=10000
 export HISTFILESIZE=10000
+export HISTCONTROL=ignoreboth
+
+## https://unix.stackexchange.com/questions/1288/preserve-bash-history-in-multiple-terminal-windows/48116#48116
+_bash_history_sync () {
+    builtin history -a          # append last command to HISTFILE
+    HISTFILESIZE=$HISTSIZE      # truncate HISTFILE to HISTSIZE
+    builtin history -c          # clear the current session
+    builtin history -r          # read the history
+}
+history () {                    # ensure history synced before display
+    _bash_history_sync
+    builtin history "$@"
+}
+PROMPT_COMMAND=_bash_history_sync
 
 # prompt
 
