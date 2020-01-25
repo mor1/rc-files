@@ -84,6 +84,9 @@ Host gitlab.alpinelinux.org
 Host mediapc.lan
      User root
 
+Host git.overleaf.com
+     User richard.mortier@cl.cam.ac.uk
+
 ## default
 
 Host *
