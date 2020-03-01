@@ -14,8 +14,7 @@
 
 [general]
 ui = TTYUI
-# accounts = Uniks
-accounts = Hermes, Docker, Kvasira, Live, Hotmail, VipadiaAlt, Vipadia, Gmail
+accounts = Hermes, Kvasira, Live, Hotmail, VipadiaAlt, Vipadia, Gmail
 pythonfile = ~/rc-files/offlineimap.py
 fsync = false
 
@@ -194,36 +193,6 @@ remoteuser = mort@kvasira.com
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
     account="mort@kvasira.com", server="imap.gmail.com")
-nametrans = to_localfolder
-folderfilter = gmail_is_synced
-
-# do not accept writes to Remote from Local
-readonly = true
-
-#
-# Docker
-#
-
-[Account Docker]
-localrepository = Docker-Local
-remoterepository = Docker-Remote
-labelsheader = X-Keywords
-synclabels = yes
-ignorelabels = \Important, \Draft
-
-[Repository Docker-Local]
-type = GmailMaildir
-localfolders = ~/me/footprint/mail/docker
-nametrans = to_remotefolder
-sep = /
-
-[Repository Docker-Remote]
-type = Gmail
-ssl_version = tls1_2
-remoteuser = richard.mortier@docker.com
-auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="richard.mortier@docker.com", server="imap.gmail.com")
 nametrans = to_localfolder
 folderfilter = gmail_is_synced
 
