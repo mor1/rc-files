@@ -218,7 +218,7 @@ remotehost = imap.hermes.cam.ac.uk
 remoteuser = rmm1002
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
-    account="rmm1002@hermes.cam.ac.uk", server="imap.hermes.cam.ac.uk")
+    account="rmm1002@imap.hermes.cam.ac.uk", server="com.apple.account.IMAP.password")
 folderfilter = hermes_is_synced
 
 # do not send deletes from Remote to Local

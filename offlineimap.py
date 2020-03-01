@@ -19,16 +19,24 @@ import re, subprocess
 def get_keychain_pass(account=None, server=None):
     ## based off from http://stevelosh.com/blog/2012/10/the-homely-mutt/
     params = {
-        'userid': 'mort',
-        'security': '/usr/bin/security',
-        'command': 'find-internet-password',
-        'account': account,
-        'server': server,
+        'u': 'mort',
+        'e': '/usr/bin/security',
+        'c': 'find-internet-password',
+        'a': account,
+        's': server,
     }
-    command = "sudo -u %(userid)s %(security)s -v %(command)s -g -a %(account)s -s %(server)s" % params
-    output = subprocess.check_output(
-        command, shell=True, stderr=subprocess.STDOUT
-    )
+    try:
+        command = "sudo -u %(u)s %(e)s -v %(c)s -g -a %(a)s -s %(s)s" % params
+        output = subprocess.check_output(
+            command, shell=True, stderr=subprocess.STDOUT
+        )
+    except subprocess.CalledProcessError:
+        params['c'] = 'find-generic-password'
+        command = "sudo -u %(u)s %(e)s -v %(c)s -g -a %(a)s -s %(s)s" % params
+        output = subprocess.check_output(
+            command, shell=True, stderr=subprocess.STDOUT
+        )
+
     outtext = [
         l for l in output.splitlines() if l.startswith('password: ')
     ][0]
