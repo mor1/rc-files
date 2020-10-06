@@ -158,37 +158,41 @@ PROMPT_COMMAND=_bash_history_sync
 export NO_PROMPT_VARS
 set -o noclobber # require explicit overwrite when redirecting
 
-source ~/rc-files/colours.sh
-GIT_PS1_SHOWDIRTYSTATE=false
-GIT_PS1_SHOWSTASHSTATE=false
-GIT_PS1_SHOWUNTRACKEDFILES=false
-GIT_PS1_SHOWCOLORHINTS=true
-GIT_PS1_SHOWUPSTREAM="auto"
-
-case $TERM in
-  dumb )
-    PROMPT_COMMAND='__git_ps1 \
+ps1git() {
+  source ~/rc-files/colours.sh
+  GIT_PS1_SHOWDIRTYSTATE=false
+  GIT_PS1_SHOWSTASHSTATE=false
+  GIT_PS1_SHOWUNTRACKEDFILES=false
+  GIT_PS1_SHOWCOLORHINTS=true
+  GIT_PS1_SHOWUPSTREAM="auto"
+  case $TERM in
+    dumb )
+      PROMPT_COMMAND='__git_ps1 \
           ": \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
           "\[$COLOR_OFF\]\\$; " \
           "#%s "
           '
-    ;;
+      ;;
 
-  * )
-    PROMPT_COMMAND='__git_ps1 \
+    * )
+      PROMPT_COMMAND='__git_ps1 \
           "\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
           "\[$COLOR_OFF\]\\$; " \
           "#%s "
           '
-    ;;
-esac
-export PROMPT_COMMAND
+      ;;
+  esac
+}
 
 ps1nogit() {
-  unset PROMPT_COMMAND
+  source ~/rc-files/colours.sh
+  PROMPT_COMMAND=_bash_history_sync
   PS1="\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]\\$; "
   export PS1
 }
+
+# simpler, happier times
+ps1nogit
 
 # pip bash completion start
 _pip_completion()
