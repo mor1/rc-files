@@ -227,3 +227,7 @@ export OCAMLRUNPARAM=b
 
 # awscli completion
 complete -C aws_completer aws
+
+## DO/K8s
+export KUBECONFIG=~/.kube/kvasir-alpha-kubeconfig.yaml:~/.kube/k8s-kvasir-kubeconfig.yaml
+helm completion bash > /usr/local/etc/bash_completion.d/helm

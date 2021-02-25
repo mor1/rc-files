@@ -30,3 +30,5 @@ alias qv="qlmanage -px"
 
 alias eject="diskutil unmount"
 alias reset="\reset -i ^C"
+
+alias kc="kubectl"

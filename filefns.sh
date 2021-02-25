@@ -346,3 +346,20 @@ function kvasira {
   curl -X POST -s -d "{\"doc\": \"$2\"}" -H "$content" -H "$auth $token" "$api/query?query_type=url&k=${3:-5}" \
     | jq -r '.response.results|map("\(.title) - \(.uri)", "\(.summary)", "")|.[]'|sed '$ d';
 }
+
+#
+# k8s / digitalocean
+#
+function kcs () {
+  cluster=$1
+
+  if [ -z "$cluster" ]; then
+    kubectl config get-clusters
+  else
+    case $cluster in
+      alpha ) cluster=do-lon1-kvasir-alpha ;;
+      old ) cluster=do-lon1-k8s-kvasir ;;
+    esac
+    kubectl config use-context $cluster
+  fi
+}
