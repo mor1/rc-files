@@ -17,36 +17,23 @@
 import re, subprocess
 
 def get_keychain_pass(account=None, server=None):
-    ## based off from http://stevelosh.com/blog/2012/10/the-homely-mutt/
     params = {
-        'u': 'mort',
-        'e': '/usr/bin/security',
-        'c': 'find-internet-password',
+        'user': "mort",
+        'exe': "/usr/bin/security",
         'a': account,
         's': server,
-    }
-    try:
-        command = "sudo -u %(u)s %(e)s -v %(c)s -g -a %(a)s -s %(s)s" % params
-        output = subprocess.check_output(
-            command, shell=True, stderr=subprocess.STDOUT
-        )
-    except subprocess.CalledProcessError:
-        params['c'] = 'find-generic-password'
-        command = "sudo -u %(u)s %(e)s -v %(c)s -g -a %(a)s -s %(s)s" % params
-        output = subprocess.check_output(
-            command, shell=True, stderr=subprocess.STDOUT
-        )
+        }
 
-    outtext = [
-        l for l in output.splitlines() if l.startswith('password: ')
-    ][0]
-    password = re.match(r'password:\s+"(.*)"', outtext)
-    if password: return password.group(1)
+    if server:
+        params['cmd'] = "find-internet-password"
+        command = "sudo -u {user} {exe} {cmd} -a {a} -s {s} -w".format(**params)
+    else:
+        params['cmd'] = "find-generic-password"
+        command = "sudo -u {user} {exe} {cmd} -a {a} -w".format(**params)
 
-    password = re.match(
-        r'password: 0x[0-9A-Z]+  "(.*)"', outtext
-    )
-    return password.group(1).split('\\012')[0]
+    output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+
+    return output.strip()
 
 Gmail_LocalRemoteNames = {
     'archive': '[Google Mail]/All Mail',

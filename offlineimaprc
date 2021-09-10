@@ -14,7 +14,7 @@
 
 [general]
 ui = TTYUI
-accounts = Hermes, Kvasira, Live, Hotmail, VipadiaAlt, Vipadia, Gmail
+accounts = Hermes, Live, Hotmail, VipadiaAlt, Vipadia, Gmail
 pythonfile = ~/rc-files/offlineimap.py
 fsync = false
 
@@ -218,7 +218,7 @@ remotehost = imap.hermes.cam.ac.uk
 remoteuser = rmm1002
 auth_mechanisms = LOGIN
 remotepasseval = get_keychain_pass(
-    account="rmm1002@imap.hermes.cam.ac.uk", server="com.apple.account.IMAP.password")
+    account="rmm1002@imap.hermes.cam.ac.uk")
 folderfilter = hermes_is_synced
 
 # do not send deletes from Remote to Local
