@@ -19,32 +19,45 @@
 #
 # specific file grep
 #
-
 trawl () {
-  find . \(                                                       \
-       -name '*.[chsSyli]'                                        \
-       -or -name 'Make*'                                          \
-       -or -name 'APKBUILD'                                       \
-       -or -name 'Dockerfile'                                     \
-       -or -name 'README*'                                        \
-       -or -name '*.bib'                                          \
-       -or -name '*.cc' -or -name '*.hh'                          \
-       -or -name '*.xml' -or -name '*.html' -or -name '*.css'     \
-       -or -name '*.el'                                           \
-       -or -name '*.fs' -or -name '*.fs[xi]'                      \
-       -or \( -name '*.go' -and -not -path './vendor/*' \) \
-       -or -name '*.inc'                                          \
-       -or -name '*.less'                                         \
-       -or -name '*.md'                                           \
-       -or -name '*.nix'                                          \
-       -or -name '*.php'                                          \
-       -or -name '*.py'                                           \
-       -or -name '*.tex'                                          \
-       -or \( \( -name '*.ml' -or -name '*.ml[yil]' \)            \
-       -not -path '*/_build/*'                              \
-       -not -name 'setup.ml' -not -name 'myocamlbuild.ml'   \
-       \)                                                   \
-       \) -print0 | xargs -0 grep -EHns "$@" | grep -v "^\./vendor/"
+  find . \( \(                                                      \
+       -name '*.[chsSyli]'                                          \
+       -or \( \( -name '*.[tj]s' -or -name '*.jsx' \)               \
+              -not -path './dist/*' \)                              \
+       -or -name '*.bib'                                            \
+       -or -name '*.cc'                                             \
+       -or -name '*.css'                                            \
+       -or -name '*.el'                                             \
+       -or -name '*.ejs'                                            \
+       -or -name '*.fs[xi]?'                                        \
+       -or -name '*.hh'                                             \
+       -or -name '*.html'                                           \
+       -or -name '*.inc'                                            \
+       -or -name '*.json'                                           \
+       -or -name '*.less'                                           \
+       -or -name '*.md'                                             \
+       -or -name '*.nix'                                            \
+       -or -name '*.php'                                            \
+       -or -name '*.py'                                             \
+       -or -name '*.sh'                                             \
+       -or -name '*.tex'                                            \
+       -or -name '*.xml'                                            \
+       -or -name '*.yaml'                                           \
+       -or -name 'APKBUILD'                                         \
+       -or -name 'Dockerfile*'                                      \
+       -or -name 'Make*'                                            \
+       -or -name 'README*'                                          \
+       -or \( -name '*.go' -not -path './vendor/*' \)               \
+       -or \( \( -name '*.ml' -or -name '*.ml[yil]' -or -name 'dune*' \) \
+         -not -name 'setup.ml' -not -name 'myocamlbuild.ml'         \
+       \) \)                                                        \
+       -not -path '*/_build/*'                                      \
+       -not -path '*/.git/*'                                        \
+       -not -path '*/_site/*'                                       \
+       -not -path '*/x/*'                                           \
+       -not -path '*/node_modules/*' \)                             \
+       -not -name 'package-lock.json'                               \
+       -print0 | xargs -0 grep -EHns "$@"
 }
 
 #
@@ -98,10 +111,10 @@ rfc () {
   if [ $# = 1 ]; then
     if [ "$1" = "-index" ]; then
       curl -o ~/docs/rfcs/rfc${1}.txt \
-           http://www.rfc-editor.org/rfc/rfc${1}.txt
+           https://www.rfc-editor.org/rfc/rfc${1}.txt
     elif [ ! -s ~/docs/rfcs/rfc${1}.txt ] ; then
       curl -o ~/docs/rfcs/rfc${1}.txt \
-           http://www.rfc-editor.org/rfc/rfc${1}.txt
+           https://www.rfc-editor.org/rfc/rfc${1}.txt
     fi
     less -i ~/docs/rfcs/rfc${1}.txt
   else
@@ -202,9 +215,6 @@ function emacspkgs-commit-all {
   for n in $PKGS; do
     emacspkg-rm ${n%-*}
   done
-  ( git add elpa/archives/ &&
-      git commit -m "emacs: update archives" elpa/archives/
-  )
   popd
 }
 
@@ -235,7 +245,7 @@ abspath () {
 #
 
 function update-all {
-  brew update && brew upgrade && brew cask upgrade
+  brew update && brew upgrade --greedy
   opam update -y -u
   rm -f ~/.profile
 }
@@ -265,7 +275,7 @@ function git-cloner {
 }
 
 #
-# make dd display progress
+# make dd display progress; deprecated for `status=progress`
 #
 
 function ddstatus {
@@ -348,18 +358,8 @@ function kvasira {
 }
 
 #
-# k8s / digitalocean
+# std od invocation
 #
-function kcs () {
-  cluster=$1
-
-  if [ -z "$cluster" ]; then
-    kubectl config get-clusters
-  else
-    case $cluster in
-      alpha ) cluster=do-lon1-kvasir-alpha ;;
-      old ) cluster=do-lon1-k8s-kvasir ;;
-    esac
-    kubectl config use-context $cluster
-  fi
+function xd() {
+  god -A x -t x1z "$@"
 }
