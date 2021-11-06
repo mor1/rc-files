@@ -29,7 +29,7 @@ trawl () {
        -or -name '*.css'                                            \
        -or -name '*.el'                                             \
        -or -name '*.ejs'                                            \
-       -or -name '*.fs[xi]?'                                        \
+       -or -name '*.fs' -or -name '*.fs[xi]'                        \
        -or -name '*.hh'                                             \
        -or -name '*.html'                                           \
        -or -name '*.inc'                                            \
@@ -41,8 +41,9 @@ trawl () {
        -or -name '*.py'                                             \
        -or -name '*.sh'                                             \
        -or -name '*.tex'                                            \
+       -or -name '*.tf'                                             \
        -or -name '*.xml'                                            \
-       -or -name '*.yaml'                                           \
+       -or -name '*.yml' -or -name '*.yaml'                         \
        -or -name 'APKBUILD'                                         \
        -or -name 'Dockerfile*'                                      \
        -or -name 'Make*'                                            \
