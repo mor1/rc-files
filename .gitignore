@@ -10,6 +10,8 @@ git/dot-gitlocal
 karabiner/**
 !karabiner/README.md
 
+local/dot-local
+
 pandoc/dot-pandoc/templates/auto
 pandoc/dot-pandoc/templates/default.latex
 

@@ -11,6 +11,7 @@ case $(uname -s) in
   Darwin ) ## likely to be my (new) laptop
     stow --dotfiles \
          karabiner \
+         local \
          ocaml \
          offlineimap \
          pandoc \

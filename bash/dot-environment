@@ -194,8 +194,8 @@ ps1nogit() {
 ps1nogit
 
 ## my PATHs mostly win
-aenv PATH    ~/me/local/bin
-aenv MANPATH ~/me/local/man
+aenv PATH    ~/.local/bin
+aenv MANPATH ~/.local/man
 
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
 
@@ -224,7 +224,7 @@ fi
 #   aenv KUBECONFIG $k
 # done
 export IKVA_ROOT=~/ikva/src
-cp $IKVA_ROOT/ikva-tools/ik ~/me/local/bin
+cp $IKVA_ROOT/ikva-tools/ik ~/.local/bin
 eval $(helm completion bash)
 
 ## yq@3
