@@ -1,3 +1,13 @@
+case $(uname -s) in
+  Darwin ) ## likely to be my (new) laptop
+    brew install stow
+    ;;
+
+  Linux )
+    sudo apt install -yy curl stow
+    ;;
+esac
+
 stow --dotfiles \
      bash \
      emacs \
@@ -27,12 +37,3 @@ case $(uname -s) in
          -o ~/.git-prompt.sh
     ;;
 esac
-
-# ## capture any existing SSH state
-# [ ! -L ~/.ssh ] \
-#     && for file in ~/.ssh/{authorized_keys,known_hosts,*-key,*-key.pub} ; do
-
-#     [ -s $file ] && mv $file ssh
-# done
-# [ -d ~/.ssh -a ! -L ~/.ssh ] \
-#     && ( rmdir ~/.ssh ; ln -s $INDIR/ssh ~/.ssh )
