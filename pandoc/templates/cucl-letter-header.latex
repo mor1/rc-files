@@ -18,7 +18,19 @@
 \usepackage[absolute]{textpos}
 
 \usepackage{graphicx}
-\graphicspath{ {/Users/mort/.pandoc/templates/} }
+\graphicspath{
+  {/Users/mort/.pandoc/templates/}
+  {/Users/mort/me/signatures/}
+}
+
+\usepackage{longtable,booktabs}
+% \usepackage{etoolbox}
+% \makeatletter
+% \patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+% \makeatother
+% % Allow footnotes in longtable head/foot
+% \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+% \makesavenoteenv{longtable}
 
 %% fonts
 \usepackage[T1]{fontenc}
@@ -159,7 +171,6 @@ $endif$
 
 \newcommand{\swmfoot}{\fontsize{9pt}{10pt}\rm\hfill
   \begin{tabular}{@{}l@{ }l@{}}
-    \multicolumn{2}{@{}l@{}}{Computer Laboratory,}\\
     \multicolumn{2}{@{}l@{}}{William Gates Building,}\\
     \multicolumn{2}{@{}l@{}}{15, JJ Thompson Avenue,}\\
     \multicolumn{2}{@{}l@{}}{Cambridge CB3 0FD. UK}\\
@@ -193,10 +204,14 @@ $endif$
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
+$if(preamble)$
+$preamble$
+$endif$
+
 \begin{document}
 
 \fromwhom{Richard~Mortier}{,~Ph.D.}
-         {Reader in Computing \& Human-Data Interaction}{richard.mortier@cl.cam.ac.uk}
+         {Professor of Computing \& Human-Data Interaction}{richard.mortier@cl.cam.ac.uk}
          {+44 1223 334419}{+44 1223 334678}
 
 \begin{letter}
