@@ -1,20 +1,21 @@
 .DS_Store
-ocp/
-*.pyc
 
-pandoc/templates/auto/
-pandoc/templates/default.latex
+bash/.config/**
+
+emacs/dot-emacs.d/**
+!emacs/dot-emacs.d/README.md
+
+git/dot-gitlocal
+
+karabiner/dot-karabiner/**
+!karabiner/dot-karabiner/README.md
+
+pandoc/dot-pandoc/templates/auto
+pandoc/dot-pandoc/templates/default.latex
+
+solarized/
 
 ssh/**
 !ssh/config
 !ssh/sssha
 !ssh/ssh-cucl-proxy
-
-karabiner/**
-!karabiner/README.md
-
-emacs.d/**
-!emacs.d/README.md
-
-gitlocal
-solarized/

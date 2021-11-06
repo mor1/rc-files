@@ -21,9 +21,10 @@
 # handy shell functions
 #
 
-[ -r ~/rc-files/envfns.sh  ] && source ~/rc-files/envfns.sh
-[ -r ~/rc-files/filefns.sh ] && source ~/rc-files/filefns.sh
-[ -r ~/rc-files/hosts.sh ] && source ~/rc-files/hosts.sh
+[ -r ~/rc-files/scripts/envfns.sh  ] && source ~/rc-files/scripts/envfns.sh
+[ -r ~/rc-files/scripts/filefns.sh ] && source ~/rc-files/scripts/filefns.sh
+[ -r ~/rc-files/scripts/hosts.sh ] && source ~/rc-files/scripts/hosts.sh
+
 [ -r ~/src/dockerfiles/dockerfns.sh ] && source ~/src/dockerfiles/dockerfns.sh
 [ -r ~/src/sh-scripts/numfns.sh ] && source ~/src/sh-scripts/numfns.sh
 
@@ -157,7 +158,7 @@ export NO_PROMPT_VARS
 set -o noclobber # require explicit overwrite when redirecting
 
 ps1git() {
-  source ~/rc-files/colours.sh
+  source ~/rc-files/scripts/colours.sh
   GIT_PS1_SHOWDIRTYSTATE=false
   GIT_PS1_SHOWSTASHSTATE=false
   GIT_PS1_SHOWUNTRACKEDFILES=false
@@ -183,7 +184,7 @@ ps1git() {
 }
 
 ps1nogit() {
-  source ~/rc-files/colours.sh
+  source ~/rc-files/scripts/colours.sh
   PROMPT_COMMAND=_bash_history_sync
   PS1="\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]\\$; "
   export PS1
