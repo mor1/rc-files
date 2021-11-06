@@ -5,27 +5,18 @@
 SSH="ssh -K"
 CUCL="ely.cl"
 
-# SSHFSOPTS="\
-#   -o follow_symlinks\
-#   -o auto_cache\
-#   -o reconnect\
-#   -o defer_permissions\
-#   -o noappledouble\
-#   -o nolocalcaches\
-#   -o no_readahead"
-# SSHFS="sshfs $SSHFSOPTS"
-# # -o uid=503 -o gid=20"
+SSHFSOPTS="\
+  -o follow_symlinks\
+  -o auto_cache\
+  -o reconnect\
+  -o defer_permissions\
+  -o noappledouble\
+  -o nolocalcaches\
+  -o no_readahead"
+# -o uid=503 -o gid=20"
+SSHFS="sshfs $SSHFSOPTS"
 
 # CUCL
-
-# aod () {
-#   $KINIT
-#   $SSH armyofdockerness.cl
-# }
-# aodfs () {
-#   $KINIT
-#   $SSHFS armyofdockerness.cl:/ ~/l/aod
-# }
 
 _kinit () {
   _A=rmm1002@DC.CL.CAM.AC.UK
@@ -50,11 +41,12 @@ cucl () {
   _kinit $CUCL
   $SSH $CUCL
 }
-# cuclfs () {
-#   _kinit $CUCL
-#   $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
-#   $SSHFS $CUCL:/ ~/l/cucl
-# }
+
+cuclfs () {
+  _kinit $CUCL
+  $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
+  $SSHFS $CUCL:/ ~/l/cucl
+}
 
 ely () {
   _kinit ely.cl
@@ -66,15 +58,15 @@ gitlab () {
   $SSH svr-rmm1002-git.cl
 }
 
-uksystems () {
-  _kinit svr-rmm1002-uksystems2018.cl
-  $SSH svr-rmm1002-uksystems2018.cl
+quoth () {
+  _kinit quoth.cl
+  $SSH quoth.cl
 }
 
-# netos () {
-#   $KINIT
-#   $SSHFS $CUCL:/usr/groups/netos ~/l/netos
-# }
+uksystems () {
+  _kinit svr-rmm1002-uksystems-hotcrp.cl
+  $SSH rmm1002@hotcrp.uksystems.org # svr-rmm1002-uksystems-hotcrp.cl
+}
 
 office () {
   $KINIT
@@ -94,6 +86,9 @@ mcs () {
 
 # Other
 
+jackdaw () {
+  $SSH -k jackdaw.lan
+}
 mediapc () {
   $SSH -k root@mediapc.lan
 }

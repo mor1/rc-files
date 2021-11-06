@@ -35,7 +35,7 @@ Host *.cl
 Host *.cl.cam.ac.uk linux.cl.ds.cam.ac.uk linux.ds.cam.ac.uk
      User rmm1002
      IdentityFile ~/.ssh/cucl-key
-     ForwardX11 no
+     ForwardX11 yes
      ForwardAgent yes
      StrictHostKeyChecking no
      UserKnownHostsFile=/dev/null
@@ -43,6 +43,11 @@ Host *.cl.cam.ac.uk linux.cl.ds.cam.ac.uk linux.ds.cam.ac.uk
 Host gitlab.developers.cam.ac.uk
      User rmm1002
      IdentityFile ~/.ssh/bitbucket-key-rsa
+
+Host mirage-dev.packet
+     User root
+     IdentityFile ~/.ssh/github-key
+     HostName 147.75.204.215
 
 # Host tfc-app2.cl.cam.ac.uk
 #      User rita
@@ -63,6 +68,37 @@ Host gitlab.developers.cam.ac.uk
 #      HostName punk.recoil.org
 #      IdentityFile ~/.ssh/bitbucket-key
 #      LocalForward 7070 irc.gnome.org:7000
+
+## ikva
+
+Host ikva
+     Hostname mort-vm.uksouth.cloudapp.azure.com
+     User azureuser
+     IdentityFile ~/ikva/keys/mort-ikva-ai.pem
+
+Host arxiv
+     Hostname 20.68.219.52
+     User azureuser
+
+Host gitlab.k
+     HostName gitlab.kvasira.com
+     Port 899
+
+Host ulv.k
+     ProxyJump gitlab.k
+     HostName 10.131.139.191
+
+Host u6l.k
+     ProxyJump gitlab.k
+     HostName 10.131.139.223
+
+Host u6u.k
+     ProxyJump gitlab.k
+     HostName 10.131.88.98
+
+Host *.k
+     User mort
+     IdentityFile ~/.ssh/packetnet-key
 
 ## other
 
@@ -85,6 +121,10 @@ Host gitlab.alpinelinux.org
      User git
      IdentityFile ~/.ssh/github-key
 
+Host *.lan
+     User mort
+     IdentityFile ~/.ssh/nottingham-key-rsa
+
 Host mediapc.lan
      User root
 
@@ -94,6 +134,10 @@ Host git.overleaf.com
 Host gitlab.lrz.de
      User git
      IdentityFile ~/.ssh/bitbucket-key-rsa
+
+Host hotcrp.uksystems.org
+     User rmm1002
+     IdentityFile ~/.ssh/cucl-key
 
 ## default
 
