@@ -15,12 +15,12 @@
 [general]
 ui = TTYUI
 accounts = Hermes, Live, Hotmail, VipadiaAlt, Vipadia, Gmail
-pythonfile = ~/rc-files/offlineimap.py
+pythonfile = ~/rc-files/scripts/offlineimap.py
 fsync = false
 
 [DEFAULT]
-presynchook = ~/rc-files/offlineimap-presynchook.sh
-postsynchook = ~/rc-files/offlineimap-postsynchook.sh
+presynchook = ~/rc-files/scripts/offlineimap-presynchook.sh
+postsynchook = ~/rc-files/scripts/offlineimap-postsynchook.sh
 sslcacertfile = /usr/local/etc/openssl/cert.pem
 ssl = yes
 maxconnections = 1
@@ -31,7 +31,7 @@ maxage = 90
 #
 
 [Account Gmail]
-postsynchook = ~/rc-files/offlineimap-postsynchook.sh --index
+postsynchook = ~/rc-files/scripts/offlineimap-postsynchook.sh --index
 localrepository = Gmail-Local
 remoterepository = Gmail-Remote
 labelsheader = X-Keywords

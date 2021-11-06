@@ -16,8 +16,6 @@ case $(uname -s) in
          pandoc \
          python
 
-    brew install offlineimap
-    mkdir -p ~/Library/LaunchAgents
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.offlineimap.plist
     ;;
 
