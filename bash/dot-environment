@@ -139,14 +139,14 @@ export HISTCONTROL=ignoreboth
 
 ## https://unix.stackexchange.com/questions/1288/preserve-bash-history-in-multiple-terminal-windows/48116#48116
 _bash_history_sync () {
-    builtin history -a          # append last command to HISTFILE
-    HISTFILESIZE=$HISTSIZE      # truncate HISTFILE to HISTSIZE
-    builtin history -c          # clear the current session
-    builtin history -r          # read the history
+  builtin history -a          # append last command to HISTFILE
+  HISTFILESIZE=$HISTSIZE      # truncate HISTFILE to HISTSIZE
+  builtin history -c          # clear the current session
+  builtin history -r          # read the history
 }
 history () {                    # ensure history synced before display
-    _bash_history_sync
-    builtin history "$@"
+  _bash_history_sync
+  builtin history "$@"
 }
 PROMPT_COMMAND=_bash_history_sync
 
@@ -206,32 +206,36 @@ export OCAMLRUNPARAM=b
 # direnv
 [ -x "$(which direnv)" ] && { eval "$(direnv hook bash)" ; direnv reload ; }
 
-## ikva
+# iKVA
+if [[ "$SHOST" = "greyjay" ]]; then
+  if [ -x "$(which kubectl)" ]; then
+    ## DO/K8s
+    alias k=kubectl
+    trap 'rm -f "$TMPFILE"' EXIT
+    TMPFILE=$(mktemp)
+    if [[ $? -gt 0 ]]; then
+      echo "### COULDN'T CREATE TMPFILE"
+    else
+      kubectl completion bash >| $TMPFILE && source $TMPFILE && rm $TMPFILE
+      complete -F __start_kubectl k
+    fi
 
-## DO/K8s
-alias k=kubectl
-trap 'rm -f "$TMPFILE"' EXIT
-TMPFILE=$(mktemp)
-if [[ $? -gt 0 ]]; then
-  echo "### COULDN'T CREATE TMPFILE"
-else
-  kubectl completion bash >| $TMPFILE && source $TMPFILE && rm $TMPFILE
-  complete -F __start_kubectl k
+    ## replaced using `kubectl config view --flatten > ~/.kube/config`
+    # for k in ~/.kube/*-kubeconfig.yaml ; do
+    #   aenv KUBECONFIG $k
+    # done
+  fi
+
+  export IKVA_ROOT=~/ikva/src
+  cp $IKVA_ROOT/ikva-tools/ik ~/.local/bin
+  eval $(helm completion bash)
+
+  ## yq@3
+  aenv PATH /usr/local/opt/yq@3/bin
+
+  ## terraform
+  complete -C /usr/local/bin/terraform terraform
+
+  ## rust / rustup / cargo
+  [ -r "$HOME/.cargo.env" ] && . "$HOME/.cargo/env"
 fi
-
-## replaced using `kubectl config view --flatten > ~/.kube/config`
-# for k in ~/.kube/*-kubeconfig.yaml ; do
-#   aenv KUBECONFIG $k
-# done
-export IKVA_ROOT=~/ikva/src
-cp $IKVA_ROOT/ikva-tools/ik ~/.local/bin
-eval $(helm completion bash)
-
-## yq@3
-aenv PATH /usr/local/opt/yq@3/bin
-
-## terraform
-complete -C /usr/local/bin/terraform terraform
-
-## rust / rustup / cargo
-. "$HOME/.cargo/env"
