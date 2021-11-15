@@ -181,7 +181,7 @@ e () {
 }
 
 function emacspkg-update {
-  ( cd ~/rc-files/emacs.d/elpa &&
+  ( cd ~/.emacs.d/elpa &&
       git rm "$1-*" &&
       git add "$1-*" &&
       git commit -m "emacs: update \`$1\`"
@@ -189,21 +189,21 @@ function emacspkg-update {
 }
 
 function emacspkg-add {
-  ( cd ~/rc-files/emacs.d/elpa &&
+  ( cd ~/.emacs.d/elpa &&
       git add "$1-*" &&
       git commit -m "emacs: add \`$1\`"
   )
 }
 
 function emacspkg-rm {
-  ( cd ~/rc-files/emacs.d/elpa &&
+  ( cd ~/.emacs.d/elpa &&
       git rm "$1-*" &&
       git commit -m "emacs: remove \`$1\`"
   )
 }
 
 function emacspkgs-commit-all {
-  pushd ~/rc-files/emacs.d
+  pushd ~/.emacs.d
   PKGS=$(git status -s | grep -E "^   elpa/.*$" | cut -f 2 -d "/" | uniq)
   for n in $PKGS; do
     emacspkg-update ${n%-*}
