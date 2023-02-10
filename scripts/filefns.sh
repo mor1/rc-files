@@ -24,6 +24,7 @@ trawl () {
        -name '*.[chsSyli]'                                          \
        -or \( \( -name '*.[tj]s' -or -name '*.jsx' \)               \
               -not -path './dist/*' \)                              \
+       -or -name '.env*'                                            \
        -or -name '*.bib'                                            \
        -or -name '*.cc'                                             \
        -or -name '*.css'                                            \
@@ -39,6 +40,7 @@ trawl () {
        -or -name '*.nix'                                            \
        -or -name '*.php'                                            \
        -or -name '*.py'                                             \
+       -or -name '*.rs'                                             \
        -or -name '*.sh'                                             \
        -or -name '*.tex'                                            \
        -or -name '*.tf'                                             \
@@ -56,6 +58,8 @@ trawl () {
        -not -path '*/.git/*'                                        \
        -not -path '*/_site/*'                                       \
        -not -path '*/x/*'                                           \
+       -not -path '*/target/*'                                      \
+       -not -path '*/__pypackages__/*'                              \
        -not -path '*/node_modules/*' \)                             \
        -not -name 'package-lock.json'                               \
        -print0 | xargs -0 grep -EHns "$@"
