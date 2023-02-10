@@ -14,13 +14,13 @@
 
 [general]
 ui = TTYUI
-accounts = Hermes, Live, Hotmail, VipadiaAlt, Vipadia, Gmail
-pythonfile = ~/rc-files/scripts/offlineimap.py
+accounts = Live, Hotmail, Gmail
+pythonfile = /Users/mort/rc-files/offlineimap/offlineimap.py
 fsync = false
 
 [DEFAULT]
-presynchook = ~/rc-files/scripts/offlineimap-presynchook.sh
-postsynchook = ~/rc-files/scripts/offlineimap-postsynchook.sh
+presynchook = /Users/mort/rc-files/offlineimap/offlineimap-presynchook.sh
+postsynchook = /Users/mort/rc-files/offlineimap/offlineimap-postsynchook.sh
 sslcacertfile = /usr/local/etc/openssl/cert.pem
 ssl = yes
 maxconnections = 1
@@ -31,7 +31,7 @@ maxage = 90
 #
 
 [Account Gmail]
-postsynchook = ~/rc-files/scripts/offlineimap-postsynchook.sh --index
+postsynchook = /Users/mort/rc-files/offlineimap/offlineimap-postsynchook.sh --index
 localrepository = Gmail-Local
 remoterepository = Gmail-Remote
 labelsheader = X-Keywords
@@ -40,7 +40,7 @@ ignorelabels = \Important, \Draft
 
 [Repository Gmail-Local]
 type = GmailMaildir
-localfolders = ~/me/footprint/mail/gmail
+localfolders = ~/me/mail/gmail
 nametrans = to_remotefolder
 sep = /
 
@@ -59,65 +59,65 @@ sync_deletes = no
 # do not accept writes to Remote from Local
 readonly = true
 
-#
-# Vipadia
-#
+# #
+# # Vipadia
+# #
 
-[Account Vipadia]
-localrepository = Vipadia-Local
-remoterepository = Vipadia-Remote
-labelsheader = X-Keywords
-synclabels = yes
-ignorelabels = \Important, \Draft
+# [Account Vipadia]
+# localrepository = Vipadia-Local
+# remoterepository = Vipadia-Remote
+# labelsheader = X-Keywords
+# synclabels = yes
+# ignorelabels = \Important, \Draft
 
-[Repository Vipadia-Local]
-type = GmailMaildir
-localfolders = ~/me/footprint/mail/vipadia
-nametrans = to_remotefolder
-sep = /
+# [Repository Vipadia-Local]
+# type = GmailMaildir
+# localfolders = ~/me/mail/vipadia
+# nametrans = to_remotefolder
+# sep = /
 
-[Repository Vipadia-Remote]
-type = Gmail
-ssl_version = tls1_2
-remoteuser = mort@vipadia.com
-auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="mort@vipadia.com", server="imap.gmail.com")
-nametrans = to_localfolder
-folderfilter = gmail_is_synced
+# [Repository Vipadia-Remote]
+# type = Gmail
+# ssl_version = tls1_2
+# remoteuser = mort@vipadia.com
+# auth_mechanisms = LOGIN
+# remotepasseval = get_keychain_pass(
+#     account="mort@vipadia.com", server="imap.gmail.com")
+# nametrans = to_localfolder
+# folderfilter = gmail_is_synced
 
-# do not accept writes to Remote from Local
-readonly = true
+# # do not accept writes to Remote from Local
+# readonly = true
 
-#
-# Vipadia- alternate account
-#
+# #
+# # Vipadia- alternate account
+# #
 
-[Account VipadiaAlt]
-localrepository = VipadiaAlt-Local
-remoterepository = VipadiaAlt-Remote
-labelsheader = X-Keywords
-synclabels = yes
-ignorelabels = \Important, \Draft
+# [Account VipadiaAlt]
+# localrepository = VipadiaAlt-Local
+# remoterepository = VipadiaAlt-Remote
+# labelsheader = X-Keywords
+# synclabels = yes
+# ignorelabels = \Important, \Draft
 
-[Repository VipadiaAlt-Local]
-type = GmailMaildir
-localfolders = ~/me/footprint/mail/vipadia-alt
-nametrans = to_remotefolder
-sep = /
+# [Repository VipadiaAlt-Local]
+# type = GmailMaildir
+# localfolders = ~/me/mail/vipadia-alt
+# nametrans = to_remotefolder
+# sep = /
 
-[Repository VipadiaAlt-Remote]
-type = Gmail
-ssl_version = tls1_2
-remoteuser = mort.vipadia
-auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="mort.vipadia", server="imap.gmail.com")
-nametrans = to_localfolder
-folderfilter = gmail_is_synced
+# [Repository VipadiaAlt-Remote]
+# type = Gmail
+# ssl_version = tls1_2
+# remoteuser = mort.vipadia
+# auth_mechanisms = LOGIN
+# remotepasseval = get_keychain_pass(
+#     account="mort.vipadia", server="imap.gmail.com")
+# nametrans = to_localfolder
+# folderfilter = gmail_is_synced
 
-# do not accept writes to Remote from Local
-readonly = true
+# # do not accept writes to Remote from Local
+# readonly = true
 
 #
 # Hotmail
@@ -129,7 +129,7 @@ remoterepository = Hotmail-Remote
 
 [Repository Hotmail-Local]
 type = Maildir
-localfolders = ~/me/footprint/mail/hotmail
+localfolders = ~/me/mail/hotmail
 nametrans = to_remotefolder
 sep = /
 
@@ -154,7 +154,7 @@ remoterepository = Live-Remote
 
 [Repository Live-Local]
 type = Maildir
-localfolders = ~/me/footprint/mail/live
+localfolders = ~/me/mail/live
 nametrans = to_remotefolder
 sep = /
 
@@ -169,60 +169,60 @@ remotepasseval = get_keychain_pass(
 # do not accept writes to Remote from Local
 readonly = true
 
-#
-# Kvasira
-#
+# #
+# # Kvasira
+# #
 
-[Account Kvasira]
-localrepository = Kvasira-Local
-remoterepository = Kvasira-Remote
-labelsheader = X-Keywords
-synclabels = yes
-ignorelabels = \Important, \Draft
+# [Account Kvasira]
+# localrepository = Kvasira-Local
+# remoterepository = Kvasira-Remote
+# labelsheader = X-Keywords
+# synclabels = yes
+# ignorelabels = \Important, \Draft
 
-[Repository Kvasira-Local]
-type = GmailMaildir
-localfolders = ~/me/footprint/mail/kvasira
-nametrans = to_remotefolder
-sep = /
+# [Repository Kvasira-Local]
+# type = GmailMaildir
+# localfolders = ~/me/mail/kvasira
+# nametrans = to_remotefolder
+# sep = /
 
-[Repository Kvasira-Remote]
-type = Gmail
-ssl_version = tls1_2
-remoteuser = mort@kvasira.com
-auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="mort@kvasira.com", server="imap.gmail.com")
-nametrans = to_localfolder
-folderfilter = gmail_is_synced
+# [Repository Kvasira-Remote]
+# type = Gmail
+# ssl_version = tls1_2
+# remoteuser = mort@kvasira.com
+# auth_mechanisms = LOGIN
+# remotepasseval = get_keychain_pass(
+#     account="mort@kvasira.com", server="imap.gmail.com")
+# nametrans = to_localfolder
+# folderfilter = gmail_is_synced
 
-# do not accept writes to Remote from Local
-readonly = true
+# # do not accept writes to Remote from Local
+# readonly = true
 
-#
-# Hermes
-#
+# #
+# # Hermes
+# #
 
-[Account Hermes]
-localrepository = Hermes-Local
-remoterepository = Hermes-Remote
+# [Account Hermes]
+# localrepository = Hermes-Local
+# remoterepository = Hermes-Remote
 
-[Repository Hermes-Local]
-type = Maildir
-localfolders = ~/me/footprint/mail/hermes
-sep = /
+# [Repository Hermes-Local]
+# type = Maildir
+# localfolders = ~/me/mail/hermes
+# sep = /
 
-[Repository Hermes-Remote]
-type = IMAP
-remotehost = imap.hermes.cam.ac.uk
-remoteuser = rmm1002
-auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="rmm1002@imap.hermes.cam.ac.uk")
-folderfilter = hermes_is_synced
+# [Repository Hermes-Remote]
+# type = IMAP
+# remotehost = imap.hermes.cam.ac.uk
+# remoteuser = rmm1002
+# auth_mechanisms = LOGIN
+# remotepasseval = get_keychain_pass(
+#     account="rmm1002@imap.hermes.cam.ac.uk")
+# folderfilter = hermes_is_synced
 
-# do not send deletes from Remote to Local
-sync_deletes = no
+# # do not send deletes from Remote to Local
+# sync_deletes = no
 
-# do not accept writes to Remote from Local
-readonly = true
+# # do not accept writes to Remote from Local
+# readonly = true

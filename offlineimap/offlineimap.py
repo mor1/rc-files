@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 #
 # Copyright (c) 2015 Richard Mortier <mort@cantab.net>
 #
@@ -69,3 +69,17 @@ def hermes_is_synced(folder):
     return folder not in [
         'Archive',
     ]
+
+if __name__ == '__main__':
+    SERVERS = {
+        "richard.mortier@gmail.com": "imap.gmail.com",
+        "mort@vipadia.com": "imap.gmail.com",
+        "mort.vipadia": "imap.gmail.com",
+        "richard_mortier@hotmail.com": "imap-mail.outlook.com",
+        "mort@live.co.uk": "imap-mail.outlook.com",
+        "mort@kvasira.com": "imap.gmail.com",
+        "rmm1002@imap.hermes.cam.ac.uk": None
+    }
+
+    for a, s in SERVERS.items():
+        print(f"ACCOUNT {a} SERVER {s} PASSWORD {get_keychain_pass(a, s)}")

@@ -12,6 +12,8 @@ karabiner/**
 
 local/dot-local
 
+offlineimap/__pycache__/
+
 pandoc/dot-pandoc/templates/auto
 pandoc/dot-pandoc/templates/default.latex
 
