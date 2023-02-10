@@ -59,7 +59,7 @@ gitlab () {
 }
 
 quoth () {
-  _kinit quoth.cl
+  _kinit $CUCL
   $SSH quoth.cl
 }
 

@@ -5,24 +5,14 @@ UseRoaming no
 
 ## cucl
 
-# Host armyofdockerness.cl
-#      User mort
-#      HostName %h.cam.ac.uk
-#      IdentityFile ~/.ssh/cucl-key
-#      ForwardX11 no
-#      ForwardAgent yes
-
-Host gitlab.srg.cl.cam.ac.uk
-     User git
-     IdentityFile ~/.ssh/cucl-key
-     ForwardX11 no
-     ForwardAgent no
-
 Host svr-rmm1002-git.cl
      Hostname svr-rmm1002-git.cl.cam.ac.uk
      IdentityFile ~/.ssh/gitlabrsync-key
      Port 2222
      ForwardAgent no
+
+Host papers.cl.cam.ac.uk
+     IdentityFile ~/.ssh/nottingham-key-rsa
 
 Host *.cl
      User rmm1002
@@ -44,67 +34,13 @@ Host gitlab.developers.cam.ac.uk
      User rmm1002
      IdentityFile ~/.ssh/bitbucket-key-rsa
 
-Host mirage-dev.packet
-     User root
-     IdentityFile ~/.ssh/github-key
-     HostName 147.75.204.215
-
 # Host tfc-app2.cl.cam.ac.uk
 #      User rita
 #      IdentityFile ~/.ssh/cucl-key
 #      ForwardX11 no
 #      ForwardAgent no
 
-# ## tunnels
-
-# Host irc-tunnel
-#      User mort
-#      HostName punk.recoil.org
-#      IdentityFile ~/.ssh/bitbucket-key
-#      LocalForward 7000 chat.freenode.net:7000
-
-# Host opw-tunnel
-#      User mort
-#      HostName punk.recoil.org
-#      IdentityFile ~/.ssh/bitbucket-key
-#      LocalForward 7070 irc.gnome.org:7000
-
-## ikva
-
-Host ikva
-     Hostname mort-vm.uksouth.cloudapp.azure.com
-     User azureuser
-     IdentityFile ~/ikva/keys/mort-ikva-ai.pem
-
-Host arxiv
-     Hostname 20.68.219.52
-     User azureuser
-
-Host gitlab.k
-     HostName gitlab.kvasira.com
-     Port 899
-
-Host ulv.k
-     ProxyJump gitlab.k
-     HostName 10.131.139.191
-
-Host u6l.k
-     ProxyJump gitlab.k
-     HostName 10.131.139.223
-
-Host u6u.k
-     ProxyJump gitlab.k
-     HostName 10.131.88.98
-
-Host *.k
-     User mort
-     IdentityFile ~/.ssh/packetnet-key
-
 ## other
-
-Host *.recoil.org
-     User mort
-     IdentityFile ~/.ssh/bitbucket-key
 
 Host github.com
      User git
@@ -120,10 +56,6 @@ Host git.alpinelinux.org
 Host gitlab.alpinelinux.org
      User git
      IdentityFile ~/.ssh/github-key
-
-Host *.lan
-     User mort
-     IdentityFile ~/.ssh/nottingham-key-rsa
 
 Host mediapc.lan
      User root
