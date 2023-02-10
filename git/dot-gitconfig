@@ -16,6 +16,8 @@
     lg = log --all --decorate=full --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ai (%ar)%Creset'
     llg = log --all --decorate --graph --stat
     log = log --color-words
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     patdiff = difftool -y -x patdiff
     pull-theirs = pull -s recursive -X theirs
     rems = "!f() { for r in $(git remote); do printf \"$r:\t $(git remote get-url $r)\n\" ; done; }; f"
@@ -31,8 +33,12 @@
     whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
 
 [color]
-    ui = true
+    branch = auto
+    diff = auto
     diff = true
+    interactive = auto
+    status = auto
+    ui = true
 
 [core]
     pager = less -+$LESS -FRXi
@@ -76,3 +82,5 @@
     autoStash = true
 [init]
 	defaultBranch = main
+[credential "https://github.com"]
+	helper = !/usr/local/bin/gh auth git-credential
