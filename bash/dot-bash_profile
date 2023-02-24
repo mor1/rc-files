@@ -18,6 +18,5 @@ if tty -s; then
     stty sane
     uname -a
     date
-    [ "$PLATFORM" = "Darwin" ] && complete -r make # hack
     echo
 fi

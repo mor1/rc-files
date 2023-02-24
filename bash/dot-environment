@@ -74,12 +74,11 @@ aenv MANPATH /usr/local/share/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
 
-unset PYTHONPATH
-aenv PYTHONPATH /usr/local/Cellar/pdm/1.13.4/libexec/lib/python3.10/site-packages/pdm/pep582
-
-enva PATH "/usr/local/opt/python@3.7/bin"
-aenv LDFLAGS "-L/usr/local/opt/python@3.7/lib"
-aenv PKG_CONFIG_PATH "/usr/local/opt/python@3.7/lib/pkgconfig"
+# unset PYTHONPATH
+# aenv PYTHONPATH /usr/local/Cellar/pdm/1.13.4/libexec/lib/python3.10/site-packages/pdm/pep582
+# enva PATH "/usr/local/opt/python@3.7/bin"
+# aenv LDFLAGS "-L/usr/local/opt/python@3.7/lib"
+# aenv PKG_CONFIG_PATH "/usr/local/opt/python@3.7/lib/pkgconfig"
 
 #
 # platform specific configuration
@@ -105,11 +104,6 @@ case $PLATFORM in
   Darwin )
     aenv PATH /usr/local/texlive/2022/bin/universal-darwin
     export EDITOR="emacsclient -s /tmp/emacs-$USER/server"
-
-    # ## homebrew completion -- TOO SLOW!
-    # if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    #   source $(brew --prefix)/etc/bash_completion
-    # fi
 
     ## GIT bash completion
     gitdir=$(dirname $(abspath $(which git)))
@@ -219,16 +213,4 @@ fi
 if [ -x "$(which direnv)" ]; then
   eval "$(direnv hook bash)"
   direnv reload
-fi
-
-# iKVA
-if [[ "$SHOST" = "greyjay" ]]; then
-
-  export IKVA_ROOT=~/ikva/src
-  cp $IKVA_ROOT/ikva-tools/ik ~/.local/bin
-
-  [[ -x "$(which k9s)" ]] && eval $(k9s completion bash)
-  # [[ -x "$(which kubectl)" ]] && { alias k=kubectl ; eval $(kubectl completion bash) ; complete -F start_kubectl k ;}
-  # [[ -x "$(which helm)" ]] && eval $(helm completion bash)
-  # [[ -x "$(which terraform)" ]] && complete -C /usr/local/bin/terraform terraform
 fi

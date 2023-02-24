@@ -66,11 +66,6 @@
     signingkey = 6D6612A7F8827E91
     name = Richard Mortier
     email = mort@cantab.net
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
 [sendemail]
     confirm = auto
     smtpserver = smtp.gmail.com
