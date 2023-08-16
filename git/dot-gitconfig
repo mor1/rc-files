@@ -42,7 +42,7 @@
 
 [core]
     pager = less -+$LESS -FRXi
-    autocrlf = input
+	autocrlf = input
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
 [rerere]
@@ -79,3 +79,5 @@
 	defaultBranch = main
 [credential "https://github.com"]
 	helper = !/usr/local/bin/gh auth git-credential
+[credential]
+	helper = store

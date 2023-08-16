@@ -1,130 +1,64 @@
 # -*- mode: sh -*-
 #
-# Copyright (C) 2000--2021 Richard Mortier <mort@cantab.net>.  All Rights
+# Copyright (C) 2000--2023 Richard Mortier <mort@cantab.net>. All Rights
 # Reserved.
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License version 2 as published by the Free
+# Software Foundation
 #
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-# USA.
-
-#
-# handy shell functions
-#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place - Suite 330, Boston, MA 02111-1307, USA.
 
 [ -r ~/rc-files/scripts/envfns.sh ] && source ~/rc-files/scripts/envfns.sh
-[ -r ~/rc-files/scripts/filefns.sh ] && source ~/rc-files/scripts/filefns.sh
-[ -r ~/rc-files/scripts/hosts.sh ] && source ~/rc-files/scripts/hosts.sh
-
-[ -r ~/src/dockerfiles/dockerfns.sh ] && source ~/src/dockerfiles/dockerfns.sh
-[ -r ~/src/sh-scripts/numfns.sh ] && source ~/src/sh-scripts/numfns.sh
-
-#
-# general
-#
-
-umask 0002
-
-shopt -s checkwinsize
-shopt -s extglob
-
-CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../../../../../..:../../../../../../../..:../../../../../../../../..:../../../../../../../../../..:$HOME
-KERNEL=$(uname -r)
-LHOST=$(uname -n)
-PLATFORM=$(uname -s)
-SHOST=${LHOST%%.*}
-export CDPATH KERNEL LHOST PLATFORM SHOST
-
-PAGER="less -FRXi"
-MANPAGER="$PAGER"
-export PAGER MANPAGER
-
-LC_ALL="en_GB.UTF-8"
-LANG="en_GB.UTF-8"
-LANGUAGE="en_GB.UTF-8"
-export LC_ALL LANG LANGUAGE
-
-LESSCHARSET=utf-8
-export LESSCHARSET
 
 #
 # paths
 #
 
 unset PATH
-aenv PATH /sbin
-aenv PATH /bin
-aenv PATH /usr/sbin
-aenv PATH /usr/bin
-aenv PATH /usr/X11R6/bin
-aenv PATH /usr/local/sbin
-aenv PATH /usr/local/bin
+if [ -r /etc/NIXOS ]; then
+  aenv PATH /run/current-system/sw/bin
+  aenv PATH /nix/var/nix/profiles/default/bin
+  aenv PATH /etc/profiles/per-user/mort/bin
+  aenv PATH /home/mort/.nix-profile/bin
+  aenv PATH /run/wrappers/bin
+else
+  aenv PATH /sbin
+  aenv PATH /bin
+  aenv PATH /usr/sbin
+  aenv PATH /usr/bin
+  aenv PATH /usr/X11R6/bin
+  aenv PATH /usr/local/sbin
+  aenv PATH /usr/local/bin
+fi
 
 unset MANPATH
 aenv MANPATH /usr/local/share/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
 
-# unset PYTHONPATH
-# aenv PYTHONPATH /usr/local/Cellar/pdm/1.13.4/libexec/lib/python3.10/site-packages/pdm/pep582
-# enva PATH "/usr/local/opt/python@3.7/bin"
-# aenv LDFLAGS "-L/usr/local/opt/python@3.7/lib"
-# aenv PKG_CONFIG_PATH "/usr/local/opt/python@3.7/lib/pkgconfig"
-
-#
-# platform specific configuration
-#
-
-case $PLATFORM in
-  Linux )
-    MAKE=make
-    export EDITOR=vi
-
-    for d in /etc/bash_completion /etc/bash_completion.d ; do
-      ## GIT bash completion
-      if [ -d $d ]; then
-        [ -r $d/git ] && source $d/git
-        [ -r $d/git-prompt ] && source $d/git-prompt
-      fi
-    done
-
-    ## debian has ancient git completion
-    [ -r ~/.git-prompt.sh ] && source ~/.git-prompt.sh
-    ;;
-
-  Darwin )
-    aenv PATH /usr/local/texlive/2022/bin/universal-darwin
-    export EDITOR="emacsclient -s /tmp/emacs-$USER/server"
-
-    ## GIT bash completion
-    gitdir=$(dirname $(abspath $(which git)))
-    source ${gitdir}/../etc/bash_completion.d/git-completion.bash
-    source ${gitdir}/../etc/bash_completion.d/git-prompt.sh
-
-    ## Android
-    export ANDROID_HOME=/usr/local/opt/android-sdk
-    ;;
-esac
-
-case ${LHOST#*.} in
-  cl.cam.ac.uk )
-    aenv PATH /usr/kerberos/bin
-esac
+aenv PATH    ~/.local/bin
+aenv MANPATH ~/.local/man
 
 #
 # bash settings
 #
 
-# history
+umask 0002
+shopt -s checkwinsize
+shopt -s extglob
+
+[ -r ~/.bash_aliases ] && source ~/.bash_aliases
+
+#
+# bash history
+#
 
 command_oriented_history=TRUE # multi-line commands become single line
 notify=TRUE # support notifications
@@ -148,10 +82,12 @@ history () {                    # ensure history synced before display
 }
 PROMPT_COMMAND=_bash_history_sync
 
-# prompt
+#
+# bash prompt
+#
 
-# so bash doesn't do variable expansion on (eg.) \w in PS1 -- consider
-# the case of a dir. called "`rm -rf ~`" ... :-> (ask Austin)
+# so bash doesn't do variable expansion on (eg.) \w in PS1 -- consider the case
+# of a dir. called "`rm -rf ~`" ... :-> (ask Austin)
 export NO_PROMPT_VARS
 set -o noclobber # require explicit overwrite when redirecting
 
@@ -173,7 +109,7 @@ ps1git() {
 
     * )
       PROMPT_COMMAND='__git_ps1 \
-          "\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
+          "\[\e]0;\u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
           "\[$COLOR_OFF\]\\$; " \
           "#%s "
           '
@@ -184,18 +120,106 @@ ps1git() {
 ps1nogit() {
   source ~/rc-files/scripts/colours.sh
   PROMPT_COMMAND=_bash_history_sync
-  PS1="\[\e]0;${KERNEL} \u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]\\$; "
+  PS1="\[\e]0;\u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]\\$; "
   export PS1
 }
 
-# simpler, happier times
-ps1nogit
+#
+# environment
+#
 
-## my PATHs mostly win
-aenv PATH    ~/.local/bin
-aenv MANPATH ~/.local/man
+CDPATH=.:..:../..:../../..:../../../..:../../../../..:../../../../../..:../../../../../../..:../../../../../../../..:../../../../../../../../..:../../../../../../../../../..:$HOME
+KERNEL=$(uname -r)
+LHOST=$(uname -n)
+PLATFORM=$(uname -s)
+SHOST=${LHOST%%.*}
+export CDPATH KERNEL LHOST PLATFORM SHOST
 
-[ -r ~/.bash_aliases ] && source ~/.bash_aliases
+PAGER="less -FRXi"
+MANPAGER="$PAGER"
+export PAGER MANPAGER
+
+LC_ALL="en_GB.UTF-8"
+LANG="en_GB.UTF-8"
+LANGUAGE="en_GB.UTF-8"
+export LC_ALL LANG LANGUAGE
+
+LESSCHARSET=utf-8
+export LESSCHARSET
+
+GPG_TTY=$(tty)
+export GPG_TTY
+
+#
+# platform specific configuration
+#
+
+case $PLATFORM in
+
+  Linux )
+
+    MAKE=make
+    export EDITOR=vi
+
+    if [ -r ~/.git-prompt.sh ]; then
+      source ~/.git-prompt.sh
+    elif [ -r /etc/NIXOS ]; then
+      gitdir=$(dirname $(readlink -f $(which git)))
+      source ${gitdir}/../share/git/contrib/completion/git-completion.bash
+      source ${gitdir}/../share/git/contrib/completion/git-prompt.sh
+    else
+      for d in /etc/bash_completion /etc/bash_completion.d ; do
+        ## GIT bash completion
+        if [ -d $d ]; then
+          [ -r $d/git ] && source $d/git
+          [ -r $d/git-prompt ] && source $d/git-prompt
+        fi
+      done
+    fi
+
+    ps1git
+    ;;
+
+  Darwin )
+
+    unset PYTHONPATH
+    aenv PYTHONPATH /usr/local/Cellar/pdm/1.13.4/libexec/lib/python3.10/site-packages/pdm/pep582
+    enva PATH "/usr/local/opt/python@3.7/bin"
+    aenv LDFLAGS "-L/usr/local/opt/python@3.7/lib"
+    aenv PKG_CONFIG_PATH "/usr/local/opt/python@3.7/lib/pkgconfig"
+
+    aenv PATH /usr/local/texlive/2022/bin/universal-darwin
+    export EDITOR="emacsclient -s /tmp/emacs-$USER/server"
+
+    ## GIT bash completion
+    gitdir=$(dirname $(abspath $(which git)))
+    source ${gitdir}/../etc/bash_completion.d/git-completion.bash
+    source ${gitdir}/../etc/bash_completion.d/git-prompt.sh
+
+    ## Android
+    export ANDROID_HOME=/usr/local/opt/android-sdk
+
+    ps1nogit
+    ;;
+esac
+
+#
+# host specific configuration
+#
+
+case ${LHOST#*.} in
+
+  cl.cam.ac.uk )
+    aenv PATH /usr/kerberos/bin
+    ;;
+
+esac
+
+## my shell functions
+[ -r ~/rc-files/scripts/filefns.sh ] && source ~/rc-files/scripts/filefns.sh
+[ -r ~/rc-files/scripts/hosts.sh ] && source ~/rc-files/scripts/hosts.sh
+[ -r ~/src/dockerfiles/dockerfns.sh ] && source ~/src/dockerfiles/dockerfns.sh
+[ -r ~/src/sh-scripts/numfns.sh ] && source ~/src/sh-scripts/numfns.sh
 
 ## OCaml
 if [ -x "$(which opam)" ]; then

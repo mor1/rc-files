@@ -366,5 +366,5 @@ function kvasira {
 # std od invocation
 #
 function xd() {
-  god -A x -t x1z "$@"
+  od -A x -t x1z "$@"
 }

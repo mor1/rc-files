@@ -4,36 +4,38 @@ case $(uname -s) in
     ;;
 
   Linux )
-    sudo apt install -yy curl stow
+    if [ ! -r /etc/NIXOS ]; then
+      sudo apt install -yy curl stow || true
+    fi
+
     ;;
 esac
 
+APPS="local ocaml pandoc python"
 stow --dotfiles \
      bash \
      emacs \
      git \
      indent \
      screen \
+     ssh \
      tmux \
      wget
 
 case $(uname -s) in
   Darwin ) ## likely to be my (new) laptop
-    stow --dotfiles \
-         karabiner \
-         local \
-         ocaml \
-         offlineimap \
-         pandoc \
-         python
-
+    stow --dotfiles $APPS
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.offlineimap.plist
     ;;
 
   Linux ) ## likely to be a random server
-    ## many linux distros appear to have old git-prompt.sh
-    GITHUB=https://raw.githubusercontent.com
-    curl $GITHUB/git/git/master/contrib/completion/git-prompt.sh \
-         -o ~/.git-prompt.sh
+    if [ -r /etc/NIXOS ]; then ## ...or a linux laptop?! :)
+      stow --dotfiles $APPS
+    else
+      ## many linux distros appear to have old git-prompt.sh
+      GITHUB=https://raw.githubusercontent.com
+      curl $GITHUB/git/git/master/contrib/completion/git-prompt.sh \
+           -o ~/.git-prompt.sh
+    fi
     ;;
 esac

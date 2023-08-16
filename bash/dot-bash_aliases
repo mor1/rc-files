@@ -1,19 +1,15 @@
-# if [[ -x "$(which gls)" ]]; then
-#   alias ls="\gls -FC --group-directories-first"
-# else
-#   alias ls="ls -FC --group-directories-first"
-# fi
 alias ls="ls -FC"
-
 alias ll="ls -l"
 alias lll="ls -lT"
 alias la="ls -A"
 alias lla="ls -lA"
 alias l="ls"
+
 alias f="find . \! -path \*/.git/\* -a -name"
 
 alias less="less -FRXi"
 alias m="less -E"
+
 alias bc="bc -l"
 alias df="git df --minimal --no-index --"
 
