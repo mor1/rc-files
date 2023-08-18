@@ -32,13 +32,14 @@ in {
         htop
         imagemagick
         jhead
+        nixos-option
         texlive.combined.scheme-full
         tree
         unzip
         wget
         which
       ];
-      dev_apps = [ emacs29 git gnumake jq nixfmt ripgrep ];
+      dev_apps = [ emacs29 fd git gnumake jq lapce nixfmt ripgrep ];
       fonts = [
         # (pkgs.nerdfonts.override { fonts = [
         #                              "hack"
@@ -54,7 +55,9 @@ in {
         brightnessctl
         gammastep
         gnome3.adwaita-icon-theme
+        grim
         pamixer
+        slurp
         swayosd
         wdisplays
         wev
