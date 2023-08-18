@@ -81,6 +81,8 @@ in {
 
     swaynag.enable = true;
 
+    wrapperFeatures.gtk = true;
+
     config = rec {
       modifier = "Mod4"; # use WIN not ALT-L for sway controls
       focus.wrapping = "force";
@@ -93,6 +95,7 @@ in {
         now = after 0;
 
         startup = pkgs.writeShellScriptBin "startup.sh" ''
+          # 2:mail
           ${now [
             "workspace --no-auto-back-and-forth 2:mail"
             "exec firefox -P richard.mortier@gmail.com"
@@ -101,6 +104,7 @@ in {
             "layout stacking"
           ]}
 
+          # 3:chat
           ${after 5 [
             "workspace --no-auto-back-and-forth 3:chat"
             "exec slack"
@@ -108,19 +112,37 @@ in {
           ${after 1 [ "splith" "exec signal-desktop" ]}
           ${after 3 [ "[class=Signal] focus" "splitv" "exec skypeforlinux" ]}
 
+          # 4:music
+          ${after 3 [
+            "workspace --no-auto-back-and-forth 4:media"
+            "exec strawberry"
+          ]}
+
+          # 1 (default)
           ${after 1 [
             "workspace --no-auto-back-and-forth 1"
             "exec emacs -f todo"
           ]}
           ${after 1 [ "splith" "exec foot" ]}
           ${after 1 [ "splitv" "exec firefox -P default" ]}
+
+          # reload config; sometimes the bar is confused...
+          ${after 2 [ "reload" ]}
         '';
       in [{ command = "${startup}/bin/startup.sh"; }];
 
       # all my keyboards are GB layout
-      input = { "*" = { xkb_layout = "gb"; }; };
+      input = {
+        "*" = {
+          xkb_layout = "gb";
+        };
+        "touchpad" = {
+          natural_scroll = "enabled";
+          tap = "enabled";
+        };
+      };
 
-      # additional keybindings
+      # additional keybindings; cannot simply remap input ev -> output ev
       keybindings = lib.mkOptionDefault {
         # F1
         "XF86AudioMute" = "exec swayosd --output-volume mute-toggle";
@@ -305,16 +327,22 @@ in {
               format = "{ $icon|} $text.pango-str()";
               json = true;
               interval = "once";
-              command = "swaymsg -q inhibit_idle none && printf '${
+              command = ''
+                swaymsg -q inhibit_idle none && printf '${
                   builtins.toJSON caffeine_off
-                }\n' ";
+                }
+                ' '';
               cycle = [
-                "swaymsg -q inhibit_idle none && printf '${
-                  builtins.toJSON caffeine_off
-                }\n' "
-                "swaymsg -q inhibit_idle visible && printf '${
-                  builtins.toJSON caffeine_on
-                }\n' "
+                ''
+                  swaymsg -q inhibit_idle none && printf '${
+                    builtins.toJSON caffeine_off
+                  }
+                  ' ''
+                ''
+                  swaymsg -q inhibit_idle visible && printf '${
+                    builtins.toJSON caffeine_on
+                  }
+                  ' ''
               ];
             }
             {
@@ -331,7 +359,8 @@ in {
           blocks = [
             {
               block = "net";
-              format = " $icon $device $ip $ipv6{ ($signal_strength $ssid)a|}";
+              format =
+                " $icon $device {$ip |NO IPv4 }{$ipv6 |NO IPv6 }{($signal_strength $ssid)|}";
             }
             {
               block = "external_ip";
