@@ -33,7 +33,7 @@ in {
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [ "memtest86-efi" ];
   security.polkit.enable = true;
-  environment.systemPackages = with pkgs; [ vim ];
+  environment.systemPackages = with pkgs; [ keyd restic vim ];
 
   # boot via UEFI
   boot = {
@@ -95,31 +95,26 @@ in {
 
   # system services
   services = {
-    interception-tools = {
-      # https://wiki.archlinux.org/title/Interception-tools
-      enable = true;
-      plugins = [ pkgs.interception-tools-plugins.caps2esc ];
-      udevmonConfig =
-        # https://github.com/NixOS/nixpkgs/issues/126681#issuecomment-860071968
-        # future? https://gitlab.com/interception/linux/plugins/dual-function-keys
-        let intercept = "${pkgs.interception-tools}/bin/intercept";
-        in let uinput = "${pkgs.interception-tools}/bin/uinput";
-        in let
-          caps2esc = "${pkgs.interception-tools-plugins.caps2esc}/bin/caps2esc";
-        in ''
-          - JOB: "${intercept} -g $DEVNODE | ${caps2esc} -m 1 -t 10000 | ${uinput} -d $DEVNODE"
-            DEVICE:
-              EVENTS:
-                EV_KEY: [ KEY_CAPSLOCK ]
-        '';
-    };
-
     # getty.autologinUser = "mort";
+
     automatic-timezoned.enable = true;
     dbus.packages = [ pkgs.networkmanager pkgs.strongswanNM ];
     geoclue2.enable = true;
     gnome.gnome-keyring.enable = true;
-    # onedrive.enable = true;
+
+    keyd = {
+      enable = true;
+      settings = {
+        main = {
+          # capslock -> (held) ctrl, (tap) ESC
+          capslock = "overload(control, esc)";
+        };
+        shift = {
+          grave = "G-4"; # S-` -> €
+        };
+      };
+    };
+
     printing.enable = true;
     strongswan-swanctl.enable = true;
   };
@@ -137,6 +132,57 @@ in {
     mort = {
       isNormalUser = true;
       extraGroups = [ "wheel" "video" ];
+    };
+
+  };
+
+  # restic backups not as root; https://nixos.wiki/wiki/Restic
+  # users.users.restic.isNormalUser = true;
+  # security.wrappers.restic = {
+  #   source = "${pkgs.restic.out}/bin/restic";
+  #   owner = "restic";
+  #   group = "users";
+  #   permissions = "u=rwx,g=,o=";
+  #   capabilities = "cap_dac_read_search=+ep";
+  # };
+
+  services.restic = {
+    backups = {
+#      package = pkgs.restic;
+#      package.CGO_ENABLED = 0;
+      full = {
+        initialize = true;
+        repository = "local:/mnt/backup-hdd";
+        # XXX can't by symlinked path
+        passwordFile = "/etc/secrets/restic-password";
+        user = "mort";
+
+        timerConfig = {
+          OnCalendar = "daily";
+          Persistent = true;
+        };
+
+        # backupPrepareCommand = ''
+        #   # remove stale locks
+        #   ${pkgs.restic}/bin/restic unlock || true
+        # '';
+
+        paths = [
+          "/home/mort"
+          "/var/lib"
+        ];
+
+        exclude = [
+          "/var/lib/systemd"
+          "/var/lib/containers"
+          "/var/lib/docker"
+          "/home/*/.local/share/Trash"
+          "/home/*/.cache"
+          "/home/*/Downloads"
+          "/home/*/.npm"
+          "/home/*/.local/share/containers"
+        ];
+      };
     };
   };
 
