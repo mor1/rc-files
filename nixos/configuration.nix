@@ -146,45 +146,46 @@ in {
   #   capabilities = "cap_dac_read_search=+ep";
   # };
 
-  services.restic = {
-    backups = {
-#      package = pkgs.restic;
-#      package.CGO_ENABLED = 0;
-      full = {
-        initialize = true;
-        repository = "local:/mnt/backup-hdd";
-        # XXX can't by symlinked path
-        passwordFile = "/etc/secrets/restic-password";
-        user = "mort";
+  # automount USB storage devices on plugin
+  services = {
+    udev.extraRules = ''
+      ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", \
+        ENV{ID_FS_USAGE}=="filesystem", \
+        RUN{program}+= "${pkgs.systemd}/bin/systemd-mount --no-block -AG $devnode"
+      '';
+    restic = {
+      backups = {
+        backup-home = {
+          initialize = true;
+          repository = "local:/run/media/system/backup-home";
+          passwordFile = "/etc/secrets/restic-password";
+          user = "mort";
 
-        timerConfig = {
-          OnCalendar = "daily";
-          Persistent = true;
+          timerConfig = {
+            OnCalendar = "hourly";
+            Persistent = true;
+          };
+
+          paths = [
+            "/home/mort"
+            "/var/lib/NetworkManager"
+          ];
+
+          exclude = [
+            "/home/*/.local/share/Trash"
+            "/home/*/.cache"
+            "/home/*/Downloads"
+            "/home/*/.npm"
+            "/home/*/.local/share/containers"
+            "/home/**/__pycache__"
+            "/home/**/target/"
+            "/home/**/node_modules/"
+            "/home/**/vendor/"
+            "/home/**/.venv/"
+          ];
         };
-
-        # backupPrepareCommand = ''
-        #   # remove stale locks
-        #   ${pkgs.restic}/bin/restic unlock || true
-        # '';
-
-        paths = [
-          "/home/mort"
-          "/var/lib"
-        ];
-
-        exclude = [
-          "/var/lib/systemd"
-          "/var/lib/containers"
-          "/var/lib/docker"
-          "/home/*/.local/share/Trash"
-          "/home/*/.cache"
-          "/home/*/Downloads"
-          "/home/*/.npm"
-          "/home/*/.local/share/containers"
-        ];
       };
     };
   };
-
   system.stateVersion = "23.05";
 }
