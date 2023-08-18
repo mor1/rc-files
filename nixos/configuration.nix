@@ -14,7 +14,7 @@ in {
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users.mort = import ../home-manager;
+    users.mort = import ./home-manager;
   };
 
   nix = {
