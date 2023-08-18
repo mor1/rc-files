@@ -93,8 +93,8 @@ in {
 
       # build the startup script to start apps in workspaces
       startup = let
-        sm = cmds: "swaymsg '${builtins.concatStringsSep ", " cmds}' ";
-        after = delay: cmds: "sleep ${toString delay} && ${sm cmds}";
+        msg = cmds: "swaymsg '${builtins.concatStringsSep ", " cmds}' ";
+        after = delay: cmds: "sleep ${toString delay} && ${msg cmds}";
         now = after 0;
 
         startup = pkgs.writeShellScriptBin "startup.sh" ''
@@ -136,9 +136,7 @@ in {
 
       # all my keyboards are GB layout
       input = {
-        "*" = {
-          xkb_layout = "gb";
-        };
+        "*" = { xkb_layout = "gb"; };
         "touchpad" = {
           natural_scroll = "enabled";
           tap = "enabled";
@@ -228,7 +226,7 @@ in {
       # screen saving and locking
       let
         lock = "${pkgs.swaylock}/bin/swaylock -C ~/.config/swaylock/config";
-        msg = "${pkgs.sway}/bin/swaymsg";
+        suspend = "systemctl suspend";
       in {
         enable = true;
         timeouts = [
@@ -238,7 +236,7 @@ in {
           }
           {
             timeout = 600;
-            command = ''${msg} "output * power off"'';
+            command = "${suspend}";
           }
         ];
         events = [
@@ -247,16 +245,8 @@ in {
             command = "${lock}";
           }
           {
-            event = "after-resume";
-            command = ''${msg} "output * power on"'';
-          }
-          {
             event = "lock";
             command = "${lock}";
-          }
-          {
-            event = "unlock";
-            command = ''${msg} "output * power on"'';
           }
         ];
       };

@@ -152,7 +152,7 @@ in {
       ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", \
         ENV{ID_FS_USAGE}=="filesystem", \
         RUN{program}+= "${pkgs.systemd}/bin/systemd-mount --no-block -AG $devnode"
-      '';
+    '';
     restic = {
       backups = {
         backup-home = {
@@ -166,10 +166,7 @@ in {
             Persistent = true;
           };
 
-          paths = [
-            "/home/mort"
-            "/var/lib/NetworkManager"
-          ];
+          paths = [ "/home/mort" "/var/lib/NetworkManager" ];
 
           exclude = [
             "/home/*/.local/share/Trash"
