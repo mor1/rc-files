@@ -9,6 +9,7 @@ in {
   # setup configuration, home-manager, flake
   imports = [
     ./hardware-configuration.nix
+    ./vpn
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -115,8 +116,8 @@ in {
       };
     };
 
+    podgrab.enable = true;
     printing.enable = true;
-    strongswan-swanctl.enable = true;
   };
 
   # system applications
