@@ -51,6 +51,7 @@ in {
         gammastep
         gnome3.adwaita-icon-theme
         grim
+        kanshi
         slurp
         swayosd
         wdisplays
@@ -227,20 +228,28 @@ in {
     kanshi = {
       # autodetect and arrange external monitors
       enable = true;
-      profiles = {
-        undocked = { outputs = [{ criteria = "eDP-1"; }]; };
+      profiles = let
+        laptop = "eDP-1";
+        hdmi = "HDMI-A-1";
+        move_ws = w: o: ''
+          ${pkgs.sway}/bin/swaymsg workspace {w}, move workspace to output ${o}
+        '';
+      in {
+        undocked = { outputs = [{ criteria = "${laptop}"; }]; };
         docked = {
           outputs = [
             {
-              criteria = "eDP-1";
-              position = "0,1920";
+              criteria = "${laptop}"; # 3840x2400
+              position = "0,1662";    # below ${hdmi} => y = 2160 / 1.3
+              scale = 2.0;
             }
             {
-              criteria = "HDMP-A-1";
-              position = "640,0";
-              scale = 1.2;
+              criteria = "${hdmi}"; # 3840x2160
+              position = "832,0";   # offset-right 1/3 laptop => 3840/2*1.3 / 3
+              scale = 1.3;
             }
           ];
+          exec = [ "${move_ws 1 hdmi}" "${move_ws "3:chat" hdmi}" ];
         };
       };
     };
