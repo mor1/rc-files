@@ -91,7 +91,14 @@ in {
         after = delay: cmds: "sleep ${toString delay} && ${msg cmds}";
         now = after 0;
 
+        #  # name the displays
+        # set $laptop eDP-1
+        # set $hdmi HDMI-A-1
+
+        # # arrange displays: laptop at bottom, offset left of HDMI
+        # ${msg [ "output $laptop pos 0 2160" "output $hdmi pos 640 0" ]}
         startup = pkgs.writeShellScriptBin "startup.sh" ''
+
           # 2:mail
           ${now [
             "workspace --no-auto-back-and-forth 2:mail"
@@ -109,15 +116,16 @@ in {
           ${after 1 [ "splith" "exec signal-desktop" ]}
           ${after 3 [ "[class=Signal] focus" "splitv" "exec skypeforlinux" ]}
 
-          # 4:music
+          # 4:media
           ${after 3 [
             "workspace --no-auto-back-and-forth 4:media"
-            "exec strawberry"
+            "exec quodlibet"
+            # "exec firefox -P default --new-window http://localhost:8080/"
           ]}
 
           # 1 (default)
           ${after 1 [
-            "workspace --no-auto-back-and-forth 1"
+            "workspace --no-auto-back-and-forth 1" # output $hdmi $laptop"
             "exec emacs -f todo"
           ]}
           ${after 1 [ "splith" "exec foot" ]}
@@ -214,6 +222,27 @@ in {
 
       defaultCacheTtl = 2592000;
       maxCacheTtl = 2592000;
+    };
+
+    kanshi = {
+      # autodetect and arrange external monitors
+      enable = true;
+      profiles = {
+        undocked = { outputs = [{ criteria = "eDP-1"; }]; };
+        docked = {
+          outputs = [
+            {
+              criteria = "eDP-1";
+              position = "0,1920";
+            }
+            {
+              criteria = "HDMP-A-1";
+              position = "640,0";
+              scale = 1.2;
+            }
+          ];
+        };
+      };
     };
 
     swayidle =
