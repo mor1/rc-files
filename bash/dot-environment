@@ -225,7 +225,6 @@ esac
 if [ -x "$(which opam)" ]; then
   [[ -r ~/.opam/opam-init/init.sh ]] && . ~/.opam/opam-init/init.sh
   export OCAMLRUNPARAM=b
-  aenv MANPATH $(opam var man)
 fi
 
 ## Rust

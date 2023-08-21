@@ -20,6 +20,7 @@ in {
       system_apps = [
         (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
         coreutils
+        davmail
         direnv
         gnupg
         maestral
@@ -31,7 +32,9 @@ in {
         file
         htop
         imagemagick
+        inetutils
         jhead
+        mc
         nixos-option
         texlive.combined.scheme-full
         tree
@@ -39,43 +42,34 @@ in {
         wget
         which
       ];
-      dev_apps = [ emacs29 fd git gnumake jq lapce nixfmt ripgrep ];
-      fonts = [
-        # (pkgs.nerdfonts.override { fonts = [
-        #                              "hack"
-        #                              "material-design-icons"
-        #                              "font-awesome.v5"
-        #                            ]; })
-        font-awesome_4
-        hack-font
-        material-design-icons
-        powerline-fonts
-      ];
+      dev_apps =
+        [ emacs29 fd git gnumake jq lapce nixfmt ocaml opam ripgrep rustup ];
+      fonts =
+        [ font-awesome_4 hack-font material-design-icons powerline-fonts ];
       sway_apps = [
         brightnessctl
         gammastep
         gnome3.adwaita-icon-theme
         grim
-        pamixer
         slurp
         swayosd
         wdisplays
         wev
       ];
       gui_apps = [
-        davmail
         firefox
         libreoffice
         signal-desktop
         skypeforlinux
         slack
-        strawberry
         thunderbird
         vocal
         wire-desktop
       ];
+      media_apps = [ greg quodlibet-full vlc ];
       # brave evolution evolution-ews mailspring
-    in system_apps ++ cli_apps ++ dev_apps ++ fonts ++ sway_apps ++ gui_apps;
+    in system_apps ++ cli_apps ++ dev_apps ++ fonts ++ sway_apps ++ gui_apps
+    ++ media_apps;
 
   fonts.fontconfig.enable = true;
 
@@ -254,6 +248,7 @@ in {
   };
 
   programs = {
+
     direnv = {
       # per-directory env configuration
       enable = true;
