@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Copyright (C) 2017-2019 Richard Mortier <mort@cantab.net>
 #
@@ -6,15 +6,22 @@
 # bash `/dev/tcp` magic to setup a transparent tunnel. Could probably do this
 # with `netcat` too if you wanted.
 
+# old linux:
 # ifconfig | grep -E '^([[:alnum:]]*:.*$|[[:space:]]+(inet |inet6 ))' \
 # | cut -d " " -f 1-2
 
-# heaven only knows why sometimes we get en6 as the wired interface
-for i in $(seq 1 6); do
-  IP=$(ipconfig getifaddr en$i)
-  if [[ "$IP" == 128.232.* ]]; then
+# macos: heaven only knows why sometimes we get en6 as the wired interface
+# for i in $(seq 1 6); do
+#   IP=$(ipconfig getifaddr en$i)
+#   if [[ "$IP" == 128.232.* ]]; then
+#     exec 3<>/dev/tcp/$1/$2 ; cat <&3 & cat >&3 ; kill $!
+#   fi
+# done
+
+while read IP; do
+  if [[ $IP =~ ^128.232. ]]; then
     exec 3<>/dev/tcp/$1/$2 ; cat <&3 & cat >&3 ; kill $!
   fi
-done
+done < <(ip -j -4 a | jq '.[].addr_info | .[].local')
 
 ssh -AKqW $1:$2 rmm1002@ely.cl.cam.ac.uk

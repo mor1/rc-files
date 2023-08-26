@@ -1,12 +1,11 @@
-PATH=/bin:/sbin/:/usr/bin:/usr/sbin
-
 [ -r ~/.environment ] && source ~/.environment
 
-stty sane
 uname -a
 date
 echo
 
-if [[ $(tty) == "/dev/tty1" ]]; then
+if [[ $(tty) == /dev/tty1 ]]; then
+  keychain --clear
+  keychain bitbucket-key-rsa github-key cucl-key
   exec sway
 fi
