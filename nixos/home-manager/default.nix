@@ -13,7 +13,12 @@ in {
   programs.home-manager.enable = true;
 
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "slack" "skypeforlinux" ];
+    builtins.elem (lib.getName pkg) [
+      "slack"
+      "skypeforlinux"
+      "teams"
+      "zoom" # zoom here but zoom-us for install?!
+    ];
 
   home.packages = with pkgs;
     let
@@ -23,17 +28,23 @@ in {
         davmail
         direnv
         gnupg
+        keybase
         maestral
+        onedrive
         stow
         strongswan
       ];
       cli_apps = [
         bc
+        dua
         file
+        get_iplayer
         htop
         imagemagick
         inetutils
         jhead
+        keychain
+        lynx
         mc
         nixos-option
         texlive.combined.scheme-full
@@ -42,8 +53,23 @@ in {
         wget
         which
       ];
-      dev_apps =
-        [ emacs29 fd git gnumake jq lapce nixfmt ocaml opam ripgrep rustup ];
+      dev_apps = [
+        emacs29
+        fd
+        gh
+        git
+        git-filter-repo
+        git-lfs
+        gnumake
+        jq
+        nixfmt
+        ocaml
+        opam
+        python311
+        python311Packages.pip
+        ripgrep
+        rustup
+      ];
       fonts =
         [ font-awesome_4 hack-font material-design-icons powerline-fonts ];
       sway_apps = [
@@ -58,16 +84,22 @@ in {
         wev
       ];
       gui_apps = [
+        chromium
+        doublecmd
         firefox
+        keybase-gui
         libreoffice
         signal-desktop
         skypeforlinux
         slack
+        teams # deprecated end 2022?
+        teams-for-linux
         thunderbird
         vocal
         wire-desktop
+        zoom-us
       ];
-      media_apps = [ greg quodlibet-full vlc ];
+      media_apps = [ greg rhythmbox vlc ];
       # brave evolution evolution-ews mailspring
     in system_apps ++ cli_apps ++ dev_apps ++ fonts ++ sway_apps ++ gui_apps
     ++ media_apps;
@@ -124,6 +156,14 @@ in {
             # "exec firefox -P default --new-window http://localhost:8080/"
           ]}
 
+          # 5:conf
+          ${after 3 [
+            "workspace --no-auto-back-and-forth 5:conf"
+            "exec zoom-us"
+            "exec teams-for-linux"
+            "layout stacking"
+          ]}
+
           # 1 (default)
           ${after 1 [
             "workspace --no-auto-back-and-forth 1" # output $hdmi $laptop"
@@ -143,11 +183,14 @@ in {
         "touchpad" = {
           natural_scroll = "enabled";
           tap = "enabled";
+          tap_button_map = "lmr";
         };
+        "pointer" = { accel_profile = "adaptive"; };
       };
 
       # additional keybindings; cannot simply remap input ev -> output ev
       keybindings = lib.mkOptionDefault {
+        ## thinkpad keyboard
         # F1
         "XF86AudioMute" = "exec swayosd --output-volume mute-toggle";
         # F2
@@ -166,10 +209,44 @@ in {
 
         # F7  XF86Display
         # F8  XF86WLAN
-        # F9  XF86Messenger
-        # F10 XF86Go
-        # F11 Cancel
-        # F12 XF86Favorites
+
+        # F9  XF86Messenger => media:pause|play
+        "XF86Messenger" = "exec rhythmbox-client --play-pause";
+        # F10 XF86Go => skip
+        "XF86Go" = "exec rhythmbox-client --stop";
+        # F11 Cancel => media:prev
+        "Cancel" = "exec rhythmbox-client --previous";
+        # F12 XF86Favorites => media:next
+        "XF86Favorites" = "exec rhythmbox-client --next";
+
+        ## MSFT keyboard
+        # F1
+        "Help" = "exec swayosd --output-volume mute-toggle";
+        # F2
+        "Undo" = "exec  swayosd --output-volume lower";
+        # F3
+        "Redo" = "exec swayosd --output-volume raise";
+        # # F4
+        # "XF86New" = ''exec swayosd --input-volume mute-toggle''; # XXX broken
+
+        # F5
+        "XF86Open" =
+          "exec brightnessctl s 10%-"; # swayosd --brightness lower''; # XXX broken
+        # F6
+        "XF86Close" =
+          "exec brightnessctl s 10%+"; # swayosd --brightness raise''; # XXX broken
+
+        # F7  XF86Reply
+        # F8  XF86MailForward
+
+        # F9  XF86Send => media:pause|play
+        "XF86Send" = "exec rhythmbox-client --play-pause";
+        # F10 !!! XXX NO SCAN CODE
+        # F11 XF86Save => media:prev
+        "XF86Save" = "exec rhythmbox-client --previous";
+        # F12 Print => media:next
+        "Print" = "exec rhythmbox-client --next";
+
       };
 
       # status bars using i3status-rust
@@ -193,17 +270,13 @@ in {
   };
 
   services = {
-    #   swayosd = {
-    #     enable = true;
-    #     maxVolume = 120;
-    #   };
 
     emacs = {
       # until the addiction is kicked
       package = pkgs.emacs29;
       enable = true;
-      client.enable = true;
-      defaultEditor = true;
+      # client.enable = true;
+      # defaultEditor = true;
     };
 
     gammastep = {
@@ -232,7 +305,7 @@ in {
         laptop = "eDP-1";
         hdmi = "HDMI-A-1";
         move_ws = w: o: ''
-          ${pkgs.sway}/bin/swaymsg workspace {w}, move workspace to output ${o}
+          ${pkgs.sway}/bin/swaymsg workspace --no-auto-back-and-forth {w}, move workspace to output ${o}
         '';
       in {
         undocked = { outputs = [{ criteria = "${laptop}"; }]; };
@@ -240,19 +313,21 @@ in {
           outputs = [
             {
               criteria = "${laptop}"; # 3840x2400
-              position = "0,1662";    # below ${hdmi} => y = 2160 / 1.3
+              position = "0,1662"; # below ${hdmi} => y = 2160 / 1.3
               scale = 2.0;
             }
             {
               criteria = "${hdmi}"; # 3840x2160
-              position = "832,0";   # offset-right 1/3 laptop => 3840/2*1.3 / 3
-              scale = 1.3;
+              position = "1920,0"; # offset-right 1/3 laptop => 3840/2*1.3 / 3
+              scale = 1.0;
             }
           ];
           exec = [ "${move_ws 1 hdmi}" "${move_ws "3:chat" hdmi}" ];
         };
       };
     };
+
+    keybase.enable = true;
 
     swayidle =
       # screen saving and locking
@@ -283,9 +358,19 @@ in {
         ];
       };
 
+    # swayosd = {
+    #   enable = true;
+    #   maxVolume = 120;
+    # };
   };
 
   programs = {
+
+    bash = {
+      # obviously
+      enable = false;
+      enableCompletion = false;
+    };
 
     direnv = {
       # per-directory env configuration
@@ -293,6 +378,8 @@ in {
       enableBashIntegration = true;
       nix-direnv = { enable = true; };
     };
+
+    chromium = { enable = true; };
 
     firefox = {
       # everybody needs a web browser these days
@@ -304,7 +391,10 @@ in {
       # ];
     };
 
-    git.enable = true; # obviously
+    git = {
+      # obviously
+      enable = true;
+    };
 
     i3status-rust = {
       # providing information for status bars
@@ -418,10 +508,15 @@ in {
       };
     };
 
+    keychain = {
+      enable = true;
+      agents = [ "gpg" "ssh" ];
+    };
+
     opam = {
       # OCaml support
-      enable = true;
-      enableBashIntegration = true;
+      enable = false;
+      enableBashIntegration = false;
     };
 
     swaylock = {
