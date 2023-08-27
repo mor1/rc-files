@@ -9,7 +9,8 @@ in {
   # setup configuration, home-manager, flake
   imports = [
     ./hardware-configuration.nix
-    ./vpn
+    ./cambridge-vpn
+    ./iphone
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -34,7 +35,14 @@ in {
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [ "memtest86-efi" ];
   security.polkit.enable = true;
-  environment.systemPackages = with pkgs; [ keyd restic vim ];
+  environment.systemPackages = with pkgs; [
+    git # obviously
+    ifuse # ios optional; to mount using 'ifuse'
+    keyd # key remappings
+    libimobiledevice # ios
+    restic # backups
+    vim # i just don't like nano, ok?
+  ];
 
   # boot via UEFI
   boot = {
@@ -116,7 +124,9 @@ in {
       };
     };
 
-    podgrab.enable = true;
+    onedrive.enable = true;
+
+    # podgrab.enable = true;
     printing.enable = true;
   };
 
@@ -132,7 +142,7 @@ in {
 
     mort = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "video" ];
+      extraGroups = [ "docker" "video" "wheel" ];
     };
 
   };
@@ -157,7 +167,7 @@ in {
     restic = {
       backups = {
         backup-home = {
-          initialize = true;
+          initialize = false;
           repository = "local:/run/media/system/backup-home";
           passwordFile = "/etc/secrets/restic-password";
           user = "mort";
@@ -167,23 +177,99 @@ in {
             Persistent = true;
           };
 
-          paths = [ "/home/mort" "/var/lib/NetworkManager" ];
+          paths = [ "/home/mort" "/var/lib/NetworkManager" "/etc/secrets" ];
 
           exclude = [
-            "/home/*/.local/share/Trash"
-            "/home/*/.cache"
-            "/home/*/Downloads"
-            "/home/*/.npm"
-            "/home/*/.local/share/containers"
-            "/home/**/__pycache__"
-            "/home/**/target/"
-            "/home/**/node_modules/"
-            "/home/**/vendor/"
             "/home/**/.venv/"
+            "/home/**/__pycache__"
+            "/home/**/node_modules/"
+            "/home/**/target/"
+            "/home/**/vendor/"
+            "/home/*/.cache"
+            "/home/*/.local/share/Trash"
+            "/home/*/.local/share/containers"
+            "/home/*/.npm"
+            "/home/*/Downloads"
+            "/home/mort/Dropbox (Maestral)/"
+            "/home/mort/OneDrive/"
+            "/home/mort/l/"
+          ];
+        };
+
+        backup-christs = {
+          initialize = false;
+          repository = "local:/run/media/system/backup-christs";
+          passwordFile = "/etc/secrets/restic-password-backup-christs";
+          user = "mort";
+
+          timerConfig = {
+            OnCalendar = "hourly";
+            Persistent = true;
+          };
+
+          paths = [ "/home/mort" "/var/lib/NetworkManager" "/etc/secrets" ];
+
+          exclude = [
+            "/home/**/.venv/"
+            "/home/**/__pycache__"
+            "/home/**/node_modules/"
+            "/home/**/target/"
+            "/home/**/vendor/"
+            "/home/*/.cache"
+            "/home/*/.local/share/Trash"
+            "/home/*/.local/share/containers"
+            "/home/*/.npm"
+            "/home/*/Downloads"
+            "/home/mort/Dropbox (Maestral)/"
+            "/home/mort/OneDrive/"
+            "/home/mort/l/"
+          ];
+        };
+
+        backup-wgb = {
+          initialize = false;
+          repository = "local:/run/media/system/backup-wgb";
+          passwordFile = "/etc/secrets/restic-password-backup-wgb";
+          user = "mort";
+
+          timerConfig = {
+            OnCalendar = "hourly";
+            Persistent = true;
+          };
+
+          paths = [ "/home/mort" "/var/lib/NetworkManager" "/etc/secrets" ];
+
+          exclude = [
+            "/home/**/.venv/"
+            "/home/**/__pycache__"
+            "/home/**/node_modules/"
+            "/home/**/target/"
+            "/home/**/vendor/"
+            "/home/*/.cache"
+            "/home/*/.local/share/Trash"
+            "/home/*/.local/share/containers"
+            "/home/*/.npm"
+            "/home/*/Downloads"
+            "/home/mort/Dropbox (Maestral)/"
+            "/home/mort/OneDrive/"
+            "/home/mort/l/"
           ];
         };
       };
     };
   };
+
+  # docker
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = false;
+  };
+
+  # iphone/ipad
+  services.usbmuxd = {
+    enable = true;
+    # package = pkgs.usbmuxd2;
+  };
+
   system.stateVersion = "23.05";
 }
