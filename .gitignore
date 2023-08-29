@@ -2,8 +2,6 @@
 *~
 \#*#
 
-bash/.config
-
 emacs/dot-emacs.d/**
 !emacs/dot-emacs.d/README.md
 

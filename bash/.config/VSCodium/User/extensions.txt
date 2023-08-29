@@ -1,0 +1,8 @@
+arrterian.nix-env-selector
+betterthantomorrow.calva
+jnoortheen.nix-ide
+ms-pyright.pyright
+ms-python.python
+ocamllabs.ocaml-platform
+tuttieee.emacs-mcx
+vscode-org-mode.org-mode

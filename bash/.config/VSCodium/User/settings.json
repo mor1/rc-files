@@ -1,0 +1,18 @@
+{
+    "workbench.colorTheme": "Solarized Dark",
+    "editor.fontSize": 11,
+    "files.autoSave": "afterDelay",
+    "editor.wordWrap": "bounded",
+    "editor.fontFamily": "Hack, 'Droid Sans Mono', 'monospace', monospace",
+    "terminal.integrated.fontSize": 11,
+    "interactiveSession.editor.fontSize": 11,
+    "explorer.confirmDelete": false,
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "git.confirmSync": false,
+    "nix.enableLanguageServer": true,
+    "nix.serverPath": "nil",
+    "nix.serverSettings": {
+        
+    },
+    "editor.renderWhitespace": "all"
+}

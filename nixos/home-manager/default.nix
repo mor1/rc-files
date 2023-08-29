@@ -39,6 +39,7 @@ in {
         dua
         file
         get_iplayer
+        handlr
         htop
         imagemagick
         inetutils
@@ -62,16 +63,25 @@ in {
         git-lfs
         gnumake
         jq
+        nil
         nixfmt
-        ocaml
-        opam
         python311
         python311Packages.pip
         ripgrep
         rustup
+        vscodium
       ];
       fonts =
         [ font-awesome_4 hack-font material-design-icons powerline-fonts ];
+      ocaml_apps = [ gcc ocaml dune_3 ocamlformat opam ]
+        ++ (with ocamlPackages; [
+          cmdliner
+          findlib
+          merlin
+          ocaml-lsp
+          ocp-indent
+          utop
+        ]);
       sway_apps = [
         brightnessctl
         gammastep
@@ -101,7 +111,7 @@ in {
       media_apps = [ greg rhythmbox vlc ];
       # brave evolution evolution-ews mailspring
     in system_apps ++ cli_apps ++ dev_apps ++ fonts ++ sway_apps ++ gui_apps
-    ++ media_apps;
+    ++ media_apps ++ ocaml_apps;
 
   fonts.fontconfig.enable = true;
 
@@ -513,8 +523,8 @@ in {
 
     opam = {
       # OCaml support
-      enable = false;
-      enableBashIntegration = false;
+      enable = true;
+      enableBashIntegration = true;
     };
 
     swaylock = {
@@ -526,6 +536,95 @@ in {
         ignore-empty-password = true;
         image = "${background}";
       };
+    };
+
+    vscode = {
+      enable = true;
+
+      package = pkgs.vscodium;
+      # package = pkgs.vscodium.fhsWithPackages (ps: with ps; [ rustup zlib ]);
+
+      extensions = with pkgs.vscode-extensions; [
+        ms-python.python
+        ms-pyright.pyright
+        ocamllabs.ocaml-platform
+        betterthantomorrow.calva
+        # rust-lang.rust-analyzer
+        # tutieee.emacs-mcx
+        # vscode-org-mode.org-mode
+        # jnoortheen.nix-ide
+      ];
+
+      keybindings = [
+        # (bind-keys*
+        #   ("%"          . match-paren)
+        #   ("C-<return>" . split-line)
+        #   ("C-<tab>"    . dabbrev-expand)
+        #   ("C-x C-d"    . insert-current-date)
+
+        #   ("M-%"        . replace-regexp)
+
+        #   ("M-n"        . next-buffer)
+        #   ("M-p"        . previous-buffer)
+        #   ("M-q"        . unfill-toggle)
+
+        #   ;; | point-to  | previous   | next        |
+        #   ;; |-----------+------------+-------------|
+        #   ;; | char      | <left>     | <right>     |
+        #   ;; | word      | C/M-<left> | C/M-<right> |
+        #   ;; | line      | <up>       | <down>      |
+        #   ;; | paragraph | C-<up>     | C-<down>    |
+
+        #   ;; | point-to | start  | end      |
+        #   ;; |----------+--------+----------|
+        #   ;; | line     | C-a    | C-e      |
+        #   ;; | sentence | M-a    | M-e      |
+        #   ;; | screen   | M-<up> | M-<down> |
+        #   ;; | file     | M-\<   | M-\>     |
+
+        #   ;; | window-to | key        |
+        #   ;; |-----------+------------|
+        #   ;; | top       | C-M-<down> |
+        #   ;; | bottom    | C-M-<up>   |
+
+        #   ;; | centre-current |     |
+        #   ;; |----------------+-----|
+        #   ;; | point          | M-r |
+        #   ;; | window         | C-l |
+
+        #   ;; for poxy macbook keyboard with only the arrow keys
+        #   ("C-<up>"     . backward-paragraph)
+        #   ("C-<down>"   . forward-paragraph)
+        #   ("M-<up>"     . warp-to-top-of-window)
+        #   ("M-<down>"   . warp-to-bottom-of-window)
+        #   ("C-M-<down>" . line-to-top-of-window)
+        #   ("C-M-<up>"   . line-to-bottom-of-window)
+
+        #   ;; for a sensible pc keyboard with pgup|pgdn|home|end
+        #   ("C-<prior>" . warp-to-top-of-window)
+        #   ("C-<next>"  . warp-to-bottom-of-window)
+        #   ("C-<home>"  . line-to-top-of-window)
+        #   ("C-<end>"   . line-to-bottom-of-window)
+        #   ("<home>"    . beginning-of-buffer)    ; M-<
+        #   ("<end>"     . end-of-buffer)          ; M->
+        #   )
+
+        {
+          key = "ctrl+;";
+          command = "editor.action.addCommentLine";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+u ctrl+;";
+          command = "editor.action.removeCommentLine";
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+c ctrl+space";
+          command = "editor.action.trimTrailingWhitespace";
+          when = "textInputFocus";
+        }
+      ];
     };
   };
 
