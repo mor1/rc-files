@@ -179,9 +179,7 @@ letter2pdf () {
 
 e () {
   SERVER_SOCK=/tmp/emacs-$USER/server
-  [ -S $SERVER_SOCK ] && \
-    emacsclient -n -s $SERVER_SOCK "$@" || \
-      { /Applications/Emacs.app/Contents/MacOS/Emacs "$@" & }
+  [ -S $SERVER_SOCK ] && emacsclient -n -r -s $SERVER_SOCK "$@"
 }
 
 function emacspkg-update {

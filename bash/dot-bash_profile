@@ -5,7 +5,8 @@ date
 echo
 
 if [[ $(tty) == /dev/tty1 ]]; then
+  gpg --import F8827E91.asc
   keychain --clear
-  keychain bitbucket-key-rsa github-key cucl-key
+  eval $(keychain --eval --agents gpg,ssh bitbucket-key-rsa github-key cucl-key)
   exec sway
 fi

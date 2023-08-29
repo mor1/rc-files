@@ -165,7 +165,6 @@ case $PLATFORM in
       source ~/.git-prompt.sh
     elif [ -r /etc/NIXOS ]; then
       gitdir=$(dirname $(readlink -f $(which git)))
-      source ${gitdir}/../share/git/contrib/completion/git-completion.bash
       source ${gitdir}/../share/git/contrib/completion/git-prompt.sh
     else
       for d in /etc/bash_completion /etc/bash_completion.d ; do
@@ -235,5 +234,5 @@ fi
 # direnv
 if [ -x "$(which direnv)" ]; then
   eval "$(direnv hook bash)"
-  direnv reload
+  direnv reload || true
 fi
