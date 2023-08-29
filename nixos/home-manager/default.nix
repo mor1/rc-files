@@ -22,7 +22,7 @@ in {
 
   home.packages = with pkgs;
     let
-      system_apps = [
+      system = [
         (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
         coreutils
         davmail
@@ -34,27 +34,73 @@ in {
         stow
         strongswan
       ];
-      cli_apps = [
-        bc
-        dua
-        file
-        get_iplayer
-        handlr
-        htop
-        imagemagick
-        inetutils
-        jhead
-        keychain
-        lynx
-        mc
-        nixos-option
-        texlive.combined.scheme-full
-        tree
-        unzip
-        wget
-        which
-      ];
-      dev_apps = [
+
+      apps = (let
+        sway_apps = [
+          brightnessctl
+          gammastep
+          gnome3.adwaita-icon-theme
+          grim
+          kanshi
+          slurp
+          swayosd
+          wdisplays
+          wev
+          wl-clipboard
+        ];
+        cli_apps = [
+          bc # calculator
+          dua # disk usage, interactively
+          file # identify filetype by magic
+          get_iplayer # download from iPlayer
+          handlr # manage XDG Open mappings
+          htop # graphical top
+          imagemagick # image manipulation tools
+          inetutils
+          jhead # jpeg exif header manipulation tool
+          joshuto # file manager
+          keychain # cli to manage SSH, GPG keys
+          lynx # cli web browser
+          texlive.combined.scheme-full # latex installation
+          tree # tree-format recursive ls
+          unzip
+          wget # network downloadre
+          which # locate command in $PATH
+        ];
+        gui_apps = [
+          chromium
+          firefox
+          keybase-gui
+          libreoffice
+          okular
+          signal-desktop
+          skypeforlinux
+          slack
+          teams-for-linux
+          thunderbird
+          vocal
+          wire-desktop
+          zoom-us
+        ];
+        media_apps = [ greg rhythmbox vlc ];
+      in sway_apps ++ cli_apps ++ gui_apps ++ media_apps);
+
+      fonts =
+        [ font-awesome_4 hack-font material-design-icons powerline-fonts ];
+
+      dev_tools = (let
+        python_tools = [ python311 ]
+          ++ (with python311Packages; [ autopep8 pip ]);
+        ocaml_tools = [ gcc ocaml dune_3 ocamlformat opam ]
+          ++ (with ocamlPackages; [
+            cmdliner
+            findlib
+            merlin
+            ocaml-lsp
+            ocp-indent
+            utop
+          ]);
+      in [
         emacs29
         fd
         gh
@@ -65,53 +111,13 @@ in {
         jq
         nil
         nixfmt
-        python311
-        python311Packages.pip
         ripgrep
         rustup
         vscodium
-      ];
-      fonts =
-        [ font-awesome_4 hack-font material-design-icons powerline-fonts ];
-      ocaml_apps = [ gcc ocaml dune_3 ocamlformat opam ]
-        ++ (with ocamlPackages; [
-          cmdliner
-          findlib
-          merlin
-          ocaml-lsp
-          ocp-indent
-          utop
-        ]);
-      sway_apps = [
-        brightnessctl
-        gammastep
-        gnome3.adwaita-icon-theme
-        grim
-        kanshi
-        slurp
-        swayosd
-        wdisplays
-        wev
-      ];
-      gui_apps = [
-        chromium
-        firefox
-        keybase-gui
-        libreoffice
-        okular
-        signal-desktop
-        skypeforlinux
-        slack
-        teams-for-linux
-        thunderbird
-        vocal
-        wire-desktop
-        zoom-us
-      ];
-      media_apps = [ greg rhythmbox vlc ];
+      ] ++ python_tools ++ ocaml_tools);
+
       # brave evolution evolution-ews mailspring
-    in system_apps ++ cli_apps ++ dev_apps ++ fonts ++ sway_apps ++ gui_apps
-    ++ media_apps ++ ocaml_apps;
+    in system ++ apps ++ dev_tools ++ fonts;
 
   fonts.fontconfig.enable = true;
 
@@ -162,14 +168,6 @@ in {
           ${after 3 [
             "workspace --no-auto-back-and-forth 4:media"
             "exec rhythmbox"
-          ]}
-
-          # 5:conf
-          ${after 3 [
-            "workspace --no-auto-back-and-forth 5:conf"
-            "exec zoom-us"
-            "exec teams-for-linux"
-            "layout stacking"
           ]}
 
           # 1 (default)
@@ -545,14 +543,17 @@ in {
       # package = pkgs.vscodium.fhsWithPackages (ps: with ps; [ rustup zlib ]);
 
       extensions = with pkgs.vscode-extensions; [
-        ms-python.python
-        ms-pyright.pyright
-        ocamllabs.ocaml-platform
+        arrterian.nix-env-selector
         betterthantomorrow.calva
-        # rust-lang.rust-analyzer
-        # tutieee.emacs-mcx
-        # vscode-org-mode.org-mode
-        # jnoortheen.nix-ide
+        # earshinov.sort-lines-by-selection
+        # jasonlhy.hungry-delete
+        jnoortheen.nix-ide
+        # medo64.render-crlf
+        ms-pyright.pyright
+        ms-python.python
+        ocamllabs.ocaml-platform
+        tuttieee.emacs-mcx
+        # usernamehw.remove-empty-lines
       ];
 
       keybindings = [
@@ -560,6 +561,11 @@ in {
         #   ("%"          . match-paren)
         #   ("C-<tab>"    . dabbrev-expand)
         #   ("M-q"        . unfill-toggle)
+
+        {
+          key = "ctrl+x g";
+          command = "magit.status";
+        }
 
         {
           key = "ctrl+enter";
