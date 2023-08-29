@@ -558,70 +558,91 @@ in {
       keybindings = [
         # (bind-keys*
         #   ("%"          . match-paren)
-        #   ("C-<return>" . split-line)
         #   ("C-<tab>"    . dabbrev-expand)
-        #   ("C-x C-d"    . insert-current-date)
-
-        #   ("M-%"        . replace-regexp)
-
-        #   ("M-n"        . next-buffer)
-        #   ("M-p"        . previous-buffer)
         #   ("M-q"        . unfill-toggle)
 
-        #   ;; | point-to  | previous   | next        |
-        #   ;; |-----------+------------+-------------|
-        #   ;; | char      | <left>     | <right>     |
-        #   ;; | word      | C/M-<left> | C/M-<right> |
-        #   ;; | line      | <up>       | <down>      |
-        #   ;; | paragraph | C-<up>     | C-<down>    |
-
-        #   ;; | point-to | start  | end      |
-        #   ;; |----------+--------+----------|
-        #   ;; | line     | C-a    | C-e      |
-        #   ;; | sentence | M-a    | M-e      |
-        #   ;; | screen   | M-<up> | M-<down> |
-        #   ;; | file     | M-\<   | M-\>     |
-
-        #   ;; | window-to | key        |
-        #   ;; |-----------+------------|
-        #   ;; | top       | C-M-<down> |
-        #   ;; | bottom    | C-M-<up>   |
-
-        #   ;; | centre-current |     |
-        #   ;; |----------------+-----|
-        #   ;; | point          | M-r |
-        #   ;; | window         | C-l |
-
-        #   ;; for poxy macbook keyboard with only the arrow keys
-        #   ("C-<up>"     . backward-paragraph)
-        #   ("C-<down>"   . forward-paragraph)
-        #   ("M-<up>"     . warp-to-top-of-window)
-        #   ("M-<down>"   . warp-to-bottom-of-window)
-        #   ("C-M-<down>" . line-to-top-of-window)
-        #   ("C-M-<up>"   . line-to-bottom-of-window)
-
-        #   ;; for a sensible pc keyboard with pgup|pgdn|home|end
-        #   ("C-<prior>" . warp-to-top-of-window)
-        #   ("C-<next>"  . warp-to-bottom-of-window)
-        #   ("C-<home>"  . line-to-top-of-window)
-        #   ("C-<end>"   . line-to-bottom-of-window)
-        #   ("<home>"    . beginning-of-buffer)    ; M-<
-        #   ("<end>"     . end-of-buffer)          ; M->
-        #   )
+        {
+          key = "ctrl+enter";
+          command = "runCommands";
+          args = {
+            commands = [
+              { command = "emacs-mcx.newLine"; }
+              {
+                command = "cursorMove";
+                args = {
+                  to = "up";
+                  by = "line";
+                };
+              }
+              {
+                command = "cursorMove";
+                args = { to = "wrappedLineLastNonWhitespaceCharacter"; };
+              }
+            ];
+            when = "textInputFocus";
+          };
+        }
 
         {
-          key = "ctrl+;";
+          key = "ctrl+c ctrl+space";
+          command = "runCommands";
+          args = {
+            commands = [
+              {
+                command = "remove-empty-lines.inDocument";
+                args = 2;
+              }
+              { command = "editor.action.trimTrailingWhitespace"; }
+            ];
+          };
+          when = "textInputFocus";
+        }
+
+        {
+          key = "alt+n";
+          command = "workbench.action.nextEditor";
+        }
+        {
+          key = "alt+p";
+          command = "workbench.action.previousEditor";
+        }
+
+        {
+          key = "ctrl+c ;";
           command = "editor.action.addCommentLine";
           when = "textInputFocus";
         }
         {
-          key = "ctrl+u ctrl+;";
+          key = "ctrl+u ctrl+c ;";
           command = "editor.action.removeCommentLine";
           when = "textInputFocus";
         }
+
         {
-          key = "ctrl+c ctrl+space";
-          command = "editor.action.trimTrailingWhitespace";
+          key = "ctrl+pageup";
+          command = "cursorMove";
+          args = { to = "viewPortTop"; };
+          when = "textInputFocus";
+        }
+        {
+          key = "ctrl+pagedown";
+          command = "runCommands";
+          args = {
+            # viewPortBottom alone causes a scroll up by one...
+            commands = [
+              {
+                command = "editorScroll";
+                args = {
+                  to = "up";
+                  by = "line";
+                };
+              }
+              {
+                command = "cursorMove";
+                args = { to = "viewPortBottom"; };
+              }
+            ];
+          };
           when = "textInputFocus";
         }
       ];

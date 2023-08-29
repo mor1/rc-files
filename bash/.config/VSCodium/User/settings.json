@@ -14,5 +14,11 @@
     "nix.serverSettings": {
         
     },
-    "editor.renderWhitespace": "all"
+    "editor.renderWhitespace": "none",
+    "git.allowForcePush": true,
+    "github.gitProtocol": "ssh",
+    "hungryDelete.considerIncreaseIndentPattern": true,
+    "hungryDelete.followAboveLineIndent": true,
+    "nix.formatterPath": "nixfmt",
+    "editor.multiCursorModifier": "ctrlCmd"
 }
