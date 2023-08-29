@@ -5,15 +5,6 @@ UseRoaming no
 
 ## cucl
 
-Host svr-rmm1002-git.cl
-     Hostname svr-rmm1002-git.cl.cam.ac.uk
-     IdentityFile ~/.ssh/gitlabrsync-key
-     Port 2222
-     ForwardAgent no
-
-Host papers.cl.cam.ac.uk
-     IdentityFile ~/.ssh/nottingham-key-rsa
-
 Host *.cl
      User rmm1002
      HostName %h.cam.ac.uk
@@ -30,9 +21,12 @@ Host *.cl.cam.ac.uk linux.cl.ds.cam.ac.uk linux.ds.cam.ac.uk
      StrictHostKeyChecking no
      UserKnownHostsFile=/dev/null
 
-Host gitlab.developers.cam.ac.uk
-     User rmm1002
-     IdentityFile ~/.ssh/bitbucket-key-rsa
+# Host papers.cl.cam.ac.uk
+#      IdentityFile ~/.ssh/nottingham-key-rsa
+
+# Host gitlab.developers.cam.ac.uk
+#      User rmm1002
+#      IdentityFile ~/.ssh/bitbucket-key-rsa
 
 # Host tfc-app2.cl.cam.ac.uk
 #      User rita

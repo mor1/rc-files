@@ -13,7 +13,6 @@ SSHFSOPTS="\
   -o noappledouble\
   -o nolocalcaches\
   -o no_readahead"
-# -o uid=503 -o gid=20"
 SSHFS="sshfs $SSHFSOPTS"
 
 # CUCL
@@ -26,10 +25,6 @@ _kinit () {
 binky () {
   _kinit binky.cl
   $SSH binky.cl
-}
-
-cf () {
-  $SSH $CUCL finger $1@hermes.cam.ac.uk
 }
 
 cronserv () {
@@ -53,11 +48,6 @@ ely () {
   $SSH ely.cl
 }
 
-gitlab () {
-  _kinit $CUCL
-  $SSH svr-rmm1002-git.cl
-}
-
 quoth () {
   _kinit $CUCL
   $SSH quoth.cl
@@ -77,11 +67,6 @@ lab () {
   H=$1
   _kinit $H.cl
   $SSH $H.cl
-}
-
-mcs () {
-  _kinit linux.cl.ds.cam.ac.uk
-  $SSH linux.cl.ds.cam.ac.uk
 }
 
 # Other
