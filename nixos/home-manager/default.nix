@@ -85,14 +85,13 @@ in {
       ];
       gui_apps = [
         chromium
-        doublecmd
         firefox
         keybase-gui
         libreoffice
+        okular
         signal-desktop
         skypeforlinux
         slack
-        teams # deprecated end 2022?
         teams-for-linux
         thunderbird
         vocal
@@ -152,8 +151,7 @@ in {
           # 4:media
           ${after 3 [
             "workspace --no-auto-back-and-forth 4:media"
-            "exec quodlibet"
-            # "exec firefox -P default --new-window http://localhost:8080/"
+            "exec rhythmbox"
           ]}
 
           # 5:conf

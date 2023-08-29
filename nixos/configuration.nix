@@ -10,7 +10,6 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./cambridge-vpn
-    ./iphone
     inputs.home-manager.nixosModules.home-manager
   ];
 
