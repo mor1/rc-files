@@ -19,8 +19,8 @@
 
 \usepackage{graphicx}
 \graphicspath{
-  {/Users/mort/.pandoc/templates/}
-  {/Users/mort/me/signatures/}
+  {/home/mort/.pandoc/templates/}
+  {/home/mort/u/me/signatures/}
 }
 
 \usepackage{longtable,booktabs}
@@ -44,7 +44,7 @@
 \defaultfontfeatures{Mapping=tex-text,Scale=MatchUppercase}
 \renewcommand{\familydefault}{\rmdefault}
 \setmainfont{Times New Roman}
-\setmonofont{Hack Nerd Font}
+\setmonofont{Hack}
 
 %% geometry
 \pagestyle{plain}
