@@ -315,10 +315,15 @@ in {
           sink =
             "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink";
         };
-        hdmi = {
-          screen = "HDMI-A-1";
+        wgb = {
+          screen = "LG Electronics LG HDR 4K 0x0000DD99";
           sink =
             "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp_3__sink";
+        };
+        o2 = {
+          screen = "LG Electronics LG HDR 4K 0x00005FAC";
+          sink =
+            "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink";
         };
 
         pactl = "${pkgs.pulseaudio}/bin/pactl";
@@ -331,7 +336,7 @@ in {
           outputs = [{ criteria = "${laptop.screen}"; }];
           exec = [ "${pactl} set-default-sink ${laptop.sink}" ];
         };
-        docked = {
+        wgb = {
           outputs = [
             {
               criteria = "${laptop.screen}"; # 3840x2400
@@ -339,16 +344,37 @@ in {
               scale = 2.0;
             }
             {
-              criteria = "${hdmi.screen}"; # 3840x2160
+              criteria = "${wgb.screen}"; # 3840x2160
               position =
                 "640,0"; # overlap right-third => laptop_x => 3840 / 2.0 * (2/3)
               scale = 1.0;
             }
           ];
           exec = [
-            "${move_ws "1" hdmi.screen}"
-            "${move_ws "3:chat" hdmi.screen}"
-            "${pactl} set-default-sink ${hdmi.sink}"
+            "${move_ws "1" wgb.screen}"
+            "${move_ws "3:chat" wgb.screen}"
+            "${pactl} set-default-sink ${wgb.sink}"
+            ''${sm} "workspace --no-auto-back-and-forth 1"''
+          ];
+        };
+        o2 = {
+          outputs = [
+            {
+              criteria = "${laptop.screen}"; # 3840x2400
+              position = "0,2160"; # below ${hdmi} => hdmi_y = 2160 / 1.0
+              scale = 2.0;
+            }
+            {
+              criteria = "${o2.screen}"; # 3840x2160
+              position =
+                "640,0"; # overlap right-third => laptop_x => 3840 / 2.0 * (2/3)
+              scale = 1.0;
+            }
+          ];
+          exec = [
+            "${move_ws "1" o2.screen}"
+            "${move_ws "3:chat" o2.screen}"
+            "${pactl} set-default-sink ${o2.sink}"
             ''${sm} "workspace --no-auto-back-and-forth 1"''
           ];
         };
