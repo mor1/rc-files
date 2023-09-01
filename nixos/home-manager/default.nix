@@ -310,27 +310,47 @@ in {
       # autodetect and arrange external monitors
       enable = true;
       profiles = let
-        laptop = "eDP-1";
-        hdmi = "HDMI-A-1";
+        laptop = {
+          screen = "eDP-1";
+          sink =
+            "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink";
+        };
+        hdmi = {
+          screen = "HDMI-A-1";
+          sink =
+            "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp_3__sink";
+        };
+
+        pactl = "${pkgs.pulseaudio}/bin/pactl";
+        sm = "${pkgs.sway}/bin/swaymsg";
         move_ws = w: o: ''
-          ${pkgs.sway}/bin/swaymsg "workspace --no-auto-back-and-forth ${w}, move workspace to output ${o}"
+          ${sm} "workspace --no-auto-back-and-forth ${w}, move workspace to output ${o}"
         '';
       in {
-        undocked = { outputs = [{ criteria = "${laptop}"; }]; };
+        undocked = {
+          outputs = [{ criteria = "${laptop.screen}"; }];
+          exec = [ "${pactl} set-default-sink ${laptop.sink}" ];
+        };
         docked = {
           outputs = [
             {
-              criteria = "${laptop}"; # 3840x2400
+              criteria = "${laptop.screen}"; # 3840x2400
               position = "0,2160"; # below ${hdmi} => hdmi_y = 2160 / 1.0
               scale = 2.0;
             }
             {
-              criteria = "${hdmi}"; # 3840x2160
-              position = "640,0"; # overlap right-third => laptop_x => 3840 / 2.0 * (2/3)
+              criteria = "${hdmi.screen}"; # 3840x2160
+              position =
+                "640,0"; # overlap right-third => laptop_x => 3840 / 2.0 * (2/3)
               scale = 1.0;
             }
           ];
-          exec = [ "${move_ws "1" hdmi}" "${move_ws "3:chat" hdmi}" ];
+          exec = [
+            "${move_ws "1" hdmi.screen}"
+            "${move_ws "3:chat" hdmi.screen}"
+            "${pactl} set-default-sink ${hdmi.sink}"
+            ''${sm} "workspace --no-auto-back-and-forth 1"''
+          ];
         };
       };
     };
