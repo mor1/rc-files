@@ -311,7 +311,7 @@ in {
         laptop = "eDP-1";
         hdmi = "HDMI-A-1";
         move_ws = w: o: ''
-          ${pkgs.sway}/bin/swaymsg workspace --no-auto-back-and-forth {w}, move workspace to output ${o}
+          ${pkgs.sway}/bin/swaymsg "workspace --no-auto-back-and-forth ${w}, move workspace to output ${o}"
         '';
       in {
         undocked = { outputs = [{ criteria = "${laptop}"; }]; };
@@ -319,16 +319,16 @@ in {
           outputs = [
             {
               criteria = "${laptop}"; # 3840x2400
-              position = "0,1662"; # below ${hdmi} => y = 2160 / 1.3
+              position = "0,2160"; # below ${hdmi} => hdmi_y = 2160 / 1.0
               scale = 2.0;
             }
             {
               criteria = "${hdmi}"; # 3840x2160
-              position = "1920,0"; # offset-right 1/3 laptop => 3840/2*1.3 / 3
+              position = "640,0"; # overlap right-third => laptop_x => 3840 / 2.0 * (2/3)
               scale = 1.0;
             }
           ];
-          exec = [ "${move_ws 1 hdmi}" "${move_ws "3:chat" hdmi}" ];
+          exec = [ "${move_ws "1" hdmi}" "${move_ws "3:chat" hdmi}" ];
         };
       };
     };
