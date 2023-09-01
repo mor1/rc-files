@@ -51,6 +51,7 @@ in {
         cli_apps = [
           bc # calculator
           dua # disk usage, interactively
+          exiftool # manipulate images
           file # identify filetype by magic
           get_iplayer # download from iPlayer
           handlr # manage XDG Open mappings
@@ -68,21 +69,22 @@ in {
           which # locate command in $PATH
         ];
         gui_apps = [
-          chromium
-          firefox
-          keybase-gui
-          libreoffice
-          okular
-          signal-desktop
-          skypeforlinux
-          slack
-          teams-for-linux
-          thunderbird
-          vocal
-          wire-desktop
-          zoom-us
+          chromium # teams calling in browser doesn't work in firefox
+          firefox # web browser
+          gnome.nautilus # maybe the least sucky of the file managers, so far?
+          keybase-gui # keybase
+          libreoffice # ~ms office
+          meld # compare files / folders
+          okular # pdf viewer / annotator
+          signal-desktop # signal private messaging
+          skypeforlinux # skype
+          slack # slack
+          teams-for-linux # ms teams in electron
+          thunderbird # email
+          wire-desktop # wire private messaging
+          zoom-us # zoom vc
         ];
-        media_apps = [ greg rhythmbox vlc ];
+        media_apps = [ digikam greg rhythmbox vlc ];
       in sway_apps ++ cli_apps ++ gui_apps ++ media_apps);
 
       fonts =

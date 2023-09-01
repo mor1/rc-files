@@ -34,6 +34,7 @@ in {
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [ "memtest86-efi" ];
   security.polkit.enable = true;
+  services.udisks2.enable = true;
   environment.systemPackages = with pkgs; [
     git # obviously
     ifuse # ios optional; to mount using 'ifuse'
@@ -164,11 +165,11 @@ in {
         RUN{program}+= "${pkgs.systemd}/bin/systemd-mount --no-block -AG $devnode"
     '';
     restic = {
-      backups = {
-        backup-home = {
+      backups = let
+        backup = target: {
           initialize = false;
-          repository = "local:/run/media/system/backup-home";
-          passwordFile = "/etc/secrets/restic-password";
+          repository = "local:/run/media/system/backup-${target}";
+          passwordFile = "/etc/secrets/restic-password-backup-${target}";
           user = "mort";
 
           timerConfig = {
@@ -194,66 +195,10 @@ in {
             "/home/mort/l/"
           ];
         };
-
-        backup-christs = {
-          initialize = false;
-          repository = "local:/run/media/system/backup-christs";
-          passwordFile = "/etc/secrets/restic-password-backup-christs";
-          user = "mort";
-
-          timerConfig = {
-            OnCalendar = "hourly";
-            Persistent = true;
-          };
-
-          paths = [ "/home/mort" "/var/lib/NetworkManager" "/etc/secrets" ];
-
-          exclude = [
-            "/home/**/.venv/"
-            "/home/**/__pycache__"
-            "/home/**/node_modules/"
-            "/home/**/target/"
-            "/home/**/vendor/"
-            "/home/*/.cache"
-            "/home/*/.local/share/Trash"
-            "/home/*/.local/share/containers"
-            "/home/*/.npm"
-            "/home/*/Downloads"
-            "/home/mort/Dropbox (Maestral)/"
-            "/home/mort/OneDrive/"
-            "/home/mort/l/"
-          ];
-        };
-
-        backup-wgb = {
-          initialize = false;
-          repository = "local:/run/media/system/backup-wgb";
-          passwordFile = "/etc/secrets/restic-password-backup-wgb";
-          user = "mort";
-
-          timerConfig = {
-            OnCalendar = "hourly";
-            Persistent = true;
-          };
-
-          paths = [ "/home/mort" "/var/lib/NetworkManager" "/etc/secrets" ];
-
-          exclude = [
-            "/home/**/.venv/"
-            "/home/**/__pycache__"
-            "/home/**/node_modules/"
-            "/home/**/target/"
-            "/home/**/vendor/"
-            "/home/*/.cache"
-            "/home/*/.local/share/Trash"
-            "/home/*/.local/share/containers"
-            "/home/*/.npm"
-            "/home/*/Downloads"
-            "/home/mort/Dropbox (Maestral)/"
-            "/home/mort/OneDrive/"
-            "/home/mort/l/"
-          ];
-        };
+      in {
+        backup-home = backup "home";
+        backup-christs = backup "christs";
+        backup-wgb = backup "wgb";
       };
     };
   };
