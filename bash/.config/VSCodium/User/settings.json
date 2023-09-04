@@ -12,7 +12,7 @@
     "nix.enableLanguageServer": true,
     "nix.serverPath": "nil",
     "nix.serverSettings": {
-        
+
     },
     "editor.renderWhitespace": "none",
     "git.allowForcePush": true,
@@ -20,5 +20,18 @@
     "hungryDelete.considerIncreaseIndentPattern": true,
     "hungryDelete.followAboveLineIndent": true,
     "nix.formatterPath": "nixfmt",
-    "editor.multiCursorModifier": "ctrlCmd"
+    "editor.multiCursorModifier": "ctrlCmd",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "[markdown]": {
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.unicodeHighlight.invisibleCharacters": false,
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+        }
+    }
 }

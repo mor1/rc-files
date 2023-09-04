@@ -387,7 +387,7 @@ in {
       # screen saving and locking
       let
         lock = "${pkgs.swaylock}/bin/swaylock -C ~/.config/swaylock/config";
-        suspend = "systemctl suspend";
+        suspend = "${pkgs.systemd}/bin/systemctl suspend";
       in {
         enable = true;
         timeouts = [

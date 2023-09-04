@@ -170,7 +170,7 @@ in {
           initialize = false;
           repository = "local:/run/media/system/backup-${target}";
           passwordFile = "/etc/secrets/restic-password-backup-${target}";
-          user = "mort";
+          user = "root";
 
           timerConfig = {
             OnCalendar = "hourly";
