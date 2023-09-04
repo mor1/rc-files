@@ -177,7 +177,7 @@ letter2pdf () {
 # open emacs appropriately
 #
 
-e () {
+function ee {
   SERVER_SOCK=/tmp/emacs-$USER/server
   [ -S $SERVER_SOCK ] && emacsclient -n -r -s $SERVER_SOCK "$@"
 }

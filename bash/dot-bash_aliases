@@ -29,3 +29,4 @@ alias eject="diskutil unmount"
 alias reset="\reset -i ^C"
 
 alias ho="handlr open"
+alias e="codium"

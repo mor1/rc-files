@@ -148,31 +148,33 @@ in {
         # # arrange displays: laptop at bottom, offset left of HDMI
         # ${msg [ "output $laptop pos 0 2160" "output $hdmi pos 640 0" ]}
         startup = pkgs.writeShellScriptBin "startup.sh" ''
-
-          # 2:mail
           ${now [
-            "workspace --no-auto-back-and-forth 2:mail"
+            "workspace --no-auto-back-and-forth 2:code"
+            "exec firefox -P github.com"
+            "exec codium"
+            "layout stacking"
+          ]}
+
+          ${after 3 [
+            "workspace --no-auto-back-and-forth 3:mail"
             "exec firefox -P richard.mortier@gmail.com"
             "exec firefox -P mort@ikva.ai"
             "exec firefox -P rmm1002@cam.ac.uk"
             "layout stacking"
           ]}
 
-          # 3:chat
           ${after 5 [
-            "workspace --no-auto-back-and-forth 3:chat"
+            "workspace --no-auto-back-and-forth 4:chat"
             "exec slack"
           ]}
           ${after 1 [ "splith" "exec signal-desktop" ]}
           ${after 3 [ "[class=Signal] focus" "splitv" "exec skypeforlinux" ]}
 
-          # 4:media
           ${after 3 [
-            "workspace --no-auto-back-and-forth 4:media"
+            "workspace --no-auto-back-and-forth 5:media"
             "exec rhythmbox"
           ]}
 
-          # 1 (default)
           ${after 1 [
             "workspace --no-auto-back-and-forth 1" # output $hdmi $laptop"
             "exec emacs -f todo"
@@ -647,6 +649,7 @@ in {
                 args = 2;
               }
               { command = "editor.action.trimTrailingWhitespace"; }
+              { command = "editor.action.indentationToSpaces"; }
             ];
           };
           when = "textInputFocus";

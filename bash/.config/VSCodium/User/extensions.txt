@@ -1,8 +1,12 @@
 arrterian.nix-env-selector
-betterthantomorrow.calva
+bierner.markdown-preview-github-styles
+bungcip.better-toml
+foxundermoon.shell-format
 jnoortheen.nix-ide
+kahole.magit
 ms-pyright.pyright
 ms-python.python
 ocamllabs.ocaml-platform
+rust-lang.rust
 tuttieee.emacs-mcx
-vscode-org-mode.org-mode
+usernamehw.remove-empty-lines

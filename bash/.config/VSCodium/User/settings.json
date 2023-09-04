@@ -33,5 +33,7 @@
             "strings": "off",
             "other": "off"
         }
-    }
+    },
+    "editor.useTabStops": false,
+    "editor.indentSize": "tabSize"
 }
