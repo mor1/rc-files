@@ -1,4 +1,4 @@
-{ nixpkgs, pkgs, lib, config, ... }:
+{ lib, config, nixpkgs, pkgs, ... }: # nur, ... }:
 
 let
   username = "mort";
@@ -14,9 +14,11 @@ in {
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
+      "corefonts"
       "slack"
       "skypeforlinux"
       "teams"
+      "vista-fonts" # vista-fonts here but vistafonts for install?!
       "zoom" # zoom here but zoom-us for install?!
     ];
 
@@ -28,45 +30,54 @@ in {
         davmail
         direnv
         gnupg
+        hunspell # spellchecking and dictionaries
+        hunspellDicts.en_GB-large
         keybase
+        kbfs
         maestral
         onedrive
+        pciutils
+        sshfs
         stow
         strongswan
       ];
 
       apps = (let
         sway_apps = [
-          brightnessctl
-          gammastep
-          gnome3.adwaita-icon-theme
+          brightnessctl # control screen brightness
+          gammastep # automatically dim+redden screen at night
+          gnome3.adwaita-icon-theme # gnome-ish icons
           grim
-          kanshi
+          kanshi # modify sway config on hardware changes
           slurp
           swayosd
-          wdisplays
-          wev
-          wl-clipboard
+          wdisplays # gui for display configuration
+          wev # wayland event viewer
+          wl-clipboard # pipe to/from clipboard
         ];
         cli_apps = [
           bc # calculator
           dua # disk usage, interactively
           exiftool # manipulate images
           file # identify filetype by magic
+          fzf # fuzzy file finder; desired by yazi
           get_iplayer # download from iPlayer
           handlr # manage XDG Open mappings
+          pandoc # document processing and conversion
           htop # graphical top
           imagemagick # image manipulation tools
           inetutils
           jhead # jpeg exif header manipulation tool
-          joshuto # file manager
           keychain # cli to manage SSH, GPG keys
           lynx # cli web browser
+          pdftk # manipulate PDF files
           texlive.combined.scheme-full # latex installation
           tree # tree-format recursive ls
           unzip
           wget # network downloadre
           which # locate command in $PATH
+          yazi # file manager
+          zoxide # smarter cd; desired by yazi
         ];
         gui_apps = [
           chromium # teams calling in browser doesn't work in firefox
@@ -75,6 +86,7 @@ in {
           keybase-gui # keybase
           libreoffice # ~ms office
           meld # compare files / folders
+          networkmanagerapplet # nm-connection-manager, NetworkManager GUI
           okular # pdf viewer / annotator
           signal-desktop # signal private messaging
           skypeforlinux # skype
@@ -84,11 +96,17 @@ in {
           wire-desktop # wire private messaging
           zoom-us # zoom vc
         ];
-        media_apps = [ digikam greg rhythmbox vlc ];
+        media_apps = [ digikam greg kodi rhythmbox vlc ];
       in sway_apps ++ cli_apps ++ gui_apps ++ media_apps);
 
-      fonts =
-        [ font-awesome_4 hack-font material-design-icons powerline-fonts ];
+      fonts = [
+        corefonts
+        font-awesome_4
+        # hack-font
+        material-design-icons
+        powerline-fonts
+        vistafonts
+      ];
 
       dev_tools = (let
         python_tools = [ python311 ]
@@ -103,19 +121,19 @@ in {
             utop
           ]);
       in [
-        emacs29
-        fd
-        gh
-        git
-        git-filter-repo
-        git-lfs
-        gnumake
-        jq
-        nil
-        nixfmt
-        ripgrep
-        rustup
-        vscodium
+        emacs29 # even after all, because org-mode
+        fd # `find` replacement
+        gh # github CLI
+        git # obviously
+        git-filter-repo # for fixing up repos
+        git-lfs # large file support
+        gnumake # unavoidably
+        jq # pretty-print JSON
+        nil # LSP for Nix language
+        nixfmt # format .nix files
+        ripgrep # `grep` replacement
+        rustup # manage Rust installations
+        vscodium # vscode but no Microsoft, no
       ] ++ python_tools ++ ocaml_tools);
 
       # brave evolution evolution-ews mailspring
@@ -137,60 +155,65 @@ in {
 
       # build the startup script to start apps in workspaces
       startup = let
-        msg = cmds: "swaymsg '${builtins.concatStringsSep ", " cmds}' ";
+        msg = cmds: "swaymsg '${builtins.concatStringsSep ", " cmds}'";
+        workspace = ws: msg [ "workspace --no-auto-back-and-forth ${ws}" ];
         after = delay: cmds: "sleep ${toString delay} && ${msg cmds}";
         now = after 0;
-
-        #  # name the displays
-        # set $laptop eDP-1
-        # set $hdmi HDMI-A-1
-
-        # # arrange displays: laptop at bottom, offset left of HDMI
-        # ${msg [ "output $laptop pos 0 2160" "output $hdmi pos 640 0" ]}
         startup = pkgs.writeShellScriptBin "startup.sh" ''
-          ${now [
-            "workspace --no-auto-back-and-forth 2:code"
-            "exec firefox -P github.com"
-            "exec codium"
-            "layout stacking"
-          ]}
+            wait_for () {
+              { swaymsg -r -m -t subscribe '["window"]' |
+                jq -c --unbuffered '. | select(.change == "new")' |
+                { grep -m1 . >/dev/null ; pkill swaymsg ;} &
+              } 2>/dev/null
+              pid=$!
+              swaymsg -- "exec $*" && sleep 0.5
+              wait $pid 2>/dev/null
+            }
 
-          ${after 3 [
-            "workspace --no-auto-back-and-forth 3:mail"
-            "exec firefox -P richard.mortier@gmail.com"
-            "exec firefox -P mort@ikva.ai"
-            "exec firefox -P rmm1002@cam.ac.uk"
-            "layout stacking"
-          ]}
+            ${msg [ "exec swayosd --max-volume 160" ]}
 
-          ${after 5 [
-            "workspace --no-auto-back-and-forth 4:chat"
-            "exec slack"
-          ]}
-          ${after 1 [ "splith" "exec signal-desktop" ]}
-          ${after 3 [ "[class=Signal] focus" "splitv" "exec skypeforlinux" ]}
+            ${workspace "5:media"}
+            wait_for "rhythmbox"
 
-          ${after 3 [
-            "workspace --no-auto-back-and-forth 5:media"
-            "exec rhythmbox"
-          ]}
+            ${workspace "4:chat"}
+            wait_for slack
+            ${after 1 [ "split horizontal" ]}
+            wait_for skypeforlinux
+            ${after 3 [ "[class=Skype] focus" "split vertical" ]}
+            wait_for signal-desktop
+            ${after 1 [ "[class=Skype] layout stacking" ]}
 
-          ${after 1 [
-            "workspace --no-auto-back-and-forth 1" # output $hdmi $laptop"
-            "exec emacs -f todo"
-          ]}
-          ${after 1 [ "splith" "exec foot" ]}
-          ${after 1 [ "splitv" "exec firefox -P default" ]}
+            ${workspace "3:mail"}
+            wait_for firefox -P richard.mortier@gmail.com
+            wait_for firefox -P mort@ikva.ai
+            wait_for firefox -P rmm1002@cam.ac.uk
+            ${after 3 [ "layout stacking" ]}
 
-          # reload config; sometimes the bar is confused...
-          ${after 2 [ "reload" ]}
+            ${workspace "2:code"}
+            wait_for firefox -P github.com
+            wait_for codium
+            ${after 3 [ "layout stacking" ]}
+
+            ${workspace "1"}
+            wait_for emacsclient -r -s /tmp/emacs-mort/server -e '(todo)'
+            ${after 1 [ "split horizontal" ]}
+            wait_for foot
+            ${after 1 [ "split vertical" ]}
+            wait_for firefox -P default
+
+            ${after 1 [ "reload" "kanshictl reload" ]}
         '';
       in [{ command = "${startup}/bin/startup.sh"; }];
 
-      # all my keyboards are GB layout
+      #       exe=$1
+      # shift
+      # args="$@"
+      # '. | select(.change == "new" and .container.app_id == "'$exe'")' |
+
+      # all my keyboards are GB layouta
       input = {
         "*" = { xkb_layout = "gb"; };
-        "touchpad" = {
+        "type:touchpad" = {
           natural_scroll = "enabled";
           tap = "enabled";
           tap_button_map = "lmr";
@@ -199,64 +222,47 @@ in {
       };
 
       # additional keybindings; cannot simply remap input ev -> output ev
-      keybindings = lib.mkOptionDefault {
+      keybindings = let
+        f1 = "exec swayosd --output-volume mute-toggle";
+        f2 = "exec  swayosd --output-volume lower";
+        f3 = "exec swayosd --output-volume raise";
+        f4 = "exec swayosd --input-volume mute-toggle";
+        f5 = "exec brightnessctl s 10%-";
+        f6 = "exec brightnessctl s 10%+";
+        f7 = "nop f7 pressed";
+        f8 = "nop f8 pressed";
+        f9 = "exec rhythmbox-client --play-pause";
+        f10 = "exec rhythmbox-client --stop";
+        f11 = "exec rhythmbox-client --previous";
+        f12 = "exec rhythmbox-client --next";
+      in lib.mkOptionDefault {
         ## thinkpad keyboard
-        # F1
-        "XF86AudioMute" = "exec swayosd --output-volume mute-toggle";
-        # F2
-        "XF86AudioLowerVolume" = "exec  swayosd --output-volume lower";
-        # F3
-        "XF86AudioRaiseVolume" = "exec swayosd --output-volume raise";
-        # # F4
-        # "XF86AudioMicMute" = ''exec swayosd --input-volume mute-toggle''; # XXX broken
-
-        # F5
-        "XF86MonBrightnessDown" =
-          "exec brightnessctl s 10%-"; # swayosd --brightness lower''; # XXX broken
-        # F6
-        "XF86MonBrightnessUp" =
-          "exec brightnessctl s 10%+"; # swayosd --brightness raise''; # XXX broken
-
-        # F7  XF86Display
-        # F8  XF86WLAN
-
-        # F9  XF86Messenger => media:pause|play
-        "XF86Messenger" = "exec rhythmbox-client --play-pause";
-        # F10 XF86Go => skip
-        "XF86Go" = "exec rhythmbox-client --stop";
-        # F11 Cancel => media:prev
-        "Cancel" = "exec rhythmbox-client --previous";
-        # F12 XF86Favorites => media:next
-        "XF86Favorites" = "exec rhythmbox-client --next";
+        "XF86AudioMute" = f1;
+        "XF86AudioLowerVolume" = f2;
+        "XF86AudioRaiseVolume" = f3;
+        "XF86AudioMicMute" = f4;
+        "XF86MonBrightnessDown" = f5;
+        "XF86MonBrightnessUp" = f6;
+        "XF86Display" = f7;
+        "XF86WLAN" = f8;
+        "XF86Messenger" = f9;
+        "XF86Go" = f10;
+        "Cancel" = f11;
+        "XF86Favorites" = f12;
 
         ## MSFT keyboard
-        # F1
-        "Help" = "exec swayosd --output-volume mute-toggle";
-        # F2
-        "Undo" = "exec  swayosd --output-volume lower";
-        # F3
-        "Redo" = "exec swayosd --output-volume raise";
-        # # F4
-        # "XF86New" = ''exec swayosd --input-volume mute-toggle''; # XXX broken
-
-        # F5
-        "XF86Open" =
-          "exec brightnessctl s 10%-"; # swayosd --brightness lower''; # XXX broken
-        # F6
-        "XF86Close" =
-          "exec brightnessctl s 10%+"; # swayosd --brightness raise''; # XXX broken
-
-        # F7  XF86Reply
-        # F8  XF86MailForward
-
-        # F9  XF86Send => media:pause|play
-        "XF86Send" = "exec rhythmbox-client --play-pause";
+        "Help" = f1;
+        "Undo" = f2;
+        "Redo" = f3;
+        "XF86New" = f4;
+        "XF86Open" = f5;
+        "XF86Close" = f6;
+        "XF86Reply" = f7;
+        "XF86MailForward" = f8;
+        "XF86Send" = f9;
         # F10 !!! XXX NO SCAN CODE
-        # F11 XF86Save => media:prev
-        "XF86Save" = "exec rhythmbox-client --previous";
-        # F12 Print => media:next
-        "Print" = "exec rhythmbox-client --next";
-
+        "XF86Save" = f11;
+        "Print" = f12;
       };
 
       # status bars using i3status-rust
@@ -276,7 +282,9 @@ in {
     };
 
     # set background
-    extraConfig = ''output "*" bg ${background} fill'';
+    extraConfig = ''
+      output "*" bg ${background} fill
+    '';
   };
 
   services = {
@@ -285,7 +293,7 @@ in {
       # until the addiction is kicked
       package = pkgs.emacs29;
       enable = true;
-      # client.enable = true;
+      client.enable = true;
       # defaultEditor = true;
     };
 
@@ -331,7 +339,7 @@ in {
         pactl = "${pkgs.pulseaudio}/bin/pactl";
         sm = "${pkgs.sway}/bin/swaymsg";
         move_ws = w: o: ''
-          ${sm} "workspace --no-auto-back-and-forth ${w}, move workspace to output ${o}"
+          ${sm} "workspace --no-auto-back-and-forth ${w}, move workspace to output '${o}'"
         '';
       in {
         undocked = {
@@ -354,7 +362,10 @@ in {
           ];
           exec = [
             "${move_ws "1" wgb.screen}"
-            "${move_ws "3:chat" wgb.screen}"
+            "${move_ws "2:code" wgb.screen}"
+            "${move_ws "3:mail" laptop.screen}"
+            "${move_ws "4:chat" wgb.screen}"
+            "${move_ws "5:media" laptop.screen}"
             "${pactl} set-default-sink ${wgb.sink}"
             ''${sm} "workspace --no-auto-back-and-forth 1"''
           ];
@@ -375,15 +386,31 @@ in {
           ];
           exec = [
             "${move_ws "1" o2.screen}"
-            "${move_ws "3:chat" o2.screen}"
+            "${move_ws "2:code" o2.screen}"
+            "${move_ws "3:mail" laptop.screen}"
+            "${move_ws "4:chat" o2.screen}"
             "${pactl} set-default-sink ${o2.sink}"
+            "${move_ws "5:media" laptop.screen}"
             ''${sm} "workspace --no-auto-back-and-forth 1"''
           ];
         };
+        # o2-closed = {
+        #   outputs = [{
+        #     criteria = "${o2.screen}"; # 3840x2160
+        #     position =
+        #       "640,0"; # overlap right-third => laptop_x => 3840 / 2.0 * (2/3)
+        #     scale = 1.0;
+        #   }];
+        #   exec = [
+        #     "${move_ws "3:mail" o2.screen}"
+        #     "${move_ws "5:media" o2.screen}"
+        #   ];
+        # };
       };
     };
 
     keybase.enable = true;
+    kbfs.enable = true;
 
     swayidle =
       # screen saving and locking
@@ -414,10 +441,10 @@ in {
         ];
       };
 
-    # swayosd = {
-    #   enable = true;
-    #   maxVolume = 120;
-    # };
+    swayosd = {
+      enable = true;
+      maxVolume = 160;
+    };
   };
 
   programs = {
@@ -458,7 +485,7 @@ in {
       bars = {
         top = {
           theme = "solarized-dark";
-          icons = "awesome4";
+          icons = "emoji";
           blocks = let
             caffeine_on = {
               icon = "pomodoro_break";
@@ -511,7 +538,7 @@ in {
                   }
                   ' ''
                 ''
-                  swaymsg -q inhibit_idle visible && printf '${
+                  swaymsg -q inhibit_idle open && printf '${
                     builtins.toJSON caffeine_on
                   }
                   ' ''
@@ -527,12 +554,12 @@ in {
 
         bottom = {
           theme = "solarized-dark";
-          icons = "awesome4";
+          icons = "emoji";
           blocks = [
             {
               block = "net";
               format =
-                " $icon $device {$ip |NO IPv4 }{$ipv6 |NO IPv6 }{($signal_strength $ssid)|}";
+                " $icon $device {$ip|NO IPv4} {$ipv6|NO IPv6} {($signal_strength $ssid)|}";
             }
             {
               block = "external_ip";
@@ -594,6 +621,7 @@ in {
 
       extensions = with pkgs.vscode-extensions; [
         arrterian.nix-env-selector
+        ban.spellright
         betterthantomorrow.calva
         # earshinov.sort-lines-by-selection
         # jasonlhy.hungry-delete
@@ -606,11 +634,107 @@ in {
         # usernamehw.remove-empty-lines
       ];
 
+      userSettings = {
+        "editor.fontFamily" = [ "Hack" "Droid Sans Mono" "monospace" ];
+        "editor.fontSize" = 11;
+        "editor.indentSize" = "tabSize";
+        "editor.multiCursorModifier" = "ctrlCmd";
+        "editor.renderWhitespace" = "none";
+        "editor.rulers" = [
+          {
+            "column" = 72;
+            "color" = "#aaa";
+          }
+          {
+            "column" = 100;
+            "color" = "#aaa";
+          }
+          { # alpha=0 ~ transparent
+            "column" = 0;
+            "color" = "#0000";
+          }
+        ];
+        "editor.useTabStops" = false;
+        # "editor.wordWrap" = "bounded";
+
+        "explorer.confirmDelete" = false;
+
+        "files.autoSave" = "afterDelay";
+        "files.autoSaveDelay" = 2000;
+        "files.insertFinalNewline" = true;
+        "files.trimFinalNewlines" = true;
+
+        "git.allowForcePush" = true;
+        "git.confirmSync" = false;
+
+        "github.gitProtocol" = "ssh";
+
+        "hungryDelete.considerIncreaseIndentPattern" = true;
+        "hungryDelete.followAboveLineIndent" = true;
+
+        "interactiveSession.editor.fontSize" = 11;
+
+        "nix.enableLanguageServer" = true;
+        "nix.formatterPath" = "nixfmt";
+        "nix.serverPath" = "nil";
+        "nix.serverSettings" = { };
+
+        "rewrap.autoWrap.enabled" = true;
+
+        "security.workspace.trust.untrustedFiles" = "open";
+
+        "spellright.language" = [ "English (British)" ];
+
+        "terminal.integrated.fontSize" = 11;
+        "terminal.integrated.sendKeybindingsToShell" = true;
+
+        "workbench.colorTheme" = "Solarized Dark";
+        "workbench.preferredDarkColorTheme" = "Solarized Dark";
+        "workbench.preferredLightColorTheme" = "Solarized Light";
+
+        "[markdown]" = {
+          "preview.typographer" = true;
+          "diffEditor.ignoreTrimWhitespace" = false;
+          "editor.quickSuggestions" = {
+            "comments" = "off";
+            "strings" = "off";
+            "other" = "off";
+          };
+          "editor.rulers" = [
+            {
+              "column" = 80;
+              "color" = "#aaa";
+            } # alpha=0 ~ transparent
+            {
+              "column" = 0;
+              "color" = "#0000";
+            } # alpha=0 ~ transparent
+
+          ];
+          "editor.unicodeHighlight.ambiguousCharacters" = false;
+          "editor.unicodeHighlight.invisibleCharacters" = false;
+          # "editor.wordWrap" = "on";
+        };
+
+      };
+
       keybindings = [
         # (bind-keys*
         #   ("%"          . match-paren)
         #   ("C-<tab>"    . dabbrev-expand)
-        #   ("M-q"        . unfill-toggle)
+
+        # {
+        #   key = "ctrl+c";
+        #   command = "workbench.action.terminal.sendSequence";
+        #   args = { text = "u0003"; };
+        #   when =
+        #     "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported";
+        # }
+
+        {
+          key = "ctrl+c t";
+          command = "workbench.action.toggleLightDarkThemes";
+        }
 
         {
           key = "ctrl+x g";
