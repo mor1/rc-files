@@ -10,6 +10,8 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./cambridge-vpn
+    # inputs.nur.hmModules.nur
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -80,7 +82,7 @@ in {
     hostName = "${hostname}";
     networkmanager = {
       enable = true;
-      plugins = [ pkgs.networkmanager_strongswan ];
+      enableStrongSwan = true;
     };
 
     # https://discourse.nixos.org/t/ntp-use-values-from-network-manager-via-dhcp/23408/2
@@ -107,19 +109,26 @@ in {
     # getty.autologinUser = "mort";
 
     automatic-timezoned.enable = true;
-    dbus.packages = [ pkgs.networkmanager pkgs.strongswanNM ];
+    localtimed.enable = true;
+    dbus = {
+      enable = true;
+      packages = [ pkgs.networkmanager pkgs.strongswanNM ];
+    };
     geoclue2.enable = true;
     gnome.gnome-keyring.enable = true;
 
     keyd = {
       enable = true;
-      settings = {
-        main = {
-          # capslock -> (held) ctrl, (tap) ESC
-          capslock = "overload(control, esc)";
-        };
-        shift = {
-          grave = "G-4"; # S-` -> €
+      keyboards.default = {
+        ids = [ "*" ];
+        settings = {
+          main = {
+            # capslock -> (held) ctrl, (tap) ESC
+            capslock = "overload(control, esc)";
+          };
+          shift = {
+            grave = "G-4"; # S-` -> €
+          };
         };
       };
     };
@@ -136,13 +145,20 @@ in {
     sway.enable = true;
   };
 
+  xdg.portal = {
+    # https://nixos.wiki/wiki/Sway
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
   # setup users
   users.users = {
     root = { extraGroups = [ "wheel" ]; };
 
     mort = {
       isNormalUser = true;
-      extraGroups = [ "docker" "video" "wheel" ];
+      extraGroups = [ "audio" "docker" "video" "wheel" ];
     };
 
   };
@@ -192,6 +208,7 @@ in {
             "/home/*/Downloads"
             "/home/mort/Dropbox (Maestral)/"
             "/home/mort/OneDrive/"
+            "/home/mort/keybase"
             "/home/mort/l/"
           ];
         };

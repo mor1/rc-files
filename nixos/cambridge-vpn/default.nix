@@ -1,17 +1,19 @@
+# from https://github.com/jeffa5/nix-home/blob/main/nixos/modules/vpn.nix
+
 { pkgs, config, ... }:
-let crsid = "rmm1002";
+let
+  crsid = "rmm1002";
+  hostname = "greyjay";
 in {
   networking.networkmanager.enableStrongSwan = true;
   environment.systemPackages = with pkgs; [ strongswan ];
 
   services = {
-    # Check status at
-    # https://myip.uis.cam.ac.uk/
     strongswan = {
       enable = true;
       # Passwords per
       # https://help.uis.cam.ac.uk/service/network-services/remote-access/uis-vpn/ubuntu1604#password-file
-      secrets = [ "/home/mort/.config/ipsec.secrets" ];
+      secrets = [ "/etc/secrets/ipsec.secrets" ];
 
       connections."%default" = {
         keyexchange = "ikev2";
@@ -21,9 +23,10 @@ in {
         keyingtries = "1";
       };
 
+      # https://tokens.uis.cam.ac.uk/
       connections.UCAM = {
         left = "%any";
-        leftid = "${crsid}+greyjay_ucamvpn@cam.ac.uk";
+        leftid = "${crsid}+${hostname}_ucamvpn@cam.ac.uk";
         leftauth = "eap";
         leftsourceip = "%config";
         leftfirewall = "yes";
@@ -41,7 +44,7 @@ in {
       connections.CUCL = {
         reauth = "no";
         left = "%any";
-        leftid = "${crsid}-greyjay";
+        leftid = "${crsid}-${hostname}";
         leftauth = "eap";
         leftsourceip = "%config4,%config6";
         leftfirewall = "yes";
