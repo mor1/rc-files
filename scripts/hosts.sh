@@ -8,10 +8,8 @@ CUCL="ely.cl"
 SSHFSOPTS="\
   -o follow_symlinks\
   -o auto_cache\
+  -o idmap=user\
   -o reconnect\
-  -o defer_permissions\
-  -o noappledouble\
-  -o nolocalcaches\
   -o no_readahead"
 SSHFS="sshfs $SSHFSOPTS"
 
