@@ -135,10 +135,9 @@ rfc () {
 # pandoc invocations
 #
 
-PANDOC_BASE='
-  dr mor1/pandoc --from=markdown+smart -Vpapersize=a4 --pdf-engine=xelatex'
+PANDOC_BASE='pandoc --from=markdown+smart -Vpapersize=a4 --pdf-engine=xelatex'
 
-PANDOC_MD="$PANDOC_BASE --number-sections -Vgeometry=margin=2cm -Vcolorlinks"
+PANDOC_MD="$PANDOC_BASE -Vgeometry=margin=2cm -Vcolorlinks"
 
 md2tex () {
   $PANDOC_MD -o ${1%.md}.tex $@
@@ -168,6 +167,8 @@ letter2doc () {
 letter2pdf () {
   $PANDOC_LETTER -o ${1%.md}.pdf $@
 }
+
+alias 2up="pdfxup -x 2 -y 1 -m 1cm -o OUTPUT INPUT"
 
 
 #transpose
