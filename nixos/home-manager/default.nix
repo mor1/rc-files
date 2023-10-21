@@ -187,6 +187,7 @@ in {
             wait_for firefox -P richard.mortier@gmail.com
             wait_for firefox -P mort@ikva.ai
             wait_for firefox -P rmm1002@cam.ac.uk
+            wait_for teams-for-linux
             ${after 3 [ "layout stacking" ]}
 
             ${workspace "2:code"}
