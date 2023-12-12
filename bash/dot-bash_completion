@@ -1,7 +1,0 @@
-have make || have gmake || have gnumake || have pmake &&
-my_make()
-{
-    COMPREPLY=()
-    _make
-} &&
-complete -F my_make make gmake gnumake pmake

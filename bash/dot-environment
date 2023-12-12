@@ -157,10 +157,6 @@ export GPG_TTY
 case $PLATFORM in
 
   Linux )
-
-    MAKE=make
-    export EDITOR=vi
-
     if [ -r ~/.git-prompt.sh ]; then
       source ~/.git-prompt.sh
     elif [ -r /etc/NIXOS ]; then
@@ -180,7 +176,6 @@ case $PLATFORM in
     ;;
 
   Darwin )
-
     unset PYTHONPATH
     aenv PYTHONPATH /usr/local/Cellar/pdm/1.13.4/libexec/lib/python3.10/site-packages/pdm/pep582
     enva PATH "/usr/local/opt/python@3.7/bin"
