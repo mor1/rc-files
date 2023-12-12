@@ -42,7 +42,7 @@
 
 [core]
     pager = less -+$LESS -FRXi
-	autocrlf = input
+    autocrlf = input
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
 [rerere]
@@ -76,13 +76,13 @@
 [rebase]
     autoStash = true
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [credential "https://github.com"]
-	helper = !/usr/local/bin/gh auth git-credential
+    helper = !/usr/local/bin/gh auth git-credential
 [credential]
-	helper = store
+    helper = store
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
