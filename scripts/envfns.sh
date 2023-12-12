@@ -106,3 +106,12 @@ cenv () {
         fi ;
     done
 }
+
+#
+# display inhibitions
+#
+
+inhibitors () {
+  swaymsg -t get_tree -r | jq --stream -c . | rg 'inhibit_idle|name|app_id' \
+    | rg -B2 'inhibit_idle"],true'
+}
