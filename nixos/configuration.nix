@@ -10,7 +10,6 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./cambridge-vpn
-    # inputs.nur.hmModules.nur
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -38,10 +37,12 @@ in {
   security.polkit.enable = true;
   services.udisks2.enable = true;
   environment.systemPackages = with pkgs; [
+    cifs-utils # samba
     git # obviously
     ifuse # ios optional; to mount using 'ifuse'
     keyd # key remappings
     libimobiledevice # ios
+    lxqt.lxqt-policykit # for gvfs
     restic # backups
     vim # i just don't like nano, ok?
   ];
@@ -70,9 +71,20 @@ in {
   };
 
   # mount home and swap
-  fileSystems."/home" = {
-    device = "${home_dev}";
-    fsType = "ext4";
+  fileSystems = {
+    "/home" = {
+      device = "${home_dev}";
+      fsType = "ext4";
+    };
+
+    "/mnt/home-desktop" = {
+      device = "//desktop-bqgpfcm/14mort/";
+      fsType = "cifs";
+      options = let
+        automount_opts =
+          "x-systemd.automount,noauot,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in [ "${automount_opts},credentials=/etc/secrets/smb-secrets" ];
+    };
   };
 
   swapDevices = [{ device = "${swap_dev}"; }];
@@ -112,10 +124,12 @@ in {
     localtimed.enable = true;
     dbus = {
       enable = true;
-      packages = [ pkgs.networkmanager pkgs.strongswanNM ];
+      packages = with pkgs; [ networkmanager strongswanNM ];
     };
     geoclue2.enable = true;
     gnome.gnome-keyring.enable = true;
+
+    gvfs.enable = true;
 
     keyd = {
       enable = true;
@@ -232,5 +246,5 @@ in {
     # package = pkgs.usbmuxd2;
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }

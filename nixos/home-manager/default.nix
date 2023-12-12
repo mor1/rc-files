@@ -57,11 +57,13 @@ in {
         ];
         cli_apps = [
           bc # calculator
+          dig # because DNS
           dua # disk usage, interactively
           exiftool # manipulate images
           file # identify filetype by magic
           fzf # fuzzy file finder; desired by yazi
           get_iplayer # download from iPlayer
+          ghostscript # ps etc
           handlr # manage XDG Open mappings
           pandoc # document processing and conversion
           htop # graphical top
@@ -70,16 +72,20 @@ in {
           jhead # jpeg exif header manipulation tool
           keychain # cli to manage SSH, GPG keys
           lynx # cli web browser
+          nushell # maybe it's time to kick another addiction
           pdftk # manipulate PDF files
+          subversion # hysterical raisins
           texlive.combined.scheme-full # latex installation
           tree # tree-format recursive ls
-          unzip
+          unzip # what it says on the tin, because zip can't unzip
           wget # network downloadre
           which # locate command in $PATH
           yazi # file manager
+          zip # what it says on the tin
           zoxide # smarter cd; desired by yazi
         ];
         gui_apps = [
+          alacritty # alternative xterm
           chromium # teams calling in browser doesn't work in firefox
           firefox # web browser
           gnome.nautilus # maybe the least sucky of the file managers, so far?
@@ -102,7 +108,6 @@ in {
       fonts = [
         corefonts
         font-awesome_4
-        # hack-font
         material-design-icons
         powerline-fonts
         vistafonts
@@ -110,7 +115,7 @@ in {
 
       dev_tools = (let
         python_tools = [ python311 ]
-          ++ (with python311Packages; [ autopep8 pip ]);
+          ++ (with python311Packages; [ autopep8 pip rye ]);
         ocaml_tools = [ gcc ocaml dune_3 ocamlformat opam ]
           ++ (with ocamlPackages; [
             cmdliner
@@ -133,7 +138,6 @@ in {
         nixfmt # format .nix files
         ripgrep # `grep` replacement
         rustup # manage Rust installations
-        vscodium # vscode but no Microsoft, no
       ] ++ python_tools ++ ocaml_tools);
 
       # brave evolution evolution-ews mailspring
@@ -160,56 +164,51 @@ in {
         after = delay: cmds: "sleep ${toString delay} && ${msg cmds}";
         now = after 0;
         startup = pkgs.writeShellScriptBin "startup.sh" ''
-            wait_for () {
-              { swaymsg -r -m -t subscribe '["window"]' |
-                jq -c --unbuffered '. | select(.change == "new")' |
-                { grep -m1 . >/dev/null ; pkill swaymsg ;} &
-              } 2>/dev/null
-              pid=$!
-              swaymsg -- "exec $*" && sleep 0.5
-              wait $pid 2>/dev/null
-            }
+          wait_for () {
+            { swaymsg -r -m -t subscribe '["window"]' |
+              jq -c --unbuffered '. | select(.change == "new")' |
+              { grep -m1 . >/dev/null ; pkill swaymsg ;} &
+            } 2>/dev/null
+            pid=$!
+            swaymsg -- "exec $*" && sleep 0.5
+            wait $pid 2>/dev/null
+          }
 
-            ${msg [ "exec swayosd --max-volume 160" ]}
+          ${msg [ "exec swayosd --max-volume 160" ]}
 
-            ${workspace "5:media"}
-            wait_for "rhythmbox"
+          ${workspace "5:media"}
+          wait_for "rhythmbox"
 
-            ${workspace "4:chat"}
-            wait_for slack
-            ${after 1 [ "split horizontal" ]}
-            wait_for skypeforlinux
-            ${after 3 [ "[class=Skype] focus" "split vertical" ]}
-            wait_for signal-desktop
-            ${after 1 [ "[class=Skype] layout stacking" ]}
+          ${workspace "4:chat"}
+          wait_for slack
+          ${after 1 [ "split horizontal" ]}
+          wait_for skypeforlinux
+          ${after 3 [ "[class=Skype] focus" "split vertical" ]}
+          wait_for signal-desktop
+          ${after 1 [ "[class=Skype] layout stacking" ]}
 
-            ${workspace "3:mail"}
-            wait_for firefox -P richard.mortier@gmail.com
-            wait_for firefox -P mort@ikva.ai
-            wait_for firefox -P rmm1002@cam.ac.uk
-            wait_for teams-for-linux
-            ${after 3 [ "layout stacking" ]}
+          ${workspace "3:mail"}
+          wait_for firefox -P richard.mortier@gmail.com
+          wait_for firefox -P mort@ikva.ai
+          wait_for firefox -P rmm1002@cam.ac.uk
+          wait_for teams-for-linux
+          ${after 3 [ "layout stacking" ]}
 
-            ${workspace "2:code"}
-            wait_for firefox -P github.com
-            wait_for codium
-            ${after 3 [ "layout stacking" ]}
+          ${workspace "2:code"}
+          wait_for firefox -P github.com
+          wait_for codium
+          ${after 3 [ "layout stacking" ]}
 
-            ${workspace "1"}
-            wait_for emacsclient -r -s /tmp/emacs-mort/server -e '(todo)'
-            ${after 1 [ "split horizontal" ]}
-            wait_for foot
-            ${after 1 [ "split vertical" ]}
-            wait_for firefox -P default
+          ${workspace "1"}
+          wait_for emacsclient -c -s /tmp/emacs-mort/server
+          ${after 1 [ "split horizontal" ]}
+          wait_for foot
+          ${after 1 [ "split vertical" ]}
+          wait_for firefox -P default
 
-            ${after 1 [ "reload" "kanshictl reload" ]}
+          ${after 1 [ "reload" "kanshictl reload" ]}
         '';
       in [{ command = "${startup}/bin/startup.sh"; }];
-
-      #       exe=$1
-      # shift
-      # args="$@"
-      # '. | select(.change == "new" and .container.app_id == "'$exe'")' |
 
       # all my keyboards are GB layouta
       input = {
@@ -225,7 +224,7 @@ in {
       # additional keybindings; cannot simply remap input ev -> output ev
       keybindings = let
         f1 = "exec swayosd --output-volume mute-toggle";
-        f2 = "exec  swayosd --output-volume lower";
+        f2 = "exec swayosd --output-volume lower";
         f3 = "exec swayosd --output-volume raise";
         f4 = "exec swayosd --input-volume mute-toggle";
         f5 = "exec brightnessctl s 10%-";
@@ -460,7 +459,7 @@ in {
       # per-directory env configuration
       enable = true;
       enableBashIntegration = true;
-      nix-direnv = { enable = true; };
+      nix-direnv.enable = true;
     };
 
     chromium = { enable = true; };
@@ -617,8 +616,8 @@ in {
     vscode = {
       enable = true;
 
-      package = pkgs.vscodium;
-      # package = pkgs.vscodium.fhsWithPackages (ps: with ps; [ rustup zlib ]);
+      package = pkgs.vscodium.fhsWithPackages
+        (ps: with ps; [ rustup zlib openssl.dev pkg-config ]);
 
       extensions = with pkgs.vscode-extensions; [
         arrterian.nix-env-selector
@@ -831,5 +830,5 @@ in {
     };
   };
 
-  home.stateVersion = "23.05";
+  home.stateVersion = "23.11";
 }
