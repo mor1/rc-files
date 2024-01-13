@@ -10,8 +10,6 @@ git/dot-gitlocal
 karabiner/**
 !karabiner/README.md
 
-local/dot-local
-
 offlineimap/__pycache__/
 
 pandoc/dot-pandoc/templates/auto

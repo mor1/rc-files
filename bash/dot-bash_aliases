@@ -1,31 +1,34 @@
-alias ls="ls -FC --group-directories-first -v"
-alias ll="ls -l"
-alias lll="ls -lZ --full-time"
-alias la="ls -A"
-alias lla="ls -lA"
-alias l="ls"
+alias cat="bat"
+alias ps="procs"
+alias ls="eza -F --group-directories-first --git" # ls -FC --group-directories-first -v"
 
-alias f="find . \! -path \*/.git/\* -a -name"
+alias l="ls"
+alias la="ls -A"
+alias ll="ls -l"
+alias lla="ls -lA"
+alias lll="ls -lZ --time-style=long-iso" # "ls -lZ --full-time"
+
+# alias f="find . \! -path \*/.git/\* -a -name"
 
 alias less="less -FRXi"
 alias m="less -E"
 
 alias bc="bc -l"
-alias df="git df --minimal --no-index --"
-alias dfw="git dfw --minimal --no-index --"
+alias dif="git df --minimal --no-index --"
+alias difw="git dfw --minimal --no-index --"
 
-alias src2ps="a2ps --highlight-level=normal --columns=4 --rows=1 -L190 -l90"
-alias rfc2ps="a2ps --highlight-level=normal --columns=4 --row=1 -l82 --interpret=no"
+# alias src2ps="a2ps --highlight-level=normal --columns=4 --rows=1 -L190 -l90"
+# alias rfc2ps="a2ps --highlight-level=normal --columns=4 --row=1 -l82 --interpret=no"
 
 alias ctime="python -c 'import sys,time; print(time.ctime(float(sys.argv[1])))'"
 alias bcat="hexdump -C"
 
-alias github-tunnel="ssh -f -N github-tunnel"
-alias irc-tunnels="ps aux | \grep -E -- '-tunnel$' | tr -s ' ' | cut -d ' ' -f 2 | xargs kill -9 ; ssh -f -N irc-tunnel ; ssh -f -N opw-tunnel"
+# alias github-tunnel="ssh -f -N github-tunnel"
+# alias irc-tunnels="ps aux | \grep -E -- '-tunnel$' | tr -s ' ' | cut -d ' ' -f 2 | xargs kill -9 ; ssh -f -N irc-tunnel ; ssh -f -N opw-tunnel"
 
-alias qv="qlmanage -px"
+# alias qv="qlmanage -px"
 
-alias eject="diskutil unmount"
+# alias eject="diskutil unmount"
 alias reset="\reset -i ^C"
 
 alias ho="handlr open"

@@ -1,4 +1,4 @@
-{ lib, config, nixpkgs, pkgs, ... }: # nur, ... }:
+{ lib, config, nixpkgs, pkgs, ... }:
 
 let
   username = "mort";
@@ -26,7 +26,7 @@ in {
     let
       system = [
         (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-        coreutils
+        # coreutils
         davmail
         direnv
         gnupg
@@ -40,6 +40,7 @@ in {
         sshfs
         stow
         strongswan
+        uutils-coreutils-noprefix
       ];
 
       apps = (let
@@ -58,37 +59,35 @@ in {
         cli_apps = [
           bc # calculator
           dig # because DNS
-          dua # disk usage, interactively
           exiftool # manipulate images
           file # identify filetype by magic
-          fzf # fuzzy file finder; desired by yazi
           get_iplayer # download from iPlayer
           ghostscript # ps etc
           handlr # manage XDG Open mappings
           pandoc # document processing and conversion
-          htop # graphical top
           imagemagick # image manipulation tools
-          inetutils
+          # inetutils
           jhead # jpeg exif header manipulation tool
           keychain # cli to manage SSH, GPG keys
           lynx # cli web browser
-          nushell # maybe it's time to kick another addiction
-          pdftk # manipulate PDF files
+          mupdf # PDF manipulation
+          pdftk # more PDF manipulation
+          qpdf # yet more PDF manipulation
           subversion # hysterical raisins
           texlive.combined.scheme-full # latex installation
+          traceroute
           tree # tree-format recursive ls
           unzip # what it says on the tin, because zip can't unzip
-          wget # network downloadre
+          wget # network downloader
           which # locate command in $PATH
-          yazi # file manager
           zip # what it says on the tin
-          zoxide # smarter cd; desired by yazi
         ];
         gui_apps = [
           alacritty # alternative xterm
           chromium # teams calling in browser doesn't work in firefox
           firefox # web browser
           gnome.nautilus # maybe the least sucky of the file managers, so far?
+          inkscape # vector graphics editing
           keybase-gui # keybase
           libreoffice # ~ms office
           meld # compare files / folders
@@ -103,7 +102,25 @@ in {
           zoom-us # zoom vc
         ];
         media_apps = [ digikam greg kodi rhythmbox vlc ];
-      in sway_apps ++ cli_apps ++ gui_apps ++ media_apps);
+        nu_posix = [
+          bat # better cat
+          bottom # btm ~ better top, htop, etc
+          broot # interactive directory navigation
+          dua # disk usage, interactively
+          eza # improved `ls`
+          fd # `find` replacement
+          fzf # fuzzy file finder; desired by yazi
+          htop # graphical top
+          just # updated gnumake replacement
+          mcfly # better shell history
+          nushell # maybe it's time to kick another addiction
+          procs # better ps
+          ripgrep # rg ~ `grep` replacement
+          viddy # better watch
+          yazi # file manager
+          zoxide # smarter cd; desired by yazi
+        ];
+      in sway_apps ++ cli_apps ++ gui_apps ++ media_apps ++ nu_posix);
 
       fonts = [
         corefonts
@@ -127,7 +144,6 @@ in {
           ]);
       in [
         emacs29 # even after all, because org-mode
-        fd # `find` replacement
         gh # github CLI
         git # obviously
         git-filter-repo # for fixing up repos
@@ -136,7 +152,6 @@ in {
         jq # pretty-print JSON
         nil # LSP for Nix language
         nixfmt # format .nix files
-        ripgrep # `grep` replacement
         rustup # manage Rust installations
       ] ++ python_tools ++ ocaml_tools);
 

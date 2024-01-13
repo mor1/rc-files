@@ -228,6 +228,16 @@ fi
 
 # direnv
 if [ -x "$(which direnv)" ]; then
-  eval "$(direnv hook bash)"
+  source <(direnv hook bash)
   direnv reload || true
+fi
+
+# procs
+if [ -x "$(which procs)" ]; then
+  source <(procs --gen-completion-out bash)
+fi
+
+# just
+if [ -x "$(which just)" ]; then
+  source <(just --completions bash)
 fi

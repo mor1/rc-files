@@ -13,7 +13,7 @@
     ignore-unknown = status -s | grep "^?? " | cut -f 2 -d " " >> .gitignore
     l = log --all --decorate=full
     ldiff = log --all -p --decorate=full --word-diff=color
-    lg = log --all --decorate=full --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ai (%ar)%Creset'
+    lg = log --all --decorate=full --graph --pretty=format:'%C(yellow)%h%C(reset) \"%s\" %C(cyan)%cd%C(reset) %C(blue)%an%C(reset) %C(green)%d%C(reset)'  # --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ai (%ar)%Creset'
     llg = log --all --decorate --graph --stat
     log = log --color-words
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
