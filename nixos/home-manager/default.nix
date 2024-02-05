@@ -28,7 +28,7 @@ in {
         (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
         # coreutils
         davmail
-        direnv
+        # direnv
         gnupg
         hunspell # spellchecking and dictionaries
         hunspellDicts.en_GB-large
@@ -55,6 +55,7 @@ in {
           wdisplays # gui for display configuration
           wev # wayland event viewer
           wl-clipboard # pipe to/from clipboard
+          wlclock # old skool analogue
         ];
         cli_apps = [
           bc # calculator
@@ -132,7 +133,7 @@ in {
 
       dev_tools = (let
         python_tools = [ python311 ]
-          ++ (with python311Packages; [ autopep8 pip rye ]);
+          ++ (with python311Packages; [ autopep8 pip pygments rye ]);
         ocaml_tools = [ gcc ocaml dune_3 ocamlformat opam ]
           ++ (with ocamlPackages; [
             cmdliner
@@ -470,12 +471,12 @@ in {
       enableCompletion = false;
     };
 
-    direnv = {
-      # per-directory env configuration
-      enable = true;
-      enableBashIntegration = true;
-      nix-direnv.enable = true;
-    };
+    # direnv = {
+    #   # per-directory env configuration
+    #   enable = true;
+    #   enableBashIntegration = true;
+    #   nix-direnv.enable = true;
+    # };
 
     chromium = { enable = true; };
 
@@ -843,6 +844,7 @@ in {
         }
       ];
     };
+
   };
 
   home.stateVersion = "23.11";

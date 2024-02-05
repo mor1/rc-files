@@ -14,10 +14,10 @@ in {
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users.mort = import ./home-manager;
-  };
+  # home-manager = {
+  #   extraSpecialArgs = { inherit inputs; };
+  #   users.mort = import ./home-manager;
+  # };
 
   nix = {
     # flakes
@@ -155,8 +155,9 @@ in {
 
   # system applications
   programs = {
-    vim.defaultEditor = true;
     sway.enable = true;
+    vim.defaultEditor = true;
+    wireshark.enable = true;
   };
 
   xdg.portal = {
@@ -172,7 +173,7 @@ in {
 
     mort = {
       isNormalUser = true;
-      extraGroups = [ "audio" "docker" "video" "wheel" ];
+      extraGroups = [ "audio" "docker" "video" "wheel" "wireshark" ];
     };
 
   };
