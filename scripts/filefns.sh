@@ -360,10 +360,3 @@ function kvasira {
   curl -X POST -s -d "{\"doc\": \"$2\"}" -H "$content" -H "$auth $token" "$api/query?query_type=url&k=${3:-5}" \
     | jq -r '.response.results|map("\(.title) - \(.uri)", "\(.summary)", "")|.[]'|sed '$ d';
 }
-
-#
-# std od invocation
-#
-function xd() {
-  od -A x -t x1z "$@"
-}
