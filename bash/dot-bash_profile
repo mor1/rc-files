@@ -1,4 +1,6 @@
-[ -r ~/.environment ] && source ~/.environment
+if tty -s ; then
+  [ -r ~/.environment ] && source ~/.environment
+fi
 
 _KEYS="bitbucket-key-rsa github-key cucl-key examqs-key-rsa"
 
