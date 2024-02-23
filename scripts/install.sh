@@ -11,7 +11,7 @@ case $(uname -s) in
     ;;
 esac
 
-APPS="local ocaml pandoc python"
+APPS="ocaml pandoc python"
 stow --dotfiles \
      bash \
      emacs \

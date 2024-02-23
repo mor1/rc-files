@@ -115,15 +115,17 @@ in {
   console.keyMap = "uk";
 
   # audio
-  sound.enable = true;
   sound.mediaKeys.enable = true;
-  nixpkgs.config.pulseaudio = true;
-  hardware.pulseaudio.enable = true;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   # system services
   services = {
-    # getty.autologinUser = "mort";
-
     automatic-timezoned.enable = true;
     localtimed.enable = true;
     dbus = {

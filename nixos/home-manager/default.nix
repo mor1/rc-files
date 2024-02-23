@@ -496,9 +496,7 @@ in {
       # ];
     };
 
-    git = {
-      enable = true;
-    };
+    git = { enable = true; };
 
     i3status-rust = {
       # providing information for status bars
