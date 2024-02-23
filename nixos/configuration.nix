@@ -10,14 +10,14 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./cambridge-vpn
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  # home-manager = {
-  #   extraSpecialArgs = { inherit inputs; };
-  #   users.mort = import ./home-manager;
-  # };
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users.mort = import ./home-manager;
+  };
 
   nix = {
     # flakes
@@ -36,16 +36,20 @@ in {
     builtins.elem (lib.getName pkg) [ "memtest86-efi" ];
   security.polkit.enable = true;
   services.udisks2.enable = true;
-  environment.systemPackages = with pkgs; [
-    cifs-utils # samba
-    git # obviously
-    ifuse # ios optional; to mount using 'ifuse'
-    keyd # key remappings
-    libimobiledevice # ios
-    lxqt.lxqt-policykit # for gvfs
-    restic # backups
-    vim # i just don't like nano, ok?
-  ];
+  environment = {
+    sessionVariables = { NIXOS_OZONE_WL = "1"; };
+
+    systemPackages = with pkgs; [
+      cifs-utils # samba
+      git # obviously
+      ifuse # ios optional; to mount using 'ifuse'
+      keyd # key remappings
+      libimobiledevice # ios
+      lxqt.lxqt-policykit # for gvfs
+      restic # backups
+      vim # i just don't like nano, ok?
+    ];
+  };
 
   # boot via UEFI
   boot = {
@@ -163,8 +167,9 @@ in {
   xdg.portal = {
     # https://nixos.wiki/wiki/Sway
     enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
+    # gtkUsePortal = true;
     wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   # setup users
@@ -247,5 +252,5 @@ in {
     # package = pkgs.usbmuxd2;
   };
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }

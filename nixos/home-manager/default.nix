@@ -28,7 +28,7 @@ in {
         (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
         # coreutils
         davmail
-        # direnv
+        direnv
         gnupg
         hunspell # spellchecking and dictionaries
         hunspellDicts.en_GB-large
@@ -40,6 +40,7 @@ in {
         sshfs
         stow
         strongswan
+        usbutils
         uutils-coreutils-noprefix
       ];
 
@@ -67,7 +68,7 @@ in {
           handlr # manage XDG Open mappings
           pandoc # document processing and conversion
           imagemagick # image manipulation tools
-          # inetutils
+          inetutils
           jhead # jpeg exif header manipulation tool
           keychain # cli to manage SSH, GPG keys
           lynx # cli web browser
@@ -107,11 +108,14 @@ in {
           bat # better cat
           bottom # btm ~ better top, htop, etc
           broot # interactive directory navigation
+          delta # better syntax highlighting diff
           dua # disk usage, interactively
           eza # improved `ls`
           fd # `find` replacement
           fzf # fuzzy file finder; desired by yazi
+          hexyl # hex pretty printer
           htop # graphical top
+          jujutsu # better git
           just # updated gnumake replacement
           mcfly # better shell history
           nushell # maybe it's time to kick another addiction
@@ -133,7 +137,7 @@ in {
 
       dev_tools = (let
         python_tools = [ python311 ]
-          ++ (with python311Packages; [ autopep8 pip pygments rye ]);
+          ++ (with python311Packages; [ autopep8 pip pygments ruff rye uv ]);
         ocaml_tools = [ gcc ocaml dune_3 ocamlformat opam ]
           ++ (with ocamlPackages; [
             cmdliner
@@ -193,7 +197,7 @@ in {
           ${msg [ "exec swayosd --max-volume 160" ]}
 
           ${workspace "5:media"}
-          wait_for "rhythmbox"
+          wait_for "rhythmbox -n"
 
           ${workspace "4:chat"}
           wait_for slack
@@ -239,6 +243,12 @@ in {
 
       # additional keybindings; cannot simply remap input ev -> output ev
       keybindings = let
+        wlandev = "wlp0s20f3";
+        netdevs = [
+          "enp0s20f0u6u3c2" # wired, O2
+          "enp0s13f0u3u1" # wired, GB
+          "${wlandev}" # wireless
+        ];
         f1 = "exec swayosd --output-volume mute-toggle";
         f2 = "exec swayosd --output-volume lower";
         f3 = "exec swayosd --output-volume raise";
@@ -246,7 +256,7 @@ in {
         f5 = "exec brightnessctl s 10%-";
         f6 = "exec brightnessctl s 10%+";
         f7 = "nop f7 pressed";
-        f8 = "nop f8 pressed";
+        f8 = "nmcli dev disconnect ${wlandev}"; # # XXX need to toggle!
         f9 = "exec rhythmbox-client --play-pause";
         f10 = "exec rhythmbox-client --stop";
         f11 = "exec rhythmbox-client --previous";
@@ -351,7 +361,9 @@ in {
           sink =
             "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink";
         };
-
+        # nms_a = {
+        #   screen = "HDMI-A-1";
+        # };
         pactl = "${pkgs.pulseaudio}/bin/pactl";
         sm = "${pkgs.sway}/bin/swaymsg";
         move_ws = w: o: ''
@@ -457,31 +469,25 @@ in {
         ];
       };
 
-    swayosd = {
-      enable = true;
-      maxVolume = 160;
-    };
+    swayosd.enable = true;
   };
 
   programs = {
 
     bash = {
-      # obviously
       enable = false;
       enableCompletion = false;
     };
 
-    # direnv = {
-    #   # per-directory env configuration
-    #   enable = true;
-    #   enableBashIntegration = true;
-    #   nix-direnv.enable = true;
-    # };
+    direnv = {
+      enable = true;
+      enableBashIntegration = true;
+      nix-direnv.enable = true;
+    };
 
     chromium = { enable = true; };
 
     firefox = {
-      # everybody needs a web browser these days
       enable = true;
       package = pkgs.firefox-wayland;
       # profiles.default.extensions = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -491,7 +497,6 @@ in {
     };
 
     git = {
-      # obviously
       enable = true;
     };
 
@@ -613,7 +618,6 @@ in {
     };
 
     opam = {
-      # OCaml support
       enable = true;
       enableBashIntegration = true;
     };
@@ -639,15 +643,21 @@ in {
         arrterian.nix-env-selector
         ban.spellright
         betterthantomorrow.calva
-        # earshinov.sort-lines-by-selection
-        # jasonlhy.hungry-delete
+        # bierner.markdown-preview-github-styles
+        shd101wyy.markdown-preview-enhanced
+        bungcip.better-toml
+        foxundermoon.shell-format
         jnoortheen.nix-ide
-        # medo64.render-crlf
+        kahole.magit
         ms-pyright.pyright
         ms-python.python
         ocamllabs.ocaml-platform
+        # rust-lang.rust
+        rust-lang.rust-analyzer
+        stkb.rewrap
         tuttieee.emacs-mcx
         # usernamehw.remove-empty-lines
+        yzhang.markdown-all-in-one
       ];
 
       userSettings = {
@@ -847,5 +857,5 @@ in {
 
   };
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
 }
