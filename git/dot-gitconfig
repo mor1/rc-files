@@ -44,46 +44,62 @@
     ui = true
 
 [core]
-    pager = less -+$LESS -FRXi
+    pager = delta
     autocrlf = input
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+
+[diff]
+    renames = true
+    colorMoved = default
+    
+[init]
+    defaultBranch = main
+
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    conflictstyle = diff3
+    tool = ediff
+
+[mergetool "ediff"]
+    cmd = emacs --eval \"(ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\")\"
+
+[pull]
+    rebase = true
+
+[push]
+    default = tracking
+
+[rebase]
+    autoStash = true
 
 [rerere]
     enabled = true
     autoupdate = true
 
-[push]
-    default = tracking
-
-[merge]
-    conflictstyle = diff3
-    tool = ediff
-[mergetool "ediff"]
-    cmd = emacs --eval \"(ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\")\"
-
-[diff]
-    renames = true
-[transfer]
-    fsckObjects = true
-[user]
-    signingkey = 6D6612A7F8827E91
-    name = Richard Mortier
-    email = mort@cantab.net
 [sendemail]
     confirm = auto
     smtpserver = smtp.gmail.com
     smtpserverport = 587
     smtpencryption = tls
-[pull]
-    rebase = true
-[rebase]
-    autoStash = true
-[init]
-    defaultBranch = main
+
+[transfer]
+    fsckObjects = true
+
+[user]
+    signingkey = 6D6612A7F8827E91
+    name = Richard Mortier
+    email = mort@cantab.net
+
 [credential "https://github.com"]
     helper = !/usr/local/bin/gh auth git-credential
 [credential]
     helper = store
+
+[delta]
+    navigate = true
+
 [filter "lfs"]
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
