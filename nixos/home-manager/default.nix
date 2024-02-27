@@ -41,7 +41,6 @@ in {
         stow
         strongswan
         usbutils
-        uutils-coreutils-noprefix
       ];
 
       apps = (let
@@ -121,6 +120,7 @@ in {
           nushell # maybe it's time to kick another addiction
           procs # better ps
           ripgrep # rg ~ `grep` replacement
+          uutils-coreutils-noprefix # replaces GNU `coreutils`
           viddy # better watch
           yazi # file manager
           zoxide # smarter cd; desired by yazi
@@ -256,7 +256,14 @@ in {
         f5 = "exec brightnessctl s 10%-";
         f6 = "exec brightnessctl s 10%+";
         f7 = "nop f7 pressed";
-        f8 = "nmcli dev disconnect ${wlandev}"; # # XXX need to toggle!
+        wifi_toggle = pkgs.writeShellScriptBin "wifi_toggle.sh" ''
+          if [[ $(nmcli -t r) =~ :enabled ]]; then
+            nmcli r all off
+          else
+            nmcli r all on
+          fi
+          '';
+        f8 = "exec wifi-toggle";
         f9 = "exec rhythmbox-client --play-pause";
         f10 = "exec rhythmbox-client --stop";
         f11 = "exec rhythmbox-client --previous";
