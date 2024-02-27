@@ -136,9 +136,10 @@ SHOST=${LHOST%%.*}
 export CDPATH KERNEL LHOST PLATFORM SHOST
 
 PAGER="less -FRXi"
+BAT_PAGER=$PAGER
 MANPAGER="sh -c 'col -bx | bat -l man -p'"
 MANROFFOPT="-c"
-export PAGER MANPAGER MANROFFOPT
+export PAGER BAT_PAGER MANPAGER MANROFFOPT
 
 LC_ALL="en_GB.UTF-8"
 LANG="en_GB.UTF-8"
@@ -241,4 +242,9 @@ fi
 # just
 if [ -x "$(which just)" ]; then
   source <(just --completions bash)
+fi
+
+# maestral
+if [ -x "$(which maestral)" ]; then
+  source <(maestral completion bash)
 fi
