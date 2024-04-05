@@ -44,6 +44,7 @@ in {
       cifs-utils # samba
       ifuse # ios optional; to mount using 'ifuse'
       keyd # key remappings
+      krb5 # kerberos
       libimobiledevice # ios
       lxqt.lxqt-policykit # for gvfs
       restic # backups

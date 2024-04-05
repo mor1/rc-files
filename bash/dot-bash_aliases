@@ -1,7 +1,8 @@
 alias cat="bat"
+alias id="[ -x /usr/bin/id ] && /usr/bin/id || id"
 alias less="bat"
 alias ls="eza -F --group-directories-first --git"
-alias ps="procs"
+alias ps="procs -t"
 alias xd="hexyl"
 
 alias l="ls"
