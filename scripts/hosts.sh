@@ -3,7 +3,6 @@
 #
 
 SSH="ssh -K"
-CUCL="ely.cl"
 
 SSHFSOPTS="\
   -o follow_symlinks\
@@ -15,59 +14,61 @@ SSHFS="sshfs $SSHFSOPTS"
 
 # CUCL
 
-_kinit () {
-  _A=rmm1002@DC.CL.CAM.AC.UK
-  ssh -t $1 "cl-krenew --ensuretgt || kinit $_A || /usr/kerberos/bin/kinit $_A"
+kinit () {
+  cucl_local=false
+  while read IP; do
+    if [[ $IP =~ ^128.232. ]]; then
+      cucl_local=true
+    fi
+  done < <(ip -j -4 a | jq -r '.[].addr_info | .[].local')
+
+  teardown_vpn=false
+  if [[ $cucl_local == false ]]; then
+    teardown_vpn=true
+    sudo swanctl --initiate --child CUCL
+  fi
+
+  cl-krenew --ensuretgt || $(which kinit) -R rmm1002@DC.CL.CAM.AC.UK || $(which kinit) -f rmm1002@DC.CL.CAM.AC.UK
+
+  if [[ $teardown_vpn == true ]]; then
+    sudo swanctl --terminate --ike CUCL
+  fi
 }
 
 binky () {
-  _kinit binky.cl
   $SSH binky.cl
 }
 
 cronserv () {
-  _kinit cronserv$1.cl
   $SSH cron-serv$1.cl
 }
 
 cucl () {
-  _kinit $CUCL
-  $SSH $CUCL
+  $SSH slogin.cl
 }
 
 cuclfs () {
-  _kinit $CUCL
-  $SSHFS $CUCL:/home/rmm1002 ~/l/rmm1002
-  $SSHFS $CUCL:/ ~/l/cucl
+  $SSHFS slogin.cl:/home/rmm1002 ~/l/rmm1002
+  $SSHFS slogin.cl:/ ~/l/cucl
 }
 
 ely () {
-  _kinit ely.cl
   $SSH ely.cl
 }
 
 quoth () {
-  _kinit $CUCL
   $SSH quoth.cl
 }
 
 uksystems () {
-  _kinit svr-rmm1002-uksystems-hotcrp.cl
   $SSH rmm1002@hotcrp.uksystems.org # svr-rmm1002-uksystems-hotcrp.cl
 }
 
 office () {
-  $KINIT
   $SSH daugleddau.cl
 }
 
-lab () {
-  H=$1
-  _kinit $H.cl
-  $SSH $H.cl
-}
-
-# Other
+# home
 
 jackdaw () {
   $SSH -k jackdaw.lan

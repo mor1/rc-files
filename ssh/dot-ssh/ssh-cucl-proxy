@@ -1,27 +1,19 @@
 #!/usr/bin/env bash
 #
-# Copyright (C) 2017-2019 Richard Mortier <mort@cantab.net>
+# Copyright (C) 2017-2024 Richard Mortier <mort@cantab.net>
 #
-# Detect if remote and need to hop through the slogin.cl gateway; otherwise use
-# bash `/dev/tcp` magic to setup a transparent tunnel. Could probably do this
-# with `netcat` too if you wanted.
+# Determine if we're on the Lab network, and start the VPN if we're not. Then
+# use bash `/dev/tcp` magic to setup a transparent tunnel.
 
-# old linux:
-# ifconfig | grep -E '^([[:alnum:]]*:.*$|[[:space:]]+(inet |inet6 ))' \
-# | cut -d " " -f 1-2
-
-# macos: heaven only knows why sometimes we get en6 as the wired interface
-# for i in $(seq 1 6); do
-#   IP=$(ipconfig getifaddr en$i)
-#   if [[ "$IP" == 128.232.* ]]; then
-#     exec 3<>/dev/tcp/$1/$2 ; cat <&3 & cat >&3 ; kill $!
-#   fi
-# done
-
+cucl_local=false
 while read IP; do
   if [[ $IP =~ ^128.232. ]]; then
-    exec 3<>/dev/tcp/$1/$2 ; cat <&3 & cat >&3 ; kill $!
+    cucl_local=true
   fi
-done < <(ip -j -4 a | jq '.[].addr_info | .[].local')
+done < <(ip -j -4 a | jq -r '.[].addr_info | .[].local')
 
-ssh -AKqW $1:$2 rmm1002@ely.cl.cam.ac.uk
+if [[ $cucl_local == false ]]; then
+  sudo swanctl --initiate --child CUCL 2>/dev/null
+fi
+
+exec 3<>/dev/tcp/$1/$2 ; cat <&3 & cat >&3 ; kill $!
