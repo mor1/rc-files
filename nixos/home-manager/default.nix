@@ -26,14 +26,14 @@ in {
     let
       system = [
         (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-        # coreutils
         davmail
         direnv
         gnupg
         hunspell # spellchecking and dictionaries
         hunspellDicts.en_GB-large
-        keybase
         kbfs
+        keybase
+        krb5
         maestral
         onedrive
         pciutils
@@ -47,11 +47,10 @@ in {
         sway_apps = [
           brightnessctl # control screen brightness
           gammastep # automatically dim+redden screen at night
-          gnome3.adwaita-icon-theme # gnome-ish icons
           grim
           kanshi # modify sway config on hardware changes
           slurp
-          swayosd
+          swayosd # on-screen display for various states
           wdisplays # gui for display configuration
           wev # wayland event viewer
           wl-clipboard # pipe to/from clipboard
@@ -75,9 +74,11 @@ in {
           pdftk # more PDF manipulation
           qpdf # yet more PDF manipulation
           subversion # hysterical raisins
+          sysstat # system stats
           texlive.combined.scheme-full # latex installation
           traceroute
           tree # tree-format recursive ls
+          typst # better latex?
           unzip # what it says on the tin, because zip can't unzip
           wget # network downloader
           which # locate command in $PATH
@@ -128,16 +129,17 @@ in {
       in sway_apps ++ cli_apps ++ gui_apps ++ media_apps ++ nu_posix);
 
       fonts = [
+        (nerdfonts.override { fonts = [ "Hack" ]; })
         corefonts
-        font-awesome_4
-        material-design-icons
-        powerline-fonts
+        # font-awesome_4
+        # material-design-icons
+        # powerline-fonts
         vistafonts
       ];
 
       dev_tools = (let
-        python_tools = [ python311 ]
-          ++ (with python311Packages; [ autopep8 pip pygments ruff rye uv ]);
+        python_tools = [ hatch python312 ruff uv ]
+          ++ (with python312Packages; [ autopep8 pip pygments ]);
         ocaml_tools = [ gcc ocaml dune_3 ocamlformat opam ]
           ++ (with ocamlPackages; [
             cmdliner
@@ -172,7 +174,8 @@ in {
 
     wrapperFeatures.gtk = true;
 
-    config = rec {
+    config = let swayosd = lib.getExe' pkgs.swayosd "swayosd-client";
+    in rec {
       modifier = "Mod4"; # use WIN not ALT-L for sway controls
       focus.wrapping = "force";
       workspaceAutoBackAndForth = true;
@@ -194,21 +197,24 @@ in {
             wait $pid 2>/dev/null
           }
 
-          ${msg [ "exec swayosd --max-volume 160" ]}
+          ${msg [ "exec ${swayosd} --max-volume 160" ]}
 
           ${workspace "5:media"}
-          wait_for "rhythmbox -n"
+          wait_for "rhythmbox"
 
           ${workspace "4:chat"}
           wait_for slack
           ${after 1 [ "split horizontal" ]}
           wait_for skypeforlinux
           ${after 3 [ "[class=Skype] focus" "split vertical" ]}
-          wait_for signal-desktop
+          # some signal weirdness prevents the window appearing until a second
+          # copy is run, and fails to start...
+          wait_for "signal-desktop & sleep 2 && signal-desktop"
           ${after 1 [ "[class=Skype] layout stacking" ]}
 
           ${workspace "3:mail"}
           wait_for firefox -P richard.mortier@gmail.com
+          wait_for firefox -P 14mortier@gmail.com
           wait_for firefox -P mort@ikva.ai
           wait_for firefox -P rmm1002@cam.ac.uk
           wait_for teams-for-linux
@@ -249,20 +255,20 @@ in {
           "enp0s13f0u3u1" # wired, GB
           "${wlandev}" # wireless
         ];
-        f1 = "exec swayosd --output-volume mute-toggle";
-        f2 = "exec swayosd --output-volume lower";
-        f3 = "exec swayosd --output-volume raise";
-        f4 = "exec swayosd --input-volume mute-toggle";
+        f1 = "exec ${swayosd} --output-volume mute-toggle";
+        f2 = "exec ${swayosd} --output-volume lower";
+        f3 = "exec ${swayosd} --output-volume raise";
+        f4 = "exec ${swayosd} --input-volume mute-toggle";
         f5 = "exec brightnessctl s 10%-";
         f6 = "exec brightnessctl s 10%+";
         f7 = "nop f7 pressed";
-        wifi_toggle = pkgs.writeShellScriptBin "wifi_toggle.sh" ''
-          if [[ $(nmcli -t r) =~ :enabled ]]; then
-            nmcli r all off
+        net_toggle = pkgs.writeShellScriptBin "net_toggle.sh" ''
+          if [[ $(nmcli n) =~ enabled ]]; then
+            nmcli n off
           else
-            nmcli r all on
+            nmcli n on
           fi
-          '';
+        '';
         f8 = "exec wifi-toggle";
         f9 = "exec rhythmbox-client --play-pause";
         f10 = "exec rhythmbox-client --stop";
@@ -320,6 +326,8 @@ in {
     '';
   };
 
+  systemd.user.services.kbfs.Service.PrivateTmp = lib.mkForce false;
+
   services = {
 
     emacs = {
@@ -359,12 +367,12 @@ in {
             "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink";
         };
         wgb = {
-          screen = "LG Electronics LG HDR 4K 0x0000DD99";
+          screen = "LG Electronics LG HDR 4K 0x0005DD99";
           sink =
             "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp_3__sink";
         };
         o2 = {
-          screen = "LG Electronics LG HDR 4K 0x00005FAC";
+          screen = "LG Electronics LG HDR 4K 0x00035DAC";
           sink =
             "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink";
         };
@@ -373,7 +381,7 @@ in {
         # };
         pactl = "${pkgs.pulseaudio}/bin/pactl";
         sm = "${pkgs.sway}/bin/swaymsg";
-        move_ws = w: o: ''
+        mws = w: o: ''
           ${sm} "workspace --no-auto-back-and-forth ${w}, move workspace to output '${o}'"
         '';
       in {
@@ -396,11 +404,11 @@ in {
             }
           ];
           exec = [
-            "${move_ws "1" wgb.screen}"
-            "${move_ws "2:code" wgb.screen}"
-            "${move_ws "3:mail" laptop.screen}"
-            "${move_ws "4:chat" wgb.screen}"
-            "${move_ws "5:media" laptop.screen}"
+            "${mws "1" wgb.screen}"
+            "${mws "2:code" wgb.screen}"
+            "${mws "3:mail" laptop.screen}"
+            "${mws "4:chat" wgb.screen}"
+            "${mws "5:media" laptop.screen}"
             "${pactl} set-default-sink ${wgb.sink}"
             ''${sm} "workspace --no-auto-back-and-forth 1"''
           ];
@@ -420,12 +428,12 @@ in {
             }
           ];
           exec = [
-            "${move_ws "1" o2.screen}"
-            "${move_ws "2:code" o2.screen}"
-            "${move_ws "3:mail" laptop.screen}"
-            "${move_ws "4:chat" o2.screen}"
+            "${mws "1" o2.screen}"
+            "${mws "2:code" o2.screen}"
+            "${mws "3:mail" laptop.screen}"
+            "${mws "4:chat" o2.screen}"
             "${pactl} set-default-sink ${o2.sink}"
-            "${move_ws "5:media" laptop.screen}"
+            "${mws "5:media" laptop.screen}"
             ''${sm} "workspace --no-auto-back-and-forth 1"''
           ];
         };
@@ -437,15 +445,18 @@ in {
         #     scale = 1.0;
         #   }];
         #   exec = [
-        #     "${move_ws "3:mail" o2.screen}"
-        #     "${move_ws "5:media" o2.screen}"
+        #     "${mws "3:mail" o2.screen}"
+        #     "${mws "5:media" o2.screen}"
         #   ];
         # };
       };
     };
 
     keybase.enable = true;
-    kbfs.enable = true;
+    kbfs = {
+      enable = true;
+      # enableRedirector = true;
+    };
 
     swayidle =
       # screen saving and locking
@@ -644,29 +655,35 @@ in {
       package = pkgs.vscodium.fhsWithPackages
         (ps: with ps; [ rustup zlib openssl.dev pkg-config ]);
 
-      extensions = with pkgs.vscode-extensions; [
-        arrterian.nix-env-selector
-        ban.spellright
-        betterthantomorrow.calva
-        # bierner.markdown-preview-github-styles
-        shd101wyy.markdown-preview-enhanced
-        bungcip.better-toml
-        foxundermoon.shell-format
-        jnoortheen.nix-ide
-        kahole.magit
-        ms-pyright.pyright
-        ms-python.python
-        ocamllabs.ocaml-platform
-        # rust-lang.rust
-        rust-lang.rust-analyzer
-        stkb.rewrap
-        tuttieee.emacs-mcx
-        # usernamehw.remove-empty-lines
-        yzhang.markdown-all-in-one
-      ];
+      extensions = with pkgs.vscode-extensions;
+        [
+          arrterian.nix-env-selector
+          ban.spellright
+          bbenoist.nix
+          betterthantomorrow.calva
+          charliermarsh.ruff
+          foxundermoon.shell-format
+          jnoortheen.nix-ide
+          kahole.magit
+          ms-pyright.pyright
+          ms-python.python
+          ocamllabs.ocaml-platform
+          rust-lang.rust-analyzer
+          shd101wyy.markdown-preview-enhanced
+          stkb.rewrap
+          tamasfe.even-better-toml
+          tuttieee.emacs-mcx
+          usernamehw.errorlens
+          yzhang.markdown-all-in-one
+        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+          publisher = "bierner";
+          name = "markdown-preview-github-styles";
+          version = "2.0.4";
+          sha256 = "sha256-jJulxvjMNsqQqmsb5szQIAUuLWuHw824Caa0KArjUVw=";
+        }];
 
       userSettings = {
-        "editor.fontFamily" = [ "Hack" "Droid Sans Mono" "monospace" ];
+        "editor.fontFamily" = "Hack";
         "editor.fontSize" = 11;
         "editor.indentSize" = "tabSize";
         "editor.multiCursorModifier" = "ctrlCmd";
@@ -745,6 +762,15 @@ in {
           "editor.unicodeHighlight.ambiguousCharacters" = false;
           "editor.unicodeHighlight.invisibleCharacters" = false;
           # "editor.wordWrap" = "on";
+        };
+
+        "[python]" = {
+          "editor.formatOnSave" = true;
+          "editor.codeActionsOnSave" = {
+            "source.fixAll" = "explicit";
+            "source.organizeImports" = "explicit";
+          };
+          "editor.defaultFormatter" = "charliermarsh.ruff";
         };
 
       };
