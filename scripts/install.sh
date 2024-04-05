@@ -4,7 +4,7 @@ case $(uname -s) in
     ;;
 
   Linux )
-    if [ ! -r /etc/NIXOS ]; then
+    if [ ! -d ~/.nix-profile ]; then
       sudo apt install -yy curl stow || true
     fi
 
@@ -29,7 +29,7 @@ case $(uname -s) in
     ;;
 
   Linux ) ## likely to be a random server
-    if [ -r /etc/NIXOS ]; then ## ...or a linux laptop?! :)
+    if [ -d ~/.nix-profile ]; then ## ...or a linux laptop?! :)
       stow --dotfiles $APPS
     else
       ## many linux distros appear to have old git-prompt.sh

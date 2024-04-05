@@ -22,17 +22,21 @@
 #
 
 unset PATH
+aenv PATH /bin
+aenv PATH /usr/bin
+
 if [ -r /etc/NIXOS ]; then
   aenv PATH /run/current-system/sw/bin
-  aenv PATH /nix/var/nix/profiles/default/bin
-  aenv PATH /etc/profiles/per-user/mort/bin
-  aenv PATH /home/mort/.nix-profile/bin
   aenv PATH /run/wrappers/bin
+fi
+
+if [ -d ~/.nix-profile ]; then  
+  aenv PATH /nix/var/nix/profiles/default/bin
+  aenv PATH /etc/profiles/per-user/$USER/bin
+  aenv PATH /home/$USER/.nix-profile/bin
 else
   aenv PATH /sbin
-  aenv PATH /bin
   aenv PATH /usr/sbin
-  aenv PATH /usr/bin
   aenv PATH /usr/X11R6/bin
   aenv PATH /usr/local/sbin
   aenv PATH /usr/local/bin
