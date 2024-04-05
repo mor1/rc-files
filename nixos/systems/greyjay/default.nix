@@ -1,22 +1,23 @@
-{ inputs, lib, config, pkgs, options, ... }:
+{ inputs, lib, pkgs, options, ... }:
 
 let
   root_dev = "/dev/disk/by-uuid/c3cc9248-ade1-4b94-9e6e-d50990171471";
   home_dev = "/dev/disk/by-uuid/3bbf38b9-06f1-4df3-b29c-3d2a863088cc";
   swap_dev = "/dev/disk/by-uuid/223bf99d-f6e2-41b0-b30f-7e1064e308df";
   hostname = "greyjay";
+  username = "mort";
 in {
   # setup configuration, home-manager, flake
   imports = [
     ./hardware-configuration.nix
-    ./cambridge-vpn
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
     inputs.home-manager.nixosModules.home-manager
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-9th-gen
+    ../../modules/nixos/cambridge-vpn
   ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users.mort = import ./home-manager;
+    users.${username} = import ../../home-manager/${hostname};
   };
 
   nix = {
@@ -41,7 +42,6 @@ in {
 
     systemPackages = with pkgs; [
       cifs-utils # samba
-      git # obviously
       ifuse # ios optional; to mount using 'ifuse'
       keyd # key remappings
       libimobiledevice # ios
@@ -156,52 +156,19 @@ in {
     onedrive.enable = true;
 
     # podgrab.enable = true;
-    printing.enable = true;
-  };
-
-  # system applications
-  programs = {
-    sway.enable = true;
-    vim.defaultEditor = true;
-    wireshark.enable = true;
-  };
-
-  xdg.portal = {
-    # https://nixos.wiki/wiki/Sway
-    enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
-    # gtkUsePortal = true;
-    wlr.enable = true;
-  };
-
-  # setup users
-  users.users = {
-    root = { extraGroups = [ "wheel" ]; };
-
-    mort = {
-      isNormalUser = true;
-      extraGroups = [ "audio" "docker" "video" "wheel" "wireshark" ];
+    printing = {
+      enable = true;
+      clientConf = "ServerName cups-serv.cl.cam.ac.uk";
     };
 
-  };
-
-  # restic backups not as root; https://nixos.wiki/wiki/Restic
-  # users.users.restic.isNormalUser = true;
-  # security.wrappers.restic = {
-  #   source = "${pkgs.restic.out}/bin/restic";
-  #   owner = "restic";
-  #   group = "users";
-  #   permissions = "u=rwx,g=,o=";
-  #   capabilities = "cap_dac_read_search=+ep";
-  # };
-
-  # automount USB storage devices on plugin
-  services = {
+    # automount USB storage devices on plugin
     udev.extraRules = ''
       ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", \
         ENV{ID_FS_USAGE}=="filesystem", \
         RUN{program}+= "${pkgs.systemd}/bin/systemd-mount --no-block -AG $devnode"
     '';
+
+    # backups
     restic = {
       backups = let
         backup = target: {
@@ -240,7 +207,44 @@ in {
         backup-wgb = backup "wgb";
       };
     };
+
   };
+
+  # system applications
+  programs = {
+    sway.enable = true;
+    vim.defaultEditor = true;
+    wireshark.enable = true;
+  };
+
+  xdg.portal = {
+    # https://nixos.wiki/wiki/Sway
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
+    # gtkUsePortal = true;
+    wlr.enable = true;
+  };
+
+  # setup users
+  users.users = {
+    root = { extraGroups = [ "wheel" ]; };
+
+    mort = {
+      isNormalUser = true;
+      extraGroups = [ "audio" "docker" "video" "wheel" "wireshark" ];
+    };
+
+  };
+
+  # restic backups not as root; https://nixos.wiki/wiki/Restic
+  # users.users.restic.isNormalUser = true;
+  # security.wrappers.restic = {
+  #   source = "${pkgs.restic.out}/bin/restic";
+  #   owner = "restic";
+  #   group = "users";
+  #   permissions = "u=rwx,g=,o=";
+  #   capabilities = "cap_dac_read_search=+ep";
+  # };
 
   # docker
   virtualisation.docker = {
@@ -253,6 +257,13 @@ in {
     enable = true;
     # package = pkgs.usbmuxd2;
   };
+
+  # kerberos for cambridge
+  security.krb5.settings.config = ''
+    [libdefaults]
+    forwardable = true
+    default_realm = DC.CL.CAM.AC.UK
+  '';
 
   system.stateVersion = "24.05";
 }

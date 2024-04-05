@@ -10,13 +10,36 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = inputs@{ nixpkgs, ... }: {
+  outputs = { nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       greyjay = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        system = "x86_64-linux";
-        modules = [ ./configuration.nix ];
+        specialArgs = {
+          inherit inputs;
+          username = "mort";
+        };
+        modules = [ ./systems/greyjay ];
+      };
+    };
+
+    homeConfigurations = {
+      "mort@greyjay" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = { inherit inputs; };
+        modules = [ ./home-manager/greyjay ];
+      };
+
+      "rmm1002@binky" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = { inherit inputs; };
+        modules = [ ./home-manager/binky ];
+      };
+
+      "rmm1002@quoth" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = { inherit inputs; };
+        modules = [ ./home-manager/quoth ];
       };
     };
   };
+
 }

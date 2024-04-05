@@ -1,0 +1,240 @@
+{ pkgs, ... }: {
+
+  programs.vscode = {
+    enable = true;
+
+    package = pkgs.vscodium.fhsWithPackages
+      (ps: with ps; [ rustup zlib openssl.dev pkg-config ]);
+
+    extensions = with pkgs.vscode-extensions;
+      [
+        arrterian.nix-env-selector
+        ban.spellright
+        bbenoist.nix
+        betterthantomorrow.calva
+        charliermarsh.ruff
+        foxundermoon.shell-format
+        jnoortheen.nix-ide
+        kahole.magit
+        ms-pyright.pyright
+        ms-python.python
+        ocamllabs.ocaml-platform
+        rust-lang.rust-analyzer
+        shd101wyy.markdown-preview-enhanced
+        stkb.rewrap
+        tamasfe.even-better-toml
+        tuttieee.emacs-mcx
+        usernamehw.errorlens
+        yzhang.markdown-all-in-one
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+        publisher = "bierner";
+        name = "markdown-preview-github-styles";
+        version = "2.0.4";
+        sha256 = "sha256-jJulxvjMNsqQqmsb5szQIAUuLWuHw824Caa0KArjUVw=";
+      }];
+
+    userSettings = {
+      "editor.fontFamily" = "Hack";
+      "editor.fontSize" = 11;
+      "editor.indentSize" = "tabSize";
+      "editor.multiCursorModifier" = "ctrlCmd";
+      "editor.renderWhitespace" = "none";
+      "editor.rulers" = [
+        {
+          "column" = 72;
+          "color" = "#aaa";
+        }
+        {
+          "column" = 100;
+          "color" = "#aaa";
+        }
+        { # alpha=0 ~ transparent
+          "column" = 0;
+          "color" = "#0000";
+        }
+      ];
+      "editor.useTabStops" = false;
+      # "editor.wordWrap" = "bounded";
+
+      "explorer.confirmDelete" = false;
+
+      "files.autoSave" = "afterDelay";
+      "files.autoSaveDelay" = 2000;
+      "files.insertFinalNewline" = true;
+      "files.trimFinalNewlines" = true;
+
+      "git.allowForcePush" = true;
+      "git.confirmSync" = false;
+
+      "github.gitProtocol" = "ssh";
+
+      "hungryDelete.considerIncreaseIndentPattern" = true;
+      "hungryDelete.followAboveLineIndent" = true;
+
+      "interactiveSession.editor.fontSize" = 11;
+
+      "nix.enableLanguageServer" = true;
+      "nix.formatterPath" = "nixfmt";
+      "nix.serverPath" = "nil";
+      "nix.serverSettings" = { };
+
+      "rewrap.autoWrap.enabled" = true;
+
+      "security.workspace.trust.untrustedFiles" = "open";
+
+      "spellright.language" = [ "English (British)" ];
+
+      "terminal.integrated.fontSize" = 11;
+      "terminal.integrated.sendKeybindingsToShell" = true;
+
+      "workbench.colorTheme" = "Solarized Dark";
+      "workbench.preferredDarkColorTheme" = "Solarized Dark";
+      "workbench.preferredLightColorTheme" = "Solarized Light";
+
+      "[markdown]" = {
+        "preview.typographer" = true;
+        "diffEditor.ignoreTrimWhitespace" = false;
+        "editor.quickSuggestions" = {
+          "comments" = "off";
+          "strings" = "off";
+          "other" = "off";
+        };
+        "editor.rulers" = [
+          {
+            "column" = 80;
+            "color" = "#aaa";
+          } # alpha=0 ~ transparent
+          {
+            "column" = 0;
+            "color" = "#0000";
+          } # alpha=0 ~ transparent
+
+        ];
+        "editor.unicodeHighlight.ambiguousCharacters" = false;
+        "editor.unicodeHighlight.invisibleCharacters" = false;
+        # "editor.wordWrap" = "on";
+      };
+
+      "[python]" = {
+        "editor.formatOnSave" = true;
+        "editor.codeActionsOnSave" = {
+          "source.fixAll" = "explicit";
+          "source.organizeImports" = "explicit";
+        };
+        "editor.defaultFormatter" = "charliermarsh.ruff";
+      };
+
+    };
+
+    keybindings = [
+      # (bind-keys*
+      #   ("%"          . match-paren)
+      #   ("C-<tab>"    . dabbrev-expand)
+
+      # {
+      #   key = "ctrl+c";
+      #   command = "workbench.action.terminal.sendSequence";
+      #   args = { text = "u0003"; };
+      #   when =
+      #     "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported";
+      # }
+
+      {
+        key = "ctrl+c t";
+        command = "workbench.action.toggleLightDarkThemes";
+      }
+
+      {
+        key = "ctrl+x g";
+        command = "magit.status";
+      }
+
+      {
+        key = "ctrl+enter";
+        command = "runCommands";
+        args = {
+          commands = [
+            { command = "emacs-mcx.newLine"; }
+            {
+              command = "cursorMove";
+              args = {
+                to = "up";
+                by = "line";
+              };
+            }
+            {
+              command = "cursorMove";
+              args = { to = "wrappedLineLastNonWhitespaceCharacter"; };
+            }
+          ];
+          when = "textInputFocus";
+        };
+      }
+
+      {
+        key = "ctrl+c ctrl+space";
+        command = "runCommands";
+        args = {
+          commands = [
+            {
+              command = "remove-empty-lines.inDocument";
+              args = 2;
+            }
+            { command = "editor.action.trimTrailingWhitespace"; }
+            { command = "editor.action.indentationToSpaces"; }
+          ];
+        };
+        when = "textInputFocus";
+      }
+
+      {
+        key = "alt+n";
+        command = "workbench.action.nextEditor";
+      }
+      {
+        key = "alt+p";
+        command = "workbench.action.previousEditor";
+      }
+
+      {
+        key = "ctrl+c ;";
+        command = "editor.action.addCommentLine";
+        when = "textInputFocus";
+      }
+      {
+        key = "ctrl+u ctrl+c ;";
+        command = "editor.action.removeCommentLine";
+        when = "textInputFocus";
+      }
+
+      {
+        key = "ctrl+pageup";
+        command = "cursorMove";
+        args = { to = "viewPortTop"; };
+        when = "textInputFocus";
+      }
+      {
+        key = "ctrl+pagedown";
+        command = "runCommands";
+        args = {
+          # viewPortBottom alone causes a scroll up by one...
+          commands = [
+            {
+              command = "editorScroll";
+              args = {
+                to = "up";
+                by = "line";
+              };
+            }
+            {
+              command = "cursorMove";
+              args = { to = "viewPortBottom"; };
+            }
+          ];
+        };
+        when = "textInputFocus";
+      }
+    ];
+  };
+
+}
