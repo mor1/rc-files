@@ -13,11 +13,14 @@
   outputs = { nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       greyjay = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          username = "mort";
-        };
+        specialArgs = { inherit inputs; };
         modules = [ ./systems/greyjay ];
+      };
+      binky = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+      };
+      quoth = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
       };
     };
 
