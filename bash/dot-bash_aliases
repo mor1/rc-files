@@ -8,7 +8,7 @@ alias l="ls"
 alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
-alias lll="ls -lZ --time-style=long-iso"
+alias lll="ls -B -lZ --time-style=long-iso"
 
 alias bc="bc -l"
 alias ctime="python -c 'import sys,time; print(time.ctime(float(sys.argv[1])))'"
