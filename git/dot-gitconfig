@@ -48,10 +48,24 @@
     autocrlf = input
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
+[credential "https://github.com"]
+    helper = !/usr/local/bin/gh auth git-credential
+[credential]
+    helper = store
+    
+[delta]
+    navigate = true
+
 [diff]
     renames = true
     colorMoved = default
-    
+
+[filter "lfs"]
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+
 [init]
     defaultBranch = main
 
@@ -78,6 +92,9 @@
     enabled = true
     autoupdate = true
 
+[safe]
+        directory = /auto/anfs/www/VH-cl/html/research/srg
+
 [sendemail]
     confirm = auto
     smtpserver = smtp.gmail.com
@@ -91,17 +108,3 @@
     signingkey = 6D6612A7F8827E91
     name = Richard Mortier
     email = mort@cantab.net
-
-[credential "https://github.com"]
-    helper = !/usr/local/bin/gh auth git-credential
-[credential]
-    helper = store
-
-[delta]
-    navigate = true
-
-[filter "lfs"]
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
-    clean = git-lfs clean -- %f
