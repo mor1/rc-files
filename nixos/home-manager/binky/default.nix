@@ -2,11 +2,7 @@
 let username = "rmm1002";
 in {
 
-  imports = [
-    ../../modules/home-manager/system.nix
-    ../../modules/home-manager/tui.nix
-    ../../modules/home-manager/gui.nix
-  ];
+  imports = [ ../../modules/home-manager/tui.nix ];
 
   home = {
     username = "${username}";

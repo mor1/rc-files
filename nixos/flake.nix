@@ -16,12 +16,6 @@
         specialArgs = { inherit inputs; };
         modules = [ ./systems/greyjay ];
       };
-      binky = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-      };
-      quoth = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-      };
     };
 
     homeConfigurations = {
