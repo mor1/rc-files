@@ -21,7 +21,6 @@
         qpdf # yet more PDF manipulation
         subversion # hysterical raisins
         sysstat # system stats
-        texlive.combined.scheme-full # latex installation
         traceroute
         tree # tree-format recursive ls
         typst # better latex?

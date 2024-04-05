@@ -15,6 +15,7 @@ in {
     ../../modules/home-manager/system.nix
     ../../modules/home-manager/tui.nix
     ../../modules/home-manager/gui.nix
+    ../../modules/home-manager/texlive.nix
   ];
 
   home = {
