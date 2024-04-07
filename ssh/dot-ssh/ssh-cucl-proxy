@@ -6,11 +6,15 @@
 # use bash `/dev/tcp` magic to setup a transparent tunnel.
 
 cucl_local=false
-while read IP; do
-  if [[ $IP =~ ^128.232. ]]; then
-    cucl_local=true
-  fi
-done < <(ip -j -4 a | jq -r '.[].addr_info | .[].local')
+if [[ $LHOST =~ ".cl.cam.ac.uk" ]]; then
+  cucl_local=true
+else
+  while read IP; do
+    if [[ $IP =~ ^128.232. ]]; then
+      cucl_local=true
+    fi
+  done < <(ip -j -4 a | jq -r '.[].addr_info | .[].local')
+fi
 
 if [[ $cucl_local == false ]]; then
   sudo swanctl --initiate --child CUCL 2>/dev/null
