@@ -20,7 +20,7 @@
   services = {
     emacs = {
       # until the addiction is kicked
-      package = pkgs.emacs29;
+      package = pkgs.emacs29-pgtk;
       enable = true;
       client.enable = true;
       # defaultEditor = true;
