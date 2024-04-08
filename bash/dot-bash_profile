@@ -11,7 +11,7 @@ if [[ $(tty) == /dev/tty1 ]]; then
   exec sway # dbus-run-session sway
 else
   uname -a
-  eval $(keychain --eval --agents gpg,ssh)
+  which keychain >/dev/null && eval $(keychain --eval --agents gpg,ssh)
   date
   echo
 fi
