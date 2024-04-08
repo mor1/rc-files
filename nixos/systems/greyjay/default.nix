@@ -159,7 +159,10 @@ in {
     # podgrab.enable = true;
     printing = {
       enable = true;
-      clientConf = "ServerName cups-serv.cl.cam.ac.uk";
+      clientConf = ''
+        ServerName cups-serv.cl.cam.ac.uk
+        User rmm1002
+      '';
     };
 
     # automount USB storage devices on plugin
