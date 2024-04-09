@@ -38,9 +38,6 @@
       fonts = [
         (nerdfonts.override { fonts = [ "Hack" ]; })
         corefonts
-        # font-awesome_4
-        # material-design-icons
-        # powerline-fonts
         vistafonts
       ];
     in apps ++ media ++ fonts;

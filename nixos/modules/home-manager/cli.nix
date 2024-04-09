@@ -17,6 +17,7 @@
         keychain # cli to manage SSH, GPG keys
         lynx # cli web browser
         mupdf # PDF manipulation
+        pdfcpu # `optimize` for PDF optimisation
         pdftk # more PDF manipulation
         qpdf # yet more PDF manipulation
         subversion # hysterical raisins
