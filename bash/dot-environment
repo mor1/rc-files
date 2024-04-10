@@ -139,12 +139,12 @@ PLATFORM=$(uname -s)
 SHOST=${LHOST%%.*}
 export CDPATH KERNEL LHOST PLATFORM SHOST
 
-[[ $(which foot) ]] || TERM=xterm
-[[ $(which bat) ]] && MANPAGER=less || MANPAGER="sh -c 'col -bx | bat -l man -p'"
+[[ $(which foot) ]] || export TERM=xterm
+[[ $(which bat) ]] && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 PAGER="less -FRXi"
 BAT_PAGER=$PAGER
 MANROFFOPT="-c"
-export PAGER BAT_PAGER MANPAGER MANROFFOPT TERM
+export PAGER BAT_PAGER MANROFFOPT
 
 LC_ALL="en_GB.UTF-8"
 LANG="en_GB.UTF-8"
