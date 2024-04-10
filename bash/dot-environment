@@ -139,8 +139,8 @@ PLATFORM=$(uname -s)
 SHOST=${LHOST%%.*}
 export CDPATH KERNEL LHOST PLATFORM SHOST
 
-[[ $(which foot) ]] || export TERM=xterm
-[[ $(which bat) ]] && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+[[ $(which foot 2>/dev/null) ]] || export TERM=xterm
+[[ $(which bat 2>/dev/null) ]] && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 PAGER="less -FRXi"
 BAT_PAGER=$PAGER
 MANROFFOPT="-c"
@@ -232,8 +232,8 @@ fi
 [[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
 ## load completions
-[[ $(which direnv)   ]] && { source <(direnv hook bash) ; direnv reload ;}
-[[ $(which procs)    ]] && source <(procs --gen-completion-out bash)
-[[ $(which just)     ]] && source <(just --completions bash)
-[[ $(which maestral) ]] && source <(maestral completion bash)
-[[ $(which zola)     ]] && source <(zola completion bash)
+[[ $(which direnv 2>/dev/null)   ]] && { source <(direnv hook bash) ; direnv reload ;}
+[[ $(which procs 2>/dev/null)    ]] && source <(procs --gen-completion-out bash)
+[[ $(which just 2>/dev/null)     ]] && source <(just --completions bash)
+[[ $(which maestral 2>/dev/null) ]] && source <(maestral completion bash)
+[[ $(which zola 2>/dev/null)     ]] && source <(zola completion bash)
