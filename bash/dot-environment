@@ -229,32 +229,11 @@ if [ -x "$(which opam)" ]; then
 fi
 
 ## Rust
-if [ -r "$HOME/.cargo/env" ]; then
-  . "$HOME/.cargo/env"
-fi
+[[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
-# direnv
-if [ -x "$(which direnv)" ]; then
-  source <(direnv hook bash)
-  direnv reload || true
-fi
-
-# procs
-if [ -x "$(which procs)" ]; then
-  source <(procs --gen-completion-out bash)
-fi
-
-# just
-if [ -x "$(which just)" ]; then
-  source <(just --completions bash)
-fi
-
-# maestral
-if [ -x "$(which maestral)" ]; then
-  source <(maestral completion bash)
-fi
-
-# zola
-if [ -x "$(which zola)" ]; then
-  source <(zola completion bash)
-fi
+## load completions
+[[ $(which direnv)   ]] && { source <(direnv hook bash) ; direnv reload ;}
+[[ $(which procs)    ]] && source <(procs --gen-completion-out bash)
+[[ $(which just)     ]] && source <(just --completions bash)
+[[ $(which maestral) ]] && source <(maestral completion bash)
+[[ $(which zola)     ]] && source <(zola completion bash)
