@@ -61,12 +61,6 @@ shopt -s extglob
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
 
 #
-# terminal settings
-#
-
-[ -x $(which foot) ] || TERM=xterm
-
-#
 # bash history
 #
 
@@ -145,11 +139,12 @@ PLATFORM=$(uname -s)
 SHOST=${LHOST%%.*}
 export CDPATH KERNEL LHOST PLATFORM SHOST
 
+[[ $(which foot) ]] || TERM=xterm
+[[ $(which bat) ]] && MANPAGER=less || MANPAGER="sh -c 'col -bx | bat -l man -p'"
 PAGER="less -FRXi"
 BAT_PAGER=$PAGER
-MANPAGER="sh -c 'col -bx | bat -l man -p'"
 MANROFFOPT="-c"
-export PAGER BAT_PAGER MANPAGER MANROFFOPT
+export PAGER BAT_PAGER MANPAGER MANROFFOPT TERM
 
 LC_ALL="en_GB.UTF-8"
 LANG="en_GB.UTF-8"
