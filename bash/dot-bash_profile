@@ -1,13 +1,15 @@
-if tty -s ; then
-  [ -r ~/.environment ] && source ~/.environment
+if ! tty -s ; then
+  return
 fi
 
-_KEYS="bitbucket-key-rsa github-key cucl-key examqs-key-rsa"
+[ -r ~/.environment ] && source ~/.environment
 
 if [[ $(tty) == /dev/tty1 ]]; then
   keychain --clear
   gpg --import ~/.ssh/F8827E91.asc
+  _KEYS="bitbucket-key-rsa github-key cucl-key examqs-key-rsa"
   eval $(echo $_KEYS | xargs keychain --eval --agents gpg,ssh)
+  unset _KEYS
   exec sway # dbus-run-session sway
 else
   uname -a
@@ -17,5 +19,3 @@ else
   date
   echo
 fi
-
-unset _KEYS
