@@ -30,7 +30,7 @@ if [ -r /etc/NIXOS ]; then
   aenv PATH /run/wrappers/bin
 fi
 
-if [ -d ~/.nix-profile ]; then  
+if [ -d ~/.nix-profile ]; then
   aenv PATH /nix/var/nix/profiles/default/bin
   aenv PATH /etc/profiles/per-user/$USER/bin
   aenv PATH /home/$USER/.nix-profile/bin
@@ -59,6 +59,12 @@ shopt -s checkwinsize
 shopt -s extglob
 
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
+
+#
+# terminal settings
+#
+
+[ -x $(which foot) ] || TERM=xterm
 
 #
 # bash history
@@ -251,4 +257,9 @@ fi
 # maestral
 if [ -x "$(which maestral)" ]; then
   source <(maestral completion bash)
+fi
+
+# zola
+if [ -x "$(which zola)" ]; then
+  source <(zola completion bash)
 fi
