@@ -168,7 +168,12 @@ letter2pdf () {
   $PANDOC_LETTER -o ${1%.md}.pdf $@
 }
 
-alias 2up="pdfxup -x 2 -y 1 -m 1cm -o OUTPUT INPUT"
+2up () {
+  O2=${1%pdf}2up.pdf
+  OO=${O2%pdf}opt.pdf
+  pdfxup -x 2 -y 1 -m 1cm -o $O2 $1
+  pdfcpu optimize $O2 $OO
+}
 
 
 #transpose
