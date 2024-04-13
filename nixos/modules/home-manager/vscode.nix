@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
 
   programs.vscode = {
     enable = true;
@@ -26,12 +26,26 @@
         tuttieee.emacs-mcx
         usernamehw.errorlens
         yzhang.markdown-all-in-one
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
-        publisher = "bierner";
-        name = "markdown-preview-github-styles";
-        version = "2.0.4";
-        sha256 = "sha256-jJulxvjMNsqQqmsb5szQIAUuLWuHw824Caa0KArjUVw=";
-      }];
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          publisher = "bierner";
+          name = "markdown-preview-github-styles";
+          version = "2.0.4";
+          sha256 = "sha256-jJulxvjMNsqQqmsb5szQIAUuLWuHw824Caa0KArjUVw=";
+        }
+        {
+          publisher = "karunamurti";
+          name = "tera";
+          version = "0.0.9";
+          sha256 = "sha256-e72lZXg//vCZwoggRrpJlYiNUMxID3rkDLLBtV1b098=";
+        }
+        {
+          publisher = "kokakiwi";
+          name = "vscode-just";
+          version = "2.1.0";
+          sha256 = "sha256-1ncWDFG111HJ+PmA6k011qgC4uWMOs/wiE4F0A48UtY=";
+        }
+      ];
 
     userSettings = {
       "editor.fontFamily" = "Hack";
