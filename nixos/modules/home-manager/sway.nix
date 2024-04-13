@@ -312,7 +312,7 @@ in {
           blocks = let
             caffeine_on = {
               icon = "pomodoro_break";
-              text = "";
+              text = "<%d>";
             };
             caffeine_off = {
               icon = "resolution";
@@ -350,27 +350,31 @@ in {
               json = true;
               interval = "once";
               command = ''
-                swaymsg -q inhibit_idle none && printf '${
-                  builtins.toJSON caffeine_off
-                }
-                ' '';
-              cycle = [
+                swaymsg -q 'for_window [all] inhibit_idle none' &&
+                  swaymsg -q '[all] inhibit_idle none' &&
+                  printf '${builtins.toJSON caffeine_off}'
+              '';
+              cycle = let
+                inhibitor_count = ''
+                  $(swaymsg -t get_tree -r | jq --stream -c . | rg 'inhibit_idle"],true' | wc -l)
+                '';
+              in [
                 ''
-                  swaymsg -q inhibit_idle none && printf '${
-                    builtins.toJSON caffeine_off
-                  }
-                  ' ''
+                  swaymsg -q 'for_window [all] inhibit_idle none' &&
+                    swaymsg -q '[all] inhibit_idle none' &&
+                    printf '${builtins.toJSON caffeine_off}'
                 ''
-                  swaymsg -q inhibit_idle open && printf '${
-                    builtins.toJSON caffeine_on
-                  }
-                  ' ''
+                ''
+                  swaymsg -q 'for_window [all] inhibit_idle open' &&
+                    swaymsg -q '[all] inhibit_idle open' &&
+                    printf '${builtins.toJSON caffeine_on}' ${inhibitor_count}
+                ''
               ];
             }
             {
               block = "time";
               format = "$timestamp.datetime(f:'%c')";
-              interval = 2;
+              interval = 1;
             }
           ];
         };
