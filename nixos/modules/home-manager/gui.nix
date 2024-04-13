@@ -3,10 +3,10 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "corefonts"
-      "slack"
-      "skypeforlinux"
-      "teams"
+      "corefonts" # some fonts
+      "slack" # slack, electron wrapper
+      "vscode"
+      "skypeforlinux" # skype, such as it is
       "vista-fonts" # vista-fonts here but vistafonts for install?!
       "zoom" # zoom here but zoom-us for install?!
     ];
@@ -35,11 +35,8 @@
 
       media = [ digikam greg imv kodi rhythmbox vlc ];
 
-      fonts = [
-        (nerdfonts.override { fonts = [ "Hack" ]; })
-        corefonts
-        vistafonts
-      ];
+      fonts =
+        [ (nerdfonts.override { fonts = [ "Hack" ]; }) corefonts vistafonts ];
     in apps ++ media ++ fonts;
 
   fonts.fontconfig.enable = true;
