@@ -1,6 +1,8 @@
 { pkgs, ... }: {
   imports = [ ./cli.nix ./dev.nix ];
 
+  home.packages = with pkgs; [ pkgs.emacs29-pgtk ];
+
   programs = {
 
     bash = {

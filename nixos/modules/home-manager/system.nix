@@ -14,6 +14,7 @@
     stow
     strongswan
     usbutils
+    zola # static site generation
   ];
 
   programs = {
