@@ -1,5 +1,11 @@
 { pkgs, lib, ... }:
-let background = "~/rc-files/floatlg.jpg";
+let
+  background = "~/rc-files/floatlg.jpg";
+  chatws = "2:chat";
+  codews = "8:code";
+  homews = "1";
+  mailws = "3:mail";
+  mediaws = "9:media";
 in {
 
   home.packages = with pkgs; [
@@ -46,10 +52,23 @@ in {
 
           ${msg [ "exec ${swayosd} --max-volume 160" ]}
 
-          ${workspace "5:media"}
+          ${workspace "${mediaws}"}
           wait_for "rhythmbox"
 
-          ${workspace "4:chat"}
+          ${workspace "${codews}"}
+          wait_for firefox -P github.com
+          wait_for codium
+          ${after 3 [ "layout stacking" ]}
+
+          ${workspace "${mailws}"}
+          wait_for firefox -P richard.mortier@gmail.com
+          wait_for firefox -P 14mortier@gmail.com
+          wait_for firefox -P mort@ikva.ai
+          wait_for firefox -P rmm1002@cam.ac.uk
+          wait_for teams-for-linux
+          ${after 3 [ "layout stacking" ]}
+
+          ${workspace "${chatws}"}
           wait_for slack
           ${after 1 [ "split horizontal" ]}
           wait_for skypeforlinux
@@ -59,20 +78,7 @@ in {
           wait_for "signal-desktop & sleep 2 && signal-desktop"
           ${after 1 [ "[class=Skype] layout stacking" ]}
 
-          ${workspace "3:mail"}
-          wait_for firefox -P richard.mortier@gmail.com
-          wait_for firefox -P 14mortier@gmail.com
-          wait_for firefox -P mort@ikva.ai
-          wait_for firefox -P rmm1002@cam.ac.uk
-          wait_for teams-for-linux
-          ${after 3 [ "layout stacking" ]}
-
-          ${workspace "2:code"}
-          wait_for firefox -P github.com
-          wait_for codium
-          ${after 3 [ "layout stacking" ]}
-
-          ${workspace "1"}
+          ${workspace "${homews}"}
           wait_for emacsclient -c -s /tmp/emacs-mort/server
           ${after 1 [ "split horizontal" ]}
           wait_for foot
@@ -110,7 +116,7 @@ in {
             nmcli n on
           fi
         '';
-        f8 = "exec ${net_toggle}";
+        f8 = "exec ${net_toggle}/bin/net_toggle.sh";
         f9 = "exec rhythmbox-client --play-pause";
         f10 = "exec rhythmbox-client --stop";
         f11 = "exec rhythmbox-client --previous";
@@ -226,11 +232,11 @@ in {
             }
           ];
           exec = [
-            "${mws "1" wgb.screen}"
-            "${mws "2:code" wgb.screen}"
-            "${mws "3:mail" laptop.screen}"
-            "${mws "4:chat" wgb.screen}"
-            "${mws "5:media" laptop.screen}"
+            "${mws "${homews}" wgb.screen}"
+            "${mws "${codews}" wgb.screen}"
+            "${mws "${chatws}" wgb.screen}"
+            "${mws "${mailws}" laptop.screen}"
+            "${mws "${mediaws}" laptop.screen}"
             "${pactl} set-default-sink ${wgb.sink}"
             ''${sm} "workspace --no-auto-back-and-forth 1"''
           ];
@@ -250,27 +256,15 @@ in {
             }
           ];
           exec = [
-            "${mws "1" o2.screen}"
-            "${mws "2:code" o2.screen}"
-            "${mws "3:mail" laptop.screen}"
-            "${mws "4:chat" o2.screen}"
+            "${mws "${homews}" o2.screen}"
+            "${mws "${codews}" o2.screen}"
+            "${mws "${chatws}" o2.screen}"
+            "${mws "${mailws}" laptop.screen}"
+            "${mws "${mediaws}" laptop.screen}"
             "${pactl} set-default-sink ${o2.sink}"
-            "${mws "5:media" laptop.screen}"
             ''${sm} "workspace --no-auto-back-and-forth 1"''
           ];
         };
-        # o2-closed = {
-        #   outputs = [{
-        #     criteria = "${o2.screen}"; # 3840x2160
-        #     position =
-        #       "640,0"; # overlap right-third => laptop_x => 3840 / 2.0 * (2/3)
-        #     scale = 1.0;
-        #   }];
-        #   exec = [
-        #     "${mws "3:mail" o2.screen}"
-        #     "${mws "5:media" o2.screen}"
-        #   ];
-        # };
       };
     };
 
