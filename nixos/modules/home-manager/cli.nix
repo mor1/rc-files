@@ -1,6 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     let
       cli = [
         bc # calculator
@@ -54,7 +56,8 @@
         viddy # better watch
         zoxide # smarter cd; desired by yazi
       ];
-    in cli ++ nu_posix;
+    in
+    cli ++ nu_posix;
 
   programs.lf = {
     enable = true;

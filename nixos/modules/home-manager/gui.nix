@@ -1,7 +1,12 @@
-{ pkgs, lib, ... }: {
-  imports = [ ./sway.nix ./vscode.nix ];
+{ pkgs, lib, ... }:
+{
+  imports = [
+    ./sway.nix
+    ./vscode.nix
+  ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
     builtins.elem (lib.getName pkg) [
       "corefonts" # some fonts
       "slack" # slack, electron wrapper
@@ -11,19 +16,26 @@
       "zoom" # zoom here but zoom-us for install?!
     ];
 
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     let
       apps = [
         alacritty # alternative xterm
         chromium # teams calling in browser doesn't work in firefox
         firefox # web browser
         gnome.nautilus # maybe the least sucky of the file managers, so far?
+        gst123
+        gst_all_1.gstreamer
+        gst_all_1.gst-libav
         inkscape # vector graphics editing
         keybase-gui # keybase
+        # libav_12
+        ffmpeg_7-full
         libreoffice # ~ms office
         meld # compare files / folders
         networkmanagerapplet # nm-connection-manager, NetworkManager GUI
         okular # pdf viewer / annotator
+        pdfpc # pdf presentation viewer
         signal-desktop # signal private messaging
         skypeforlinux # skype
         slack # slack
@@ -33,11 +45,22 @@
         zoom-us # zoom vc
       ];
 
-      media = [ digikam greg imv kodi rhythmbox vlc ];
+      media = [
+        digikam
+        greg
+        imv
+        kodi
+        rhythmbox
+        vlc
+      ];
 
-      fonts =
-        [ (nerdfonts.override { fonts = [ "Hack" ]; }) corefonts vistafonts ];
-    in apps ++ media ++ fonts;
+      fonts = [
+        (nerdfonts.override { fonts = [ "Hack" ]; })
+        corefonts
+        vistafonts
+      ];
+    in
+    apps ++ media ++ fonts;
 
   fonts.fontconfig.enable = true;
 
@@ -66,12 +89,13 @@
   };
 
   programs = {
-    chromium = { enable = true; };
+    chromium = {
+      enable = true;
+    };
 
     firefox = {
       enable = true;
       package = pkgs.firefox-wayland;
     };
   };
-
 }

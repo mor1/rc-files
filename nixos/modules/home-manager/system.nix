@@ -1,7 +1,14 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
 
   home.packages = with pkgs; [
-    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+    (aspellWithDicts (
+      dicts: with dicts; [
+        en
+        en-computers
+        en-science
+      ]
+    ))
     davmail
     direnv
     gnupg
@@ -20,7 +27,10 @@
   programs = {
     keychain = {
       enable = true;
-      agents = [ "gpg" "ssh" ];
+      agents = [
+        "gpg"
+        "ssh"
+      ];
     };
   };
 

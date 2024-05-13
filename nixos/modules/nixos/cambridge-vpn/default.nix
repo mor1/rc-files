@@ -4,7 +4,8 @@
 let
   crsid = "rmm1002";
   hostname = "greyjay";
-in {
+in
+{
   networking.networkmanager.enableStrongSwan = true;
   environment.systemPackages = with pkgs; [ strongswan ];
 

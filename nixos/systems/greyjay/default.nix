@@ -1,4 +1,10 @@
-{ inputs, lib, pkgs, options, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  options,
+  ...
+}:
 
 let
   root_dev = "/dev/disk/by-uuid/c3cc9248-ade1-4b94-9e6e-d50990171471";
@@ -6,7 +12,8 @@ let
   swap_dev = "/dev/disk/by-uuid/223bf99d-f6e2-41b0-b30f-7e1064e308df";
   hostname = "greyjay";
   username = "mort";
-in {
+in
+{
   # setup configuration, home-manager, flake
   imports = [
     ./hardware-configuration.nix
@@ -16,7 +23,9 @@ in {
   ];
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {
+      inherit inputs;
+    };
     users.${username} = import ../../home-manager/${hostname};
   };
 
@@ -33,12 +42,13 @@ in {
   };
 
   # system packages
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "memtest86-efi" ];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "memtest86-efi" ];
   security.polkit.enable = true;
   services.udisks2.enable = true;
   environment = {
-    sessionVariables = { NIXOS_OZONE_WL = "1"; };
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    };
 
     systemPackages = with pkgs; [
       cifs-utils # samba
@@ -47,6 +57,7 @@ in {
       krb5 # kerberos
       libimobiledevice # ios
       lxqt.lxqt-policykit # for gvfs
+      pavucontrol # graphical control of AV routing
       restic # backups
       vim # i just don't like nano, ok?
     ];
@@ -85,14 +96,15 @@ in {
     "/mnt/home-desktop" = {
       device = "//desktop-bqgpfcm/14mort/";
       fsType = "cifs";
-      options = let
-        automount_opts =
-          "x-systemd.automount,noauot,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-      in [ "${automount_opts},credentials=/etc/secrets/smb-secrets" ];
+      options =
+        let
+          automount_opts = "x-systemd.automount,noauot,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+        in
+        [ "${automount_opts},credentials=/etc/secrets/smb-secrets" ];
     };
   };
 
-  swapDevices = [{ device = "${swap_dev}"; }];
+  swapDevices = [ { device = "${swap_dev}"; } ];
 
   # networking, plus UCAM timeservers
   networking = {
@@ -131,7 +143,10 @@ in {
     localtimed.enable = true;
     dbus = {
       enable = true;
-      packages = with pkgs; [ networkmanager strongswanNM ];
+      packages = with pkgs; [
+        networkmanager
+        strongswanNM
+      ];
     };
     geoclue2.enable = true;
     gnome.gnome-keyring.enable = true;
@@ -173,44 +188,47 @@ in {
 
     # backups
     restic = {
-      backups = let
-        backup = target: {
-          initialize = false;
-          repository = "local:/run/media/system/backup-${target}";
-          passwordFile = "/etc/secrets/restic-password-backup-${target}";
-          user = "root";
+      backups =
+        let
+          backup = target: {
+            initialize = false;
+            repository = "local:/run/media/system/backup-${target}";
+            passwordFile = "/etc/secrets/restic-password-backup-${target}";
+            user = "root";
 
-          timerConfig = {
-            OnCalendar = "hourly";
-            Persistent = true;
+            timerConfig = {
+              OnCalendar = "hourly";
+              Persistent = true;
+            };
+
+            paths = [
+              "/home/mort"
+              "/var/lib/NetworkManager"
+              "/etc/secrets"
+            ];
+
+            exclude = [
+              "/home/**/.venv/"
+              "/home/**/__pycache__"
+              "/home/**/node_modules/"
+              "/home/**/target/"
+              "/home/**/vendor/"
+              "/home/*/.cache"
+              "/home/*/.local/share/Trash"
+              "/home/*/.local/share/containers"
+              "/home/*/.npm"
+              "/home/*/Downloads"
+              "/home/mort/keybase"
+              "/home/mort/l/"
+            ];
           };
-
-          paths = [ "/home/mort" "/var/lib/NetworkManager" "/etc/secrets" ];
-
-          exclude = [
-            "/home/**/.venv/"
-            "/home/**/__pycache__"
-            "/home/**/node_modules/"
-            "/home/**/target/"
-            "/home/**/vendor/"
-            "/home/*/.cache"
-            "/home/*/.local/share/Trash"
-            "/home/*/.local/share/containers"
-            "/home/*/.npm"
-            "/home/*/Downloads"
-            "/home/mort/Dropbox (Maestral)/"
-            "/home/mort/OneDrive/"
-            "/home/mort/keybase"
-            "/home/mort/l/"
-          ];
+        in
+        {
+          backup-home = backup "home";
+          backup-christs = backup "christs";
+          backup-wgb = backup "wgb";
         };
-      in {
-        backup-home = backup "home";
-        backup-christs = backup "christs";
-        backup-wgb = backup "wgb";
-      };
     };
-
   };
 
   # system applications
@@ -223,20 +241,30 @@ in {
   xdg.portal = {
     # https://nixos.wiki/wiki/Sway
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+    ];
     # gtkUsePortal = true;
     wlr.enable = true;
   };
 
   # setup users
   users.users = {
-    root = { extraGroups = [ "wheel" ]; };
+    root = {
+      extraGroups = [ "wheel" ];
+    };
 
     mort = {
       isNormalUser = true;
-      extraGroups = [ "audio" "docker" "video" "wheel" "wireshark" ];
+      extraGroups = [
+        "audio"
+        "docker"
+        "video"
+        "wheel"
+        "wireshark"
+      ];
     };
-
   };
 
   # restic backups not as root; https://nixos.wiki/wiki/Restic

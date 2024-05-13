@@ -1,12 +1,20 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
 
   programs.vscode = {
     enable = true;
 
-    package = pkgs.vscodium.fhsWithPackages
-      (ps: with ps; [ rustup zlib openssl.dev pkg-config ]);
+    package = pkgs.vscodium.fhsWithPackages (
+      ps: with ps; [
+        rustup
+        zlib
+        openssl.dev
+        pkg-config
+      ]
+    );
 
-    extensions = with pkgs.vscode-extensions;
+    extensions =
+      with pkgs.vscode-extensions;
       [
         arrterian.nix-env-selector
         ban.spellright
@@ -26,7 +34,8 @@
         tuttieee.emacs-mcx
         usernamehw.errorlens
         yzhang.markdown-all-in-one
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      ]
+      ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           publisher = "bierner";
           name = "markdown-preview-github-styles";
@@ -62,7 +71,8 @@
           "column" = 100;
           "color" = "#aaa";
         }
-        { # alpha=0 ~ transparent
+        {
+          # alpha=0 ~ transparent
           "column" = 0;
           "color" = "#0000";
         }
@@ -122,7 +132,6 @@
             "column" = 0;
             "color" = "#0000";
           } # alpha=0 ~ transparent
-
         ];
         "editor.unicodeHighlight.ambiguousCharacters" = false;
         "editor.unicodeHighlight.invisibleCharacters" = false;
@@ -137,7 +146,6 @@
         };
         "editor.defaultFormatter" = "charliermarsh.ruff";
       };
-
     };
 
     keybindings = [
@@ -178,7 +186,9 @@
             }
             {
               command = "cursorMove";
-              args = { to = "wrappedLineLastNonWhitespaceCharacter"; };
+              args = {
+                to = "wrappedLineLastNonWhitespaceCharacter";
+              };
             }
           ];
           when = "textInputFocus";
@@ -224,7 +234,9 @@
       {
         key = "ctrl+pageup";
         command = "cursorMove";
-        args = { to = "viewPortTop"; };
+        args = {
+          to = "viewPortTop";
+        };
         when = "textInputFocus";
       }
       {
@@ -242,7 +254,9 @@
             }
             {
               command = "cursorMove";
-              args = { to = "viewPortBottom"; };
+              args = {
+                to = "viewPortBottom";
+              };
             }
           ];
         };
@@ -250,5 +264,4 @@
       }
     ];
   };
-
 }

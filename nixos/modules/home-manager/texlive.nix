@@ -1,8 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
-  home.packages = with pkgs;
-    [
-      texlive.combined.scheme-full # latex installation
-    ];
-
+  home.packages = with pkgs; [
+    texlive.combined.scheme-full # latex installation
+  ];
 }

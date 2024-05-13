@@ -9,9 +9,16 @@
 # It will fail, but there will occure a dialog on your iPhone to "trust this computer"
 # Press OK there and run `iphone` again. If it succeeds it will open a freshly mounted folder
 
-{ config, pkgs, lib, ... }:
-let cfg = config.iphone;
-in {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.iphone;
+in
+{
   options.iphone = {
     enable = lib.mkOption { default = false; };
     directory = lib.mkOption { default = "/run/media/iPhone"; };
@@ -30,8 +37,7 @@ in {
     services.usbmuxd.user = cfg.user;
 
     systemd.services.iphone = {
-      preStart =
-        "mkdir -p ${cfg.directory}; chown ${cfg.user} ${cfg.directory}";
+      preStart = "mkdir -p ${cfg.directory}; chown ${cfg.user} ${cfg.directory}";
       script = ''
         ${pkgs.libimobiledevice}/bin/idevicepair pair \
         && exec ${pkgs.ifuse}/bin/ifuse ${cfg.directory}

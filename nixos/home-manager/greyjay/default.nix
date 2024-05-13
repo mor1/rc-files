@@ -8,8 +8,10 @@
 # pushd ~/u/src/dl-solar ; ./dl-solar yesterday ; popd
 
 { ... }:
-let username = "mort";
-in {
+let
+  username = "mort";
+in
+{
 
   imports = [
     ../../modules/home-manager/system.nix

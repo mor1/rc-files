@@ -1,6 +1,8 @@
 { ... }:
-let username = "rmm1002";
-in {
+let
+  username = "rmm1002";
+in
+{
 
   imports = [ ../../modules/home-manager/tui.nix ];
 

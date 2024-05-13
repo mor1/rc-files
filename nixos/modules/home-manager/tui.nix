@@ -1,5 +1,9 @@
-{ pkgs, ... }: {
-  imports = [ ./cli.nix ./dev.nix ];
+{ pkgs, ... }:
+{
+  imports = [
+    ./cli.nix
+    ./dev.nix
+  ];
 
   home.packages = with pkgs; [ pkgs.emacs29-pgtk ];
 
@@ -16,7 +20,9 @@
       nix-direnv.enable = true;
     };
 
-    git = { enable = true; };
+    git = {
+      enable = true;
+    };
   };
 
   services = {
@@ -28,5 +34,4 @@
       # defaultEditor = true;
     };
   };
-
 }
