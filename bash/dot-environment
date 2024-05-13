@@ -25,15 +25,17 @@ unset PATH
 aenv PATH /bin
 aenv PATH /usr/bin
 
-if [ -r /etc/NIXOS ]; then
-  aenv PATH /run/current-system/sw/bin
-  aenv PATH /run/wrappers/bin
-fi
+[ -r /etc/NIXOS ] && NIXOS=true || NIXOS=false
+[ -d ~/.nix-profile ] &&  NIX=true || NIX=false
 
-if [ -d ~/.nix-profile ]; then
+if $NIX ; then
   aenv PATH /nix/var/nix/profiles/default/bin
   aenv PATH /etc/profiles/per-user/$USER/bin
   aenv PATH /home/$USER/.nix-profile/bin
+  if $NIXOS ; then
+    aenv PATH /run/current-system/sw/bin
+    aenv PATH /run/wrappers/bin
+  fi
 else
   aenv PATH /sbin
   aenv PATH /usr/sbin

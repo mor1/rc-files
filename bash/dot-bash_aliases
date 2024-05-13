@@ -1,9 +1,18 @@
-alias cat="bat"
-alias id="[ -x /usr/bin/id ] && /usr/bin/id || id"
-alias less="bat"
-alias ls="eza -F --group-directories-first --git"
-alias ps="procs -t"
-alias xd="hexyl"
+if $NIX ; then
+  alias cat="bat"
+  alias id="[ -x /usr/bin/id ] && /usr/bin/id || id"
+  alias less="bat"
+  alias ls="eza -F --group-directories-first --git"
+  alias ps="procs -t"
+  alias xd="hexyl"
+fi
+
+if $NIXOS ; then
+  alias e="codium"
+  alias ho="handlr open"
+  alias bigclock='nix-shell -p wlclock --run "wlclock --border-size 5 --corner-radius 10 --hand-width 13 --marking-width 3 --size 650 --position bottom-left"'
+  alias clock='nix-shell -p wlclock --run "wlclock --border-size 5 --corner-radius 10 --hand-width 8 --marking-width 3 --size 200 --position bottom-left"'
+fi
 
 alias l="ls"
 alias la="ls -A"
@@ -16,9 +25,4 @@ alias ctime="python -c 'import sys,time; print(time.ctime(float(sys.argv[1])))'"
 alias dif="git diff --minimal --no-index" # | xargs bat --diff"
 alias dift="git diff --name-only --relative -- | xargs bat --diff"
 alias difw="git dfw --minimal --no-index --"
-alias e="codium"
-alias ho="handlr open"
 alias reset="\reset -i ^C"
-
-alias bigclock='nix-shell -p wlclock --run "wlclock --border-size 5 --corner-radius 10 --hand-width 13 --marking-width 3 --size 650 --position bottom-left"'
-alias clock='nix-shell -p wlclock --run "wlclock --border-size 5 --corner-radius 10 --hand-width 8 --marking-width 3 --size 200 --position bottom-left"'
