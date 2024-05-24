@@ -22,21 +22,23 @@ kinit () {
     fi
   done < <(ip -j -4 a | jq -r '.[].addr_info | .[].local')
 
-  teardown_vpn=false
-  if [[ $cucl_local == false ]]; then
-    teardown_vpn=true
+  if [[ "$cucl_local" != "true" ]]; then
     sudo swanctl --initiate --child CUCL
   fi
 
   cl-krenew --ensuretgt || $(which kinit) -R rmm1002@DC.CL.CAM.AC.UK || $(which kinit) -f rmm1002@DC.CL.CAM.AC.UK
 
-  if [[ $teardown_vpn == true ]]; then
+  if [[ "$cucl_local" != "true" ]]; then
     sudo swanctl --terminate --ike CUCL
   fi
 }
 
 binky () {
   $SSH binky.cl
+}
+
+tfc () {
+  $SSH tfc-app9.cl
 }
 
 cronserv () {

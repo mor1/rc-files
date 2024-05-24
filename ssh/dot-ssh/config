@@ -5,6 +5,12 @@ UseRoaming no
 
 ## cucl
 
+Host tfc-app9.cl
+     User mort
+     IdentityFile ~/.ssh/bitbucket-key-rsa
+     ForwardX11 no
+     ForwardAgent no
+
 Host *.cl
      User rmm1002
      HostName %h.cam.ac.uk
@@ -27,12 +33,6 @@ Host papers.cl.cam.ac.uk
 Host gitlab.developers.cam.ac.uk
      User rmm1002
      IdentityFile ~/.ssh/bitbucket-key-rsa
-
-# Host tfc-app2.cl.cam.ac.uk
-#      User rita
-#      IdentityFile ~/.ssh/cucl-key
-#      ForwardX11 no
-#      ForwardAgent no
 
 ## other
 
