@@ -3,6 +3,7 @@
 
 \documentclass[11pt,a4paper]{article}
 
+\usepackage{float}
 \usepackage[hyphens]{url}
 \usepackage[unicode=true]{hyperref}
 \hypersetup{
@@ -44,7 +45,7 @@
 \defaultfontfeatures{Mapping=tex-text,Scale=MatchUppercase}
 \renewcommand{\familydefault}{\rmdefault}
 \setmainfont{Times New Roman}
-\setmonofont{Hack}
+\setmonofont{Hack Nerd Font}
 
 %% geometry
 \pagestyle{plain}
@@ -211,8 +212,13 @@ $endif$
 \begin{document}
 
 \fromwhom{Richard~Mortier}{,~Ph.D.}
-         {Professor of Computing \& Human-Data Interaction}{richard.mortier@cl.cam.ac.uk}
-         {+44 1223 334419}{+44 1223 334678}
+  {Professor of Computing \& Human-Data Interaction}
+  $if(email)$
+  {$email$}
+  $else$
+  {richard.mortier@cl.cam.ac.uk}
+  $endif$
+  {+44 1223 334419}{+44 1223 334678}
 
 \begin{letter}
 $body$
