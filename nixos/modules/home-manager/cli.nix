@@ -45,7 +45,6 @@
         fzf # fuzzy file finder; desired by yazi
         hexyl # hex pretty printer
         htop # graphical top
-        lf # file manager
         jujutsu # better git
         just # updated gnumake replacement
         mcfly # better shell history

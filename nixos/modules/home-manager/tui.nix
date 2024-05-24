@@ -5,10 +5,12 @@
     ./dev.nix
   ];
 
-  home.packages = with pkgs; [ pkgs.emacs29-pgtk ];
+  home.packages = with pkgs; [
+    emacs29-pgtk # gtk emacs
+    yazi # file manager
+  ];
 
   programs = {
-
     bash = {
       enable = false;
       enableCompletion = false;
@@ -18,6 +20,10 @@
       enable = true;
       enableBashIntegration = true;
       nix-direnv.enable = true;
+    };
+
+    emacs = {
+      extraPackages = epkgs: [ epkgs.mu4e ];
     };
 
     git = {
