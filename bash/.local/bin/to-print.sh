@@ -1,1 +1,0 @@
-/home/mort/u/src/sh-scripts/to-print.sh
