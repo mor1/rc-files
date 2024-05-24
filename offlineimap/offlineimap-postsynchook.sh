@@ -20,7 +20,7 @@ echo $(date) offlineimap: post-sync
 export PATH=/usr/local/bin:$PATH
 
 if [ ! -d "~/.cache/mu" ]; then
-  mu init --maildir=~/me/mail \
+  mu init --maildir=~/u/me/mail \
      --my-address=mort@cantab.net \
      --my-address=mort@greyjay \
      --my-address=mort@live.co.uk \
@@ -31,12 +31,15 @@ if [ ! -d "~/.cache/mu" ]; then
      --my-address=pszrmm@nottingham.ac.uk \
      --my-address=richard.mortier@cdbb.cam.ac.uk \
      --my-address=richard.mortier@cl.cam.ac.uk \
+     --my-address=richard.mortier@cst.cam.ac.uk \
      --my-address=richard.mortier@docker.com \
      --my-address=richard.mortier@gmail.com \
      --my-address=richard.mortier@hotmail.com \
      --my-address=richard.mortier@nottingham.ac.uk \
      --my-address=richard.mortier@unikernel.com \
      --my-address=rmm1002@cam.ac.uk \
+     --my-address=rmm1002@cl.cam.ac.uk \
+     --my-address=rmm1002@cst.cam.ac.uk \
      --my-address=rmm1002@hermes.cam.ac.uk \
      --my-address=rmm1002@srcf.net \
      --my-address=rmm@cs.nott.ac.uk
