@@ -108,3 +108,5 @@
     signingkey = 6D6612A7F8827E91
     name = Richard Mortier
     email = mort@cantab.net
+[submodule]
+	recurse = true
