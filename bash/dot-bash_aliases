@@ -2,7 +2,7 @@ if $NIX ; then
   alias cat="bat"
   alias id="[ -x /usr/bin/id ] && /usr/bin/id || id"
   alias less="bat"
-  alias ls="eza -F --group-directories-first --git"
+  alias ls="eza -F -g --group-directories-first --git --time-style=long-iso"
   alias ps="procs -t"
   alias xd="hexyl"
 fi
@@ -18,7 +18,7 @@ alias l="ls"
 alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
-alias lll="ls -B -lZ --time-style=long-iso"
+alias lll="ls -B -lZ"
 
 alias bc="bc -l"
 alias ctime="python -c 'import sys,time; print(time.ctime(float(sys.argv[1])))'"
