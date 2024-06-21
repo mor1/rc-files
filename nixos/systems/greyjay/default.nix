@@ -94,13 +94,13 @@ in
     };
 
     "/mnt/home-desktop" = {
-      device = "//desktop-bqgpfcm/14mort/";
+      device = "//desktop-bqgpfcm/14mor/";
       fsType = "cifs";
       options =
         let
-          automount_opts = "x-systemd.automount,noauot,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+          automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users";
         in
-        [ "${automount_opts},credentials=/etc/secrets/smb-secrets" ];
+        [ "${automount_opts},credentials=/etc/secrets/smb.secrets,uid=1000,gid=100" ];
     };
   };
 
@@ -204,6 +204,7 @@ in
             paths = [
               "/home/mort"
               "/var/lib/NetworkManager"
+              "/etc"
               "/etc/secrets"
             ];
 
