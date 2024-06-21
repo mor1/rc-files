@@ -23,7 +23,10 @@
     };
 
     emacs = {
-      extraPackages = epkgs: [ epkgs.mu4e ];
+      extraPackages = epkgs: [
+        pkgs.mu
+        pkgs.mu4e
+      ];
     };
 
     git = {

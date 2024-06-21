@@ -9,10 +9,10 @@
     pkg:
     builtins.elem (lib.getName pkg) [
       "corefonts" # some fonts
-      "slack" # slack, electron wrapper
-      "vscode"
       "skypeforlinux" # skype, such as it is
+      "slack" # slack, electron wrapper
       "vista-fonts" # vista-fonts here but vistafonts for install?!
+      "vscode"
       "zoom" # zoom here but zoom-us for install?!
     ];
 
@@ -20,22 +20,20 @@
     with pkgs;
     let
       apps = [
-        alacritty # alternative xterm
-        chromium # teams calling in browser doesn't work in firefox
-        firefox # web browser
+        # gimp # krita # bitmap graphics editing
+        ffmpeg_7-full
         gnome.nautilus # maybe the least sucky of the file managers, so far?
         gst123
-        gst_all_1.gstreamer
         gst_all_1.gst-libav
+        gst_all_1.gstreamer
         inkscape # vector graphics editing
         keybase-gui # keybase
-        # libav_12
-        ffmpeg_7-full
         libreoffice # ~ms office
         meld # compare files / folders
         networkmanagerapplet # nm-connection-manager, NetworkManager GUI
         okular # pdf viewer / annotator
         pdfpc # pdf presentation viewer
+        rio # alternative xterm
         signal-desktop # signal private messaging
         skypeforlinux # skype
         slack # slack
@@ -47,6 +45,7 @@
 
       media = [
         digikam
+        dim
         greg
         imv
         kodi
@@ -96,6 +95,17 @@
     firefox = {
       enable = true;
       package = pkgs.firefox-wayland;
+    };
+
+    rio = {
+      enable = true;
+      settings = {
+        cursor = "▇";
+        blinking-cursor = false;
+        fonts.family = "Hack";
+        keyboard.use-kitty-keyboard-protocol = true;
+        theme = "Solarized Dark";
+      };
     };
   };
 }

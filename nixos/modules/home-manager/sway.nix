@@ -168,7 +168,7 @@ in
             "XF86Send" = f9;
             # F10 !!! XXX NO SCAN CODE
             "XF86Save" = f11;
-            "Print" = f12;
+            "Print" = f12; # also catches PrtSc on thinkpad
 
             # ## extras, all keyboards
             # "Mod4+Shift+k" = "";
