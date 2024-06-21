@@ -213,7 +213,7 @@ in
     kanshi = {
       # autodetect and arrange external monitors
       enable = true;
-      profiles =
+      settings =
         let
           laptop = {
             screen = "eDP-1";
@@ -236,13 +236,16 @@ in
             ${sm} "workspace --no-auto-back-and-forth ${w}, move workspace to output '${o}'"
           '';
         in
-        {
-          undocked = {
-            outputs = [ { criteria = "${laptop.screen}"; } ];
-            exec = [ "${pactl} set-default-sink ${laptop.sink}" ];
-          };
-          wgb = {
-            outputs = [
+        [
+          {
+            profile.name = "undocked";
+            profile.outputs = [ { criteria = "${laptop.screen}"; } ];
+            profile.exec = [ "${pactl} set-default-sink ${laptop.sink}" ];
+          }
+
+          {
+            profile.name = "wgb";
+            profile.outputs = [
               {
                 criteria = "${laptop.screen}"; # 3840x2400
                 position = "0,2160"; # below ${hdmi} => hdmi_y = 2160 / 1.0
@@ -254,7 +257,7 @@ in
                 scale = 1.0;
               }
             ];
-            exec = [
+            profile.exec = [
               "${mws "${homews}" wgb.screen}"
               "${mws "${codews}" wgb.screen}"
               "${mws "${chatws}" wgb.screen}"
@@ -263,9 +266,10 @@ in
               "${pactl} set-default-sink ${wgb.sink}"
               ''${sm} "workspace --no-auto-back-and-forth 1"''
             ];
-          };
-          o2 = {
-            outputs = [
+          }
+          {
+            profile.name = "o2";
+            profile.outputs = [
               {
                 criteria = "${laptop.screen}"; # 3840x2400
                 position = "0,2160"; # below ${hdmi} => hdmi_y = 2160 / 1.0
@@ -277,7 +281,7 @@ in
                 scale = 1.0;
               }
             ];
-            exec = [
+            profile.exec = [
               "${mws "${homews}" o2.screen}"
               "${mws "${codews}" o2.screen}"
               "${mws "${chatws}" o2.screen}"
@@ -286,8 +290,8 @@ in
               "${pactl} set-default-sink ${o2.sink}"
               ''${sm} "workspace --no-auto-back-and-forth 1"''
             ];
-          };
-        };
+          }
+        ];
     };
 
     swayidle =
