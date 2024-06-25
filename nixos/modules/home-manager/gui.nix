@@ -8,6 +8,7 @@
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
+      "aspell-dict-en-science" # additional EN dictionary
       "corefonts" # some fonts
       "skypeforlinux" # skype, such as it is
       "slack" # slack, electron wrapper

@@ -6,7 +6,6 @@
   ];
 
   home.packages = with pkgs; [
-    emacs29-pgtk # gtk emacs
     yazi # file manager
   ];
 
@@ -23,24 +22,17 @@
     };
 
     emacs = {
-      extraPackages = epkgs: [
-        pkgs.mu
-        pkgs.mu4e
-      ];
+      enable = true;
+      package = pkgs.emacs29-pgtk;
+      extraPackages = (epkgs: [ epkgs.mu4e ]);
     };
 
     git = {
       enable = true;
     };
+
+    mu.enable = true;
   };
 
-  services = {
-    emacs = {
-      # until the addiction is kicked
-      package = pkgs.emacs29-pgtk;
-      enable = true;
-      client.enable = true;
-      # defaultEditor = true;
-    };
-  };
+  services.emacs.enable = true;
 }
