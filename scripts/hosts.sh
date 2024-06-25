@@ -15,6 +15,7 @@ SSHFS="sshfs $SSHFSOPTS"
 # CUCL
 
 kinit () {
+  kid=rmm1002@DC.CL.CAM.AC.UK
   cucl_local=false
   while read IP; do
     if [[ $IP =~ ^128.232. ]]; then
@@ -26,7 +27,11 @@ kinit () {
     sudo swanctl --initiate --child CUCL
   fi
 
-  cl-krenew --ensuretgt || $(which kinit) -R rmm1002@DC.CL.CAM.AC.UK || $(which kinit) -f rmm1002@DC.CL.CAM.AC.UK
+  if which cl-krenew; then
+    cl-krenew --ensuretgt --fresh --maxout
+  else
+    $(which kinit) -R $kid || $(which kinit) -f $kid
+  fi
 
   if [[ "$cucl_local" != "true" ]]; then
     sudo swanctl --terminate --ike CUCL

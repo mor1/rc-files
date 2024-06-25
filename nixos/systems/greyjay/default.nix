@@ -58,6 +58,7 @@ in
       krb5 # kerberos
       libimobiledevice # ios
       lxqt.lxqt-policykit # for gvfs
+      openssh_gssapi # ssh client tools that support GSS API for kerberos tickets
       pavucontrol # graphical control of AV routing
       restic # backups
       vim # i just don't like nano, ok?
@@ -150,7 +151,6 @@ in
       ];
     };
     geoclue2.enable = true;
-    gnome.gnome-keyring.enable = true;
 
     gvfs.enable = true;
 

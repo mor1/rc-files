@@ -8,24 +8,23 @@ UseRoaming no
 Host tfc-app9.cl
      User mort
      IdentityFile ~/.ssh/bitbucket-key-rsa
-     ForwardX11 no
-     ForwardAgent no
 
 Host *.cl
      User rmm1002
      HostName %h.cam.ac.uk
      IdentityFile ~/.ssh/cucl-key
-     ForwardX11 no
-     ForwardAgent yes
-     ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
+     PubkeyAuthentication no
+     GSSAPIAuthentication yes
+     GSSAPIDelegateCredentials yes
 
 Host *.cl.cam.ac.uk linux.cl.ds.cam.ac.uk linux.ds.cam.ac.uk
      User rmm1002
      IdentityFile ~/.ssh/cucl-key
-     ForwardX11 yes
-     ForwardAgent yes
      StrictHostKeyChecking no
      UserKnownHostsFile=/dev/null
+     PubkeyAuthentication no
+     GSSAPIAuthentication yes
+     GSSAPIDelegateCredentials yes
 
 Host papers.cl.cam.ac.uk
      IdentityFile ~/.ssh/examqs-key-rsa
@@ -70,7 +69,3 @@ Host hotcrp.uksystems.org
 Host *
      ForwardX11 no
      ForwardAgent no
-     IdentitiesOnly yes
-     # ControlMaster auto
-     # ControlPath ~/.ssh/master-%r@%h:%p
-     # ControlPersist 30
