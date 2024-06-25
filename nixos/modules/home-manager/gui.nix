@@ -65,26 +65,50 @@
 
   xdg.mimeApps = {
     enable = true;
-    defaultApplications = {
-      "application/pdf" = [ "okularApplication_pdf.desktop" ];
-      "application/x-extension-htm" = [ "firefox.desktop" ];
-      "application/x-extension-html" = [ "firefox.desktop" ];
-      "application/x-extension-shtml" = [ "firefox.desktop" ];
-      "application/x-extension-xht" = [ "firefox.desktop" ];
-      "application/x-extension-xhtml" = [ "firefox.desktop" ];
-      "application/xhtml+xml" = [ "firefox.desktop" ];
-      "image/jpeg" = [ "imv.desktop" ];
-      "image/jpg" = [ "imv.desktop" ];
-      "image/png" = [ "imv.desktop" ];
-      "image/svg+xml" = [ "imv.desktop" ];
-      "text/html" = [ "firefox.desktop" ];
-      "x-scheme-handler/about" = [ "firefox.desktop" ];
-      "x-scheme-handler/chrome" = [ "firefox.desktop" ];
-      "x-scheme-handler/http" = [ "firefox.desktop" ];
-      "x-scheme-handler/https" = [ "firefox.desktop" ];
-      "x-scheme-handler/msteams" = [ "teams-for-linux.desktop" ];
-      "x-scheme-handler/unknown" = [ "firefox.desktop" ];
-    };
+    defaultApplications =
+      let
+        targets =
+          app: tgts:
+          builtins.listToAttrs (
+            map (t: {
+              name = "${t}";
+              value = [ "${app}" ];
+            }) tgts
+          );
+
+        imgapp = "imv.desktop";
+        imgs = [
+          "image/jpeg"
+          "image/jpg"
+          "image/png"
+          "image/svg+xml"
+        ];
+
+        pdfapp = "okularApplication_pdf.desktop";
+        pdfs = [ "application/pdf" ];
+
+        webapp = "firefox.desktop";
+        webs = [
+          "application/x-extension-htm"
+          "application/x-extension-html"
+          "application/x-extension-shtml"
+          "application/x-extension-xht"
+          "application/x-extension-xhtml"
+          "application/xhtml+xml"
+          "text/html"
+          "x-scheme-handler/about"
+          "x-scheme-handler/chrome"
+          "x-scheme-handler/http"
+          "x-scheme-handler/https"
+          "x-scheme-handler/unknown"
+        ];
+      in
+      {
+        "x-scheme-handler/msteams" = [ "teams-for-linux.desktop" ];
+      }
+      // targets imgapp imgs
+      // targets pdfapp pdfs
+      // targets webapp webs;
   };
 
   programs = {
