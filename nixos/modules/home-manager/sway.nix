@@ -91,7 +91,7 @@ in
               ${workspace "${homews}"}
               wait_for emacsclient -c -s /tmp/emacs-mort/server
               ${after 1 [ "split horizontal" ]}
-              wait_for foot
+              wait_for rio
               ${after 1 [ "split vertical" ]}
               wait_for firefox -P default
 
@@ -170,8 +170,8 @@ in
             "XF86Save" = f11;
             "Print" = f12; # also catches PrtSc on thinkpad
 
-            # ## extras, all keyboards
-            # "Mod4+Shift+k" = "";
+            ## extras, all keyboards
+            "Mod4+Return" = "exec ${pkgs.rio}/bin/rio";
           };
 
         # status bars using i3status-rust

@@ -102,9 +102,37 @@
       settings = {
         cursor = "▇";
         blinking-cursor = false;
-        fonts.family = "Hack";
+        fonts = {
+          family = "Hack Nerd Font";
+          size = 14;
+        };
+        # navigation.mode = "Breadcrumb";
         keyboard.use-kitty-keyboard-protocol = true;
-        theme = "Solarized Dark";
+        ## theme = "Solarized Dark";
+        colors = {
+          ## Solarized Dark
+          background = "#002b36";
+          foreground = "#bbbbbb"; # 839496";
+          selection-background = "#073642";
+          selection-foreground = "#93a1a1";
+          cursor = "#839496";
+          black = "#073642";
+          red = "#dc322f";
+          green = "#859900";
+          yellow = "#b58900";
+          blue = "#268bd2";
+          magenta = "#d33682";
+          cyan = "#2aa198";
+          white = "#eee8d5";
+          light_black = "#002b36";
+          light_red = "#cb4b16";
+          light_green = "#586e75";
+          light_yellow = "#657b83";
+          light_blue = "#839496";
+          light_magenta = "#6c71c4";
+          light_cyan = "#93a1a1";
+          light_white = "#fdf6e3";
+        };
       };
     };
   };
