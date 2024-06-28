@@ -30,6 +30,7 @@
         unzip # what it says on the tin, because zip can't unzip
         wget # network downloader
         which # locate command in $PATH
+        yt-dlp # youtube download
         zip # what it says on the tin
       ];
       nu_posix = [
