@@ -23,7 +23,7 @@
       apps = [
         # gimp # krita # bitmap graphics editing
         ffmpeg_7-full
-        gnome.nautilus # maybe the least sucky of the file managers, so far?
+        nautilus # maybe the least sucky of the file managers, so far?
         gst123
         gst_all_1.gst-libav
         gst_all_1.gstreamer

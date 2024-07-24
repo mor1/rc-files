@@ -265,7 +265,10 @@ in
   # system applications
   programs = {
     sway.enable = true;
-    vim.defaultEditor = true;
+    vim = {
+      enable = true;
+      defaultEditor = true;
+    };
     wireshark.enable = true;
   };
 

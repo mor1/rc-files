@@ -15,6 +15,7 @@
         pandoc # document processing and conversion
         imagemagick # image manipulation tools
         inetutils
+        internetarchive # internet archive
         jhead # jpeg exif header manipulation tool
         keychain # cli to manage SSH, GPG keys
         lynx # cli web browser
