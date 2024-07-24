@@ -78,39 +78,27 @@
         }
       ];
       "editor.useTabStops" = false;
-      # "editor.wordWrap" = "bounded";
-
       "explorer.confirmDelete" = false;
-
       "files.autoSave" = "afterDelay";
       "files.autoSaveDelay" = 2000;
       "files.insertFinalNewline" = true;
       "files.trimFinalNewlines" = true;
-
       "git.allowForcePush" = true;
+      "git.autofetch" = true;
       "git.confirmSync" = false;
-
       "github.gitProtocol" = "ssh";
-
       "hungryDelete.considerIncreaseIndentPattern" = true;
       "hungryDelete.followAboveLineIndent" = true;
-
       "interactiveSession.editor.fontSize" = 11;
-
       "nix.enableLanguageServer" = true;
       "nix.formatterPath" = "nixfmt";
       "nix.serverPath" = "nil";
       "nix.serverSettings" = { };
-
       "rewrap.autoWrap.enabled" = true;
-
       "security.workspace.trust.untrustedFiles" = "open";
-
       "spellright.language" = [ "English (British)" ];
-
       "terminal.integrated.fontSize" = 11;
       "terminal.integrated.sendKeybindingsToShell" = true;
-
       "workbench.colorTheme" = "Solarized Dark";
       "workbench.preferredDarkColorTheme" = "Solarized Dark";
       "workbench.preferredLightColorTheme" = "Solarized Light";
