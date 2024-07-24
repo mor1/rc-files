@@ -68,3 +68,4 @@ Host hotcrp.uksystems.org
 Host *
      ForwardX11 no
      ForwardAgent no
+     SetEnv TERM=xterm-256color
