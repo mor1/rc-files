@@ -52,7 +52,7 @@
     helper = !/usr/local/bin/gh auth git-credential
 [credential]
     helper = store
-    
+
 [delta]
     navigate = true
 
@@ -109,4 +109,4 @@
     name = Richard Mortier
     email = mort@cantab.net
 [submodule]
-	recurse = true
+    recurse = true
