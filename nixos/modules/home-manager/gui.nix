@@ -59,8 +59,10 @@
         corefonts
         vistafonts
       ];
+
+      themes = [ foot.themes ];
     in
-    apps ++ media ++ fonts;
+    apps ++ media ++ fonts ++ themes;
 
   fonts.fontconfig.enable = true;
 
@@ -117,19 +119,30 @@
       enable = true;
     };
 
+    foot = {
+      enable = true;
+      settings = {
+        main = {
+          font = "Hack Nerd Font:size=8";
+          include = "${pkgs.foot.themes}/share/foot/themes/selenized-dark";
+        };
+        scrollback.lines = 10000;
+      };
+    };
+
     firefox = {
       enable = true;
       package = pkgs.firefox-wayland;
     };
 
     rio = {
-      enable = true;
+      enable = false;
       settings = {
         cursor = "▇";
         blinking-cursor = false;
         fonts = {
           family = "Hack Nerd Font";
-          size = 14;
+          size = 12;
         };
         # navigation.mode = "Breadcrumb";
         keyboard.use-kitty-keyboard-protocol = true;

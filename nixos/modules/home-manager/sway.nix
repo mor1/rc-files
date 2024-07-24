@@ -57,7 +57,10 @@ in
                 wait $pid 2>/dev/null
               }
 
-              ${msg [ "exec ${swayosd} --max-volume 160" ]}
+              ${msg [
+                "exec ${swayosd} --max-volume 160"
+                "exec kanshi"
+              ]}
 
               ${workspace "${mediaws}"}
               wait_for "rhythmbox"
@@ -91,7 +94,7 @@ in
               ${workspace "${homews}"}
               wait_for emacsclient -c -s /tmp/emacs-mort/server
               ${after 1 [ "split horizontal" ]}
-              wait_for rio
+              wait_for foot
               ${after 1 [ "split vertical" ]}
               wait_for firefox -P default
 
@@ -171,7 +174,7 @@ in
             "Print" = f12; # also catches PrtSc on thinkpad
 
             ## extras, all keyboards
-            "Mod4+Return" = "exec ${pkgs.rio}/bin/rio";
+            # "Mod4+Return" = "exec ${pkgs.rio}/bin/rio";
           };
 
         # status bars using i3status-rust
@@ -195,6 +198,7 @@ in
     # set background
     extraConfig = ''
       output "*" bg ${background} fill
+      seat * xcursor_theme Bibata-Modern-Ice 20
     '';
   };
 
@@ -460,14 +464,14 @@ in
     };
   };
 
-  # home.pointerCursor = {
-  #   name = "Bibata-Ghost"; # "Adwaita";
-  #   package =
-  #     pkgs.bibata-cursors-translucent; # colloid-icon-theme; # gnome.adwaita-icon-theme;
-  #   size = 24;
-  #   x11 = {
-  #     enable = true;
-  #     defaultCursor = "Bibata-Ghost"; # "Adwaita";
-  #   };
-  # };
+  home.pointerCursor = {
+    name = "Bibata-Modern-Ice";
+    package = pkgs.bibata-cursors;
+    size = 20;
+    gtk.enable = true;
+    x11 = {
+      enable = true;
+      defaultCursor = "wayland-cursor";
+    };
+  };
 }
