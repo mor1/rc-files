@@ -1,10 +1,16 @@
 { pkgs, lib, ... }:
 let
   background = "/home/mort/rc-files/floatlg.jpg";
-  chatws = "2:chat";
-  codews = "8:code";
   homews = "1";
+  chatws = "2:chat";
   mailws = "3:mail";
+  otherws = [
+    "4"
+    "5"
+    "6"
+    "7"
+  ];
+  codews = "8:code";
   mediaws = "9:media";
 in
 {
@@ -229,17 +235,18 @@ in
           };
           o2 = {
             screen = "LG Electronics LG HDR 4K 0x00035DAC";
-            sink = "";
-            source = "";
+            source = "alsa_input.usb-046d_0990_F6BD69E7-02.pro-input-0";
           };
           # nms_a = {
           #   screen = "HDMI-A-1";
           # };
           pactl = "${pkgs.pulseaudio}/bin/pactl";
           sm = "${pkgs.sway}/bin/swaymsg";
-          mws = w: o: ''
-            ${sm} "workspace --no-auto-back-and-forth ${w}, move workspace to output '${o}'"
-          '';
+          mwss =
+            o:
+            map (ws: ''
+              ${sm} "workspace --no-auto-back-and-forth ${ws}, move workspace to output '${o}'"
+            '');
         in
         [
           {
@@ -265,17 +272,24 @@ in
                 scale = 1.0;
               }
             ];
-            profile.exec = [
-              "${mws "${homews}" wgb.screen}"
-              "${mws "${codews}" wgb.screen}"
-              "${mws "${chatws}" wgb.screen}"
-              "${mws "${mailws}" laptop.screen}"
-              "${mws "${mediaws}" laptop.screen}"
-              "${pactl} set-default-sink ${wgb.sink}"
-              "${pactl} set-default-source ${wgb.source}"
-              ''${sm} "workspace --no-auto-back-and-forth 1"''
-            ];
+            profile.exec =
+              [
+                "${pactl} set-default-sink ${wgb.sink}"
+                "${pactl} set-default-source ${wgb.source}"
+              ]
+              ++ (mwss wgb.screen [
+                homews
+                codews
+                chatws
+              ])
+              ++ (mwss wgb.screen otherws)
+              ++ (mwss laptop.screen [
+                mailws
+                mediaws
+              ])
+              ++ [ ''${sm} "workspace --no-auto-back-and-forth 1"'' ];
           }
+
           {
             profile.name = "o2";
             profile.outputs = [
@@ -290,16 +304,22 @@ in
                 scale = 1.0;
               }
             ];
-            profile.exec = [
-              "${mws "${homews}" o2.screen}"
-              "${mws "${codews}" o2.screen}"
-              "${mws "${chatws}" o2.screen}"
-              "${mws "${mailws}" laptop.screen}"
-              "${mws "${mediaws}" laptop.screen}"
-              "${pactl} set-default-sink ${o2.sink}"
-              "${pactl} set-default-source ${o2.source}"
-              ''${sm} "workspace --no-auto-back-and-forth 1"''
-            ];
+            profile.exec =
+              [
+                "${pactl} set-default-sink ${laptop.sink}"
+                "${pactl} set-default-source ${o2.source}"
+              ]
+              ++ (mwss o2.screen [
+                homews
+                codews
+                chatws
+              ])
+              ++ (mwss o2.screen otherws)
+              ++ (mwss laptop.screen [
+                mailws
+                mediaws
+              ])
+              ++ [ ''${sm} "workspace --no-auto-back-and-forth 1"'' ];
           }
         ];
     };
