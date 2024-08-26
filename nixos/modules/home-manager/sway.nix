@@ -12,6 +12,20 @@ let
   ];
   codews = "8:code";
   mediaws = "9:media";
+  laptop = {
+    screen = "eDP-1";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink";
+    source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
+  };
+  wgb = {
+    screen = "LG Electronics LG HDR 4K 0x0005DD99";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+    source = "alsa_input.usb-046d_HD_Pro_Webcam_C920_C18974EF-02.analog-stereo";
+  };
+  o2 = {
+    screen = "LG Electronics LG HDR 4K 0x00035DAC";
+    source = "alsa_input.usb-046d_0990_F6BD69E7-02.pro-input-0";
+  };
 in
 {
 
@@ -124,6 +138,18 @@ in
           };
         };
 
+        output = {
+          "*" = {
+            bg = "${background} fill";
+          };
+        };
+
+        seat = {
+          "*" = {
+            xcursor_theme = "Bibata-Modern-Ice 18";
+          };
+        };
+
         # additional keybindings; cannot simply remap input ev -> output ev
         keybindings =
           let
@@ -198,10 +224,9 @@ in
           ];
       };
 
-    # set background
     extraConfig = ''
-      output "*" bg ${background} fill
-      seat * xcursor_theme Bibata-Modern-Ice 18
+      bindswitch --reload --locked lid:on output ${laptop.screen} disable
+      bindswitch --reload --locked lid:off output ${laptop.screen} enable
     '';
   };
 
@@ -223,20 +248,6 @@ in
       systemdTarget = "sway-session.target";
       settings =
         let
-          laptop = {
-            screen = "eDP-1";
-            sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink";
-            source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
-          };
-          wgb = {
-            screen = "LG Electronics LG HDR 4K 0x0005DD99";
-            sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
-            source = "alsa_input.usb-046d_HD_Pro_Webcam_C920_C18974EF-02.analog-stereo";
-          };
-          o2 = {
-            screen = "LG Electronics LG HDR 4K 0x00035DAC";
-            source = "alsa_input.usb-046d_0990_F6BD69E7-02.pro-input-0";
-          };
           # nms_a = {
           #   screen = "HDMI-A-1";
           # };
