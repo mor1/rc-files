@@ -5,6 +5,7 @@
     with pkgs;
     let
       cli = [
+        aria2 # feature rich wget/curl
         bc # calculator
         dig # because DNS
         exiftool # manipulate images
@@ -23,6 +24,7 @@
         pdfcpu # `optimize` for PDF optimisation
         pdftk # more PDF manipulation
         qpdf # yet more PDF manipulation
+        stow # manage dotfiles via symlinks
         subversion # hysterical raisins
         sysstat # system stats
         traceroute
@@ -47,6 +49,7 @@
         fzf # fuzzy file finder; desired by yazi
         hexyl # hex pretty printer
         htop # graphical top
+        iotop # io top
         jujutsu # better git
         just # updated gnumake replacement
         mcfly # better shell history

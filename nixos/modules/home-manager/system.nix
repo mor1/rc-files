@@ -14,10 +14,8 @@
     hunspell # spellchecking and dictionaries
     hunspellDicts.en_GB-large # en.GB
     maestral # dropbox client
-    onedrive # msft onedrive client
     pciutils
     sshfs # mount remote filesystems over ssh
-    stow
     strongswan # vpn client
     usbutils
     zola # static site generation

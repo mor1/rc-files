@@ -15,7 +15,6 @@ in
     grim
     kanshi # modify sway config on hardware changes
     slurp
-    swayosd # on-screen display for various states
     wdisplays # gui for display configuration
     wev # wayland event viewer
     wl-clipboard # pipe to/from clipboard
@@ -57,10 +56,7 @@ in
                 wait $pid 2>/dev/null
               }
 
-              ${msg [
-                "exec ${swayosd} --max-volume 160"
-                "exec kanshi"
-              ]}
+              ${msg [ "exec ${swayosd} --max-volume 160" ]}
 
               ${workspace "${mediaws}"}
               wait_for "rhythmbox"
@@ -198,7 +194,7 @@ in
     # set background
     extraConfig = ''
       output "*" bg ${background} fill
-      seat * xcursor_theme Bibata-Modern-Ice 20
+      seat * xcursor_theme Bibata-Modern-Ice 18
     '';
   };
 

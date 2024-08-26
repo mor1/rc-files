@@ -22,7 +22,6 @@
     let
       apps = [
         # gimp # krita # bitmap graphics editing
-        ffmpeg_7-full
         nautilus # maybe the least sucky of the file managers, so far?
         gst123
         gst_all_1.gst-libav
@@ -40,6 +39,7 @@
         slack # slack
         teams-for-linux # ms teams in electron
         thunderbird # email
+        vdhcoapp # for videodownloadhelper firefox plugin
         wire-desktop # wire private messaging
         zoom-us # zoom vc
       ];
@@ -48,6 +48,7 @@
         digikam
         dim
         greg
+        ffmpeg_7
         imv
         kodi
         rhythmbox
