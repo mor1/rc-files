@@ -14,6 +14,7 @@ in
     gammastep # automatically dim+redden screen at night
     grim
     kanshi # modify sway config on hardware changes
+    pwvucontrol # graphical control of AV routing (pipewire)
     slurp
     wdisplays # gui for display configuration
     wev # wayland event viewer
@@ -120,9 +121,9 @@ in
         # additional keybindings; cannot simply remap input ev -> output ev
         keybindings =
           let
-            f1 = "exec ${swayosd} --output-volume mute-toggle";
-            f2 = "exec ${swayosd} --output-volume lower";
-            f3 = "exec ${swayosd} --output-volume raise";
+            f1 = "exec ${swayosd} --max-volume 130 --output-volume mute-toggle";
+            f2 = "exec ${swayosd} --max-volume 130 --output-volume lower";
+            f3 = "exec ${swayosd} --max-volume 130 --output-volume raise";
             f4 = "exec ${swayosd} --input-volume mute-toggle";
             f5 = "exec brightnessctl s 10%-";
             f6 = "exec brightnessctl s 10%+";
@@ -213,19 +214,23 @@ in
     kanshi = {
       # autodetect and arrange external monitors
       enable = true;
+      systemdTarget = "sway-session.target";
       settings =
         let
           laptop = {
             screen = "eDP-1";
-            sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink";
+            sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink";
+            source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
           };
           wgb = {
             screen = "LG Electronics LG HDR 4K 0x0005DD99";
-            sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp_3__sink";
+            sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+            source = "alsa_input.usb-046d_HD_Pro_Webcam_C920_C18974EF-02.analog-stereo";
           };
           o2 = {
             screen = "LG Electronics LG HDR 4K 0x00035DAC";
-            sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink";
+            sink = "";
+            source = "";
           };
           # nms_a = {
           #   screen = "HDMI-A-1";
@@ -240,7 +245,10 @@ in
           {
             profile.name = "undocked";
             profile.outputs = [ { criteria = "${laptop.screen}"; } ];
-            profile.exec = [ "${pactl} set-default-sink ${laptop.sink}" ];
+            profile.exec = [
+              "${pactl} set-default-sink ${laptop.sink}"
+              "${pactl} set-default-source ${laptop.source}"
+            ];
           }
 
           {
@@ -264,6 +272,7 @@ in
               "${mws "${mailws}" laptop.screen}"
               "${mws "${mediaws}" laptop.screen}"
               "${pactl} set-default-sink ${wgb.sink}"
+              "${pactl} set-default-source ${wgb.source}"
               ''${sm} "workspace --no-auto-back-and-forth 1"''
             ];
           }
@@ -288,6 +297,7 @@ in
               "${mws "${mailws}" laptop.screen}"
               "${mws "${mediaws}" laptop.screen}"
               "${pactl} set-default-sink ${o2.sink}"
+              "${pactl} set-default-source ${o2.source}"
               ''${sm} "workspace --no-auto-back-and-forth 1"''
             ];
           }
