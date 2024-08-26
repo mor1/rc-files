@@ -19,7 +19,7 @@
         arrterian.nix-env-selector
         ban.spellright
         bbenoist.nix
-        betterthantomorrow.calva
+        bodil.file-browser
         charliermarsh.ruff
         foxundermoon.shell-format
         jnoortheen.nix-ide
@@ -97,6 +97,7 @@
       "rewrap.autoWrap.enabled" = true;
       "security.workspace.trust.untrustedFiles" = "open";
       "spellright.language" = [ "English (British)" ];
+      "terminal.integrated.allowChords" = false;
       "terminal.integrated.fontSize" = 11;
       "terminal.integrated.sendKeybindingsToShell" = true;
       "workbench.colorTheme" = "Solarized Dark";
@@ -148,6 +149,11 @@
       #   when =
       #     "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported";
       # }
+
+      {
+        key = "ctrl+x ctrl+f";
+        command = "file-browser.open";
+      }
 
       {
         key = "ctrl+c t";
