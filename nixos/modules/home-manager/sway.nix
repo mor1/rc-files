@@ -77,8 +77,6 @@ in
                 wait $pid 2>/dev/null
               }
 
-              ${msg [ "exec ${swayosd} --max-volume 160" ]}
-
               ${workspace "${mediaws}"}
               wait_for "rhythmbox"
 
@@ -104,8 +102,8 @@ in
                 "split vertical"
               ]}
               # some signal weirdness prevents the window appearing until a second
-              # copy is run, and fails to start...
-              wait_for "signal-desktop & sleep 2 && signal-desktop"
+              # copy is run, and immediately exits on detecting it's the second instance
+              wait_for "signal-desktop & sleep 3 && signal-desktop"
               ${after 1 [ "[class=Skype] layout stacking" ]}
 
               ${workspace "${homews}"}
@@ -117,7 +115,7 @@ in
 
               ${after 1 [
                 "reload"
-                "kanshictl reload"
+                "exec kanshictl reload"
               ]}
             '';
           in
