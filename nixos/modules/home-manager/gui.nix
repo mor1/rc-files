@@ -49,6 +49,7 @@
         dim
         greg
         ffmpeg_7
+        handbrake
         imv
         kodi
         rhythmbox
