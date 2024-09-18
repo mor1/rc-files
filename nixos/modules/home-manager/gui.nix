@@ -13,7 +13,6 @@
       "skypeforlinux" # skype, such as it is
       "slack" # slack, electron wrapper
       "vista-fonts" # vista-fonts here but vistafonts for install?!
-      "vscode"
       "zoom" # zoom here but zoom-us for install?!
     ];
 
@@ -44,18 +43,6 @@
         zoom-us # zoom vc
       ];
 
-      media = [
-        digikam
-        dim
-        greg
-        ffmpeg_7
-        handbrake
-        imv
-        kodi
-        rhythmbox
-        vlc
-      ];
-
       fonts = [
         (nerdfonts.override { fonts = [ "Hack" ]; })
         corefonts
@@ -64,7 +51,7 @@
 
       themes = [ foot.themes ];
     in
-    apps ++ media ++ fonts ++ themes;
+    apps ++ fonts ++ themes;
 
   fonts.fontconfig.enable = true;
 

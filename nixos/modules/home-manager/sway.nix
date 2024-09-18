@@ -40,6 +40,7 @@ in
     wev # wayland event viewer
     wl-clipboard # pipe to/from clipboard
     wlclock # old skool analogue
+    xorg.xset # used by vlc via xdg-screensaver to manage screensaver timeouts
   ];
 
   wayland.windowManager.sway.checkConfig = false;

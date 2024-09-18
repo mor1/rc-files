@@ -4,7 +4,10 @@ let
 in
 {
 
-  imports = [ ../../modules/home-manager/tui.nix ];
+  imports = [
+    ../../modules/home-manager/tui.nix
+    ../../modules/home-manager/media.nix
+  ];
 
   home = {
     username = "${username}";
