@@ -16,11 +16,13 @@
     extensions =
       with pkgs.vscode-extensions;
       [
+        # jasonlhy.hungry-delete
         arrterian.nix-env-selector
         ban.spellright
         bbenoist.nix
         bodil.file-browser
         charliermarsh.ruff
+        ecmel.vscode-html-css
         foxundermoon.shell-format
         jnoortheen.nix-ide
         kahole.magit
@@ -149,6 +151,38 @@
       #   when =
       #     "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported";
       # }
+
+      # zoom in/out/reset but only for the editor
+      {
+        key = "ctrl+x ctrl+=";
+        command = "runCommands";
+        args = {
+          commands = [
+            { command = "editor.action.fontZoomIn"; }
+            { command = "workbench.action.terminal.fontZoomIn"; }
+          ];
+        };
+      }
+      {
+        key = "ctrl+x ctrl+-";
+        command = "runCommands";
+        args = {
+          commands = [
+            { command = "editor.action.fontZoomOut"; }
+            { command = "workbench.action.terminal.fontZoomOut"; }
+          ];
+        };
+      }
+      {
+        key = "ctrl+x ctrl+0";
+        command = "runCommands";
+        args = {
+          commands = [
+            { command = "editor.action.fontZoomReset"; }
+            { command = "workbench.action.terminal.fontZoomReset"; }
+          ];
+        };
+      }
 
       {
         key = "ctrl+x ctrl+f";
