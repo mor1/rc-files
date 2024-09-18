@@ -26,7 +26,14 @@ let
     screen = "LG Electronics LG HDR 4K 0x00035DAC";
     source = "alsa_input.usb-046d_0990_F6BD69E7-02.pro-input-0";
   };
+  tv = {
+    screen = "Panasonic Industry Company Panasonic-TV 0x01010101";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+  };
 in
+# nms_a = {
+#   screen = "HDMI-A-1";
+# };
 {
 
   home.packages = with pkgs; [
@@ -116,7 +123,7 @@ in
 
               ${after 1 [
                 "reload"
-                "exec kanshictl reload"
+                "exec systemctl restart --user kanshi.service"
               ]}
             '';
           in
@@ -247,9 +254,6 @@ in
       systemdTarget = "sway-session.target";
       settings =
         let
-          # nms_a = {
-          #   screen = "HDMI-A-1";
-          # };
           pactl = "${pkgs.pulseaudio}/bin/pactl";
           sm = "${pkgs.sway}/bin/swaymsg";
           mwss =
@@ -330,6 +334,25 @@ in
                 mediaws
               ])
               ++ [ ''${sm} "workspace --no-auto-back-and-forth 1"'' ];
+          }
+
+          {
+            profile.name = "tv";
+            profile.outputs = [
+              {
+                criteria = "${laptop.screen}"; # 3840x2400
+                position = "0,0";
+                scale = 2.0;
+              }
+              {
+                criteria = "${tv.screen}"; # 3840x2160
+                position = "1920,60"; # adjacent, right-hand side, vertically centred
+                scale = 1.0;
+              }
+            ];
+            profile.exec = [
+              "${pactl} set-default-sink ${tv.sink}"
+            ] ++ (mwss tv.screen [ "10" ]) ++ [ ''${sm} "workspace --no-auto-back-and-forth 10"'' ];
           }
         ];
     };
