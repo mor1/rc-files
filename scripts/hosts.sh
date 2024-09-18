@@ -34,7 +34,7 @@ kinit () {
   fi
 
   if [[ "$cucl_local" != "true" ]]; then
-    sudo swanctl --terminate --ike CUCL
+    sudo swanctl --terminate --ike CUCL --force
   fi
 }
 
