@@ -6,6 +6,7 @@ emacs/dot-emacs.d/**
 !emacs/dot-emacs.d/README.md
 
 git/dot-gitlocal
+git/dot-git-credentials
 
 karabiner/**
 !karabiner/README.md
