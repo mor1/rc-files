@@ -16,15 +16,19 @@ let
     screen = "eDP-1";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink";
     source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
+    card = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic";
+    profile = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";
   };
   wgb = {
     screen = "LG Electronics LG HDR 4K 0x0005DD99";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
     source = "alsa_input.usb-046d_HD_Pro_Webcam_C920_C18974EF-02.analog-stereo";
   };
-  o2 = {
+  christs = {
     screen = "LG Electronics LG HDR 4K 0x00035DAC";
     source = "alsa_input.usb-046d_0990_F6BD69E7-02.pro-input-0";
+    card = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic";
+    profile = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";
   };
   tv = {
     screen = "Panasonic Industry Company Panasonic-TV 0x01010101";
@@ -267,6 +271,7 @@ in
             profile.name = "undocked";
             profile.outputs = [ { criteria = "${laptop.screen}"; } ];
             profile.exec = [
+              ''${pactl} set-card-profile ${laptop.card} "${laptop.profile}"''
               "${pactl} set-default-sink ${laptop.sink}"
               "${pactl} set-default-source ${laptop.source}"
             ];
@@ -305,7 +310,7 @@ in
           }
 
           {
-            profile.name = "o2";
+            profile.name = "christs";
             profile.outputs = [
               {
                 criteria = "${laptop.screen}"; # 3840x2400
@@ -313,22 +318,23 @@ in
                 scale = 2.0;
               }
               {
-                criteria = "${o2.screen}"; # 3840x2160
+                criteria = "${christs.screen}"; # 3840x2160
                 position = "640,0"; # overlap right-third => laptop_x => 3840 / 2.0 * (2/3)
                 scale = 1.0;
               }
             ];
             profile.exec =
               [
+                ''${pactl} set-card-profile ${laptop.card} "${laptop.profile}"''
                 "${pactl} set-default-sink ${laptop.sink}"
-                "${pactl} set-default-source ${o2.source}"
+                "${pactl} set-default-source ${christs.source}"
               ]
-              ++ (mwss o2.screen [
+              ++ (mwss christs.screen [
                 homews
                 codews
                 chatws
               ])
-              ++ (mwss o2.screen otherws)
+              ++ (mwss christs.screen otherws)
               ++ (mwss laptop.screen [
                 mailws
                 mediaws

@@ -171,6 +171,7 @@ in
   services = {
     automatic-timezoned.enable = true;
     localtimed.enable = true;
+
     dbus = {
       enable = true;
       packages = with pkgs; [
@@ -178,6 +179,7 @@ in
         strongswanNM
       ];
     };
+
     geoclue2.enable = true;
 
     gvfs.enable = true;
