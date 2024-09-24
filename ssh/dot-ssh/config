@@ -13,6 +13,7 @@ Host *.cl
      User rmm1002
      HostName %h.cam.ac.uk
      IdentityFile ~/.ssh/cucl-key
+     ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
      PubkeyAuthentication no
      GSSAPIAuthentication yes
      GSSAPIDelegateCredentials yes

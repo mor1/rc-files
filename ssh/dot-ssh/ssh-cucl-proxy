@@ -4,4 +4,23 @@
 #
 # Use bash `/dev/tcp` magic to setup a transparent tunnel.
 
-exec 3<>/dev/tcp/$1/$2 ; cat <&3 & cat >&3 ; kill $!
+cucl_local=false
+while read IP; do
+  echo "=== $IP"
+  if [[ $IP =~ ^128.232. ]]; then
+    cucl_local=true
+  fi
+done < <(ip -j -4 a | jq -r '.[].addr_info | .[].local')
+
+if [[ $cucl_local == false ]]; then
+  sudo swanctl --initiate --child CUCL # 2>/dev/null
+fi
+
+exec 3<>/dev/tcp/$1/$2
+cat <&3 & pid=$!
+cat >&3
+kill $pid
+
+if [[ $cucl_local == false ]]; then
+  sudo swanctl --terminate --force --ike CUCL # 2>/dev/null
+fi
