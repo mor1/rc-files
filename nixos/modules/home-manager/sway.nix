@@ -271,9 +271,9 @@ in
             profile.name = "undocked";
             profile.outputs = [ { criteria = "${laptop.screen}"; } ];
             profile.exec = [
-              ''${pactl} set-card-profile ${laptop.card} "${laptop.profile}"''
               "${pactl} set-default-sink ${laptop.sink}"
               "${pactl} set-default-source ${laptop.source}"
+              ''${pactl} set-card-profile ${laptop.card} "${laptop.profile}"''
             ];
           }
 
@@ -325,9 +325,9 @@ in
             ];
             profile.exec =
               [
-                ''${pactl} set-card-profile ${laptop.card} "${laptop.profile}"''
                 "${pactl} set-default-sink ${laptop.sink}"
                 "${pactl} set-default-source ${christs.source}"
+                ''${pactl} set-card-profile ${laptop.card} "${laptop.profile}"''
               ]
               ++ (mwss christs.screen [
                 homews
@@ -415,6 +415,34 @@ in
                 icon = "resolution";
                 text = "";
               };
+              caffeine = pkgs.writeShellScriptBin "caffeine.sh" ''
+                inhibitor_count () {
+                  local tree=$(swaymsg -t get_tree -r)
+                  printf "%s" $tree | jq --stream -c . | rg 'inhibit_idle"],true' | wc -l
+                }
+
+                off () {
+                  swaymsg -q 'for_window [all] inhibit_idle none' &&
+                    swaymsg -q '[all] inhibit_idle none' &&
+                    printf '${builtins.toJSON caffeine_off}'
+                }
+
+                on () {
+                  swaymsg -q 'for_window [all] inhibit_idle open' &&
+                    swaymsg -q '[all] inhibit_idle open' &&
+                    printf '${builtins.toJSON caffeine_on}' $(inhibitor_count)
+                }
+
+                case $1 in
+                  off ) off ;;
+                  on ) on ;;
+                  ic ) inhibitor_count ;;
+                  * )
+                    printf "invalid parameter '$1'\n" >/dev/stderr
+                    exit 1
+                    ;;
+                esac
+              '';
             in
             [
               {
@@ -447,29 +475,11 @@ in
                 format = "{ $icon|} $text.pango-str()";
                 json = true;
                 interval = "once";
-                command = ''
-                  swaymsg -q 'for_window [all] inhibit_idle none' &&
-                    swaymsg -q '[all] inhibit_idle none' &&
-                    printf '${builtins.toJSON caffeine_off}'
-                '';
-                cycle =
-                  let
-                    inhibitor_count = ''
-                      $(swaymsg -t get_tree -r | jq --stream -c . | rg 'inhibit_idle"],true' | wc -l)
-                    '';
-                  in
-                  [
-                    ''
-                      swaymsg -q 'for_window [all] inhibit_idle none' &&
-                        swaymsg -q '[all] inhibit_idle none' &&
-                        printf '${builtins.toJSON caffeine_off}'
-                    ''
-                    ''
-                      swaymsg -q 'for_window [all] inhibit_idle open' &&
-                        swaymsg -q '[all] inhibit_idle open' &&
-                        printf '${builtins.toJSON caffeine_on}' ${inhibitor_count}
-                    ''
-                  ];
+                command = "${caffeine}/bin/caffeine.sh off";
+                cycle = [
+                  "${caffeine}/bin/caffeine.sh on"
+                  "${caffeine}/bin/caffeine.sh off"
+                ];
               }
               {
                 block = "time";

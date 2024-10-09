@@ -16,7 +16,6 @@
     extensions =
       with pkgs.vscode-extensions;
       [
-        # jasonlhy.hungry-delete
         arrterian.nix-env-selector
         ban.spellright
         bbenoist.nix
@@ -24,6 +23,7 @@
         charliermarsh.ruff
         ecmel.vscode-html-css
         foxundermoon.shell-format
+        james-yu.latex-workshop
         jnoortheen.nix-ide
         kahole.magit
         ms-pyright.pyright
