@@ -8,6 +8,7 @@
         en-science
       ]
     ))
+    czkawka # detect file duplication, empty directories, &c
     davmail
     direnv
     gnupg

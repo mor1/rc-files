@@ -39,7 +39,7 @@
         teams-for-linux # ms teams in electron
         thunderbird # email
         vdhcoapp # for videodownloadhelper firefox plugin
-        wire-desktop # wire private messaging
+        # wire-desktop # wire private messaging
         zoom-us # zoom vc
       ];
 

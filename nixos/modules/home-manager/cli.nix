@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-
   home.packages =
     with pkgs;
     let
@@ -42,6 +41,7 @@
         broot # interactive directory navigation
         chafa # terminal graphics
         ctpv # terminal file previewer
+        cyme # better `lsusb`
         delta # better syntax highlighting diff
         dua # disk usage, interactively
         eza # improved `ls`
