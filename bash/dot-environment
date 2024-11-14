@@ -233,9 +233,10 @@ fi
 [[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
 ## load completions
+[[ $(which atuin 2>/dev/null) ]] && { source <(atuin init bash) ; source <(atuin gen-completion --shell bash) ;}
 [[ $(which direnv 2>/dev/null) ]] && { source <(direnv hook bash) ; direnv reload ;}
-[[ $(which procs 2>/dev/null) ]] && source <(procs --gen-completion-out bash)
 [[ $(which just 2>/dev/null) ]] && source <(just --completions bash)
 [[ $(which maestral 2>/dev/null) ]] && source <(maestral completion bash)
+[[ $(which procs 2>/dev/null) ]] && source <(procs --gen-completion-out bash)
 [[ $(which zola 2>/dev/null) ]] && source <(zola completion bash)
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(codium --locate-shell-integration-path bash)"

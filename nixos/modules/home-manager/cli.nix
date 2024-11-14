@@ -36,6 +36,7 @@
         zip # what it says on the tin
       ];
       nu_posix = [
+        atuin # shell history and sync
         bat # better cat
         bottom # btm ~ better top, htop, etc
         broot # interactive directory navigation
@@ -63,18 +64,24 @@
     in
     cli ++ nu_posix;
 
-  programs.lf = {
-    enable = true;
-
-    previewer = {
-      keybinding = "i";
-      source = "${pkgs.ctpv}/bin/ctpv";
+  programs = {
+    atuin = {
+      enable = true;
     };
 
-    extraConfig = ''
-      &${pkgs.ctpv}/bin/ctpv -s $id
-      cmd on-quit %${pkgs.ctpv}/bin/ctpv -e $id
-      set cleaner ${pkgs.ctpv}/bin/ctpvclear
-    '';
+    lf = {
+      enable = true;
+
+      previewer = {
+        keybinding = "i";
+        source = "${pkgs.ctpv}/bin/ctpv";
+      };
+
+      extraConfig = ''
+        &${pkgs.ctpv}/bin/ctpv -s $id
+        cmd on-quit %${pkgs.ctpv}/bin/ctpv -e $id
+        set cleaner ${pkgs.ctpv}/bin/ctpvclear
+      '';
+    };
   };
 }
