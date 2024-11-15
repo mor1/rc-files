@@ -14,14 +14,14 @@ let
   mediaws = "9:media";
   laptop = {
     screen = "eDP-1";
-    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink.2";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink";
     source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
     card = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic";
     profile = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";
   };
   wgb = {
     screen = "LG Electronics LG HDR 4K 0x0005DD99";
-    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink.3";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
     source = "alsa_input.usb-046d_HD_Pro_Webcam_C920_C18974EF-02.analog-stereo";
   };
   christs = {
