@@ -86,45 +86,38 @@ history () {                    # ensure history synced before display
   _bash_history_sync
   builtin history "$@"
 }
-PROMPT_COMMAND=_bash_history_sync
+# PROMPT_COMMAND=_bash_history_sync
 
 #
 # bash prompt
 #
 
+source ~/rc-files/scripts/colours.sh
 # so bash doesn't do variable expansion on (eg.) \w in PS1 -- consider the case
 # of a dir. called "`rm -rf ~`" ... :-> (ask Austin)
 export NO_PROMPT_VARS
 set -o noclobber # require explicit overwrite when redirecting
 
 ps1git() {
-  source ~/rc-files/scripts/colours.sh
   GIT_PS1_SHOWDIRTYSTATE=false
   GIT_PS1_SHOWSTASHSTATE=false
   GIT_PS1_SHOWUNTRACKEDFILES=false
   GIT_PS1_SHOWCOLORHINTS=true
   GIT_PS1_SHOWUPSTREAM="auto"
+
   case $TERM in
     dumb )
-      PROMPT_COMMAND='__git_ps1 \
-          ": \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
-          "\[$COLOR_OFF\]\\$; " \
-          "#%s "
-          '
+      _PROMPT=": \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]"
       ;;
 
     * )
-      PROMPT_COMMAND='__git_ps1 \
-          "\[\e]0;\u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]" \
-          "\[$COLOR_OFF\]\\$; " \
-          "#%s "
-          '
+      _PROMPT="\[\e]0;\u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]"
       ;;
   esac
+  PROMPT_COMMAND='__git_ps1 "$_PROMPT" "\[$COLOR_OFF\]\\$; " "#%s " ; _bash_history_sync'
 }
 
 ps1nogit() {
-  source ~/rc-files/scripts/colours.sh
   PROMPT_COMMAND=_bash_history_sync
   PS1="\[\e]0;\u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]\\$; "
   export PS1
@@ -201,7 +194,7 @@ case $PLATFORM in
     ## Android
     export ANDROID_HOME=/usr/local/opt/android-sdk
 
-    ps1nogit
+    ps1git
     ;;
 esac
 
@@ -233,7 +226,6 @@ fi
 [[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
 ## load completions
-[[ $(which atuin 2>/dev/null) ]] && { source <(atuin init bash) ; source <(atuin gen-completion --shell bash) ;}
 [[ $(which direnv 2>/dev/null) ]] && { source <(direnv hook bash) ; direnv reload ;}
 [[ $(which just 2>/dev/null) ]] && source <(just --completions bash)
 [[ $(which maestral 2>/dev/null) ]] && source <(maestral completion bash)
