@@ -20,6 +20,7 @@
         keychain # cli to manage SSH, GPG keys
         lynx # cli web browser
         mupdf # PDF manipulation
+        nix-du # show disk usage of roots
         pdfcpu # `optimize` for PDF optimisation
         pdftk # more PDF manipulation
         qpdf # yet more PDF manipulation
@@ -36,7 +37,7 @@
         zip # what it says on the tin
       ];
       nu_posix = [
-        atuin # shell history and sync
+        # atuin # shell history and sync
         bat # better cat
         bottom # btm ~ better top, htop, etc
         broot # interactive directory navigation
@@ -66,7 +67,13 @@
 
   programs = {
     atuin = {
-      enable = true;
+      enable = false;
+      settings = {
+        dialect = "uk";
+        enter_accept = false;
+        inline_height = 40;
+        style = "compact";
+      };
     };
 
     lf = {

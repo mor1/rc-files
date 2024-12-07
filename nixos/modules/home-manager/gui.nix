@@ -10,6 +10,7 @@
     builtins.elem (lib.getName pkg) [
       "aspell-dict-en-science" # additional EN dictionary
       "corefonts" # some fonts
+      "masterpdfeditor4" # edit PDF files
       "skypeforlinux" # skype, such as it is
       "slack" # slack, electron wrapper
       "vista-fonts" # vista-fonts here but vistafonts for install?!
@@ -28,6 +29,7 @@
         inkscape # vector graphics editing
         keybase-gui # keybase
         libreoffice # ~ms office
+        masterpdfeditor4 # edit PDF files
         meld # compare files / folders
         networkmanagerapplet # nm-connection-manager, NetworkManager GUI
         okular # pdf viewer / annotator

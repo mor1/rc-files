@@ -360,9 +360,12 @@ in
                 scale = 1.0;
               }
             ];
-            profile.exec = [
-              "${pactl} set-default-sink ${tv.sink}"
-            ] ++ (mwss tv.screen [ "10" ]) ++ [ ''${sm} "workspace --no-auto-back-and-forth 10"'' ];
+            profile.exec =
+              [
+                "${pactl} set-default-sink ${tv.sink}"
+              ]
+              ++ (mwss tv.screen [ "10" ])
+              ++ [ ''${sm} "workspace --no-auto-back-and-forth 10"'' ];
           }
         ];
     };
