@@ -200,7 +200,19 @@ in
       };
     };
 
-    onedrive.enable = true;
+    onedrive =
+      let
+        onedrive_2_4_25 = import (builtins.fetchGit {
+          name = "onedrive-2.4.25";
+          url = "https://github.com/NixOS/nixpkgs/";
+          ref = "refs/heads/nixpkgs-unstable";
+          rev = "05bbf675397d5366259409139039af8077d695ce";
+        }) { };
+      in
+      {
+        enable = true;
+        package = onedrive_2_4_25;
+      };
 
     avahi = {
       enable = true;
