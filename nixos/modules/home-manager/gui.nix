@@ -39,15 +39,16 @@
         skypeforlinux # skype
         slack # slack
         teams-for-linux # ms teams in electron
-        thunderbird # email
+        thunderbird-latest # email, v > 130 2024-11-23
         vdhcoapp # for videodownloadhelper firefox plugin
         # wire-desktop # wire private messaging
         zoom-us # zoom vc
       ];
 
       fonts = [
-        (nerdfonts.override { fonts = [ "Hack" ]; })
         corefonts
+        gyre-fonts
+        nerd-fonts.hack
         vistafonts
       ];
 
