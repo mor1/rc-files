@@ -132,6 +132,7 @@ in
               ${after 1 [
                 "reload"
                 "exec systemctl restart --user kanshi.service"
+                "exec systemctl restart --user maestral-daemon@maestral.service"
               ]}
             '';
           in
