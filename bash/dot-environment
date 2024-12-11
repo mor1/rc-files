@@ -25,7 +25,13 @@ unset PATH
 aenv PATH /bin
 aenv PATH /usr/bin
 
-[ -r /etc/NIXOS ] && NIXOS=true || NIXOS=false
+if [[ -r /etc/NIXOS ]]; then
+  NIXOS=true
+elif [[ "$TERM_PROGRAM" == "vscode" && -r /.host-etc/NIXOS ]]; then
+  NIXOS=true
+else
+  NIXOS=false
+fi
 [ -d ~/.nix-profile ] &&  NIX=true || NIX=false
 
 if $NIX ; then
@@ -160,12 +166,12 @@ case $PLATFORM in
   Linux )
     if [ -r ~/.git-prompt.sh ]; then
       source ~/.git-prompt.sh
-    elif [ -r /etc/NIXOS ]; then
+    elif $NIXOS ; then
       gitdir=$(dirname $(readlink -f $(which git)))
       source ${gitdir}/../share/git/contrib/completion/git-prompt.sh
+      source ${gitdir}/../share/git/contrib/completion/git-completion.bash
     else
       for d in /etc/bash_completion /etc/bash_completion.d ; do
-        ## GIT bash completion
         if [ -d $d ]; then
           [ -r $d/git ] && source $d/git
           [ -r $d/git-prompt ] && source $d/git-prompt
