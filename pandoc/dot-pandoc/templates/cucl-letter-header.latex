@@ -65,14 +65,12 @@
 \newcommand{\fromjobdetails}{}
 \newcommand{\fromemaildetails}{}
 \newcommand{\fromphonedetails}{}
-\newcommand{\fromfaxdetails}{}
 \newcommand{\fromwhom}[6]{
   \renewcommand{\fromnamedetails}{#1}
   \renewcommand{\fromquoldetails}{#2}
   \renewcommand{\fromjobdetails}{#3}
   \renewcommand{\fromemaildetails}{\scriptsize\url{#4}}
   \renewcommand{\fromphonedetails}{#5}
-  \renewcommand{\fromfaxdetails}{#6}
 }
 
 %% recipient
@@ -177,7 +175,6 @@ $endif$
     \multicolumn{2}{@{}l@{}}{Cambridge CB3 0FD. UK}\\
  & \\
     Tel: & \fromphonedetails\\
-    Fax: & \fromfaxdetails\\
     E-mail: & \fromemaildetails\\
   \end{tabular}
 }
