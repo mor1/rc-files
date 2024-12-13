@@ -24,25 +24,10 @@
   {/home/mort/u/me/signatures/}
 }
 
-\usepackage{longtable,booktabs}
-% \usepackage{etoolbox}
-% \makeatletter
-% \patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-% \makeatother
-% % Allow footnotes in longtable head/foot
-% \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
-% \makesavenoteenv{longtable}
+\usepackage{bookmark}
 
 %% fonts
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{eurosym}
-\usepackage{upquote}
-\usepackage{microtype}
 \usepackage{fontspec}
-\usepackage{xltxtra,xunicode}
-\defaultfontfeatures{Mapping=tex-text,Scale=MatchUppercase}
 \renewcommand{\familydefault}{\rmdefault}
 \setmainfont{Times New Roman}
 \setmonofont{Hack Nerd Font}
@@ -55,7 +40,6 @@
 \setlength{\topmargin}{-25mm}
 \setlength{\textwidth}{16cm}
 \setlength{\textheight}{265mm}  %235mm if address in footer
-%\setlength{\footskip}{25mm}
 \parskip 10pt
 \parindent 0.0pt
 
@@ -117,14 +101,14 @@ $endif$
 \newcommand{\cclist}[1]{
   \renewcommand{\cclistdetails}{
     \vspace*{1em}cc:~~\begin{minipage}[t]{100mm}#1\end{minipage}
-}}
+  }}
 
 \newcommand{\cuarms}{
-  \includegraphics[width=62mm]{figures/CUni3.eps}
+  \includegraphics[width=62mm]{figures/CUni3.pdf}
 }
 \newcommand{\bwarms}{
   \typeout{Using B&W version of the arms}
-  \renewcommand{\cuarms}{\includegraphics{figures/BWUni3.eps}}
+  \renewcommand{\cuarms}{\includegraphics{figures/BWUni3.pdf}}
 }
 
 \newcommand{\ComputerLaboratory}{
@@ -173,7 +157,7 @@ $endif$
     \multicolumn{2}{@{}l@{}}{William Gates Building,}\\
     \multicolumn{2}{@{}l@{}}{15, JJ Thompson Avenue,}\\
     \multicolumn{2}{@{}l@{}}{Cambridge CB3 0FD. UK}\\
- & \\
+    & \\
     Tel: & \fromphonedetails\\
     E-mail: & \fromemaildetails\\
   \end{tabular}
@@ -218,6 +202,6 @@ $endif$
   {+44 1223 334419}{+44 1223 334678}
 
 \begin{letter}
-$body$
+  $body$
 \end{letter}
 \end{document}
