@@ -48,6 +48,7 @@
         dua # disk usage, interactively
         eza # improved `ls`
         fd # `find` replacement
+        fend # better CLI calculator
         fzf # fuzzy file finder; desired by yazi
         hexyl # hex pretty printer
         htop # graphical top
