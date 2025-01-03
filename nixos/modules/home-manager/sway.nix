@@ -38,6 +38,8 @@ let
     screen = "Sony SONY TV  *07 0x01010101";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
   };
+
+  modifier = "Mod4";
 in
 # nms_a = {
 #   screen = "HDMI-A-1";
@@ -72,7 +74,7 @@ in
         swayosd = lib.getExe' pkgs.swayosd "swayosd-client";
       in
       {
-        modifier = "Mod4"; # use WIN not ALT-L for sway controls
+        modifier = "${modifier}"; # use WIN not ALT-L for sway controls
         focus.wrapping = "force";
         workspaceAutoBackAndForth = true;
 
@@ -168,13 +170,15 @@ in
         # additional keybindings; cannot simply remap input ev -> output ev
         keybindings =
           let
+            swaylock = "${pkgs.swaylock}/bin/swaylock -C ~/.config/swaylock/config";
+
             f1 = "exec ${swayosd} --max-volume 130 --output-volume mute-toggle";
             f2 = "exec ${swayosd} --max-volume 130 --output-volume lower";
             f3 = "exec ${swayosd} --max-volume 130 --output-volume raise";
             f4 = "exec ${swayosd} --input-volume mute-toggle";
             f5 = "exec brightnessctl s 10%-";
             f6 = "exec brightnessctl s 10%+";
-            f7 = "nop f7 pressed";
+            f7 = "exec ${swaylock}";
             net_toggle = pkgs.writeShellScriptBin "net_toggle.sh" ''
               if [[ $(nmcli n) =~ enabled ]]; then
                 nmcli n off
@@ -198,9 +202,9 @@ in
             "XF86MonBrightnessUp" = f6;
             "XF86Display" = f7;
             "XF86WLAN" = f8;
-            "XF86Messenger" = f9;
-            "XF86Go" = f10;
-            "Cancel" = f11;
+            "XF86NotificationCenter" = f9;
+            "XF86PickupPhone" = f10;
+            "XF86HangupPhone" = f11;
             "XF86Favorites" = f12;
 
             ## MSFT keyboard
@@ -213,12 +217,12 @@ in
             "XF86Reply" = f7;
             "XF86MailForward" = f8;
             "XF86Send" = f9;
-            # F10 !!! XXX NO SCAN CODE
+            "XF86SpellCheck" = f10;
             "XF86Save" = f11;
             "Print" = f12; # also catches PrtSc on thinkpad
 
             ## extras, all keyboards
-            # "Mod4+Return" = "exec ${pkgs.rio}/bin/rio";
+            "${modifier}+Shift+l" = "exec ${swaylock}";
           };
 
         # status bars using i3status-rust
