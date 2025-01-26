@@ -60,7 +60,7 @@
 
     userSettings = {
       "editor.fontFamily" = "Hack";
-      "editor.fontSize" = 11;
+      "editor.fontSize" = 12;
       "editor.indentSize" = "tabSize";
       "editor.multiCursorModifier" = "ctrlCmd";
       "editor.renderWhitespace" = "none";
