@@ -15,12 +15,14 @@
         pandoc # document processing and conversion
         imagemagick # image manipulation tools
         inetutils
+        inotify-tools # commands using inotify/dnotify APIs
         internetarchive # internet archive
         jhead # jpeg exif header manipulation tool
         keychain # cli to manage SSH, GPG keys
         lynx # cli web browser
         mupdf # PDF manipulation
         nix-du # show disk usage of roots
+        nix-tree # show dependency tree of derivations https://github.com/utdemir/nix-tree
         pdfcpu # `optimize` for PDF optimisation
         pdftk # more PDF manipulation
         qpdf # yet more PDF manipulation
@@ -59,6 +61,7 @@
         nushell # maybe it's time to kick another addiction
         procs # better ps
         ripgrep # rg ~ `grep` replacement
+        television # tui fuzzy file finder
         uutils-coreutils-noprefix # replaces GNU `coreutils`
         viddy # better watch
         zoxide # smarter cd; desired by yazi
