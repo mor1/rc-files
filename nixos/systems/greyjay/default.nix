@@ -64,8 +64,8 @@ in
     ];
   };
 
-  # boot via UEFI
   boot = {
+    # kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
     initrd.luks.devices = {
       cryptroot = {
         device = "${root_dev}";
@@ -75,12 +75,18 @@ in
     };
 
     loader = {
-      efi.canTouchEfiVariables = true;
+      efi.canTouchEfiVariables = false; # true on first invocation
       systemd-boot = {
         enable = true;
         configurationLimit = 10;
         consoleMode = "1";
         memtest86.enable = true;
+        # windows = {
+        #   "10" = {
+        #     efiDeviceHandle = "HD0b";
+        #     title = "Windows 10";
+        #   };
+        # };
       };
     };
 
