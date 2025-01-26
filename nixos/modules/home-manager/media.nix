@@ -2,7 +2,6 @@
 {
   home.packages = with pkgs; [
     digikam # photo manager
-    dim # media playback
     ffmpeg_7 # manipulate media files
     greg # podcast downloader
     handbrake # drive ffmpeg
