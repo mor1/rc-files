@@ -135,7 +135,7 @@ rfc () {
 # pandoc invocations
 #
 
-PANDOC_BASE='pandoc --from=markdown+smart -Vpapersize=a4 --pdf-engine=xelatex'
+PANDOC_BASE='pandoc --from=markdown+smart -Vpapersize=a4 --pdf-engine=lualatex'
 
 PANDOC_MD="$PANDOC_BASE -Vgeometry=margin=2cm -Vcolorlinks"
 
