@@ -70,3 +70,9 @@ Host *
   ForwardX11 no
   ForwardAgent no
   SetEnv TERM=xterm-256color
+
+## profiles
+
+Match tagged tmux
+  RemoteCommand tmux -CC new -A -s main
+  RequestTTY force
