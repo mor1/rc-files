@@ -24,7 +24,7 @@ kinit () {
   done < <(ip -j -4 a | jq -r '.[].addr_info | .[].local')
 
   if [[ "$cucl_local" != "true" ]]; then
-    sudo swanctl --initiate --child CUCL
+    sudo ipsec up CUCL
   fi
 
   if which cl-krenew; then
@@ -34,7 +34,7 @@ kinit () {
   fi
 
   if [[ "$cucl_local" != "true" ]]; then
-    sudo swanctl --terminate --ike CUCL --force
+    sudo ipsec down CUCL
   fi
 }
 

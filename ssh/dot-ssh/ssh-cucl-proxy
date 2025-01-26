@@ -13,7 +13,7 @@ while read IP; do
 done < <(ip -j -4 a | jq -r '.[].addr_info | .[].local')
 
 if [[ $cucl_local == false ]]; then
-  sudo swanctl --initiate --child CUCL # 2>/dev/null
+  sudo ipsec up CUCL
 fi
 
 exec 3<>/dev/tcp/$1/$2
@@ -22,5 +22,5 @@ cat >&3
 kill $pid
 
 if [[ $cucl_local == false ]]; then
-  sudo swanctl --terminate --force --ike CUCL # 2>/dev/null
+  sudo ipsec down CUCL
 fi
