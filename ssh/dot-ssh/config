@@ -6,67 +6,67 @@ UseRoaming no
 ## cucl
 
 Host tfc-app9.cl
-     User mort
-     IdentityFile ~/.ssh/bitbucket-key-rsa
+  User mort
+  IdentityFile ~/.ssh/bitbucket-key-rsa
 
 Host *.cl
-     User rmm1002
-     HostName %h.cam.ac.uk
-     IdentityFile ~/.ssh/cucl-key
-     ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
-     PubkeyAuthentication no
-     GSSAPIAuthentication yes
-     GSSAPIDelegateCredentials yes
+  User rmm1002
+  HostName %h.cam.ac.uk
+  IdentityFile ~/.ssh/cucl-key
+  ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
+  PubkeyAuthentication no
+  GSSAPIAuthentication yes
+  GSSAPIDelegateCredentials yes
 
 Host *.cl.cam.ac.uk linux.cl.ds.cam.ac.uk linux.ds.cam.ac.uk
-     User rmm1002
-     IdentityFile ~/.ssh/cucl-key
-     StrictHostKeyChecking no
-     UserKnownHostsFile=/dev/null
-     GSSAPIAuthentication yes
-     GSSAPIDelegateCredentials yes
+  User rmm1002
+  IdentityFile ~/.ssh/cucl-key
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+  GSSAPIAuthentication yes
+  GSSAPIDelegateCredentials yes
 
 Host papers.cl.cam.ac.uk svn-www.cl.cam.ac.uk
-     IdentityFile ~/.ssh/examqs-key-rsa
+  IdentityFile ~/.ssh/examqs-key-rsa
 
 Host gitlab.developers.cam.ac.uk
-     User rmm1002
-     IdentityFile ~/.ssh/bitbucket-key-rsa
+  User rmm1002
+  IdentityFile ~/.ssh/bitbucket-key-rsa
 
 ## other
 
 Host github.com
-     User git
-     HostName ssh.github.com
-     IdentityFile ~/.ssh/github-key
-     ## handy for firewalls!
-     # Port 443
+  User git
+  HostName ssh.github.com
+  IdentityFile ~/.ssh/github-key
+  ## handy for firewalls!
+  # Port 443
 
 Host git.alpinelinux.org
-     User git
-     IdentityFile ~/.ssh/github-key
+  User git
+  IdentityFile ~/.ssh/github-key
 
 Host gitlab.alpinelinux.org
-     User git
-     IdentityFile ~/.ssh/github-key
+  User git
+  IdentityFile ~/.ssh/github-key
 
 Host mediapc.lan
-     User root
+  User root
 
 Host git.overleaf.com
-     User richard.mortier@cl.cam.ac.uk
+  User richard.mortier@cl.cam.ac.uk
 
 Host gitlab.lrz.de
-     User git
-     IdentityFile ~/.ssh/bitbucket-key-rsa
+  User git
+  IdentityFile ~/.ssh/bitbucket-key-rsa
 
 Host hotcrp.uksystems.org
-     User rmm1002
-     IdentityFile ~/.ssh/cucl-key
+  User rmm1002
+  IdentityFile ~/.ssh/cucl-key
 
 ## default
 
 Host *
-     ForwardX11 no
-     ForwardAgent no
-     SetEnv TERM=xterm-256color
+  ForwardX11 no
+  ForwardAgent no
+  SetEnv TERM=xterm-256color
