@@ -29,7 +29,7 @@
 %% fonts
 \usepackage{fontspec}
 \renewcommand{\familydefault}{\rmdefault}
-\setmainfont{Times New Roman}
+\setmainfont{Georgia}
 \setmonofont{Hack Nerd Font}
 
 %% geometry
