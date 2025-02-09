@@ -8,9 +8,6 @@
         en-science
       ]
     ))
-    czkawka # detect file duplication, empty directories, &c
-    davmail
-    direnv
     gnupg
     hunspell # spellchecking and dictionaries
     hunspellDicts.en_GB-large # en.GB
@@ -46,9 +43,6 @@
 
     keybase.enable = true;
 
-    kbfs = {
-      enable = true;
-      # enableRedirector = true;
-    };
+    kbfs.enable = true;
   };
 }

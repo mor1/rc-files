@@ -24,9 +24,7 @@ in
 
   home-manager = {
     # backupFileExtension = "backup"; # disable: better to see the failure
-    extraSpecialArgs = {
-      inherit inputs;
-    };
+    extraSpecialArgs = { inherit inputs; };
     users.${username} = import ../../home-manager/${hostname};
   };
 

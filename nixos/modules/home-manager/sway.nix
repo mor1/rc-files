@@ -49,10 +49,10 @@ in
   home.packages = with pkgs; [
     brightnessctl # control screen brightness
     gammastep # automatically dim+redden screen at night
-    grim
+    grim # screenshot wayland compositor; use `slurp` to select regions
     kanshi # modify sway config on hardware changes
     pwvucontrol # graphical control of AV routing (pipewire)
-    slurp
+    slurp # select a compositor region to stdout
     wdisplays # gui for display configuration
     wev # wayland event viewer
     wl-clipboard # pipe to/from clipboard
@@ -60,10 +60,9 @@ in
     xorg.xset # used by vlc via xdg-screensaver to manage screensaver timeouts
   ];
 
-  wayland.windowManager.sway.checkConfig = false;
-
   wayland.windowManager.sway = {
     enable = true;
+    checkConfig = false;
 
     swaynag.enable = true;
 
@@ -100,7 +99,7 @@ in
 
               ${workspace "${codews}"}
               wait_for firefox -P github.com
-              wait_for codium
+              wait_for zeditor
               ${after 3 [ "layout stacking" ]}
 
               ${workspace "${mailws}"}
@@ -114,15 +113,10 @@ in
               ${workspace "${chatws}"}
               wait_for slack
               ${after 1 [ "split horizontal" ]}
-              wait_for skypeforlinux
-              ${after 3 [
-                "[class=Skype] focus"
-                "split vertical"
-              ]}
+
               # some signal weirdness prevents the window appearing until a second
               # copy is run, and immediately exits on detecting it's the second instance
               wait_for "signal-desktop & sleep 3 && signal-desktop"
-              ${after 1 [ "[class=Skype] layout stacking" ]}
 
               ${workspace "${homews}"}
               wait_for emacsclient -c -s /tmp/emacs-mort/server
@@ -380,9 +374,7 @@ in
               }
             ];
             profile.exec =
-              [
-                "${pactl} set-default-sink ${tv.sink}"
-              ]
+              [ "${pactl} set-default-sink ${tv.sink}" ]
               ++ (mwss tv.screen [ "10" ])
               ++ [ ''${sm} "workspace --no-auto-back-and-forth 10"'' ];
           }
@@ -568,7 +560,7 @@ in
   home.pointerCursor = {
     name = "Bibata-Modern-Ice";
     package = pkgs.bibata-cursors;
-    size = 20;
+    size = 18;
     gtk.enable = true;
     x11 = {
       enable = true;

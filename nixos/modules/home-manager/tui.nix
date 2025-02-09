@@ -1,12 +1,9 @@
 { pkgs, ... }:
 {
-  imports = [
-    ./cli.nix
-    ./dev.nix
-  ];
-
   home.packages = with pkgs; [
+    fzf # fuzzy file finder; desired by yazi
     yazi # file manager
+    zoxide # smarter cd; desired by yazi
   ];
 
   programs = {
@@ -27,10 +24,7 @@
       extraPackages = (epkgs: [ epkgs.mu4e ]);
     };
 
-    git = {
-      enable = true;
-    };
-
+    git.enable = true;
     mu.enable = true;
   };
 

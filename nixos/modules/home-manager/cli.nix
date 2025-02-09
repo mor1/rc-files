@@ -4,7 +4,7 @@
     with pkgs;
     let
       cli = [
-        aria2 # feature rich wget/curl
+        # aria2 # feature rich wget/curl
         bc # calculator
         dig # because DNS
         exiftool # manipulate images
@@ -31,7 +31,7 @@
         sysstat # system stats
         traceroute
         tree # tree-format recursive ls
-        typst # better latex?
+        # typst # better latex?
         unzip # what it says on the tin, because zip can't unzip
         wget # network downloader
         which # locate command in $PATH
@@ -39,7 +39,6 @@
         zip # what it says on the tin
       ];
       nu_posix = [
-        # atuin # shell history and sync
         bat # better cat
         bottom # btm ~ better top, htop, etc
         broot # interactive directory navigation
@@ -51,20 +50,15 @@
         eza # improved `ls`
         fd # `find` replacement
         fend # better CLI calculator
-        fzf # fuzzy file finder; desired by yazi
         hexyl # hex pretty printer
         htop # graphical top
         iotop # io top
         jujutsu # better git
         just # updated gnumake replacement
-        mcfly # better shell history
-        nushell # maybe it's time to kick another addiction
         procs # better ps
         ripgrep # rg ~ `grep` replacement
-        television # tui fuzzy file finder
         uutils-coreutils-noprefix # replaces GNU `coreutils`
         viddy # better watch
-        zoxide # smarter cd; desired by yazi
       ];
     in
     cli ++ nu_posix;

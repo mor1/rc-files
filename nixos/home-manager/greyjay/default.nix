@@ -6,6 +6,7 @@
 # sudo nix-collect-garbage -d && nix-collect-garbage -d && sudo nix-store --gc && nix-store --gc && sudo nixos-rebuild switch
 # pushd ~/rc-files/nixos ; nixfmt configuration.nix flake.nix home-manager/default.nix ; popd
 # pushd ~/u/src/dl-solar ; ./dl-solar yesterday ; popd
+# : mort@greyjay:~$; fc-cache -fr --verbose
 
 { pkgs, lib, ... }:
 let
@@ -14,11 +15,14 @@ in
 {
 
   imports = [
-    ../../modules/home-manager/system.nix
-    ../../modules/home-manager/tui.nix
-    ../../modules/home-manager/media.nix
+    ../../modules/home-manager/cli.nix
+    ../../modules/home-manager/dev.nix
     ../../modules/home-manager/gui.nix
+    ../../modules/home-manager/media.nix
+    ../../modules/home-manager/system.nix
     ../../modules/home-manager/texlive.nix
+    ../../modules/home-manager/tui.nix
+    ../../modules/home-manager/unfree.nix
   ];
 
   home = {

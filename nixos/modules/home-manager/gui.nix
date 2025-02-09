@@ -2,46 +2,24 @@
 {
   imports = [
     ./sway.nix
-    ./vscode.nix
+    ./zed-editor.nix
   ];
-
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "aspell-dict-en-science" # additional EN dictionary
-      "corefonts" # some fonts
-      "masterpdfeditor4" # edit PDF files
-      "skypeforlinux" # skype, such as it is
-      "slack" # slack, electron wrapper
-      "vista-fonts" # vista-fonts here but vistafonts for install?!
-      "zoom" # zoom here but zoom-us for install?!
-    ];
 
   home.packages =
     with pkgs;
     let
       apps = [
-        # gimp # krita # bitmap graphics editing
-        nautilus # maybe the least sucky of the file managers, so far?
-        gst123
-        gst_all_1.gst-libav
-        gst_all_1.gstreamer
+        czkawka # detect file duplication, empty directories, &c
+        ghostty # alternative gui terminal
         inkscape # vector graphics editing
         keybase-gui # keybase
         libreoffice # ~ms office
-        masterpdfeditor4 # edit PDF files
-        meld # compare files / folders
+        nautilus # maybe the least sucky of the file managers, so far?
         networkmanagerapplet # nm-connection-manager, NetworkManager GUI
         okular # pdf viewer / annotator
-        pdfpc # pdf presentation viewer
-        rio # alternative xterm
         signal-desktop # signal private messaging
-        skypeforlinux # skype
         slack # slack
         teams-for-linux # ms teams in electron
-        thunderbird-latest # email, v > 130 2024-11-23
-        vdhcoapp # for videodownloadhelper firefox plugin
-        # wire-desktop # wire private messaging
         zoom-us # zoom vc
       ];
 
@@ -107,9 +85,7 @@
   };
 
   programs = {
-    chromium = {
-      enable = true;
-    };
+    chromium.enable = true;
 
     foot = {
       enable = true;

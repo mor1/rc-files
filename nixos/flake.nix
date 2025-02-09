@@ -15,9 +15,7 @@
     {
       nixosConfigurations = {
         greyjay = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
+          specialArgs = { inherit inputs; };
           modules = [ ./systems/greyjay ];
         };
       };
@@ -25,25 +23,19 @@
       homeConfigurations = {
         "mort@greyjay" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs;
-          };
+          extraSpecialArgs = { inherit inputs; };
           modules = [ ./home-manager/greyjay ];
         };
 
         "rmm1002@binky" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs;
-          };
+          extraSpecialArgs = { inherit inputs; };
           modules = [ ./home-manager/binky ];
         };
 
         "rmm1002@quoth" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs;
-          };
+          extraSpecialArgs = { inherit inputs; };
           modules = [ ./home-manager/quoth ];
         };
       };

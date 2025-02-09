@@ -5,7 +5,6 @@
     let
       python_tools =
         [
-          # hatch
           python312
           ruff
           uv
@@ -39,7 +38,6 @@
       git-lfs # large file support
       gnumake # unavoidably
       jq # pretty-print JSON
-      nil # LSP for Nix language
       nixfmt-rfc-style # format .nix files
       rustup # manage Rust installations
     ]
