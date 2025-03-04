@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Richard Mortier <mort@cantab.net>
+# Copyright (c) Richard Mortier <mort@cantab.net>
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -14,24 +14,22 @@
 
 [general]
 ui = TTYUI
-accounts = Live, Hotmail, Gmail
-pythonfile = /Users/mort/rc-files/offlineimap/offlineimap.py
+accounts = Gmail, Ikva
+pythonfile = /home/mort/rc-files/offlineimap/offlineimap.py
 fsync = false
 
 [DEFAULT]
-presynchook = /Users/mort/rc-files/offlineimap/offlineimap-presynchook.sh
-postsynchook = /Users/mort/rc-files/offlineimap/offlineimap-postsynchook.sh
-sslcacertfile = /usr/local/etc/openssl/cert.pem
+presynchook = /home/mort/rc-files/offlineimap/offlineimap-presynchook.sh
+postsynchook = /home/mort/rc-files/offlineimap/offlineimap-postsynchook.sh
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 ssl = yes
-maxconnections = 1
-maxage = 90
 
 #
 # Gmail
 #
 
 [Account Gmail]
-postsynchook = /Users/mort/rc-files/offlineimap/offlineimap-postsynchook.sh --index
+postsynchook = /home/mort/rc-files/offlineimap/offlineimap-postsynchook.sh # --index
 localrepository = Gmail-Local
 remoterepository = Gmail-Remote
 labelsheader = X-Keywords
@@ -40,8 +38,8 @@ ignorelabels = \Important, \Draft
 
 [Repository Gmail-Local]
 type = GmailMaildir
-localfolders = ~/me/mail/gmail
-nametrans = to_remotefolder
+localfolders = ~/u/me/mail/gmail
+nametrans = gmail_to_remotefolder
 sep = /
 
 [Repository Gmail-Remote]
@@ -49,10 +47,9 @@ type = Gmail
 ssl_version = tls1_2
 remoteuser = richard.mortier@gmail.com
 auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="richard.mortier@gmail.com", server="imap.gmail.com")
-nametrans = to_localfolder
-folderfilter = gmail_is_synced
+remotepasseval = pass_get_password("richard.mortier@gmail.com")
+nametrans = gmail_to_localfolder
+folderfilter = gmail_folderfilter
 
 # do not send deletes from Remote to Local
 sync_deletes = no
@@ -60,169 +57,84 @@ sync_deletes = no
 readonly = true
 
 # #
-# # Vipadia
+# # Hotmail
 # #
 
-# [Account Vipadia]
-# localrepository = Vipadia-Local
-# remoterepository = Vipadia-Remote
-# labelsheader = X-Keywords
-# synclabels = yes
-# ignorelabels = \Important, \Draft
+# [Account Hotmail]
+# localrepository = Hotmail-Local
+# remoterepository = Hotmail-Remote
 
-# [Repository Vipadia-Local]
-# type = GmailMaildir
-# localfolders = ~/me/mail/vipadia
-# nametrans = to_remotefolder
-# sep = /
-
-# [Repository Vipadia-Remote]
-# type = Gmail
-# ssl_version = tls1_2
-# remoteuser = mort@vipadia.com
-# auth_mechanisms = LOGIN
-# remotepasseval = get_keychain_pass(
-#     account="mort@vipadia.com", server="imap.gmail.com")
-# nametrans = to_localfolder
-# folderfilter = gmail_is_synced
-
-# # do not accept writes to Remote from Local
-# readonly = true
-
-# #
-# # Vipadia- alternate account
-# #
-
-# [Account VipadiaAlt]
-# localrepository = VipadiaAlt-Local
-# remoterepository = VipadiaAlt-Remote
-# labelsheader = X-Keywords
-# synclabels = yes
-# ignorelabels = \Important, \Draft
-
-# [Repository VipadiaAlt-Local]
-# type = GmailMaildir
-# localfolders = ~/me/mail/vipadia-alt
-# nametrans = to_remotefolder
-# sep = /
-
-# [Repository VipadiaAlt-Remote]
-# type = Gmail
-# ssl_version = tls1_2
-# remoteuser = mort.vipadia
-# auth_mechanisms = LOGIN
-# remotepasseval = get_keychain_pass(
-#     account="mort.vipadia", server="imap.gmail.com")
-# nametrans = to_localfolder
-# folderfilter = gmail_is_synced
-
-# # do not accept writes to Remote from Local
-# readonly = true
-
-#
-# Hotmail
-#
-
-[Account Hotmail]
-localrepository = Hotmail-Local
-remoterepository = Hotmail-Remote
-
-[Repository Hotmail-Local]
-type = Maildir
-localfolders = ~/me/mail/hotmail
-nametrans = to_remotefolder
-sep = /
-
-[Repository Hotmail-Remote]
-type = IMAP
-remotehost = imap-mail.outlook.com
-remoteuser = richard_mortier@hotmail.com
-auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="richard_mortier@hotmail.com", server="imap-mail.outlook.com")
-
-# do not accept writes to Remote from Local
-readonly = true
-
-#
-# Live
-#
-
-[Account Live]
-localrepository = Live-Local
-remoterepository = Live-Remote
-
-[Repository Live-Local]
-type = Maildir
-localfolders = ~/me/mail/live
-nametrans = to_remotefolder
-sep = /
-
-[Repository Live-Remote]
-type = IMAP
-remotehost = imap-mail.outlook.com
-remoteuser = mort@live.co.uk
-auth_mechanisms = LOGIN
-remotepasseval = get_keychain_pass(
-    account="mort@live.co.uk", server="imap-mail.outlook.com")
-
-# do not accept writes to Remote from Local
-readonly = true
-
-# #
-# # Kvasira
-# #
-
-# [Account Kvasira]
-# localrepository = Kvasira-Local
-# remoterepository = Kvasira-Remote
-# labelsheader = X-Keywords
-# synclabels = yes
-# ignorelabels = \Important, \Draft
-
-# [Repository Kvasira-Local]
-# type = GmailMaildir
-# localfolders = ~/me/mail/kvasira
-# nametrans = to_remotefolder
-# sep = /
-
-# [Repository Kvasira-Remote]
-# type = Gmail
-# ssl_version = tls1_2
-# remoteuser = mort@kvasira.com
-# auth_mechanisms = LOGIN
-# remotepasseval = get_keychain_pass(
-#     account="mort@kvasira.com", server="imap.gmail.com")
-# nametrans = to_localfolder
-# folderfilter = gmail_is_synced
-
-# # do not accept writes to Remote from Local
-# readonly = true
-
-# #
-# # Hermes
-# #
-
-# [Account Hermes]
-# localrepository = Hermes-Local
-# remoterepository = Hermes-Remote
-
-# [Repository Hermes-Local]
+# [Repository Hotmail-Local]
 # type = Maildir
-# localfolders = ~/me/mail/hermes
+# localfolders = ~/u/me/mail/hotmail
 # sep = /
 
-# [Repository Hermes-Remote]
+# [Repository Hotmail-Remote]
 # type = IMAP
-# remotehost = imap.hermes.cam.ac.uk
-# remoteuser = rmm1002
+# remotehost = imap-mail.outlook.com
+# remoteuser = richard_mortier@hotmail.com
 # auth_mechanisms = LOGIN
-# remotepasseval = get_keychain_pass(
-#     account="rmm1002@imap.hermes.cam.ac.uk")
-# folderfilter = hermes_is_synced
-
-# # do not send deletes from Remote to Local
-# sync_deletes = no
+# remotepasseval = pass_get_password(account="richard_mortier@hotmail.com")
+# folderfilter = m365_filterfolder
 
 # # do not accept writes to Remote from Local
 # readonly = true
+
+# #
+# # Live
+# #
+
+# [Account Live]
+# localrepository = Live-Local
+# remoterepository = Live-Remote
+
+# [Repository Live-Local]
+# type = Maildir
+# localfolders = ~/u/me/mail/live
+# sep = /
+
+# [Repository Live-Remote]
+# type = IMAP
+# remotehost = outlook.office365.com
+# remoteuser = mort@live.co.uk
+# auth_mechanisms = XOAUTH2
+# oauth2_request_url = https://login.microsoftonline.com/common/oauth2/v2.0/token
+# oauth2_access_token_eval = pass_get_password(account="mort@live.co.uk").decode()
+# # oauth2_tenant_id = "3374e778-3463-4419-bb6d-ac8dadc3bac2"
+
+# # ...from https://github.com/UvA-FNWI/M365-IMAP config.py
+# oauth2_client_id = '''08162f7c-0fd2-4200-a84a-f25a4db0b584'''
+# oauth2_client_secret = '''TxRBilcHdC6WGBee]fs?QR:SJ8nI[g82'''
+# folderfilter = m365_filterfolder
+# # do not accept writes to Remote from Local
+# readonly = true
+
+#
+# Ikva
+#
+
+[Account Ikva]
+localrepository = Ikva-Local
+remoterepository = Ikva-Remote
+
+[Repository Ikva-Local]
+type = Maildir
+localfolders = ~/u/me/mail/ikva
+sep = /
+
+[Repository Ikva-Remote]
+type = IMAP
+remotehost = outlook.office365.com
+remoteuser = mort@ikva.ai
+auth_mechanisms = XOAUTH2
+oauth2_request_url = https://login.microsoftonline.com/common/oauth2/v2.0/token
+oauth2_access_token_eval = pass_get_password(account="mort+access-token@ikva.ai").decode()
+oauth2_tenant_id = "3374e778-3463-4419-bb6d-ac8dadc3bac2"
+
+# ...from https://github.com/UvA-FNWI/M365-IMAP config.py
+oauth2_client_id = '''08162f7c-0fd2-4200-a84a-f25a4db0b584'''
+oauth2_client_secret = '''TxRBilcHdC6WGBee]fs?QR:SJ8nI[g82'''
+folderfilter = m365_filterfolder
+
+# do not accept writes to Remote from Local
+readonly = true

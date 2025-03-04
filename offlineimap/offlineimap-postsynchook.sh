@@ -1,28 +1,30 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2015 Richard Mortier <mort@cantab.net>
+# Copyright (c) Richard Mortier <mort@cantab.net>
 #
-# Permission to use, copy, modify, and distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
+# Permission to use, copy, modify, and distribute this software for any purpose
+# with or without fee is hereby granted, provided that the above copyright
+# notice and this permission notice appear in all copies.
 #
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+# REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+# AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+# INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+# LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+# OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+# PERFORMANCE OF THIS SOFTWARE.
 
 set -e
 
 echo $(date) offlineimap: post-sync
-export PATH=/usr/local/bin:$PATH
 
 if [ ! -d "~/.cache/mu" ]; then
   mu init --maildir=~/u/me/mail \
      --my-address=mort@cantab.net \
      --my-address=mort@greyjay \
+     --my-address=mort@ikva.ai \
+     --my-address=mort@kvasir.com \
+     --my-address=mort@kvasira.com \
      --my-address=mort@live.co.uk \
      --my-address=mort@microsoft.com \
      --my-address=mort@sprintlabs.com \
@@ -35,6 +37,7 @@ if [ ! -d "~/.cache/mu" ]; then
      --my-address=richard.mortier@docker.com \
      --my-address=richard.mortier@gmail.com \
      --my-address=richard.mortier@hotmail.com \
+     --my-address=richard.mortier@ikva.ai \
      --my-address=richard.mortier@nottingham.ac.uk \
      --my-address=richard.mortier@unikernel.com \
      --my-address=rmm1002@cam.ac.uk \

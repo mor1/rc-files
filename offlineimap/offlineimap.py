@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2015 Richard Mortier <mort@cantab.net>
+# Copyright (c) Richard Mortier <mort@cantab.net>
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -14,26 +14,35 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import subprocess
+from subprocess import check_output
 
-def get_keychain_pass(account=None, server=None):
-    params = {
-        'user': "mort",
-        'exe': "/usr/bin/security",
-        'a': account,
-        's': server,
-        }
+def pass_get_password(account):
+    return check_output(f"pass Offlineimap/{account}", shell=True).splitlines()[0]
 
-    if server:
-        params['cmd'] = "find-internet-password"
-        command = "sudo -u {user} {exe} {cmd} -a {a} -s {s} -w".format(**params)
-    else:
-        params['cmd'] = "find-generic-password"
-        command = "sudo -u {user} {exe} {cmd} -a {a} -w".format(**params)
+def m365_filterfolder(folder):
+    return folder not in [
+        'Calendar',
+        'Calendar/Birthdays',
+        'Calendar/Holidays in United Kingdom',
+        'Calendar/United Kingdom holidays',
+        'Calendar/United States holidays',
+        'Contacts',
+        'Contacts/Skype for Business Contacts',
+        'Deleted Items',
+        'Drafts',
+        'Journal',
+        'Junk Email',
+        'Notes',
+        'Outbox',
+        'Sync Issues',
+        'Sync Issues/Conflicts',
+        'Sync Issues/Local Failures',
+        'Sync Issues/Server Failures',
+        'Tasks',
+        'Tasks/Sub Folder 1',
+        'Tasks/Sub Folder 2'
+    ]
 
-    output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
-
-    return output.strip()
 
 Gmail_LocalRemoteNames = {
     'archive': '[Google Mail]/All Mail',
@@ -48,12 +57,12 @@ Gmail_LocalRemoteNames = {
 }
 Gmail_RemoteLocalNames = { r: l for (l, r) in Gmail_LocalRemoteNames.items() }
 
-def to_remotefolder(folder):
+def gmail_to_remotefolder(folder):
     return Gmail_LocalRemoteNames.get(folder, folder)
-def to_localfolder(folder):
+def gmail_to_localfolder(folder):
     return Gmail_RemoteLocalNames.get(folder, folder)
 
-def gmail_is_synced(folder):
+def gmail_folderfilter(folder):
     return folder in [
         ## uk-based gmail accounts via Google Mail
         '[Google Mail]/All Mail',
@@ -65,21 +74,13 @@ def gmail_is_synced(folder):
         '[Gmail]/Drafts',
     ]
 
-def hermes_is_synced(folder):
-    return folder not in [
-        'Archive',
-    ]
-
 if __name__ == '__main__':
     SERVERS = {
         "richard.mortier@gmail.com": "imap.gmail.com",
-        "mort@vipadia.com": "imap.gmail.com",
-        "mort.vipadia": "imap.gmail.com",
         "richard_mortier@hotmail.com": "imap-mail.outlook.com",
         "mort@live.co.uk": "imap-mail.outlook.com",
-        "mort@kvasira.com": "imap.gmail.com",
-        "rmm1002@imap.hermes.cam.ac.uk": None
+        "mort+access-token@ikva.ai": "outlook.office365.com",
     }
 
     for a, s in SERVERS.items():
-        print(f"ACCOUNT {a} SERVER {s} PASSWORD {get_keychain_pass(a, s)}")
+        print(f"ACCOUNT {a} SERVER {s} PASSWORD {pass_get_password(a)}")
