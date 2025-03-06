@@ -12,38 +12,62 @@ let
   ];
   codews = "8:code";
   mediaws = "9:media";
+
+  # `screen` description is formed of "{.make} {.model} {.serial}" from the raw
+  # JSON output, `swaymsg -r -t get_outputs`; alternatively use `.name` though
+  # that tends to name the port, e.g., `hDMI-A-1`
+
+  # `sink`/`source` is a mess because Linux sound, notably (old) PulseAudio vs
+  # (new) Pipewire, and the inconsistent tools; TODO FIXME
   laptop = {
     screen = "eDP-1";
+    # screen = "California Institute of Technology 0x1403 Unknown";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink";
     source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
-    card = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic";
-    profile = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";
+    # card = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic";
+    # profile = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";
   };
+
+  # my offices
   wgb = {
+    # screen = "HDMA-A-1";
     screen = "LG Electronics LG HDR 4K 0x0005DD99";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
     source = "alsa_input.usb-046d_HD_Pro_Webcam_C920_C18974EF-02.analog-stereo";
   };
   christs = {
+    # screen = "HDMI-A-1";
     screen = "LG Electronics LG HDR 4K 0x00035DAC";
-    source = "alsa_input.usb-046d_Logitech_Webcam_C925e_8EA2331F-02.analog-stereo";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Headphones__sink";
-    profile = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";
+    source = "alsa_input.usb-046d_Logitech_Webcam_C925e_8EA2331F-02.analog-stereo";
+    # card = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic";
+    # profile = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";
   };
+
+  # public spaces
+  fn05 = {
+    # screen = "HDMIA-A-1";
+    screen = "Sony SONY TV  *07 0x01010101";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+  };
+  nms_a = {
+    # screen = "HDMI-A-1";
+    screen = "Crestron Electronics, Inc. Crestron Unknown";
+  };
+
+  # at home
   tv = {
+    # screen = "HDMI-A-1";
     screen = "Panasonic Industry Company Panasonic-TV 0x01010101";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
   };
-  fn05 = {
-    screen = "Sony SONY TV  *07 0x01010101";
-    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+  amp = {
+    # screen = "HDMI-A-1";
+    screen = "ONKYO Corporation TX-SR608 Unknown";
   };
 
   modifier = "Mod4";
 in
-# nms_a = {
-#   screen = "HDMI-A-1";
-# };
 {
 
   home.packages = with pkgs; [
@@ -63,6 +87,7 @@ in
   wayland.windowManager.sway = {
     enable = true;
     checkConfig = false;
+    xwayland = true;
 
     swaynag.enable = true;
 
@@ -127,6 +152,8 @@ in
 
               ${after 1 [
                 "reload"
+                "exec systemctl --user daemon-reload"
+                "exec systemctl --user import-environment"
                 "exec systemctl restart --user kanshi.service"
                 "exec systemctl restart --user maestral-daemon@maestral.service"
               ]}
@@ -276,6 +303,8 @@ in
       settings =
         let
           pactl = "${pkgs.pulseaudio}/bin/pactl";
+          wpctl = "${pkgs.wireplumber}/bin/wpctl";
+          pwcli = "${pkgs.pipewire}/bin/pw-cli";
           sm = "${pkgs.sway}/bin/swaymsg";
           mwss =
             o:
@@ -290,7 +319,18 @@ in
             profile.exec = [
               "${pactl} set-default-sink ${laptop.sink}"
               "${pactl} set-default-source ${laptop.source}"
-              ''${pactl} set-card-profile ${laptop.card} "${laptop.profile}"''
+              # "${pactl} set-card-profile ${laptop.card} "${laptop.profile} '"
+
+              # "${wpctl} set-default 129" # audio sink = headphones
+              # "${wpctl} set-default 46"  # audio source = logitech mic
+              # "${wpctl} set-default 115" # video source = logitech camera
+
+              # # device = 51 is standard audio controller
+              # # profile index = 1 is headphones
+              # # profile index = 2 is speaker
+              # pw-cli s 51 Profile '{index:2, save:true}'
+              # pw-cli s 51 Profile '{index:1, save:true}'
+
             ];
           }
 
@@ -344,7 +384,7 @@ in
               [
                 "${pactl} set-default-sink ${laptop.sink}"
                 "${pactl} set-default-source ${christs.source}"
-                ''${pactl} set-card-profile ${laptop.card} "${laptop.profile}"''
+                # "${pactl} set-card-profile ${laptop.card} '${laptop.profile}'"
               ]
               ++ (mwss christs.screen [
                 homews
