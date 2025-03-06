@@ -6,17 +6,22 @@
     extensions = [
       "git-firefly"
       "just"
+      "latex"
+      "ltex"
       "make"
       "nix"
       "ocaml"
       "ruff"
       "toml"
+      "yaml"
     ];
 
     extraPackages = with pkgs; [
+      ltex-ls-plus # language support
       nil # LSP formatter for Nix language
       nixd # LSP for Nix language
       package-version-server # quell a warning about a missing package
+      texlab # latex LSP support
     ];
 
     userSettings = {
@@ -78,17 +83,47 @@
 
       # keyboard mappings
       vim_mode = false;
-      base_keymap = "Emacs";
+      # base_keymap = "Emacs";
 
       # LSP setup
       lsp = {
+        latex = {
+          texlab.chktex.onOpenAndSave = true;
+        };
+
         nix.binary.path_lookup = true;
+
         package-version-server.binary.path = "package-version-server";
+
         rust-analyzer.binary.path_lookup = true;
+
+        taplo.settings = {
+          array_auto_collapse = false;
+        };
+
+        yaml-language-server.settings.yaml = {
+          keyOrdering = true;
+          format.singleQuote = true;
+        };
       };
 
       # languages setup
       languages = {
+        C = {
+          format_on_save = "on";
+          tab_size = 2;
+        };
+
+        ltex.settings.ltex = {
+          language = "en-GB";
+          completionEnabled = true;
+        };
+
+        Markdown = {
+          format_on_save = "on";
+          remove_trailing_whitespace_on_save = false;
+        };
+
         Nix = {
           formatter.external = {
             command = "nixfmt";
