@@ -179,6 +179,7 @@ in
     dbus = {
       enable = true;
       packages = with pkgs; [
+        gcr
         networkmanager
         strongswanNM
       ];

@@ -16,7 +16,7 @@
         libreoffice # ~ms office
         nautilus # maybe the least sucky of the file managers, so far?
         networkmanagerapplet # nm-connection-manager, NetworkManager GUI
-        okular # pdf viewer / annotator
+        kdePackages.okular # pdf viewer / annotator
         signal-desktop # signal private messaging
         slack # slack
         teams-for-linux # ms teams in electron

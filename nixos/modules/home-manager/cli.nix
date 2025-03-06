@@ -6,6 +6,7 @@
       cli = [
         # aria2 # feature rich wget/curl
         bc # calculator
+        cryfs # encrypted filesystem image support
         dig # because DNS
         exiftool # manipulate images
         file # identify filetype by magic
@@ -23,6 +24,8 @@
         mupdf # PDF manipulation
         nix-du # show disk usage of roots
         nix-tree # show dependency tree of derivations https://github.com/utdemir/nix-tree
+        offlineimap # download emails
+        pass # password manager
         pdfcpu # `optimize` for PDF optimisation
         pdftk # more PDF manipulation
         qpdf # yet more PDF manipulation
