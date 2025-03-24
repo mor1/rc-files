@@ -3,6 +3,10 @@
   home.packages =
     with pkgs;
     let
+      man_pages = [
+        man-pages
+        man-pages-posix
+      ];
       python_tools =
         [
           python312
@@ -31,7 +35,8 @@
           utop
         ]);
     in
-    [
+    man_pages
+    ++ [
       gh # github CLI
       git # obviously
       git-filter-repo # for fixing up repos
