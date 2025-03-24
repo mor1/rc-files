@@ -20,7 +20,7 @@
 
     emacs = {
       enable = true;
-      package = pkgs.emacs-pgtk;
+      package = pkgs.emacs-gtk;
       extraPackages = (epkgs: [ epkgs.mu4e ]);
     };
 
