@@ -14,6 +14,7 @@
             algorithms
             algpseudocodex
             amsmath
+            bbding
             biblatex
             booktabs
             breqn
@@ -23,6 +24,7 @@
             csquotes
             enumitem
             environ
+            epsf
             etoolbox
             everyshi
             fifo-stack
@@ -38,18 +40,27 @@
             microtype
             multirow
             ncctools
+            ninecolors
+            pdflscape
+            pdfpages
             pgf
             preprint
             relsize
             setspace
+            soul
             subfigure
+            svg
             tabto-ltx
+            tabularray
+            tblr-extras
             textcase
             textpos
             tikzmark
+            titlesec
             todonotes
             totcount
             totpages
+            transparent
             ulem
             varwidth
             xcolor
