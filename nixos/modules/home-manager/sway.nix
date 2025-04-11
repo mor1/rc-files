@@ -93,190 +93,187 @@ in
 
     wrapperFeatures.gtk = true;
 
-    config =
-      let
-        swayosd = lib.getExe' pkgs.swayosd "swayosd-client";
-      in
-      {
-        modifier = "${modifier}"; # use WIN not ALT-L for sway controls
-        focus.wrapping = "force";
-        workspaceAutoBackAndForth = true;
+    config = {
+      modifier = "${modifier}"; # use WIN not ALT-L for sway controls
+      focus.wrapping = "force";
+      workspaceAutoBackAndForth = true;
 
-        # build the startup script to start apps in workspaces
-        startup =
-          let
-            msg = cmds: "swaymsg '${builtins.concatStringsSep ", " cmds}'";
-            workspace = ws: msg [ "workspace --no-auto-back-and-forth ${ws}" ];
-            after = delay: cmds: "sleep ${toString delay} && ${msg cmds}";
-            startup = pkgs.writeShellScriptBin "startup.sh" ''
-              wait_for () {
-                { swaymsg -r -m -t subscribe '["window"]' |
-                  jq -c --unbuffered '. | select(.change == "new")' |
-                  { grep -m1 . >/dev/null ; pkill swaymsg ;} &
-                } 2>/dev/null
-                pid=$!
-                swaymsg -- "exec $*" && sleep 0.5
-                wait $pid 2>/dev/null
-              }
-
-              ${workspace "${mediaws}"}
-              wait_for "rhythmbox"
-
-              ${workspace "${codews}"}
-              wait_for firefox -P github.com
-              wait_for zeditor
-              ${after 3 [ "layout stacking" ]}
-
-              ${workspace "${mailws}"}
-              wait_for firefox -P richard.mortier@gmail.com
-              wait_for firefox -P 14mortier@gmail.com
-              wait_for firefox -P mort@ikva.ai
-              wait_for firefox -P rmm1002@cam.ac.uk
-              wait_for teams-for-linux
-              ${after 3 [ "layout stacking" ]}
-
-              ${workspace "${chatws}"}
-              wait_for slack
-              ${after 1 [ "split horizontal" ]}
-
-              # some signal weirdness prevents the window appearing until a second
-              # copy is run, and immediately exits on detecting it's the second instance
-              wait_for "signal-desktop & sleep 3 && signal-desktop"
-
-              ${workspace "${homews}"}
-              wait_for emacsclient -c -s /tmp/emacs-mort/server
-              ${after 1 [ "split horizontal" ]}
-              wait_for foot
-              ${after 1 [ "split vertical" ]}
-              wait_for firefox -P default
-
-              ${after 1 [
-                "reload"
-                "exec systemctl --user daemon-reload"
-                "exec systemctl --user import-environment"
-                "exec systemctl restart --user kanshi.service"
-                "exec systemctl restart --user maestral-daemon@maestral.service"
-              ]}
-            '';
-          in
-          [ { command = "${startup}/bin/startup.sh"; } ];
-
-        # all my keyboards are GB layouta
-        input = {
-          "*" = {
-            xkb_layout = "gb";
-          };
-          "type:touchpad" = {
-            natural_scroll = "enabled";
-            tap = "enabled";
-            tap_button_map = "lmr";
-          };
-          "pointer" = {
-            accel_profile = "adaptive";
-          };
-        };
-
-        output = {
-          "*" = {
-            bg = "${background} fill";
-          };
-        };
-
-        seat = {
-          "*" = {
-            xcursor_theme = "Bibata-Modern-Ice 18";
-          };
-        };
-
-        # additional keybindings; cannot simply remap input ev -> output ev
-        keybindings =
-          let
-            swaylock = "${pkgs.swaylock}/bin/swaylock -C ~/.config/swaylock/config";
-
-            f1 = "exec ${swayosd} --max-volume 130 --output-volume mute-toggle";
-            f2 = "exec ${swayosd} --max-volume 130 --output-volume lower";
-            f3 = "exec ${swayosd} --max-volume 130 --output-volume raise";
-            f4 = "exec ${swayosd} --input-volume mute-toggle";
-            f5 = "exec brightnessctl s 10%-";
-            f6 = "exec brightnessctl s 10%+";
-            f7 = "exec ${swaylock}";
-            net_toggle = pkgs.writeShellScriptBin "net_toggle.sh" ''
-              if [[ $(nmcli n) =~ enabled ]]; then
-                nmcli n off
-              else
-                nmcli n on
-              fi
-            '';
-            f8 = "exec ${net_toggle}/bin/net_toggle.sh";
-            f9 = "exec rhythmbox-client --play-pause";
-            f10 = "exec rhythmbox-client --stop";
-            f11 = "exec rhythmbox-client --previous";
-            f12 = "exec rhythmbox-client --next";
-          in
-          lib.mkOptionDefault {
-            ## bare function keys
-            "F1" = f1;
-            "F2" = f2;
-            "F3" = f3;
-            "F4" = f4;
-            "F5" = f5;
-            "F6" = f6;
-            "F7" = f7;
-            "F8" = f8;
-            "F9" = f9;
-            "F10" = f10;
-            "F11" = f11;
-            "F12" = f12;
-
-            ## thinkpad keyboard
-            "XF86AudioMute" = f1;
-            "XF86AudioLowerVolume" = f2;
-            "XF86AudioRaiseVolume" = f3;
-            "XF86AudioMicMute" = f4;
-            "XF86MonBrightnessDown" = f5;
-            "XF86MonBrightnessUp" = f6;
-            "XF86Display" = f7;
-            "XF86WLAN" = f8;
-            "XF86NotificationCenter" = f9;
-            "XF86PickupPhone" = f10;
-            "XF86HangupPhone" = f11;
-            "XF86Favorites" = f12;
-
-            ## MSFT keyboard
-            "Help" = f1;
-            "Undo" = f2;
-            "Redo" = f3;
-            "XF86New" = f4;
-            "XF86Open" = f5;
-            "XF86Close" = f6;
-            "XF86Reply" = f7;
-            "XF86MailForward" = f8;
-            "XF86Send" = f9;
-            "XF86SpellCheck" = f10;
-            "XF86Save" = f11;
-            "Print" = f12; # also catches PrtSc on thinkpad
-
-            ## extras, all keyboards
-            "${modifier}+Shift+l" = "exec ${swaylock}";
-          };
-
-        # status bars using i3status-rust
-        bars =
-          let
-            status = "${pkgs.i3status-rust}/bin/i3status-rs";
-          in
-          [
-            {
-              position = "top";
-              statusCommand = "${status} ~/.config/i3status-rust/config-top.toml";
+      # build the startup script to start apps in workspaces
+      startup =
+        let
+          msg = cmds: "swaymsg '${builtins.concatStringsSep ", " cmds}'";
+          workspace = ws: msg [ "workspace --no-auto-back-and-forth ${ws}" ];
+          after = delay: cmds: "sleep ${toString delay} && ${msg cmds}";
+          startup = pkgs.writeShellScriptBin "startup.sh" ''
+            wait_for () {
+              { swaymsg -r -m -t subscribe '["window"]' |
+                jq -c --unbuffered '. | select(.change == "new")' |
+                { grep -m1 . >/dev/null ; pkill swaymsg ;} &
+              } 2>/dev/null
+              pid=$!
+              swaymsg -- "exec $*" && sleep 0.5
+              wait $pid 2>/dev/null
             }
-            {
-              position = "bottom";
-              statusCommand = "${status} ~/.config/i3status-rust/config-bottom.toml";
-              workspaceButtons = false;
-            }
-          ];
+
+            ${workspace "${mediaws}"}
+            wait_for "rhythmbox"
+
+            ${workspace "${codews}"}
+            wait_for firefox -P github.com
+            # wait_for zeditor
+            ${after 3 [ "layout stacking" ]}
+
+            ${workspace "${mailws}"}
+            wait_for firefox -P richard.mortier@gmail.com
+            wait_for firefox -P 14mortier@gmail.com
+            wait_for firefox -P mort@ikva.ai
+            wait_for firefox -P rmm1002@cam.ac.uk
+            wait_for teams-for-linux
+            ${after 3 [ "layout stacking" ]}
+
+            ${workspace "${chatws}"}
+            wait_for slack
+            ${after 1 [ "split horizontal" ]}
+
+            # some signal weirdness prevents the window appearing until a second
+            # copy is run, and immediately exits on detecting it's the second instance
+            wait_for "signal-desktop & sleep 3 && signal-desktop"
+
+            ${workspace "${homews}"}
+            wait_for emacsclient -c -s /tmp/emacs-mort/server
+            ${after 1 [ "split horizontal" ]}
+            wait_for foot
+            ${after 1 [ "split vertical" ]}
+            wait_for firefox -P default
+
+            ${after 1 [
+              "reload"
+              "exec systemctl --user daemon-reload"
+              "exec systemctl --user import-environment"
+              "exec systemctl restart --user kanshi.service"
+              "exec systemctl restart --user maestral-daemon@maestral.service"
+            ]}
+          '';
+        in
+        [ { command = "${startup}/bin/startup.sh"; } ];
+
+      # all my keyboards are GB layouta
+      input = {
+        "*" = {
+          xkb_layout = "gb";
+        };
+        "type:touchpad" = {
+          natural_scroll = "enabled";
+          tap = "enabled";
+          tap_button_map = "lmr";
+        };
+        "pointer" = {
+          accel_profile = "adaptive";
+        };
       };
+
+      output = {
+        "*" = {
+          bg = "${background} fill";
+        };
+      };
+
+      seat = {
+        "*" = {
+          xcursor_theme = "Bibata-Modern-Ice 18";
+        };
+      };
+
+      # additional keybindings; cannot simply remap input ev -> output ev
+      keybindings =
+        let
+          swaylock = "${pkgs.swaylock}/bin/swaylock -C ~/.config/swaylock/config";
+          swayosd = lib.getExe' pkgs.swayosd "swayosd-client";
+
+          f1 = "exec ${swayosd} --max-volume 130 --output-volume mute-toggle";
+          f2 = "exec ${swayosd} --max-volume 130 --output-volume lower";
+          f3 = "exec ${swayosd} --max-volume 130 --output-volume raise";
+          f4 = "exec ${swayosd} --input-volume mute-toggle";
+          f5 = "exec brightnessctl s 10%-";
+          f6 = "exec brightnessctl s 10%+";
+          f7 = "exec ${swaylock}";
+          net_toggle = pkgs.writeShellScriptBin "net_toggle.sh" ''
+            if [[ $(nmcli n) =~ enabled ]]; then
+              nmcli n off
+            else
+              nmcli n on
+            fi
+          '';
+          f8 = "exec ${net_toggle}/bin/net_toggle.sh";
+          f9 = "exec rhythmbox-client --play-pause";
+          f10 = "exec rhythmbox-client --stop";
+          f11 = "exec rhythmbox-client --previous";
+          f12 = "exec rhythmbox-client --next";
+        in
+        lib.mkOptionDefault {
+          ## bare function keys
+          "F1" = f1;
+          "F2" = f2;
+          "F3" = f3;
+          "F4" = f4;
+          "F5" = f5;
+          "F6" = f6;
+          "F7" = f7;
+          "F8" = f8;
+          "F9" = f9;
+          "F10" = f10;
+          "F11" = f11;
+          "F12" = f12;
+
+          ## thinkpad keyboard
+          "XF86AudioMute" = f1;
+          "XF86AudioLowerVolume" = f2;
+          "XF86AudioRaiseVolume" = f3;
+          "XF86AudioMicMute" = f4;
+          "XF86MonBrightnessDown" = f5;
+          "XF86MonBrightnessUp" = f6;
+          "XF86Display" = f7;
+          "XF86WLAN" = f8;
+          "XF86NotificationCenter" = f9;
+          "XF86PickupPhone" = f10;
+          "XF86HangupPhone" = f11;
+          "XF86Favorites" = f12;
+
+          ## MSFT keyboard
+          "Help" = f1;
+          "Undo" = f2;
+          "Redo" = f3;
+          "XF86New" = f4;
+          "XF86Open" = f5;
+          "XF86Close" = f6;
+          "XF86Reply" = f7;
+          "XF86MailForward" = f8;
+          "XF86Send" = f9;
+          "XF86SpellCheck" = f10;
+          "XF86Save" = f11;
+          "Print" = f12; # also catches PrtSc on thinkpad
+
+          ## extras, all keyboards
+          "${modifier}+Shift+l" = "exec ${swaylock}";
+        };
+
+      # status bars using i3status-rust
+      bars =
+        let
+          status = "${pkgs.i3status-rust}/bin/i3status-rs";
+        in
+        [
+          {
+            position = "top";
+            statusCommand = "${status} ~/.config/i3status-rust/config-top.toml";
+          }
+          {
+            position = "bottom";
+            statusCommand = "${status} ~/.config/i3status-rust/config-bottom.toml";
+            workspaceButtons = false;
+          }
+        ];
+    };
 
     extraConfig = ''
       bindswitch --reload --locked lid:on output ${laptop.screen} disable
