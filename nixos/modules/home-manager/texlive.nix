@@ -6,6 +6,10 @@
         pkgs.texlive.combine {
           inherit (pkgs.texlive)
             scheme-basic # scheme-medium
+
+            collection-fontsrecommended # font-scripts # latex-fonts
+            mflua
+            texlive-scripts
             xetex
 
             acmart
@@ -17,8 +21,10 @@
             bbding
             biblatex
             booktabs
+            breakurl
             breqn
             caption
+            cite
             cmap
             comment
             csquotes
@@ -28,10 +34,12 @@
             etoolbox
             everyshi
             fifo-stack
+            filecontents
             float
             fontspec
             hyperref
             hyperxmp
+            ieeetran
             ifmtarg
             ifoddpage
             latexmk
