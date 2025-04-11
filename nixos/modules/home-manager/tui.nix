@@ -18,15 +18,7 @@
       nix-direnv.enable = true;
     };
 
-    emacs = {
-      enable = true;
-      package = pkgs.emacs-gtk;
-      extraPackages = (epkgs: [ epkgs.mu4e ]);
-    };
-
     git.enable = true;
     mu.enable = true;
   };
-
-  services.emacs.enable = true;
 }

@@ -12,7 +12,7 @@
       ]
     );
 
-    extensions =
+    profiles.default.extensions =
       with pkgs.vscode-extensions;
       [
         arrterian.nix-env-selector
@@ -57,7 +57,7 @@
         }
       ];
 
-    userSettings = {
+    profiles.default.userSettings = {
       "editor.fontFamily" = "Hack";
       "editor.fontSize" = 12;
       "editor.indentSize" = "tabSize";
@@ -138,7 +138,7 @@
       };
     };
 
-    keybindings = [
+    profiles.default.keybindings = [
       # (bind-keys*
       #   ("%"          . match-paren)
       #   ("C-<tab>"    . dabbrev-expand)

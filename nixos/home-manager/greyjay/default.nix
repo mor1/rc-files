@@ -17,6 +17,7 @@ in
   imports = [
     ../../modules/home-manager/cli.nix
     ../../modules/home-manager/dev.nix
+    ../../modules/home-manager/editors.nix
     ../../modules/home-manager/gui.nix
     ../../modules/home-manager/media.nix
     ../../modules/home-manager/system.nix

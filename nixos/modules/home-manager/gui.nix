@@ -1,9 +1,6 @@
 { pkgs, lib, ... }:
 {
-  imports = [
-    ./sway.nix
-    ./zed-editor.nix
-  ];
+  imports = [ ./sway.nix ];
 
   home.packages =
     with pkgs;
