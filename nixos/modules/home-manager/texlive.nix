@@ -13,6 +13,7 @@
             xetex
 
             acmart
+            adjustbox
             algorithm2e
             algorithmicx
             algorithms
@@ -52,6 +53,7 @@
             ncctools
             ninecolors
             paralist
+            pdfcol
             pdflscape
             pdfpages
             pgf
