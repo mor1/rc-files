@@ -19,6 +19,7 @@
             algpseudocodex
             amsmath
             bbding
+            beamer
             biblatex
             booktabs
             breakurl
@@ -33,6 +34,7 @@
             epsf
             etoolbox
             everyshi
+            extsizes
             fifo-stack
             filecontents
             float
@@ -49,6 +51,7 @@
             multirow
             ncctools
             ninecolors
+            paralist
             pdflscape
             pdfpages
             pgf
@@ -61,8 +64,10 @@
             tabto-ltx
             tabularray
             tblr-extras
+            tcolorbox
             textcase
             textpos
+            tikzfill
             tikzmark
             titlesec
             todonotes
