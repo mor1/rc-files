@@ -20,6 +20,7 @@ alias ll="ls -l"
 alias lla="ls -lA"
 alias lll="ls -B -lZ"
 
+alias a="ffplay -nodisp -f lavfi -i 'sine=f=440'"
 alias bc="bc -l"
 alias ctime="python -c 'import sys,time; print(time.ctime(float(sys.argv[1])))'"
 alias dif="git diff --minimal --no-index" # | xargs bat --diff"
