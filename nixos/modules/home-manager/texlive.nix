@@ -30,6 +30,7 @@
             cmap
             comment
             csquotes
+            doublestroke
             enumitem
             environ
             epsf
@@ -45,9 +46,11 @@
             ieeetran
             ifmtarg
             ifoddpage
+            jknapltx
             latexmk
             luacode
             luatexbase
+            mathtools
             microtype
             multirow
             ncctools
@@ -57,10 +60,12 @@
             pdflscape
             pdfpages
             pgf
+            pgfplots
             preprint
             relsize
             setspace
             soul
+            subfig
             subfigure
             svg
             tabto-ltx
@@ -78,6 +83,7 @@
             transparent
             ulem
             varwidth
+            wrapfig
             xcolor
             xkeyval
             xstring
