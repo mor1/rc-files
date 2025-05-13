@@ -22,6 +22,7 @@
             bbding
             beamer
             biblatex
+            biblatex-trad
             booktabs
             breakurl
             breqn
@@ -30,6 +31,7 @@
             cmap
             comment
             csquotes
+            detex
             doublestroke
             enumitem
             environ
@@ -59,6 +61,7 @@
             pdfcol
             pdflscape
             pdfpages
+            pdfxup
             pgf
             pgfplots
             preprint
@@ -72,6 +75,7 @@
             tabularray
             tblr-extras
             tcolorbox
+            texcount
             textcase
             textpos
             tikzfill
