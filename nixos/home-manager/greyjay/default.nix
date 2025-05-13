@@ -22,6 +22,7 @@ in
     ../../modules/home-manager/media.nix
     ../../modules/home-manager/system.nix
     ../../modules/home-manager/texlive.nix
+    ../../modules/home-manager/typst.nix
     ../../modules/home-manager/tui.nix
     ../../modules/home-manager/unfree.nix
   ];
