@@ -5,7 +5,6 @@
     let
       cli = [
         # aria2 # feature rich wget/curl
-        bc # calculator
         cryfs # encrypted filesystem image support
         dig # because DNS
         exiftool # manipulate images
@@ -34,7 +33,6 @@
         sysstat # system stats
         traceroute
         tree # tree-format recursive ls
-        # typst # better latex?
         unzip # what it says on the tin, because zip can't unzip
         wget # network downloader
         which # locate command in $PATH
@@ -43,9 +41,11 @@
       ];
       nu_posix = [
         bat # better cat
+        biff # better date
         bottom # btm ~ better top, htop, etc
         broot # interactive directory navigation
-        chafa # terminal graphics
+        brush # rusty bash
+        chafa # terminal graphics viewer
         ctpv # terminal file previewer
         cyme # better `lsusb`
         delta # better syntax highlighting diff
@@ -60,6 +60,7 @@
         just # updated gnumake replacement
         procs # better ps
         ripgrep # rg ~ `grep` replacement
+        sudo-rs # memory-safe `sudo`
         uutils-coreutils-noprefix # replaces GNU `coreutils`
         viddy # better watch
       ];
