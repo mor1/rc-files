@@ -16,9 +16,9 @@ if [[ $cucl_local == false ]]; then
   sudo ipsec up CUCL
 fi
 
-exec 3<>/dev/tcp/$1/$2
-cat <&3 & pid=$!
-cat >&3
+exec 33<>/dev/tcp/$1/$2
+cat <&33 & pid=$!
+cat >&33
 kill $pid
 
 if [[ $cucl_local == false ]]; then
