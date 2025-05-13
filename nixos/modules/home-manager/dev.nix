@@ -50,6 +50,8 @@
     ++ ocaml_tools;
 
   programs = {
+    git.enable = true;
+
     opam = {
       enable = true;
       enableBashIntegration = true;

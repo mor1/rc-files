@@ -77,6 +77,17 @@
       };
     };
 
+    bash = {
+      enable = false;
+      enableCompletion = false;
+    };
+
+    direnv = {
+      enable = true;
+      enableBashIntegration = true;
+      nix-direnv.enable = true;
+    };
+
     lf = {
       enable = true;
 
@@ -91,5 +102,7 @@
         set cleaner ${pkgs.ctpv}/bin/ctpvclear
       '';
     };
+
+    mu.enable = true;
   };
 }
