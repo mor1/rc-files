@@ -132,12 +132,16 @@ in
   i18n.defaultLocale = "en_GB.UTF-8";
   console.keyMap = "uk";
 
-  # audio
+  # audio & bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
   security.rtkit.enable = true;
   services.pipewire = {
+    enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    enable = true;
     jack.enable = true;
     pulse.enable = true;
     wireplumber.enable = true;
