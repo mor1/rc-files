@@ -315,5 +315,12 @@ in
     default_realm = DC.CL.CAM.AC.UK
   '';
 
+  # use sudo-rs rather than sudo
+  security.sudo-rs = {
+    enable = true;
+    execWheelOnly = true;
+    wheelNeedsPassword = true;
+  };
+
   system.stateVersion = "24.05";
 }
