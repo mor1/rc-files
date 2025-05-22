@@ -326,5 +326,8 @@ in
     wheelNeedsPassword = true;
   };
 
+  # enable local fontDir for unpackaged font install
+  fonts.fontDir.enable = true;
+
   system.stateVersion = "24.05";
 }

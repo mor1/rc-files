@@ -8,6 +8,8 @@
             scheme-basic # scheme-medium
 
             collection-fontsrecommended # font-scripts # latex-fonts
+            opensans
+
             mflua
             texlive-scripts
             xetex

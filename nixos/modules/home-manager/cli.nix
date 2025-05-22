@@ -38,6 +38,7 @@
         which # locate command in $PATH
         yt-dlp # youtube download
         zip # what it says on the tin
+        zola # static site generation
       ];
       nu_posix = [
         bat # better cat
