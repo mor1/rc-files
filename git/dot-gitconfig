@@ -43,13 +43,19 @@
     status = auto
     ui = true
 
+[column]
+    ui = auto
+
+[commit]
+    verbose = true
+
 [core]
     pager = delta
     autocrlf = input
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
 [credential "https://github.com"]
-    helper = !/usr/local/bin/gh auth git-credential
+    helper = !/home/mort/.nix-profile/bin/gh auth git-credential
 [credential]
     helper = store
 
@@ -57,14 +63,24 @@
     navigate = true
 
 [diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
     renames = true
-    colorMoved = default
+
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
 
 [filter "lfs"]
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
     clean = git-lfs clean -- %f
+
+[help]
+    autocorrect = prompt
 
 [init]
     defaultBranch = main
@@ -83,10 +99,14 @@
     rebase = true
 
 [push]
-    default = tracking
+    default = simple
+    autoSetupRemote = true
+    followTags = true
 
 [rebase]
+    autoSquash = true
     autoStash = true
+    updateRefs = true
 
 [rerere]
     enabled = true
@@ -100,6 +120,9 @@
     smtpserver = smtp.gmail.com
     smtpserverport = 587
     smtpencryption = tls
+
+[tag]
+    sort = version:refname
 
 [transfer]
     fsckObjects = true
