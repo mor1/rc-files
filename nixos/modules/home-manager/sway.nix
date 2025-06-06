@@ -1,5 +1,10 @@
 { pkgs, lib, ... }:
 let
+  cursor = {
+    name = "Bibata-Modern-Ice";
+    package = pkgs.bibata-cursors;
+    size = 18;
+  };
   background = "/home/mort/rc-files/floatlg.jpg";
   homews = "1";
   chatws = "2:chat";
@@ -69,7 +74,6 @@ let
   modifier = "Mod4";
 in
 {
-
   home.packages = with pkgs; [
     brightnessctl # control screen brightness
     gammastep # automatically dim+redden screen at night
@@ -172,17 +176,9 @@ in
         };
       };
 
-      output = {
-        "*" = {
-          bg = "${background} fill";
-        };
-      };
+      output."*".bg = "${background} fill";
 
-      seat = {
-        "*" = {
-          xcursor_theme = "Bibata-Modern-Ice 18";
-        };
-      };
+      seat."*".xcursor_theme = "${cursor.name} ${toString cursor.size}";
 
       # additional keybindings; cannot simply remap input ev -> output ev
       keybindings =
@@ -595,13 +591,22 @@ in
   };
 
   home.pointerCursor = {
-    name = "Bibata-Modern-Ice";
-    package = pkgs.bibata-cursors;
-    size = 18;
+    name = "${cursor.name}";
+    size = cursor.size;
+    package = cursor.package;
     gtk.enable = true;
     x11 = {
       enable = true;
       defaultCursor = "wayland-cursor";
+    };
+  };
+
+  gtk = {
+    enable = true;
+    cursorTheme = {
+      name = "${cursor.name}";
+      package = cursor.package;
+      size = cursor.size;
     };
   };
 }
