@@ -5,16 +5,23 @@
       texlive = (
         pkgs.texlive.combine {
           inherit (pkgs.texlive)
+            # start simple...
             scheme-basic # scheme-medium
 
+            # add some fonts, including the University's preferred fonts
             collection-fontsrecommended # font-scripts # latex-fonts
             opensans
 
+            # add backends and scripts
+            luatexbase
             mflua
             texlive-scripts
             xetex
 
+            # add packages incrementally, for various academic paper formats
+
             acmart
+            acronym
             adjustbox
             algorithm2e
             algorithmicx
@@ -25,16 +32,19 @@
             beamer
             biblatex
             biblatex-trad
+            bigfoot
             booktabs
             breakurl
             breqn
             caption
             cite
+            cleveref
             cmap
             comment
             csquotes
             detex
             doublestroke
+            draftwatermark
             enumitem
             environ
             epsf
@@ -52,8 +62,8 @@
             ifoddpage
             jknapltx
             latexmk
+            listings
             luacode
-            luatexbase
             mathtools
             microtype
             multirow
@@ -93,6 +103,7 @@
             xcolor
             xkeyval
             xstring
+
             ;
         }
       );
