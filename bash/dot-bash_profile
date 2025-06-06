@@ -8,13 +8,13 @@ if [[ $(tty) == /dev/tty1 ]]; then
   keychain --clear
   gpg --import ~/.ssh/F8827E91.asc
   _KEYS="bitbucket-key-rsa github-key cucl-key examqs-key-rsa"
-  eval $(echo $_KEYS | xargs keychain --eval --agents gpg,ssh)
+  eval $(echo $_KEYS | xargs keychain --eval)
   unset _KEYS
   exec dbus-run-session sway
 else
   uname -a
   if [[ ! $LHOST =~ cl.cam.ac.uk && $(which keychain 2>/dev/null) ]]; then
-    eval $(keychain --eval --agents gpg,ssh)
+    eval $(keychain --eval)
   fi
   date
   echo
