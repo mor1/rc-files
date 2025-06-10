@@ -74,5 +74,6 @@ Host *
 ## profiles
 
 Match tagged tmux
+  # `ssh FOO -P tmux` to do the tmux session
   RemoteCommand tmux -CC new -A -s main
   RequestTTY force
