@@ -529,7 +529,7 @@ in
               }
               {
                 block = "time";
-                format = "$timestamp.datetime(f:'%c')";
+                format = "$timestamp.datetime(f:'%c %Z')";
                 interval = 1;
               }
             ];
