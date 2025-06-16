@@ -5,6 +5,7 @@
     let
       cli = [
         # aria2 # feature rich wget/curl
+        # kelpsget # https://github.com/davimf721/KelpsGet
         cryfs # encrypted filesystem image support
         dig # because DNS
         exiftool # manipulate images
@@ -18,7 +19,7 @@
         inotify-tools # commands using inotify/dnotify APIs
         internetarchive # internet archive
         jhead # jpeg exif header manipulation tool
-        keychain # cli to manage SSH, GPG keys
+        lsof # list open file handles
         lynx # cli web browser
         mupdf # PDF manipulation
         nix-du # show disk usage of roots
@@ -54,6 +55,7 @@
         eza # improved `ls`
         fd # `find` replacement
         fend # better CLI calculator
+        # flash # fast inotify replacement, https://github.com/sage-scm/flash/
         hexyl # hex pretty printer
         htop # graphical top
         iotop # io top
