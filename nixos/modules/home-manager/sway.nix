@@ -67,6 +67,14 @@ let
   };
 
   modifier = "Mod4";
+  swayfonts = {
+    names = [
+      "Atkinson Hyperlegible Mono"
+      "PowerlineSymbols"
+    ];
+    style = "Medium";
+    size = 8.0;
+  };
 in
 {
   imports = [ ./theme.nix ];
@@ -95,6 +103,7 @@ in
     wrapperFeatures.gtk = true;
 
     config = {
+      fonts = swayfonts;
       modifier = "${modifier}"; # use WIN not ALT-L for sway controls
       focus.wrapping = "force";
       workspaceAutoBackAndForth = true;
@@ -256,10 +265,12 @@ in
         [
           {
             position = "top";
+            fonts = swayfonts;
             statusCommand = "${status} ~/.config/i3status-rust/config-top.toml";
           }
           {
             position = "bottom";
+            fonts = swayfonts;
             statusCommand = "${status} ~/.config/i3status-rust/config-bottom.toml";
             workspaceButtons = false;
           }

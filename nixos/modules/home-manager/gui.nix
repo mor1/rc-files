@@ -20,9 +20,12 @@
       ];
 
       fonts = [
+        atkinson-hyperlegible-mono
+        atkinson-hyperlegible-next
         corefonts
         gyre-fonts
         nerd-fonts.hack
+        powerline-symbols
         vistafonts
       ];
 
@@ -87,7 +90,7 @@
       enable = true;
       settings = {
         main = {
-          font = "Hack Nerd Font:size=8";
+          font = "Atkinson Hyperlegible Mono Medium:size=8";
           include = "${pkgs.foot.themes}/share/foot/themes/selenized-dark";
         };
         scrollback.lines = 10000;
