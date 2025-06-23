@@ -51,25 +51,37 @@
             etoolbox
             everyshi
             extsizes
+            fancyvrb
             fifo-stack
             filecontents
             float
             fontspec
+            glossaries
+            graphics
+            hypdoc
             hyperref
             hyperxmp
             ieeetran
             ifmtarg
             ifoddpage
+            iftex
+            inconsolata
             jknapltx
             latexmk
+            libertine
             listings
             luacode
             mathtools
             microtype
+            movie15
             multirow
+            natbib
             ncctools
+            newtx
             ninecolors
+            nomencl
             paralist
+            pbalance
             pdfcol
             pdflscape
             pdfpages
@@ -77,6 +89,7 @@
             pgf
             pgfplots
             preprint
+            refcount
             relsize
             setspace
             soul
@@ -98,11 +111,14 @@
             totpages
             transparent
             ulem
+            unicode-math
+            upquote
             varwidth
             wrapfig
             xcolor
             xkeyval
             xstring
+            zref
 
             ;
         }
