@@ -197,3 +197,11 @@ function rf () {
   done
   unset D
 }
+
+#
+# resolve url
+#
+
+function unsl () {
+  curl -v "$1" 2>&1 | rg -i location | cut -d" " -f3
+}
