@@ -172,7 +172,8 @@ in
         settings = {
           main = {
             # capslock -> (held) ctrl, (tap) ESC
-            capslock = "overload(control, esc)";
+            capslock = "overloadt2(control, esc, 150)";
+            rightalt = "leftalt";
           };
           shift = {
             grave = "G-4"; # S-` -> €
