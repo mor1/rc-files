@@ -6,7 +6,6 @@ let
   hostname = "greyjay";
 in
 {
-  networking.networkmanager.enableStrongSwan = true;
   environment.systemPackages = with pkgs; [ strongswan ];
 
   services = {

@@ -116,7 +116,7 @@ in
     hostName = "${hostname}";
     networkmanager = {
       enable = true;
-      enableStrongSwan = true;
+      plugins = with pkgs; [ networkmanager-strongswan ];
     };
 
     # https://discourse.nixos.org/t/ntp-use-values-from-network-manager-via-dhcp/23408/2
