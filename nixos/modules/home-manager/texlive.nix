@@ -7,18 +7,29 @@
           inherit (pkgs.texlive)
             # start simple...
             scheme-basic # scheme-medium
+            texlive-scripts
 
             # add some fonts, including the University's preferred fonts
             collection-fontsrecommended # font-scripts # latex-fonts
             opensans
 
-            # add backends and scripts
+            # font packages
+            inconsolata
+            libertine
+
+            # luatex-related
+            lua-visual-debug
+            luacode
+            lualatex-math
             luatexbase
             mflua
-            texlive-scripts
-            xetex
 
-            # add packages incrementally, for various academic paper formats
+            # xetex-related
+            xetex
+            xltxtra
+
+            # add packages incrementally, for various academic paper formats,
+            # tripos exam questions, etc
 
             acmart
             acronym
@@ -43,6 +54,7 @@
             comment
             csquotes
             detex
+            docmute
             doublestroke
             draftwatermark
             enumitem
@@ -56,6 +68,7 @@
             filecontents
             float
             fontspec
+            footmisc
             glossaries
             graphics
             hypdoc
@@ -65,12 +78,10 @@
             ifmtarg
             ifoddpage
             iftex
-            inconsolata
             jknapltx
             latexmk
-            libertine
             listings
-            luacode
+            lkproof
             mathtools
             microtype
             movie15
@@ -89,13 +100,19 @@
             pgf
             pgfplots
             preprint
+            ragged2e
+            realscripts
             refcount
             relsize
             setspace
             soul
+            stackengine
+            stmaryrd
+            sttools
             subfig
             subfigure
             svg
+            tabstackengine
             tabto-ltx
             tabularray
             tblr-extras
@@ -114,6 +131,7 @@
             unicode-math
             upquote
             varwidth
+            was
             wrapfig
             xcolor
             xkeyval
