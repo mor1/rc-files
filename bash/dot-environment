@@ -232,9 +232,13 @@ fi
 [[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
 ## load completions
+[[ $(which bat 2>/dev/null) ]] && source <(bat --completion bash)
 [[ $(which direnv 2>/dev/null) ]] && { source <(direnv hook bash) ; direnv reload ;}
 [[ $(which just 2>/dev/null) ]] && source <(just --completions bash)
 [[ $(which maestral 2>/dev/null) ]] && source <(maestral completion bash)
 [[ $(which procs 2>/dev/null) ]] && source <(procs --gen-completion-out bash)
 [[ $(which zola 2>/dev/null) ]] && source <(zola completion bash)
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(codium --locate-shell-integration-path bash)"
+
+[[ $(which nix-index 2>/dev/null) ]] &&
+  source $(nix eval --raw nixpkgs#nix-index)/etc/profile.d/command-not-found.sh
