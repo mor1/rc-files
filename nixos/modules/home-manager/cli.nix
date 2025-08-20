@@ -90,6 +90,12 @@
       enableCompletion = false;
     };
 
+    command-not-found.enable = false;
+    nix-index = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+
     direnv = {
       enable = true;
       enableBashIntegration = true;
