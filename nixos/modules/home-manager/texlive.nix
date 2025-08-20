@@ -16,6 +16,7 @@
             # font packages
             inconsolata
             libertine
+            libertinus-fonts
 
             # luatex-related
             lua-visual-debug
