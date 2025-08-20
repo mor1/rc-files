@@ -122,7 +122,8 @@ function 2up () {
   O2="${1%pdf}2up.pdf"
   OO="${O2%pdf}opt.pdf"
   pdfxup -x 2 -y 1 -m 1cm -o "$O2" "$1"
-  pdfcpu optimize "$O2" "$OO"
+  # pdfcpu optimize "$O2" "$OO"
+  # mv "$O2" "$1"
 }
 
 
