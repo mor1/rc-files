@@ -198,8 +198,8 @@ in
           f2 = "exec ${swayosd} --max-volume 130 --output-volume lower";
           f3 = "exec ${swayosd} --max-volume 130 --output-volume raise";
           f4 = "exec ${swayosd} --input-volume mute-toggle";
-          f5 = "exec brightnessctl s 10%-";
-          f6 = "exec brightnessctl s 10%+";
+          f5 = "exec brightnessctl -e s 10%-";
+          f6 = "exec brightnessctl -e s 10%+";
           f7 = "exec ${swaylock}";
           net_toggle = pkgs.writeShellScriptBin "net_toggle.sh" ''
             if [[ $(nmcli n) =~ enabled ]]; then
