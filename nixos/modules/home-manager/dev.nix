@@ -7,33 +7,31 @@
         man-pages
         man-pages-posix
       ];
-      python_tools =
-        [
-          python312
-          ruff
-          uv
-        ]
-        ++ (with python312Packages; [
-          autopep8
-          pip
-          pygments
-        ]);
-      ocaml_tools =
-        [
-          gcc
-          ocaml
-          dune_3
-          ocamlformat
-          opam
-        ]
-        ++ (with ocamlPackages; [
-          cmdliner
-          findlib
-          merlin
-          ocaml-lsp
-          ocp-indent
-          utop
-        ]);
+      python_tools = [
+        python312
+        ruff
+        uv
+      ]
+      ++ (with python312Packages; [
+        autopep8
+        pip
+        pygments
+      ]);
+      ocaml_tools = [
+        gcc
+        ocaml
+        dune_3
+        ocamlformat
+        opam
+      ]
+      ++ (with ocamlPackages; [
+        cmdliner
+        findlib
+        merlin
+        ocaml-lsp
+        ocp-indent
+        utop
+      ]);
     in
     man_pages
     ++ [

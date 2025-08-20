@@ -104,6 +104,10 @@ in
 
     config = {
       fonts = swayfonts;
+      #  // {
+      #   names = [ "Mono" ];
+      # };
+
       modifier = "${modifier}"; # use WIN not ALT-L for sway controls
       focus.wrapping = "force";
       workspaceAutoBackAndForth = true;
@@ -347,22 +351,21 @@ in
                 scale = 1.0;
               }
             ];
-            profile.exec =
-              [
-                "${pactl} set-default-sink ${wgb.sink}"
-                "${pactl} set-default-source ${wgb.source}"
-              ]
-              ++ (mwss wgb.screen [
-                homews
-                codews
-                chatws
-              ])
-              ++ (mwss wgb.screen otherws)
-              ++ (mwss laptop.screen [
-                mailws
-                mediaws
-              ])
-              ++ [ ''${sm} "workspace --no-auto-back-and-forth 1"'' ];
+            profile.exec = [
+              "${pactl} set-default-sink ${wgb.sink}"
+              "${pactl} set-default-source ${wgb.source}"
+            ]
+            ++ (mwss wgb.screen [
+              homews
+              codews
+              chatws
+            ])
+            ++ (mwss wgb.screen otherws)
+            ++ (mwss laptop.screen [
+              mailws
+              mediaws
+            ])
+            ++ [ ''${sm} "workspace --no-auto-back-and-forth 1"'' ];
           }
 
           {
@@ -379,23 +382,22 @@ in
                 scale = 1.0;
               }
             ];
-            profile.exec =
-              [
-                "${pactl} set-default-sink ${laptop.sink}"
-                "${pactl} set-default-source ${christs.source}"
-                # "${pactl} set-card-profile ${laptop.card} '${laptop.profile}'"
-              ]
-              ++ (mwss christs.screen [
-                homews
-                codews
-                chatws
-              ])
-              ++ (mwss christs.screen otherws)
-              ++ (mwss laptop.screen [
-                mailws
-                mediaws
-              ])
-              ++ [ ''${sm} "workspace --no-auto-back-and-forth 1"'' ];
+            profile.exec = [
+              "${pactl} set-default-sink ${laptop.sink}"
+              "${pactl} set-default-source ${christs.source}"
+              # "${pactl} set-card-profile ${laptop.card} '${laptop.profile}'"
+            ]
+            ++ (mwss christs.screen [
+              homews
+              codews
+              chatws
+            ])
+            ++ (mwss christs.screen otherws)
+            ++ (mwss laptop.screen [
+              mailws
+              mediaws
+            ])
+            ++ [ ''${sm} "workspace --no-auto-back-and-forth 1"'' ];
           }
 
           {
@@ -412,10 +414,11 @@ in
                 scale = 1.0;
               }
             ];
-            profile.exec =
-              [ "${pactl} set-default-sink ${tv.sink}" ]
-              ++ (mwss tv.screen [ "10" ])
-              ++ [ ''${sm} "workspace --no-auto-back-and-forth 10"'' ];
+            profile.exec = [
+              "${pactl} set-default-sink ${tv.sink}"
+            ]
+            ++ (mwss tv.screen [ "10" ])
+            ++ [ ''${sm} "workspace --no-auto-back-and-forth 10"'' ];
           }
         ];
     };
@@ -510,7 +513,8 @@ in
               }
               {
                 block = "memory";
-                format = "$icon$mem_used_percents [$swap_used_percents]";
+                # format = "$icon$mem_used_percents [$swap_used_percents]"; # XXX swap_used_percents returning NaN fails to render
+                format = " $icon$mem_used.eng(prefix:Mi)/$mem_total.eng(prefix:Mi)($mem_used_percents.eng(w:2))";
               }
               {
                 block = "cpu";

@@ -6,18 +6,20 @@
       cli = [
         # aria2 # feature rich wget/curl
         # kelpsget # https://github.com/davimf721/KelpsGet
+        # stow # manage dotfiles via symlinks
         cryfs # encrypted filesystem image support
         dig # because DNS
         exiftool # manipulate images
+        fastfetch # improved `neofetch` system info display
         file # identify filetype by magic
         get_iplayer # download from iPlayer
         ghostscript # ps etc
         handlr # manage XDG Open mappings
-        pandoc # document processing and conversion
         imagemagick # image manipulation tools
         inetutils
         inotify-tools # commands using inotify/dnotify APIs
         internetarchive # internet archive
+        jdupes # file duplicate finder
         jhead # jpeg exif header manipulation tool
         lsof # list open file handles
         lynx # cli web browser
@@ -25,11 +27,11 @@
         nix-du # show disk usage of roots
         nix-tree # show dependency tree of derivations https://github.com/utdemir/nix-tree
         offlineimap # download emails
+        pandoc # document processing and conversion
         pass # password manager
         pdfcpu # `optimize` for PDF optimisation
         pdftk # more PDF manipulation
         qpdf # yet more PDF manipulation
-        stow # manage dotfiles via symlinks
         subversion # hysterical raisins
         sysstat # system stats
         traceroute
@@ -42,6 +44,7 @@
         zola # static site generation
       ];
       nu_posix = [
+        # flash # fast inotify replacement, https://github.com/sage-scm/flash/
         bat # better cat
         biff # better date
         bottom # btm ~ better top, htop, etc
@@ -51,11 +54,11 @@
         ctpv # terminal file previewer
         cyme # better `lsusb`
         delta # better syntax highlighting diff
+        dotter # manage dotfiles by copying via a config.toml
         dua # disk usage, interactively
         eza # improved `ls`
         fd # `find` replacement
         fend # better CLI calculator
-        # flash # fast inotify replacement, https://github.com/sage-scm/flash/
         hexyl # hex pretty printer
         htop # graphical top
         iotop # io top
@@ -65,6 +68,7 @@
         ripgrep # rg ~ `grep` replacement
         sudo-rs # memory-safe `sudo`
         uutils-coreutils-noprefix # replaces GNU `coreutils`
+        uutils-findutils
         viddy # better watch
       ];
     in
