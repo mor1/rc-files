@@ -37,7 +37,7 @@ in
         pkgs.writeShellScript "org-sync.sh" ''
           set -eou pipefail
 
-          PATH=$PATH:${lib.makeBinPath [ pkgs.coreutils ]}
+          PATH=$PATH:${lib.makeBinPath [ pkgs.uutils-coreutils-noprefix ]}
 
           EXPORTBASE='/home/mort/Dropbox/calendar'
           EXPORT="richard-incoming.org richard.org richard-tripit.org"
