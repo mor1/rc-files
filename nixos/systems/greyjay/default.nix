@@ -7,10 +7,8 @@
 }:
 
 let
-  root_dev = "/dev/disk/by-uuid/c3cc9248-ade1-4b94-9e6e-d50990171471";
-  home_dev = "/dev/disk/by-uuid/3bbf38b9-06f1-4df3-b29c-3d2a863088cc";
-  swap_dev = "/dev/disk/by-uuid/223bf99d-f6e2-41b0-b30f-7e1064e308df";
   hostname = "greyjay";
+  root_partition = "/dev/disk/by-uuid/c3cc9248-ade1-4b94-9e6e-d50990171471";
   username = "mort";
 in
 {
@@ -63,10 +61,9 @@ in
   };
 
   boot = {
-    # kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
     initrd.luks.devices = {
       cryptroot = {
-        device = "${root_dev}";
+        device = "${root_partition}";
         preLVM = true;
         allowDiscards = true;
       };
@@ -93,11 +90,6 @@ in
 
   # mount home and swap
   fileSystems = {
-    "/home" = {
-      device = "${home_dev}";
-      fsType = "ext4";
-    };
-
     "/mnt/home-desktop" = {
       device = "//desktop-bqgpfcm/14mor/";
       fsType = "cifs";
@@ -109,7 +101,7 @@ in
     };
   };
 
-  swapDevices = [ { device = "${swap_dev}"; } ];
+  swapDevices = [ { device = "/dev/mapper/vg0-nixos--swap"; } ];
 
   # networking, plus UCAM timeservers
   networking = {

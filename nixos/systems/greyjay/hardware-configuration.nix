@@ -18,11 +18,6 @@
       fsType = "ext4";
     };
 
-  fileSystems."/mnt/home-desktop" =
-    { device = "systemd-1";
-      fsType = "autofs";
-    };
-
   fileSystems."/home" =
     { device = "/dev/mapper/vg0-home";
       fsType = "ext4";
