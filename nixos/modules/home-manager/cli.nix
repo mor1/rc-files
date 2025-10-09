@@ -8,13 +8,16 @@
         # kelpsget # https://github.com/davimf721/KelpsGet
         # stow # manage dotfiles via symlinks
         cryfs # encrypted filesystem image support
+        dateutils # fiddle with dates
         dig # because DNS
+        doxx # view .docx in terminal
         exiftool # manipulate images
         fastfetch # improved `neofetch` system info display
         file # identify filetype by magic
         get_iplayer # download from iPlayer
         ghostscript # ps etc
         handlr # manage XDG Open mappings
+        html-tidy # tidy HTML
         imagemagick # image manipulation tools
         inetutils
         inotify-tools # commands using inotify/dnotify APIs
@@ -75,16 +78,6 @@
     cli ++ nu_posix;
 
   programs = {
-    atuin = {
-      enable = false;
-      settings = {
-        dialect = "uk";
-        enter_accept = false;
-        inline_height = 40;
-        style = "compact";
-      };
-    };
-
     bash = {
       enable = false;
       enableCompletion = false;
@@ -103,7 +96,7 @@
     };
 
     lf = {
-      enable = true;
+      enable = false;
 
       previewer = {
         keybinding = "i";

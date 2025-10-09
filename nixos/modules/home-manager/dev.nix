@@ -7,20 +7,26 @@
         man-pages
         man-pages-posix
       ];
+      bash_tools = [
+        bash-language-server # LSP for bash
+        shfmt
+      ];
       python_tools = [
-        python312
+        basedpyright
+        python313
         ruff
+        ty
         uv
       ]
-      ++ (with python312Packages; [
-        autopep8
-        pip
+      ++ (with python313Packages; [
         pygments
+        pylsp-rope
+        python-lsp-server
       ]);
       ocaml_tools = [
+        dune_3
         gcc
         ocaml
-        dune_3
         ocamlformat
         opam
       ]
@@ -33,8 +39,7 @@
         utop
       ]);
     in
-    man_pages
-    ++ [
+    [
       gh # github CLI
       git # obviously
       git-filter-repo # for fixing up repos
@@ -44,8 +49,10 @@
       nixfmt-rfc-style # format .nix files
       rustup # manage Rust installations
     ]
+    ++ man_pages
     ++ python_tools
-    ++ ocaml_tools;
+    ++ ocaml_tools
+    ++ bash_tools;
 
   programs = {
     git.enable = true;

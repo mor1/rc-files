@@ -469,7 +469,7 @@ in
             let
               caffeine_on = {
                 icon = "pomodoro_break";
-                text = "<%d>";
+                text = "";
               };
               caffeine_off = {
                 icon = "resolution";
