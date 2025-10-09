@@ -8,7 +8,6 @@ if $NIX ; then
 fi
 
 if $NIXOS ; then
-  alias e="codium"
   alias ho="handlr open"
   alias bigclock='nix-shell -p wlclock --run "wlclock --border-size 1 --corner-radius 10 --hand-width 11 --marking-width 3 --size 450 --position bottom-left"'
   alias clock='nix-shell -p wlclock --run "wlclock --border-size 1 --corner-radius 10 --hand-width 8 --marking-width 3 --size 200 --position bottom-left"'

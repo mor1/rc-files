@@ -27,18 +27,18 @@ aenv PATH /usr/bin
 
 if [[ -r /etc/NIXOS ]]; then
   NIXOS=true
-elif [[ "$TERM_PROGRAM" == "vscode" && -r /.host-etc/NIXOS ]]; then
+elif [[ $TERM_PROGRAM == "vscode" && -r /.host-etc/NIXOS ]]; then
   NIXOS=true
 else
   NIXOS=false
 fi
-[ -d ~/.nix-profile ] &&  NIX=true || NIX=false
+[ -d ~/.nix-profile ] && NIX=true || NIX=false
 
-if $NIX ; then
+if $NIX; then
   aenv PATH /nix/var/nix/profiles/default/bin
   aenv PATH /etc/profiles/per-user/$USER/bin
   aenv PATH /home/$USER/.nix-profile/bin
-  if $NIXOS ; then
+  if $NIXOS; then
     aenv PATH /run/current-system/sw/bin
     aenv PATH /run/wrappers/bin
   fi
@@ -55,7 +55,7 @@ aenv MANPATH /usr/local/share/man
 aenv MANPATH /usr/share/man
 aenv MANPATH /usr/X11R6/man
 
-aenv PATH    ~/.local/bin
+aenv PATH ~/.local/bin
 aenv MANPATH ~/.local/man
 
 #
@@ -73,7 +73,7 @@ shopt -s extglob
 #
 
 command_oriented_history=TRUE # multi-line commands become single line
-notify=TRUE # support notifications
+notify=TRUE                   # support notifications
 
 export HISTIGNORE="&:l?([sl])?(a):[bf]g:exit:[ \t]:history"
 export HISTCONTROL=ignoreboth:erasedups
@@ -82,13 +82,13 @@ export HISTFILESIZE=10000
 export HISTCONTROL=ignoreboth
 
 ## https://unix.stackexchange.com/questions/1288/preserve-bash-history-in-multiple-terminal-windows/48116#48116
-_bash_history_sync () {
-  builtin history -a          # append last command to HISTFILE
-  HISTFILESIZE=$HISTSIZE      # truncate HISTFILE to HISTSIZE
-  builtin history -c          # clear the current session
-  builtin history -r          # read the history
+_bash_history_sync() {
+  builtin history -a     # append last command to HISTFILE
+  HISTFILESIZE=$HISTSIZE # truncate HISTFILE to HISTSIZE
+  builtin history -c     # clear the current session
+  builtin history -r     # read the history
 }
-history () {                    # ensure history synced before display
+history() { # ensure history synced before display
   _bash_history_sync
   builtin history "$@"
 }
@@ -112,11 +112,11 @@ ps1git() {
   GIT_PS1_SHOWUPSTREAM="auto"
 
   case $TERM in
-    dumb )
+    dumb)
       _PROMPT=": \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]"
       ;;
 
-    * )
+    *)
       _PROMPT="\[\e]0;\u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]"
       ;;
   esac
@@ -140,8 +140,8 @@ PLATFORM=$(uname -s)
 SHOST=${LHOST%%.*}
 export CDPATH KERNEL LHOST PLATFORM SHOST
 
-[[ $(which foot 2>/dev/null) ]] || export TERM=xterm
-[[ $(which bat 2>/dev/null) ]] && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+[[ $(which foot 2> /dev/null) ]] || export TERM=xterm
+[[ $(which bat 2> /dev/null) ]] && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 PAGER="less -FRXi"
 BAT_PAGER=$PAGER
 MANROFFOPT="-c"
@@ -163,15 +163,15 @@ export GPG_TTY
 
 case $PLATFORM in
 
-  Linux )
+  Linux)
     if [ -r ~/.git-prompt.sh ]; then
       source ~/.git-prompt.sh
-    elif $NIXOS ; then
+    elif $NIXOS; then
       gitdir=$(dirname $(readlink -f $(which git)))
       source ${gitdir}/../share/git/contrib/completion/git-prompt.sh
       source ${gitdir}/../share/git/contrib/completion/git-completion.bash
     else
-      for d in /etc/bash_completion /etc/bash_completion.d ; do
+      for d in /etc/bash_completion /etc/bash_completion.d; do
         if [ -d $d ]; then
           [ -r $d/git ] && source $d/git
           [ -r $d/git-prompt ] && source $d/git-prompt
@@ -182,7 +182,7 @@ case $PLATFORM in
     ps1git
     ;;
 
-  Darwin )
+  Darwin)
     unset PYTHONPATH
     aenv PYTHONPATH /usr/local/Cellar/pdm/1.13.4/libexec/lib/python3.10/site-packages/pdm/pep582
     enva PATH "/usr/local/opt/python@3.7/bin"
@@ -210,7 +210,7 @@ esac
 
 case ${LHOST#*.} in
 
-  cl.cam.ac.uk )
+  cl.cam.ac.uk)
     aenv PATH /usr/kerberos/bin
     ;;
 
@@ -230,15 +230,20 @@ fi
 
 ## Rust
 [[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+[ -d "$HOME/.cargo" ] && aenv PATH "$HOME/.cargo/bin"
 
 ## load completions
-[[ $(which bat 2>/dev/null) ]] && source <(bat --completion bash)
-[[ $(which direnv 2>/dev/null) ]] && { source <(direnv hook bash) ; direnv reload ;}
-[[ $(which just 2>/dev/null) ]] && source <(just --completions bash)
-[[ $(which maestral 2>/dev/null) ]] && source <(maestral completion bash)
-[[ $(which procs 2>/dev/null) ]] && source <(procs --gen-completion-out bash)
-[[ $(which zola 2>/dev/null) ]] && source <(zola completion bash)
-[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(codium --locate-shell-integration-path bash)"
+[[ $(which bat 2> /dev/null) ]] && source <(bat --completion bash)
+[[ $(which direnv 2> /dev/null) ]] && {
+  source <(direnv hook bash)
+  direnv reload
+}
+[[ $(which just 2> /dev/null) ]] && source <(just --completions bash)
+[[ $(which maestral 2> /dev/null) ]] && source <(maestral completion bash)
+[[ $(which procs 2> /dev/null) ]] && source <(procs --gen-completion-out bash)
+[[ $(which ruff 2> /dev/null) ]] && source <(ruff generate-shell-completion bash)
+[[ $(which zola 2> /dev/null) ]] && source <(zola completion bash)
+[[ $TERM_PROGRAM == "vscode" ]] && source <(codium --locate-shell-integration-path bash)
 
-[[ $(which nix-index 2>/dev/null) ]] &&
-  source $(nix eval --raw nixpkgs#nix-index)/etc/profile.d/command-not-found.sh
+[[ $(which nix-index 2> /dev/null) ]] \
+  && source $(nix eval --raw nixpkgs#nix-index)/etc/profile.d/command-not-found.sh

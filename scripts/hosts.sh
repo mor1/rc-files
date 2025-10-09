@@ -14,7 +14,7 @@ SSHFS="sshfs $SSHFSOPTS"
 
 # CUCL
 
-kinit () {
+kinit() {
   kid=rmm1002@DC.CL.CAM.AC.UK
   cucl_local=false
   while read IP; do
@@ -23,7 +23,7 @@ kinit () {
     fi
   done < <(ip -j -4 a | jq -r '.[].addr_info | .[].local')
 
-  if [[ "$cucl_local" != "true" ]]; then
+  if [[ $cucl_local != "true" ]]; then
     sudo ipsec up CUCL
   fi
 
@@ -33,63 +33,63 @@ kinit () {
     $(which kinit) -R $kid || $(which kinit) -f $kid
   fi
 
-  if [[ "$cucl_local" != "true" ]]; then
+  if [[ $cucl_local != "true" ]]; then
     sudo ipsec down CUCL
   fi
 }
 
-binky () {
+binky() {
   $SSH binky.cl
 }
 
-tfc () {
+tfc() {
   $SSH tfc-app9.cl
 }
 
-cronserv () {
+cronserv() {
   $SSH cron-serv$1.cl
 }
 
-cucl () {
+cucl() {
   $SSH slogin.cl
 }
 
-cuclfs () {
+cuclfs() {
   $SSHFS slogin.cl:/home/rmm1002 ~/l/rmm1002
   $SSHFS slogin.cl:/ ~/l/cucl
 }
 
-ely () {
+ely() {
   $SSH ely.cl
 }
 
-quoth () {
+quoth() {
   $SSH quoth.cl
 }
 
-uksystems () {
+uksystems() {
   $SSH rmm1002@hotcrp.uksystems.org # svr-rmm1002-uksystems-hotcrp.cl
 }
 
-office () {
+office() {
   $SSH daugleddau.cl
 }
 
 # home
 
-jackdaw () {
+jackdaw() {
   $SSH -k jackdaw.lan
 }
-mediapc () {
+mediapc() {
   $SSH -k root@mediapc.lan
 }
 mediapcfs() {
   sshfs root@mediapc.lan:/$1 ~/l/mediapc
 }
 
-srcf () {
+srcf() {
   $SSH -k rmm1002@shell.srcf.net
 }
-srcffs () {
+srcffs() {
   sshfs rmm1002@shell.srcf.net:/$1 ~/l/srcf
 }
