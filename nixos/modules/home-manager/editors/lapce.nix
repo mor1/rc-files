@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   programs.lapce = {
-    enable = true;
+    enable = false;
 
     keymaps = [
       {
