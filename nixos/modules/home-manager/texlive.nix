@@ -55,11 +55,13 @@
             comment
             csquotes
             detex
+            dirtytalk
             docmute
             doublestroke
             draftwatermark
             enumitem
             environ
+            epigraph
             epsf
             etoolbox
             everyshi
@@ -83,6 +85,7 @@
             latexmk
             listings
             lkproof
+            makecell
             mathtools
             microtype
             movie15
@@ -99,6 +102,7 @@
             pdfpages
             pdfxup
             pgf
+            pgfgantt
             pgfplots
             preprint
             ragged2e
@@ -146,6 +150,7 @@
     with pkgs;
     [
       biber
+      ltex-ls-plus
       texlive
     ];
 }
