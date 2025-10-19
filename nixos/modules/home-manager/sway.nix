@@ -229,6 +229,12 @@ in
           "F11" = f11;
           "F12" = f12;
 
+          ## bluetooth headset
+          "XF86AudioPause" = f9;
+          "XF86AudioPlay" = f9;
+          "XF86AudioPrev" = f11;
+          "XF86AudioNext" = f12;
+
           ## thinkpad keyboard
           "XF86AudioMute" = f1;
           "XF86AudioLowerVolume" = f2;
