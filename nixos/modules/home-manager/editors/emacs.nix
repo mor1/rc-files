@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    emacs-lsp-booster
-  ];
+  home.packages = with pkgs; [ emacs-lsp-booster ];
 
   programs.emacs = {
     enable = true;
@@ -18,11 +16,14 @@
         (treesit-grammars.with-grammars (p: [
           p.tree-sitter-bash
           p.tree-sitter-elisp
+          p.tree-sitter-markdown
+          p.tree-sitter-markdown-inline
           p.tree-sitter-nix
           p.tree-sitter-ocaml
           p.tree-sitter-python
           p.tree-sitter-rust
           p.tree-sitter-toml
+          p.tree-sitter-typst
           p.tree-sitter-yaml
         ]))
       ]);

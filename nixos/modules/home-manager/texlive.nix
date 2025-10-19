@@ -93,6 +93,7 @@
             natbib
             ncctools
             newtx
+            nextpage
             ninecolors
             nomencl
             paralist

@@ -9,18 +9,17 @@
       ];
       bash_tools = [
         bash-language-server # LSP for bash
-        shfmt
+        shellcheck # linting for bash
+        shfmt # ba/sh code formatting
       ];
       python_tools = [
         basedpyright
         python313
         ruff
-        ty
         uv
       ]
       ++ (with python313Packages; [
         pygments
-        pylsp-rope
         python-lsp-server
       ]);
       ocaml_tools = [
