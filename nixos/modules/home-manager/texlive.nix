@@ -54,6 +54,7 @@
             cmap
             comment
             csquotes
+            datenumber
             detex
             dirtytalk
             docmute
@@ -70,6 +71,8 @@
             fifo-stack
             filecontents
             float
+            fontawesome
+            fontawesome5
             fontspec
             footmisc
             glossaries
@@ -111,6 +114,7 @@
             refcount
             relsize
             setspace
+            siunitx
             soul
             stackengine
             stmaryrd

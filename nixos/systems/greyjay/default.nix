@@ -109,6 +109,7 @@ in
     networkmanager = {
       enable = true;
       plugins = with pkgs; [ networkmanager-strongswan ];
+      wifi.powersave = true;
     };
 
     # https://discourse.nixos.org/t/ntp-use-values-from-network-manager-via-dhcp/23408/2
@@ -277,6 +278,7 @@ in
       extraGroups = [
         "audio"
         "docker"
+        "networkmanager"
         "video"
         "wheel"
         "wireshark"

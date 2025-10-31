@@ -4,9 +4,9 @@
     with pkgs;
     let
       cli = [
-        # aria2 # feature rich wget/curl
+        aria2 # feature rich wget/curl
         # kelpsget # https://github.com/davimf721/KelpsGet
-        # stow # manage dotfiles via symlinks
+        stow # manage dotfiles via symlinks
         cryfs # encrypted filesystem image support
         dateutils # fiddle with dates
         dig # because DNS
@@ -27,8 +27,6 @@
         lsof # list open file handles
         lynx # cli web browser
         mupdf # PDF manipulation
-        nix-du # show disk usage of roots
-        nix-tree # show dependency tree of derivations https://github.com/utdemir/nix-tree
         offlineimap # download emails
         pandoc # document processing and conversion
         pass # password manager

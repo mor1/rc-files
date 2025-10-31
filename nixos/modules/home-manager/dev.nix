@@ -12,16 +12,13 @@
         shellcheck # linting for bash
         shfmt # ba/sh code formatting
       ];
-      python_tools = [
-        basedpyright
-        python313
-        ruff
-        uv
-      ]
-      ++ (with python313Packages; [
-        pygments
-        python-lsp-server
-      ]);
+      nix_tools = [
+        # nix-cli # unified nix command line tooling
+        nix-du # show disk usage of roots
+        nix-tree # show dependency tree of derivations https://github.com/utdemir/nix-tree
+        nixd # nix LSP server
+        nixfmt-rfc-style # format .nix files
+      ];
       ocaml_tools = [
         dune_3
         gcc
@@ -37,21 +34,33 @@
         ocp-indent
         utop
       ]);
+      python_tools = [
+        basedpyright
+        python313
+        ruff
+        uv
+      ]
+      ++ (with python313Packages; [
+        pygments
+        python-lsp-server
+      ]);
     in
     [
+      dockerfile-language-server
       gh # github CLI
       git # obviously
       git-filter-repo # for fixing up repos
       git-lfs # large file support
       gnumake # unavoidably
       jq # pretty-print JSON
-      nixfmt-rfc-style # format .nix files
       rustup # manage Rust installations
+      tombi
     ]
+    ++ bash_tools
     ++ man_pages
-    ++ python_tools
+    ++ nix_tools
     ++ ocaml_tools
-    ++ bash_tools;
+    ++ python_tools;
 
   programs = {
     git.enable = true;

@@ -7,11 +7,11 @@
     let
       apps = [
         czkawka # detect file duplication, empty directories, &c
-        ghostty # alternative gui terminal
+        # ghostty # alternative gui terminal
         inkscape # vector graphics editing
         keybase-gui # keybase
         libreoffice # ~ms office
-        nautilus # maybe the least sucky of the file managers, so far?
+        # nautilus # maybe the least sucky of the file managers, so far?
         kdePackages.okular # pdf viewer / annotator
         signal-desktop # signal private messaging
         slack # slack
@@ -26,7 +26,7 @@
         gyre-fonts
         nerd-fonts.hack
         powerline-symbols
-        vistafonts
+        vista-fonts
       ];
 
       themes = [ foot.themes ];
@@ -97,10 +97,7 @@
       };
     };
 
-    firefox = {
-      enable = true;
-      package = pkgs.firefox-wayland;
-    };
+    firefox.enable = true;
 
     rio = {
       enable = false;

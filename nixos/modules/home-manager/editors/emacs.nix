@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [ emacs-lsp-booster ];
-
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-gtk;
@@ -15,6 +14,7 @@
         tree-sitter-langs
         (treesit-grammars.with-grammars (p: [
           p.tree-sitter-bash
+          p.tree-sitter-dockerfile
           p.tree-sitter-elisp
           p.tree-sitter-markdown
           p.tree-sitter-markdown-inline
