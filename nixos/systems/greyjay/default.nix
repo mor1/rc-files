@@ -10,6 +10,16 @@ let
   hostname = "greyjay";
   root_partition = "/dev/disk/by-uuid/c3cc9248-ade1-4b94-9e6e-d50990171471";
   username = "mort";
+
+  wireplumber_0_5_12_pkgs = import (builtins.fetchTree {
+    type = "github";
+    owner = "nixos";
+    repo = "nixpkgs";
+    rev = "871b9fd269ff6246794583ce4ee1031e1da71895";
+    # ...via https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=firefox
+  }) { inherit (pkgs) system; };
+  wireplumber_0_5_12 = wireplumber_0_5_12_pkgs.wireplumber;
+
 in
 {
   # setup configuration, home-manager, flake
@@ -139,8 +149,11 @@ in
     alsa.support32Bit = true;
     jack.enable = true;
     pulse.enable = true;
-    wireplumber.enable = true;
     raopOpenFirewall = true;
+    wireplumber = {
+      enable = true;
+      package = wireplumber_0_5_12;
+    };
   };
 
   # system services
