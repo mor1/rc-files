@@ -199,7 +199,7 @@ function ddstatus() {
 #
 
 function rf() {
-  while ! eza -l "${D:=.}/$1" 2> /dev/null; do
+  while ! eza -1 "${D:=.}/$1" 2> /dev/null; do
     D=$D/..
     [ "$(realpath "$D/$1")" == "/$1" ] && break
   done
