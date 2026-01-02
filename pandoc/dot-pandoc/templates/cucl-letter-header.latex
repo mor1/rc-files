@@ -112,7 +112,7 @@ $endif$
 }
 
 \newcommand{\ComputerLaboratory}{
-  \fontsize{9.73pt}{12pt}\bf Dept of Computer Science \& Technology
+  \fontsize{8.5pt}{10pt}\bf Dept of Computer Science \& Technology
 }
 
 \newcommand{\titledetails}{}
