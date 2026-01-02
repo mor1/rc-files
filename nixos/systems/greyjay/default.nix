@@ -271,6 +271,12 @@ in
   };
 
   # setup users
+  services.printing.extraFilesConf = ''
+    SystemGroup root wheel lpadmin
+  '';
+  users.groups = {
+    lpadmin = { };
+  };
   users.users = {
     root = {
       extraGroups = [ "wheel" ];
@@ -281,6 +287,7 @@ in
       extraGroups = [
         "audio"
         "docker"
+        "lpadmin"
         "networkmanager"
         "video"
         "wheel"
