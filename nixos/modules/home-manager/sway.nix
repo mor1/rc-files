@@ -453,16 +453,10 @@ in
             command = "${suspend}";
           }
         ];
-        events = [
-          {
-            event = "before-sleep";
-            command = "${lock}";
-          }
-          {
-            event = "lock";
-            command = "${lock}";
-          }
-        ];
+        events = {
+          "before-sleep" = "${lock}";
+          "lock" = "${lock}";
+        };
       };
 
     swayosd.enable = true;
