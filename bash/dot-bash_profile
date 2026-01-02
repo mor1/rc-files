@@ -1,4 +1,4 @@
-if ! tty -s ; then
+if ! tty -s; then
   return
 fi
 
@@ -13,7 +13,7 @@ if [[ $(tty) == /dev/tty1 ]]; then
   exec dbus-run-session sway
 else
   uname -a
-  if [[ ! $LHOST =~ cl.cam.ac.uk && $(which keychain 2>/dev/null) ]]; then
+  if [[ ! $LHOST =~ cl.cam.ac.uk && $(which keychain 2> /dev/null) ]]; then
     eval $(keychain --eval)
   fi
   date

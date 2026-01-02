@@ -72,8 +72,8 @@ shopt -s extglob
 # bash history
 #
 
-command_oriented_history=TRUE # multi-line commands become single line
-notify=TRUE                   # support notifications
+export command_oriented_history=TRUE # multi-line commands become single line
+export notify=TRUE                   # support notifications
 
 export HISTIGNORE="&:l?([sl])?(a):[bf]g:exit:[ \t]:history"
 export HISTCONTROL=ignoreboth:erasedups
@@ -115,7 +115,6 @@ ps1git() {
     dumb)
       _PROMPT=": \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]"
       ;;
-
     *)
       _PROMPT="\[\e]0;\u@\h:\w\a\]: \u@\h:\[$WHITE\]\W\[$COLOR_OFF\]"
       ;;
