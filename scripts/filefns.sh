@@ -133,9 +133,14 @@ function 2up() {
 # open emacs appropriately
 #
 
-function ee() {
+function e() {
   SERVER_SOCK=/tmp/emacs-$USER/server
   [ -S $SERVER_SOCK ] && emacsclient -n -r -s $SERVER_SOCK "$@"
+}
+
+function ee() {
+  SERVER_SOCK=/tmp/emacs-$USER/server
+  [ -S $SERVER_SOCK ] && emacsclient -n -c -s $SERVER_SOCK "$@"
 }
 
 function emacspkg-update() {
