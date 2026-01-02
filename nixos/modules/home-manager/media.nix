@@ -1,10 +1,11 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   home.packages = with pkgs; [
     digikam # photo manager
     ffmpeg_7 # manipulate media files
     imv # image viewer
-    rhythmbox # simple music playback
+    musescore # music score editing
+    rhythmbox
     vlc # video player
   ];
 }

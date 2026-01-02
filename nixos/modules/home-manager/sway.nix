@@ -82,10 +82,10 @@ in
   home.packages = with pkgs; [
     brightnessctl # control screen brightness
     gammastep # automatically dim+redden screen at night
-    grim # screenshot wayland compositor; use `slurp` to select regions
     kanshi # modify sway config on hardware changes
     pwvucontrol # graphical control of AV routing (pipewire)
     slurp # select a compositor region to stdout
+    shotman # screenshotting
     wdisplays # gui for display configuration
     wev # wayland event viewer
     wl-clipboard # pipe to/from clipboard

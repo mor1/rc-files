@@ -88,6 +88,7 @@
             latexmk
             listings
             lkproof
+            llncs
             makecell
             mathtools
             microtype

@@ -8,6 +8,7 @@
       epkgs: with epkgs; ([
         corfu
         jinx
+        lsp-bridge
         mu4e
         nerd-icons-corfu
         pretty-sha-path

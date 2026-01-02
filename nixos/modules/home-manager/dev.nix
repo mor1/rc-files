@@ -52,6 +52,7 @@
       git-filter-repo # for fixing up repos
       git-lfs # large file support
       gnumake # unavoidably
+      harper # grammar checker for devs
       jq # pretty-print JSON
       rustup # manage Rust installations
       tombi
@@ -64,6 +65,14 @@
 
   programs = {
     git.enable = true;
+
+    jujutsu = {
+      enable = true;
+      settings.user = {
+        email = "mort@cantab.net";
+        name = "Richard Mortier";
+      };
+    };
 
     opam = {
       enable = true;

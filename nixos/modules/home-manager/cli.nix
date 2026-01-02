@@ -4,9 +4,10 @@
     with pkgs;
     let
       cli = [
-        aria2 # feature rich wget/curl
+        # headson # https://github.com/kantord/headson
         # kelpsget # https://github.com/davimf721/KelpsGet
-        stow # manage dotfiles via symlinks
+
+        aria2 # feature rich wget/curl
         cryfs # encrypted filesystem image support
         dateutils # fiddle with dates
         dig # because DNS
@@ -18,6 +19,7 @@
         ghostscript # ps etc
         handlr # manage XDG Open mappings
         html-tidy # tidy HTML
+        hwloc # interrogate hardware configuration
         imagemagick # image manipulation tools
         inetutils
         inotify-tools # commands using inotify/dnotify APIs
@@ -32,7 +34,10 @@
         pass # password manager
         pdfcpu # `optimize` for PDF optimisation
         pdftk # more PDF manipulation
+        poppler-utils # pdftotext and friends
+        psmisc # process tools
         qpdf # yet more PDF manipulation
+        stow # manage dotfiles via symlinks
         subversion # hysterical raisins
         sysstat # system stats
         traceroute
@@ -46,6 +51,7 @@
       ];
       nu_posix = [
         # flash # fast inotify replacement, https://github.com/sage-scm/flash/
+
         bat # better cat
         biff # better date
         bottom # btm ~ better top, htop, etc
@@ -63,7 +69,6 @@
         hexyl # hex pretty printer
         htop # graphical top
         iotop # io top
-        jujutsu # better git
         just # updated gnumake replacement
         procs # better ps
         ripgrep # rg ~ `grep` replacement

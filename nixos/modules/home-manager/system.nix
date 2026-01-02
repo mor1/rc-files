@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     gcr
     gnupg
+    hunspellDicts.en_GB-large # en.GB
     maestral # dropbox client
     pciutils
     sshfs # mount remote filesystems over ssh

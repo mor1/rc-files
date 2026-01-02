@@ -16,6 +16,7 @@
         signal-desktop # signal private messaging
         slack # slack
         teams-for-linux # ms teams in electron
+        thunderbird
         zoom-us # zoom vc
       ];
 
