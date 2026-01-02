@@ -267,6 +267,10 @@ in
 
           ## extras, all keyboards
           "${modifier}+Shift+l" = "exec ${swaylock}";
+
+          "${modifier}+p" = "exec shotman --capture window";
+          "${modifier}+Shift+p" = "exec shotman --capture region";
+          "${modifier}+Ctrl+p" = "exec shotman --capture output";
         };
 
       # status bars using i3status-rust
