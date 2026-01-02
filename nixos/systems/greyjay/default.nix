@@ -310,20 +310,24 @@ in
     usbmuxd.enable = true; # iphone/ipad
   };
 
-  # kerberos for cambridge
-  security.krb5.settings.config = ''
-    [libdefaults]
-    forwardable = true
-    default_realm = DC.CL.CAM.AC.UK
-  '';
+  security = {
+    # auditing
+    auditd.enable = true;
 
-  # use sudo-rs rather than sudo
-  security.sudo-rs = {
-    enable = true;
-    execWheelOnly = true;
-    wheelNeedsPassword = true;
+    # kerberos for cambridge
+    krb5.settings.config = ''
+      [libdefaults]
+      forwardable = true
+      default_realm = DC.CL.CAM.AC.UK
+    '';
+
+    # use sudo-rs rather than sudo
+    sudo-rs = {
+      enable = true;
+      execWheelOnly = true;
+      wheelNeedsPassword = true;
+    };
   };
-
   # enable local fontDir for unpackaged font install
   fonts.fontDir.enable = true;
 
