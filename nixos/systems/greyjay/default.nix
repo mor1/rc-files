@@ -34,7 +34,10 @@ in
     '';
 
     # housekeeping
-    settings.auto-optimise-store = true;
+    settings = {
+      auto-optimise-store = true;
+      download-buffer-size = 128 * 1024 * 1024;
+    };
     gc.automatic = true;
   };
 
