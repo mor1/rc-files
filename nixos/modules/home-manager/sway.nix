@@ -178,8 +178,10 @@ in
         };
         "type:touchpad" = {
           natural_scroll = "enabled";
-          tap = "enabled";
-          tap_button_map = "lmr";
+          tap = "enabled"; # click on tap
+          tap_button_map = "lmr"; # 1 finger = left click, 2 = middle, 3 = right
+          dwt = "enabled"; # disable touchpad while typing
+          dwtp = "enabled"; # disable touchpard while track pointing
         };
         "pointer" = {
           accel_profile = "adaptive";
