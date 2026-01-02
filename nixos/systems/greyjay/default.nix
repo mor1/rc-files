@@ -133,7 +133,6 @@ in
     enable = true;
     powerOnBoot = true;
   };
-  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -141,6 +140,7 @@ in
     jack.enable = true;
     pulse.enable = true;
     wireplumber.enable = true;
+    raopOpenFirewall = true;
   };
 
   # system services
