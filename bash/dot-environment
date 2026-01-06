@@ -240,7 +240,7 @@ fi
 [[ $(which just 2> /dev/null) ]] && source <(just --completions bash)
 [[ $(which maestral 2> /dev/null) ]] && source <(maestral completion bash)
 # following store path from `$(nix eval --offline --raw nixpkgs#nix-index)`
-NIX_INDEX=/nix/store/bhgq2s2xiaiqrd9l4zz3rk4cxkdzqzf3-nix-index-0.1.9
+NIX_INDEX=/nix/store/zam2z286qx4a9lh6d7pydg1873w9cdiv-nix-index-0.1.9
 [[ $(which nix-index 2> /dev/null) ]] && source ${NIX_INDEX}/etc/profile.d/command-not-found.sh
 [[ $(which procs 2> /dev/null) ]] && source <(procs --gen-completion-out bash)
 [[ $(which ruff 2> /dev/null) ]] && source <(ruff generate-shell-completion bash)
