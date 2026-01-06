@@ -66,6 +66,7 @@
           "image/jpg"
           "image/png"
           "image/svg+xml"
+          "image/webp"
         ];
 
         pdfapp = "okularApplication_pdf.desktop";
