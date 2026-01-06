@@ -5,14 +5,15 @@
   home.packages =
     with pkgs;
     let
-      apps = [
+      files = [
         czkawka # detect file duplication, empty directories, &c
-        # ghostty # alternative gui terminal
-        inkscape # vector graphics editing
         keybase-gui # keybase
+        # kiorg # https://github.com/houqp/kiorg, not yet packaged
         libreoffice # ~ms office
-        # nautilus # maybe the least sucky of the file managers, so far?
-        kdePackages.okular # pdf viewer / annotator
+        nautilus # maybe the least sucky of the file managers, so far?
+      ];
+
+      messaging = [
         signal-desktop # signal private messaging
         slack # slack
         teams-for-linux # ms teams in electron
@@ -20,19 +21,29 @@
         zoom-us # zoom vc
       ];
 
+      media = [
+        # digikam # photo manager
+        gthumb # image viewing
+        imv # image viewer
+        inkscape # vector graphics editing
+        musescore # music score editing
+        kdePackages.okular # pdf viewer / annotator
+        rhythmbox
+        vlc # video player
+      ];
+
       fonts = [
         atkinson-hyperlegible-mono
         atkinson-hyperlegible-next
         corefonts
         gyre-fonts
-        nerd-fonts.hack
         powerline-symbols
         vista-fonts
       ];
 
       themes = [ foot.themes ];
     in
-    apps ++ fonts ++ themes;
+    files ++ messaging ++ media ++ fonts ++ themes;
 
   fonts.fontconfig.enable = true;
 

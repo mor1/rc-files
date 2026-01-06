@@ -8,7 +8,6 @@ in
     ../../modules/home-manager/dev.nix
     ../../modules/home-manager/editors
     ../../modules/home-manager/gui.nix
-    ../../modules/home-manager/media.nix
     ../../modules/home-manager/system.nix
     ../../modules/home-manager/texlive.nix
     ../../modules/home-manager/typst.nix

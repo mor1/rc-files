@@ -14,6 +14,7 @@
         doxx # view .docx in terminal
         exiftool # manipulate images
         fastfetch # improved `neofetch` system info display
+        ffmpeg_7 # manipulate media files
         file # identify filetype by magic
         get_iplayer # download from iPlayer
         ghostscript # ps etc
