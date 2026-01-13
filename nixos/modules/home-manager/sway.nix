@@ -318,8 +318,6 @@ in
       settings =
         let
           pactl = "${pkgs.pulseaudio}/bin/pactl";
-          wpctl = "${pkgs.wireplumber}/bin/wpctl";
-          pwcli = "${pkgs.pipewire}/bin/pw-cli";
           sm = "${pkgs.sway}/bin/swaymsg";
           mwss =
             o:
@@ -334,18 +332,6 @@ in
             profile.exec = [
               "${pactl} set-default-sink ${laptop.sink}"
               "${pactl} set-default-source ${laptop.source}"
-              # "${pactl} set-card-profile ${laptop.card} "${laptop.profile} '"
-
-              # "${wpctl} set-default 129" # audio sink = headphones
-              # "${wpctl} set-default 46"  # audio source = logitech mic
-              # "${wpctl} set-default 115" # video source = logitech camera
-
-              # # device = 51 is standard audio controller
-              # # profile index = 1 is headphones
-              # # profile index = 2 is speaker
-              # pw-cli s 51 Profile '{index:2, save:true}'
-              # pw-cli s 51 Profile '{index:1, save:true}'
-
             ];
           }
 
@@ -397,7 +383,6 @@ in
             profile.exec = [
               "${pactl} set-default-sink ${laptop.sink}"
               "${pactl} set-default-source ${christs.source}"
-              # "${pactl} set-card-profile ${laptop.card} '${laptop.profile}'"
             ]
             ++ (mwss christs.screen [
               homews
