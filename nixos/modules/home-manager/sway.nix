@@ -21,27 +21,20 @@ let
   # (new) Pipewire, and the inconsistent tools; TODO FIXME
   laptop = {
     screen = "eDP-1";
-    # screen = "California Institute of Technology 0x1403 Unknown";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink";
     source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
-    # card = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic";
-    # profile = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";
   };
 
   # my offices
   wgb = {
-    # screen = "HDMA-A-1";
     screen = "LG Electronics LG HDR 4K 0x0005DD99";
-    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+    sink = "alsa_output.usb-Lenovo_ThinkPad_USB-C_Dock_Audio_000000000000-00.analog-stereo";
     source = "alsa_input.usb-046d_HD_Pro_Webcam_C920_C18974EF-02.analog-stereo";
   };
   christs = {
-    # screen = "HDMI-A-1";
     screen = "LG Electronics LG HDR 4K 0x00035DAC";
-    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Headphones__sink";
+    sink = "alsa_output.usb-Lenovo_ThinkPad_USB-C_Dock_Audio_000000000000-00.analog-stereo";
     source = "alsa_input.usb-046d_Logitech_Webcam_C925e_8EA2331F-02.analog-stereo";
-    # card = "alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic";
-    # profile = "HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)";
   };
 
   # public spaces
