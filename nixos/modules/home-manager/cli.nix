@@ -30,6 +30,7 @@
         lsof # list open file handles
         lynx # cli web browser
         mupdf # PDF manipulation
+        nh
         offlineimap # download emails
         pandoc # document processing and conversion
         pass # password manager
@@ -38,6 +39,7 @@
         poppler-utils # pdftotext and friends
         psmisc # process tools
         qpdf # yet more PDF manipulation
+        snitch
         stow # manage dotfiles via symlinks
         subversion # hysterical raisins
         sysstat # system stats

@@ -17,7 +17,7 @@
         nix-du # show disk usage of roots
         nix-tree # show dependency tree of derivations https://github.com/utdemir/nix-tree
         nixd # nix LSP server
-        nixfmt-rfc-style # format .nix files
+        nixfmt # format .nix files
       ];
       ocaml_tools = [
         dune_3
