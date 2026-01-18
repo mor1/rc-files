@@ -75,13 +75,13 @@ in
         paths = [ pkgs.uutils-findutils ];
       };
     }
-    {
-      oldDependency = pkgs.diffutils;
-      newDependency = pkgs.symlinkJoin {
-        name = diffutils-name;
-        paths = [ pkgs.uutils-diffutils ];
-      };
-    }
+    # {
+    #   oldDependency = pkgs.diffutils;
+    #   newDependency = pkgs.symlinkJoin {
+    #     name = diffutils-name;
+    #     paths = [ pkgs.uutils-diffutils ];
+    #   };
+    # }
   ];
 
   home-manager = {
