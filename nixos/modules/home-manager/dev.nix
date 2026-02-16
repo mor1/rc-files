@@ -53,9 +53,11 @@
       git-lfs # large file support
       gnumake # unavoidably
       harper # grammar checker for devs
+      hjson
       jq # pretty-print JSON
       rustup # manage Rust installations
       tombi
+      yq
     ]
     ++ bash_tools
     ++ man_pages

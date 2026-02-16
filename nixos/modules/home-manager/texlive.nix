@@ -40,6 +40,7 @@
             algorithms
             algpseudocodex
             amsmath
+            appendix
             bbding
             beamer
             biblatex
@@ -131,6 +132,7 @@
             texcount
             textcase
             textpos
+            threeparttable
             tikzfill
             tikzmark
             titlesec
