@@ -112,6 +112,14 @@ in
   environment = {
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
+      ## XXX new, to test
+      WLR_DRM_NO_MODIFIERS = "1";
+      WLR_RENDERER = "vulkan";
+      XDG_CURRENT_DESKTOP = "sway";
+      MOZ_ENABLE_WAYLAND = "1";
+      QT_QPA_PLATFORM = "wayland";
+      CLUTTER_BACKEND = "wayland";
+      SDL_VIDEODRIVER = "wayland";
     };
 
     systemPackages = with pkgs; [

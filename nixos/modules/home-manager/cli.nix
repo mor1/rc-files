@@ -6,6 +6,7 @@
       cli = [
         # headson # https://github.com/kantord/headson
         # kelpsget # https://github.com/davimf721/KelpsGet
+        # compendium # strace but better ux
 
         aria2 # feature rich wget/curl
         cryfs # encrypted filesystem image support

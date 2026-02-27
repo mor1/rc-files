@@ -77,13 +77,13 @@ in
     gammastep # automatically dim+redden screen at night
     kanshi # modify sway config on hardware changes
     pwvucontrol # graphical control of AV routing (pipewire)
-    slurp # select a compositor region to stdout
     shotman # screenshotting
+    slurp # select a compositor region to stdout
     wdisplays # gui for display configuration
     wev # wayland event viewer
     wl-clipboard # pipe to/from clipboard
     wlclock # old skool analogue
-    xorg.xset # used by vlc via xdg-screensaver to manage screensaver timeouts
+    xset # used by vlc via xdg-screensaver to manage screensaver timeouts
   ];
 
   wayland.windowManager.sway = {
@@ -289,6 +289,7 @@ in
     extraConfig = ''
       bindswitch --reload --locked lid:on output ${laptop.screen} disable
       bindswitch --reload --locked lid:off output ${laptop.screen} enable
+      include /etc/sway/config.d/*
     '';
   };
 
