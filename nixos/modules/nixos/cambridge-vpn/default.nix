@@ -23,7 +23,8 @@ in
         keyingtries = "1";
       };
 
-      # https://tokens.uis.cam.ac.uk/
+      # Setup instructions: https://help.uis.cam.ac.uk/service/network-services/remote-access/uis-vpn/ubuntu2004
+      # Password from https://tokens.uis.cam.ac.uk/
       connections.UCAM = {
         left = "%any";
         leftid = "${crsid}+${hostname}_ucamvpn@cam.ac.uk";
@@ -32,9 +33,7 @@ in
         leftfirewall = "yes";
         right = "vpn.uis.cam.ac.uk";
         rightid = ''"CN=vpn.uis.cam.ac.uk"'';
-        # from
-        # https://help.uis.cam.ac.uk/service/network-services/remote-access/uis-vpn/ubuntu1604
-        rightcert = "${./cambridge-vpn-2022.crt}";
+        rightca = ''"C=US, O=Internet Security Research Group, CN=ISRG Root X1"'';
         rightsubnet = "0.0.0.0/0";
         auto = "add";
       };
@@ -72,7 +71,7 @@ in
 
       ca.CUCL = {
         auto = "add";
-        cacert = "${./cambridge-cl-vpn-2023.pem}";
+        cacert = "${./isrgrootx1.pem}";
       };
     };
   };
