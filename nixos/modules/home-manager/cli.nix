@@ -31,7 +31,7 @@
         lsof # list open file handles
         lynx # cli web browser
         mupdf # PDF manipulation
-        nh
+        nh # better, integrated, nix cli
         offlineimap # download emails
         pandoc # document processing and conversion
         pass # password manager

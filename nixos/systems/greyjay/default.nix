@@ -11,14 +11,35 @@ let
   root_partition = "/dev/disk/by-uuid/c3cc9248-ade1-4b94-9e6e-d50990171471";
   username = "mort";
 
+  # 2026-02-??: fails to load for some reason
   wireplumber_0_5_12_pkgs = import (builtins.fetchTree {
     type = "github";
     owner = "nixos";
     repo = "nixpkgs";
     rev = "871b9fd269ff6246794583ce4ee1031e1da71895";
-    # ...via https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=firefox
+    # ...via https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable
   }) { inherit (pkgs) system; };
   wireplumber_0_5_12 = wireplumber_0_5_12_pkgs.wireplumber;
+
+  # 2026-03-17: out of disk space when building `unstable` -- but 2.7.10 (latest) seems fine?!
+  teams_for_linux_2_7_10_pkgs = import (builtins.fetchTree {
+    type = "github";
+    owner = "nixos";
+    repo = "nixpkgs";
+    rev = "0429819150b575535d789f79f694922c8ca7fd4a";
+    # ...via https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable
+  }) { inherit (pkgs) system; };
+  teams_for_linux_2_7_10 = teams_for_linux_2_7_10_pkgs.teams-for-linux;
+
+  # 2026-03-17: swayosd libinput backend appears to need secpol update
+  swayosd_0_2_1_pkgs = import (builtins.fetchTree {
+    type = "github";
+    owner = "nixos";
+    repo = "nixpkgs";
+    rev = "5fce2b655ae7d13590981f16ea7237488779ac08";
+    # ...via https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable
+  }) { inherit (pkgs) system; };
+  swayosd_0_2_1 = swayosd_0_2_1_pkgs.swayosd;
 
   coreutils-full-name =
     "coreuutils-full"
@@ -86,7 +107,7 @@ in
 
   home-manager = {
     # backupFileExtension = "backup"; # disable: better to see the failure
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs teams_for_linux_2_7_10 swayosd_0_2_1; };
     users.${username} = import ../../home-manager/${hostname};
   };
 
@@ -164,16 +185,22 @@ in
   };
 
   # mount home and swap
-  fileSystems = {
-    "/mnt/home-desktop" = {
-      device = "//desktop-bqgpfcm/14mor/";
-      fsType = "cifs";
-      options =
-        let
-          automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users";
-        in
-        [ "${automount_opts},credentials=/etc/secrets/smb.secrets,uid=1000,gid=100" ];
-    };
+  fileSystems."/mnt/home-desktop" = {
+    device = "//desktop-bqgpfcm/14mor/";
+    fsType = "cifs";
+    options = [
+      "x-systemd.automount"
+      "noauto"
+
+      "x-systemd.idle-timeout=60"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.mount-timeout=5s"
+      "user"
+      "users"
+      "credentials=/etc/secrets/smb.secrets"
+      "uid=1000"
+      "gid=100"
+    ];
   };
 
   swapDevices = [ { device = "/dev/mapper/vg0-nixos--swap"; } ];

@@ -70,9 +70,12 @@
 
     jujutsu = {
       enable = true;
-      settings.user = {
-        email = "mort@cantab.net";
-        name = "Richard Mortier";
+      settings = {
+        user = {
+          email = "mort@cantab.net";
+          name = "Richard Mortier";
+        };
+        ui.default-command = "log";
       };
     };
 
