@@ -11,30 +11,34 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }@inputs:
+    inputs:
+    # { nixpkgs, home-manager, ... }@inputs:
     {
       nixosConfigurations = {
-        greyjay = nixpkgs.lib.nixosSystem {
+        greyjay = inputs.nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
-          modules = [ ./systems/greyjay ];
+          modules = [
+            ./systems/greyjay
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
+          ];
         };
       };
 
       homeConfigurations = {
-        "mort@greyjay" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        "mort@greyjay" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs; };
           modules = [ ./home-manager/greyjay ];
         };
 
-        "rmm1002@binky" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        "rmm1002@binky" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs; };
           modules = [ ./home-manager/binky ];
         };
 
-        "rmm1002@quoth" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        "rmm1002@quoth" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs; };
           modules = [ ./home-manager/quoth ];
         };
