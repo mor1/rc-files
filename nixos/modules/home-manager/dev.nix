@@ -66,7 +66,10 @@
     ++ python_tools;
 
   programs = {
-    git.enable = true;
+    git = {
+      enable = true;
+      signing.format = null;
+    };
 
     jujutsu = {
       enable = true;

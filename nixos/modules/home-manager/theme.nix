@@ -29,6 +29,7 @@ in
       package = cursor.package;
       size = cursor.size;
     };
+    gtk4.theme = null;
   };
 
 }
