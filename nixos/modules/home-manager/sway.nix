@@ -269,8 +269,8 @@ in
           "${modifier}+Shift+p" = "exec shotman --capture region";
           "${modifier}+Ctrl+p" = "exec shotman --capture output";
 
-          "${modifier}+less" = "move workspace to output left";
-          "${modifier}+greater" = "move workspace to output right";
+          "${modifier}+less" = "move workspace to output down";
+          "${modifier}+greater" = "move workspace to output up";
         };
 
       # status bars using i3status-rust
