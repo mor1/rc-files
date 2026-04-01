@@ -17,7 +17,6 @@
         signal-desktop # signal private messaging
         slack # slack
         teams_for_linux_2_7_10 # teams-for-linux # ms teams in electron
-        thunderbird # outlook but not cloud based
         zoom-us # zoom vc
       ];
 
@@ -149,6 +148,12 @@
           light_white = "#fdf6e3";
         };
       };
+    };
+
+    thunderbird = {
+      enable = true;
+      package = pkgs.thunderbird-bin;
+      profiles = { };
     };
   };
 }
