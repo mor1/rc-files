@@ -140,6 +140,7 @@ in
             wait_for firefox -P 14mortier@gmail.com
             wait_for firefox -P rmm1002@cam.ac.uk
             wait_for teams-for-linux
+            wait_for thunderbird
             ${after 3 [ "layout stacking" ]}
 
             ${workspace "${chatws}"}
