@@ -38,7 +38,9 @@
         basedpyright
         python313
         ruff
+        ty
         uv
+        zuban
       ]
       ++ (with python313Packages; [
         pygments
