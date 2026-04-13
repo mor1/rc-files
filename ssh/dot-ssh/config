@@ -35,6 +35,11 @@ Host gitlab.developers.cam.ac.uk
 
 ## other
 
+Host srcf.net
+  User rmm1002
+  Hostname shell.srcf.net
+  IdentityFile ~/.ssh/bitbucket-key-rsa
+
 Host github.com
   User git
   HostName ssh.github.com
