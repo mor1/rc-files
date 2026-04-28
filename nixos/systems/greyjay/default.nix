@@ -11,36 +11,6 @@ let
   root_partition = "/dev/disk/by-uuid/c3cc9248-ade1-4b94-9e6e-d50990171471";
   username = "mort";
 
-  # 2026-02-??: fails to load for some reason
-  wireplumber_0_5_12_pkgs = import (builtins.fetchTree {
-    type = "github";
-    owner = "nixos";
-    repo = "nixpkgs";
-    rev = "871b9fd269ff6246794583ce4ee1031e1da71895";
-    # ...via https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable
-  }) { inherit (pkgs) system; };
-  wireplumber_0_5_12 = wireplumber_0_5_12_pkgs.wireplumber;
-
-  # 2026-03-17: out of disk space when building `unstable` -- but 2.7.10 (latest) seems fine?!
-  teams_for_linux_2_7_10_pkgs = import (builtins.fetchTree {
-    type = "github";
-    owner = "nixos";
-    repo = "nixpkgs";
-    rev = "0429819150b575535d789f79f694922c8ca7fd4a";
-    # ...via https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable
-  }) { inherit (pkgs) system; };
-  teams_for_linux_2_7_10 = teams_for_linux_2_7_10_pkgs.teams-for-linux;
-
-  # 2026-03-17: swayosd libinput backend appears to need secpol update
-  swayosd_0_2_1_pkgs = import (builtins.fetchTree {
-    type = "github";
-    owner = "nixos";
-    repo = "nixpkgs";
-    rev = "5fce2b655ae7d13590981f16ea7237488779ac08";
-    # ...via https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable
-  }) { inherit (pkgs) system; };
-  swayosd_0_2_1 = swayosd_0_2_1_pkgs.swayosd;
-
   coreutils-full-name =
     "coreuutils-full"
     + builtins.concatStringsSep "" (
@@ -107,7 +77,6 @@ in
 
   home-manager = {
     # backupFileExtension = "backup"; # disable: better to see the failure
-    extraSpecialArgs = { inherit inputs teams_for_linux_2_7_10 swayosd_0_2_1; };
     users.${username} = import ../../home-manager/${hostname};
   };
 
@@ -122,6 +91,7 @@ in
     settings = {
       auto-optimise-store = true;
       download-buffer-size = 128 * 1024 * 1024;
+      trusted-users = [ "@wheel" ];
     };
     gc.automatic = true;
   };
@@ -157,11 +127,14 @@ in
   };
 
   boot = {
-    initrd.luks.devices = {
-      cryptroot = {
-        device = "${root_partition}";
-        preLVM = true;
-        allowDiscards = true;
+    initrd = {
+      systemd.enable = true;
+      luks.devices = {
+        cryptroot = {
+          device = "${root_partition}";
+          preLVM = true;
+          allowDiscards = true;
+        };
       };
     };
 
@@ -170,7 +143,7 @@ in
       systemd-boot = {
         enable = true;
         configurationLimit = 10;
-        consoleMode = "1";
+        consoleMode = "auto";
         memtest86.enable = true;
         # windows = {
         #   "10" = {
@@ -239,10 +212,7 @@ in
     jack.enable = true;
     pulse.enable = true;
     raopOpenFirewall = true;
-    wireplumber = {
-      enable = true;
-      package = wireplumber_0_5_12;
-    };
+    wireplumber.enable = true;
   };
 
   # system services
@@ -389,6 +359,7 @@ in
       extraGroups = [
         "audio"
         "docker"
+        "input"
         "lpadmin"
         "networkmanager"
         "video"
@@ -421,7 +392,7 @@ in
 
   security = {
     # auditing
-    auditd.enable = true;
+    auditd.enable = false;
 
     # kerberos for cambridge
     krb5.settings.config = ''

@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  swayosd_0_2_1,
-  ...
-}:
+{ pkgs, lib, ... }:
 let
   background = "/home/mort/rc-files/floatlg.jpg";
   homews = "1";
@@ -446,10 +441,7 @@ in
         };
       };
 
-    swayosd = {
-      enable = true;
-      package = swayosd_0_2_1;
-    };
+    swayosd.enable = true;
   };
 
   programs = {

@@ -1,4 +1,4 @@
-{ pkgs, teams_for_linux_2_7_10, ... }:
+{ pkgs, ... }:
 {
   imports = [ ./sway.nix ];
 
@@ -16,7 +16,7 @@
       messaging = [
         signal-desktop # signal private messaging
         slack # slack
-        teams_for_linux_2_7_10 # teams-for-linux # ms teams in electron
+        teams-for-linux # ms teams in electron
         zoom-us # zoom vc
       ];
 
