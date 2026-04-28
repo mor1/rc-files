@@ -67,6 +67,7 @@
         delta # better syntax highlighting diff
         dotter # manage dotfiles by copying via a config.toml
         dua # disk usage, interactively
+        dysk # prettier `mount` listing
         eza # improved `ls`
         fd # `find` replacement
         fend # better CLI calculator

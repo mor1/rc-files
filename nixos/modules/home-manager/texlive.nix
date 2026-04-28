@@ -87,6 +87,7 @@
             iftex
             jknapltx
             latexmk
+            lineno
             listings
             lkproof
             llncs
@@ -142,6 +143,7 @@
             transparent
             ulem
             unicode-math
+            units
             upquote
             varwidth
             was

@@ -142,9 +142,13 @@ in
             wait_for slack
             ${after 1 [ "split horizontal" ]}
 
+            wait_for whatsapp-electron
+
             # some signal weirdness prevents the window appearing until a second
             # copy is run, and immediately exits on detecting it's the second instance
             wait_for "signal-desktop & sleep 3 && signal-desktop"
+
+            ${after 3 [ "layout stacking" ]}
 
             ${workspace "${homews}"}
             wait_for emacsclient -c -s /tmp/emacs-mort/server

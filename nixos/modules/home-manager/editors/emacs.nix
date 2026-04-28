@@ -5,7 +5,7 @@
     enable = true;
     package = pkgs.emacs-gtk;
     extraPackages =
-      epkgs: with epkgs; ([
+      epkgs: with epkgs; [
         corfu
         jinx
         lsp-bridge
@@ -15,6 +15,7 @@
         tree-sitter-langs
         (treesit-grammars.with-grammars (p: [
           p.tree-sitter-bash
+          p.tree-sitter-bibtex
           p.tree-sitter-dockerfile
           p.tree-sitter-elisp
           p.tree-sitter-markdown
@@ -27,7 +28,7 @@
           p.tree-sitter-typst
           p.tree-sitter-yaml
         ]))
-      ]);
+      ];
   };
   services.emacs.enable = true;
 }

@@ -17,6 +17,7 @@
         signal-desktop # signal private messaging
         slack # slack
         teams-for-linux # ms teams in electron
+        whatsapp-electron # i finally gave in because others insisted on it
         zoom-us # zoom vc
       ];
 
