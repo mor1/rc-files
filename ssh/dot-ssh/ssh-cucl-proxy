@@ -4,6 +4,11 @@
 #
 # Use bash `/dev/tcp` magic to setup a transparent tunnel.
 
+if [[ $SSH_CUCL_PROXY_DEBUG == "true" ]]; then
+  set -xv
+  PS4='$LINENO: '
+fi
+
 cucl_local=false
 while read IP; do
   echo "=== $IP"
@@ -16,10 +21,16 @@ if [[ $cucl_local == false ]]; then
   sudo ipsec up CUCL
 fi
 
-exec 33<>/dev/tcp/$1/$2
-cat <&33 & pid=$!
-cat >&33
-kill $pid
+# XXX failing with core-uutils `cat`; try `nc` instead
+# cat=/run/current-system/sw/bin/cat
+# exec 3<> /dev/tcp/$1/$2
+# $cat <&3 &
+# pid=$!
+# echo "PID=$pid"
+# $cat >&3
+# kill $pid
+
+nc $1 $2
 
 if [[ $cucl_local == false ]]; then
   sudo ipsec down CUCL
