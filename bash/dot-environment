@@ -66,6 +66,9 @@ umask 0002
 shopt -s checkwinsize
 shopt -s extglob
 
+# XXX would prefer not to alias eg `cat = bat` for `command_not_found_handler` but can't
+# see how to detect when environment is being setup inside a shell function vs
+# interactive shell
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
 
 #

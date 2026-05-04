@@ -1,4 +1,4 @@
-if $NIX ; then
+if $NIX; then
   alias cat="bat"
   alias id="[ -x /usr/bin/id ] && /usr/bin/id || id"
   alias less="bat"
@@ -7,7 +7,7 @@ if $NIX ; then
   alias xd="hexyl"
 fi
 
-if $NIXOS ; then
+if $NIXOS; then
   alias bigclock='nix-shell -p wlclock --run "wlclock --border-size 1 --corner-radius 10 --hand-width 11 --marking-width 3 --size 450 --position bottom-left"'
   alias clock='nix-shell -p wlclock --run "wlclock --border-size 1 --corner-radius 10 --hand-width 8 --marking-width 3 --size 200 --position bottom-left"'
   alias ho="handlr open"
@@ -25,4 +25,5 @@ alias dif="git diff --minimal --no-index" # | xargs bat --diff"
 alias dift="git diff --name-only --relative -- | xargs bat --diff"
 alias difw="git dfw --minimal --no-index --"
 alias htop="htop -sPERCENT_CPU"
+alias olclone="echo sh -c git clone https://git.overleaf.com/$1 $2"
 alias reset="\reset -i ^C"
