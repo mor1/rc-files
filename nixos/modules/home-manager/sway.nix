@@ -505,7 +505,7 @@ in
               }
               {
                 block = "memory";
-                format = " $icon $mem_used.eng(w:2,u:B,p:Mi)/$mem_total.eng(w:2,u:B,p:Mi)($mem_used_percents.eng(w:2)) [$swap_used_percents.eng(w:2,range:1..)] ";
+                format = " $icon $mem_used.eng(w:2,u:B,p:Mi)/$mem_total.eng(w:2,u:B,p:Mi)($mem_used_percents.eng(w:2)) [$swap_used_percents.eng(w:2)] ";
                 format_alt = " $icon_swap $swap_used.eng(w:2,u:B,p:Mi)/$swap_total.eng(w:2,u:B,p:Mi)($swap_used_percents.eng(w:2)) [$mem_used_percents.eng(w:2,range:1..)] ";
                 interval = 30;
               }
