@@ -505,8 +505,9 @@ in
               }
               {
                 block = "memory";
-                # format = "$icon$mem_used_percents [$swap_used_percents]"; # XXX swap_used_percents returning NaN fails to render
-                format = " $icon$mem_used.eng(prefix:Mi)/$mem_total.eng(prefix:Mi)($mem_used_percents.eng(w:2))";
+                format = " $icon $mem_used.eng(w:2,u:B,p:Mi)/$mem_total.eng(w:2,u:B,p:Mi)($mem_used_percents.eng(w:2)) [$swap_used_percents.eng(w:2,range:1..)] ";
+                format_alt = " $icon_swap $swap_used.eng(w:2,u:B,p:Mi)/$swap_total.eng(w:2,u:B,p:Mi)($swap_used_percents.eng(w:2)) [$mem_used_percents.eng(w:2,range:1..)] ";
+                interval = 30;
               }
               {
                 block = "cpu";
