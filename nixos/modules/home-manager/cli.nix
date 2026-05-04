@@ -71,6 +71,7 @@
         eza # improved `ls`
         fd # `find` replacement
         fend # better CLI calculator
+        glances # another better `top`, at a glance
         hexyl # hex pretty printer
         htop # graphical top
         iotop # io top
