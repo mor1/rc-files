@@ -9,6 +9,7 @@
     debug = !GIT_PAGER= gdb --args git
     df = diff --word-diff=color
     dfw = diff -R --color
+    force = push --force-with-lease --force-if-includes
     human = "name-rev --refs=refs/heads/* --stdin"
     ignore-unknown = status -s | grep "^?? " | cut -f 2 -d " " >> .gitignore
     l = log --all --decorate=full
