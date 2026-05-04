@@ -10,7 +10,7 @@
         keybase-gui # keybase
         # kiorg # https://github.com/houqp/kiorg, not yet packaged
         libreoffice # ~ms office
-        nautilus # maybe the least sucky of the file managers, so far?
+        nemo-with-extensions # nautilus but for cinnamon; better?
       ];
 
       messaging = [
@@ -60,6 +60,12 @@
             }) tgts
           );
 
+        filemgr = "nemo.desktop";
+        files = [
+          "inode/directory"
+          "application/x-gnome-saved-search"
+        ];
+
         imgapp = "imv.desktop";
         imgs = [
           "image/jpeg"
@@ -91,6 +97,7 @@
       {
         "x-scheme-handler/msteams" = [ "teams-for-linux.desktop" ];
       }
+      // targets filemgr files
       // targets imgapp imgs
       // targets pdfapp pdfs
       // targets webapp webs;
