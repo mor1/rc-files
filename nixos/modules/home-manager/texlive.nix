@@ -41,6 +41,7 @@
             algpseudocodex
             amsmath
             appendix
+            arydshln
             bbding
             beamer
             biblatex
@@ -76,6 +77,7 @@
             fontawesome5
             fontspec
             footmisc
+            forest
             glossaries
             graphics
             hypdoc
@@ -109,6 +111,7 @@
             pdfpages
             pdfxup
             pgf
+            pgf-pie
             pgfgantt
             pgfplots
             preprint
