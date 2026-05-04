@@ -29,8 +29,8 @@
 %% fonts
 \usepackage{fontspec}
 \renewcommand{\familydefault}{\rmdefault}
-\setmainfont{Georgia}
-\setmonofont{Hack Nerd Font}
+\setmainfont{Atkinson Hyperlegible Next}
+\setmonofont{Atkinson Hyperlegible Mono}[Scale=0.9]
 
 %% geometry
 \pagestyle{plain}
@@ -112,7 +112,7 @@ $endif$
 }
 
 \newcommand{\ComputerLaboratory}{
-  \fontsize{8.5pt}{10pt}\bf Dept of Computer Science \& Technology
+  \fontsize{9.3pt}{11pt}\bf Dept of Computer Science \& Technology
 }
 
 \newcommand{\titledetails}{}
