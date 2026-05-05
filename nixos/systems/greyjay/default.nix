@@ -99,7 +99,6 @@ in
   # system packages
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "memtest86-efi" ];
   security.polkit.enable = true;
-  services.udisks2.enable = true;
   environment = {
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -263,60 +262,6 @@ in
         User rmm1002
       '';
     };
-
-    # automount USB storage devices on plugin
-    udev.extraRules = ''
-      ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", \
-        ENV{ID_FS_USAGE}=="filesystem", \
-        RUN{program}+= "${pkgs.systemd}/bin/systemd-mount --no-block -AG $devnode"
-    '';
-
-    # backups
-    restic = {
-      backups =
-        let
-          backup = target: {
-            initialize = false;
-            repository = "local:/run/media/system/backup-${target}";
-            passwordFile = "/etc/secrets/restic-password-backup-${target}";
-            user = "root";
-
-            timerConfig = {
-              OnCalendar = "hourly";
-              Persistent = true;
-            };
-
-            paths = [
-              "/home/mort"
-              "/var/lib/NetworkManager"
-              "/etc"
-              "/etc/secrets"
-            ];
-
-            exclude = [
-              "/home/**/.venv/"
-              "/home/**/__pycache__"
-              "/home/**/node_modules/"
-              "/home/**/target/"
-              "/home/**/vendor/"
-              "/home/*/.cache"
-              "/home/*/.cargo"
-              "/home/*/.local/share/Trash"
-              "/home/*/.local/share/containers"
-              "/home/*/.mozilla"
-              "/home/*/.npm"
-              "/home/*/Downloads"
-              "/home/mort/keybase"
-              "/home/mort/l/"
-            ];
-          };
-        in
-        {
-          backup-home = backup "home";
-          backup-christs = backup "christs";
-          backup-wgb = backup "wgb";
-        };
-    };
   };
 
   # system applications
@@ -341,41 +286,107 @@ in
   };
 
   # setup users
+  users = {
+    users = {
+      root = {
+        extraGroups = [ "wheel" ];
+      };
+
+      mort = {
+        isNormalUser = true;
+        extraGroups = [
+          "audio"
+          "docker"
+          "input"
+          "lpadmin"
+          "networkmanager"
+          "video"
+          "wheel"
+          "wireshark"
+        ];
+      };
+
+      # run restic backups not as root; https://nixos.wiki/wiki/Restic
+      restic = {
+        group = "restic";
+        isSystemUser = true;
+      };
+    };
+    groups = {
+      restic = { };
+      lpadmin = { };
+    };
+  };
+
+  # automount USB storage devices on plugin
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", \
+      ENV{ID_FS_USAGE}=="filesystem", \
+      RUN{program}+= "${pkgs.systemd}/bin/systemd-mount --no-block -AG $devnode"
+  '';
+  services.udisks2.enable = true;
+
+  # backups
+  security.wrappers.restic = {
+    source = lib.getExe pkgs.restic;
+    owner = "restic";
+    group = "restic";
+    permissions = "u=rx,g=,o=";
+    capabilities = "cap_dac_read_search=+ep";
+  };
+  services.restic = {
+    backups =
+      let
+        backup = target: {
+          initialize = false;
+          repository = "local:/run/media/system/backup-${target}/RESTIC";
+          passwordFile = "/etc/secrets/restic-password-backup-${target}";
+          user = "restic";
+          package = pkgs.writeShellScriptBin "restic" ''
+            exec /run/wrappers/bin/restic "$@"
+          '';
+
+          timerConfig = {
+            OnCalendar = "hourly";
+            Persistent = true;
+          };
+
+          paths = [
+            "/home/mort"
+            "/var/lib/NetworkManager"
+            "/etc"
+            "/etc/secrets"
+          ];
+
+          exclude = [
+            "/home/**/.venv/"
+            "/home/**/__pycache__"
+            "/home/**/node_modules/"
+            "/home/**/target/"
+            "/home/**/vendor/"
+            "/home/*/.cache"
+            "/home/*/.cargo"
+            "/home/*/.local/share/Trash"
+            "/home/*/.local/share/containers"
+            "/home/*/.mozilla"
+            "/home/*/.npm"
+            "/home/*/Downloads"
+            "/home/mort/keybase"
+            "/home/mort/l/"
+          ];
+        };
+      in
+      {
+        backup-home = backup "home";
+        backup-christs = backup "christs";
+        backup-wgb = backup "wgb";
+      };
+  };
+
+  # printing
   services.printing.extraFilesConf = ''
     SystemGroup root wheel lpadmin
   '';
-  users.groups = {
-    lpadmin = { };
-  };
-  users.users = {
-    root = {
-      extraGroups = [ "wheel" ];
-    };
-
-    mort = {
-      isNormalUser = true;
-      extraGroups = [
-        "audio"
-        "docker"
-        "input"
-        "lpadmin"
-        "networkmanager"
-        "video"
-        "wheel"
-        "wireshark"
-      ];
-    };
-  };
-
-  # restic backups not as root; https://nixos.wiki/wiki/Restic
-  # users.users.restic.isNormalUser = true;
-  # security.wrappers.restic = {
-  #   source = "${pkgs.restic.out}/bin/restic";
-  #   owner = "restic";
-  #   group = "users";
-  #   permissions = "u=rwx,g=,o=";
-  #   capabilities = "cap_dac_read_search=+ep";
-  # };
 
   # docker
   virtualisation.docker = {
