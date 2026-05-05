@@ -176,8 +176,6 @@ in
     ];
   };
 
-  swapDevices = [ { device = "/dev/mapper/vg0-nixos--swap"; } ];
-
   # networking, plus UCAM timeservers
   networking = {
     hostName = "${hostname}";
