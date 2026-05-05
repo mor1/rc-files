@@ -513,6 +513,7 @@ in
                 format = "[$1m]";
                 interval = 1;
               }
+              { block = "backlight"; }
               {
                 block = "sound";
                 headphones_indicator = true;
@@ -569,7 +570,6 @@ in
               alert = 10.0;
               alert_unit = "GB";
             }
-            { block = "backlight"; }
           ];
         };
       };
