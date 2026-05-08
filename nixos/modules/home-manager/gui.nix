@@ -43,7 +43,7 @@
 
       themes = [ foot.themes ];
     in
-    files ++ messaging ++ media ++ fonts ++ themes;
+    fonts ++ files ++ messaging ++ media ++ themes;
 
   fonts.fontconfig.enable = true;
 
