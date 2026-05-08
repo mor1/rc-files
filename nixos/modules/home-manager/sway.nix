@@ -66,6 +66,7 @@ let
     style = "Medium";
     size = 8.0;
   };
+  swaylock = "${pkgs.swaylock}/bin/swaylock -C ~/.config/swaylock/config";
 in
 {
   imports = [ ./theme.nix ];
@@ -87,7 +88,6 @@ in
   wayland.windowManager.sway =
     let
       modifier = "Mod4";
-      swaylock = "${pkgs.swaylock}/bin/swaylock -C ~/.config/swaylock/config";
     in
     {
       enable = true;
