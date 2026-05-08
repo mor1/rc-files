@@ -493,7 +493,7 @@ in
             [
               {
                 block = "battery";
-                format = " $icon $percentage {$time |}";
+                format = " $icon $percentage {$time_remaining |}";
                 charging_format = " $icon $percentage ";
                 full_format = " $icon $percentage {$time |}";
               }
