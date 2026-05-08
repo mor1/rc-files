@@ -243,7 +243,7 @@ fi
 [[ $(which just 2> /dev/null) ]] && source <(just --completions bash)
 [[ $(which maestral 2> /dev/null) ]] && source <(maestral completion bash)
 # following store path from `$(nix eval --offline --raw nixpkgs#nix-index)`
-NIX_INDEX=/nix/store/bkxsngkkriq1z4h25s1l3r3pd1y6a9qr-nix-index-0.1.9-unstable-2026-02-05
+NIX_INDEX=/nix/store/vbb340a5czm0hsm0f9fb2lijzbqsgr2w-nix-index-0.1.10
 [[ $(which nix-index 2> /dev/null) ]] && source ${NIX_INDEX}/etc/profile.d/command-not-found.sh
 [[ $(which procs 2> /dev/null) ]] && source <(procs --gen-completion-out bash)
 [[ $(which restic 2> /dev/null) ]] && source <(restic generate --bash-completion -)
