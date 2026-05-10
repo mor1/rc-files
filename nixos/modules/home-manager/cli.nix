@@ -104,6 +104,11 @@
       nix-direnv.enable = true;
     };
 
+    fzf = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+
     lf = {
       enable = false;
 
