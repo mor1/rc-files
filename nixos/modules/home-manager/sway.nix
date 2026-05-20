@@ -516,7 +516,10 @@ in
                 block = "sound";
                 headphones_indicator = true;
               }
-              { block = "music"; }
+              {
+                block = "music";
+                separator = " ―"; # ⁓"
+              }
               {
                 block = "custom";
                 format = "{ $icon|} $text.pango-str()";
