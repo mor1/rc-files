@@ -18,7 +18,7 @@
 [ -r ~/rc-files/scripts/envfns.sh ] && source ~/rc-files/scripts/envfns.sh
 
 #
-# paths
+# paths for Nix / non-Nix setups
 #
 
 unset PATH
@@ -57,45 +57,6 @@ aenv MANPATH /usr/X11R6/man
 
 aenv PATH ~/.local/bin
 aenv MANPATH ~/.local/man
-
-#
-# bash settings
-#
-
-umask 0002
-shopt -s checkwinsize
-shopt -s extglob
-
-# XXX would prefer not to alias eg `cat = bat` for `command_not_found_handler` but can't
-# see how to detect when environment is being setup inside a shell function vs
-# interactive shell
-[ -r ~/.bash_aliases ] && source ~/.bash_aliases
-
-#
-# bash history
-#
-
-export command_oriented_history=TRUE # multi-line commands become single line
-export notify=TRUE                   # support notifications
-
-export HISTIGNORE="&:l?([sl])?(a):[bf]g:exit:[ \t]:history"
-export HISTCONTROL=ignoreboth:erasedups
-export HISTSIZE=10000
-export HISTFILESIZE=10000
-export HISTCONTROL=ignoreboth
-
-## https://unix.stackexchange.com/questions/1288/preserve-bash-history-in-multiple-terminal-windows/48116#48116
-_bash_history_sync() {
-  builtin history -a     # append last command to HISTFILE
-  HISTFILESIZE=$HISTSIZE # truncate HISTFILE to HISTSIZE
-  builtin history -c     # clear the current session
-  builtin history -r     # read the history
-}
-history() { # ensure history synced before display
-  _bash_history_sync
-  builtin history "$@"
-}
-# PROMPT_COMMAND=_bash_history_sync
 
 #
 # bash prompt
@@ -159,6 +120,14 @@ export LESSCHARSET
 GPG_TTY=$(tty)
 export GPG_TTY
 
+case ${LHOST#*.} in
+
+  cl.cam.ac.uk)
+    aenv PATH /usr/kerberos/bin
+    ;;
+
+esac
+
 #
 # platform specific configuration
 #
@@ -207,18 +176,45 @@ case $PLATFORM in
 esac
 
 #
-# host specific configuration
+# bash
 #
 
-case ${LHOST#*.} in
+umask 0002
+shopt -s checkwinsize
+shopt -s extglob
 
-  cl.cam.ac.uk)
-    aenv PATH /usr/kerberos/bin
-    ;;
+# XXX would prefer not to alias eg `cat = bat` for `command_not_found_handler` but can't
+# see how to detect when environment is being setup inside a shell function vs
+# interactive shell
+[ -r ~/.bash_aliases ] && source ~/.bash_aliases
 
-esac
+#
+# bash: history
+#
 
-## my shell functions
+export command_oriented_history=TRUE # multi-line commands become single line
+export notify=TRUE                   # support notifications
+
+export HISTIGNORE="&:l?([sl])?(a):[bf]g:exit:[ \t]:history"
+export HISTCONTROL=ignoreboth:erasedups
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+export HISTCONTROL=ignoreboth
+
+## https://unix.stackexchange.com/questions/1288/preserve-bash-history-in-multiple-terminal-windows/48116#48116
+_bash_history_sync() {
+  builtin history -a     # append last command to HISTFILE
+  HISTFILESIZE=$HISTSIZE # truncate HISTFILE to HISTSIZE
+  builtin history -c     # clear the current session
+  builtin history -r     # read the history
+}
+history() { # ensure history synced before display
+  _bash_history_sync
+  builtin history "$@"
+}
+
+
+## load my shell functions
 [ -r ~/rc-files/scripts/filefns.sh ] && source ~/rc-files/scripts/filefns.sh
 [ -r ~/rc-files/scripts/hosts.sh ] && source ~/rc-files/scripts/hosts.sh
 [ -r ~/src/dockerfiles/dockerfns.sh ] && source ~/src/dockerfiles/dockerfns.sh
