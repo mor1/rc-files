@@ -304,6 +304,7 @@ fi
   direnv reload
 }
 [[ $(which fzf 2> /dev/null) ]] && source <(fzf --bash)
+[[ $(which jj 2> /dev/null) ]] && source <(jj util completion bash)
 [[ $(which just 2> /dev/null) ]] && source <(just --completions bash)
 [[ $(which maestral 2> /dev/null) ]] && source <(maestral completion bash)
 # following store path from `$(nix eval --offline --raw nixpkgs#nix-index)`
