@@ -9,6 +9,14 @@ Host tfc-app9.cl
   User mort
   IdentityFile ~/.ssh/bitbucket-key-rsa
 
+Host rats fleas
+  User rmm1002 # mort
+  HostName %h.sm.cl.cam.ac.uk
+  IdentityFile ~/.ssh/bitbucket-key-rsa
+  ProxyCommand ~/.ssh/ssh-cucl-proxy %h %p
+  GSSAPIAuthentication yes
+  GSSAPIDelegateCredentials yes
+
 Host *.cl
   User rmm1002
   HostName %h.cam.ac.uk
