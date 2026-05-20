@@ -22,7 +22,7 @@ BCYAN='\e[1;36m'   # Cyan
 BWHITE='\e[1;37m'  # White
 
 # Underline
-UBLACK='\E[4;30M'  # Black
+UBLACK='\e[4;30M'  # Black
 URED='\e[4;31m'    # Red
 UGREEN='\e[4;32m'  # Green
 UYELLOW='\e[4;33m' # Yellow
