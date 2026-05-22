@@ -105,6 +105,7 @@
             ninecolors
             nomencl
             paralist
+            parskip
             pbalance
             pdfcol
             pdflscape

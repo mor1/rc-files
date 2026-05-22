@@ -4,6 +4,7 @@
     gcr
     gnupg
     hunspellDicts.en_GB-large # en.GB
+    localsend # cross-platform airdrop
     maestral # dropbox client
     pciutils
     sshfs # mount remote filesystems over ssh

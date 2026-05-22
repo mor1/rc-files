@@ -7,6 +7,7 @@
     let
       files = [
         czkawka # detect file duplication, empty directories, &c
+        gnome-commander # another possible file manager?
         keybase-gui # keybase
         # kiorg # https://github.com/houqp/kiorg, not yet packaged
         libreoffice # ~ms office
@@ -23,11 +24,13 @@
 
       media = [
         # digikam # photo manager
-        gthumb # image viewing
+        # gthumb # image viewing
         imv # image viewer
         inkscape # vector graphics editing
         musescore # music score editing
+        kdePackages.gwenview # image viewing
         kdePackages.okular # pdf viewer / annotator
+        pympress # pdf presentations
         rhythmbox
         vlc # video player
       ];

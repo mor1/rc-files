@@ -3,7 +3,7 @@
   home.packages = with pkgs; [ emacs-lsp-booster ];
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-gtk;
+    package = pkgs.emacs-pgtk;
     extraPackages =
       epkgs: with epkgs; [
         corfu

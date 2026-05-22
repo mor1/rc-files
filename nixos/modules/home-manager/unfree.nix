@@ -6,6 +6,7 @@
       "aspell-dict-en-science" # additional EN dictionary
       "corefonts" # some fonts
       # "masterpdfeditor4" # edit PDF files
+      "jocalsend" # tui for `localsend`
       "slack" # slack, electron wrapper
       "vista-fonts" # vista-fonts here but vistafonts for install?!
       "zoom" # zoom here but zoom-us for install?!
