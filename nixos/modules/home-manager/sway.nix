@@ -268,6 +268,11 @@ in
 
             "${modifier}+less" = "move workspace to output down";
             "${modifier}+greater" = "move workspace to output up";
+
+            "${modifier}+Ctrl+Down" = "ocus parent, focus down, focus child";
+            "${modifier}+Ctrl+Left" = "focus parent, focus left, focus child";
+            "${modifier}+Ctrl+Right" = "focus parent, focus right, focus child";
+            "${modifier}+Ctrl+Up" = "focus parent, focus up, focus child";
           };
 
         # status bars using i3status-rust
