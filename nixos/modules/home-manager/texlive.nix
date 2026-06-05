@@ -141,6 +141,7 @@
             tikzfill
             tikzmark
             titlesec
+            titling
             todonotes
             totcount
             totpages
