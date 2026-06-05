@@ -194,8 +194,8 @@ in
             f2 = "exec ${swayosd} --max-volume 130 --output-volume lower";
             f3 = "exec ${swayosd} --max-volume 130 --output-volume raise";
             f4 = "exec ${swayosd} --input-volume mute-toggle";
-            f5 = "exec brightnessctl -e s 5%-";
-            f6 = "exec brightnessctl -e s 5%+";
+            f5 = "exec brightnessctl -e s 3%-";
+            f6 = "exec brightnessctl -e s 3%+";
             f7 = "exec ${swaylock}";
             net_toggle = pkgs.writeShellScriptBin "net_toggle.sh" ''
               if [[ $(nmcli n) =~ enabled ]]; then
@@ -260,8 +260,6 @@ in
             "Print" = f12; # also catches PrtSc on thinkpad
 
             ## extras, all keyboards
-            "${modifier}+Shift+l" = "exec ${swaylock}";
-
             "${modifier}+p" = "exec shotman --capture window";
             "${modifier}+Shift+p" = "exec shotman --capture region";
             "${modifier}+Ctrl+p" = "exec shotman --capture output";
@@ -269,7 +267,7 @@ in
             "${modifier}+less" = "move workspace to output down";
             "${modifier}+greater" = "move workspace to output up";
 
-            "${modifier}+Ctrl+Down" = "ocus parent, focus down, focus child";
+            "${modifier}+Ctrl+Down" = "focus parent, focus down, focus child";
             "${modifier}+Ctrl+Left" = "focus parent, focus left, focus child";
             "${modifier}+Ctrl+Right" = "focus parent, focus right, focus child";
             "${modifier}+Ctrl+Up" = "focus parent, focus up, focus child";
