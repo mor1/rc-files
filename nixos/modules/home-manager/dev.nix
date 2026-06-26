@@ -23,10 +23,7 @@
       ];
 
       ocaml_tools = [
-        dune_3
-        gcc
         ocaml
-        ocamlformat
         opam
       ]
       ++ (with ocamlPackages; [

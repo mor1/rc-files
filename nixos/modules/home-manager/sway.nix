@@ -29,12 +29,12 @@ let
   # my offices
   wgb = {
     screen = "LG Electronics LG HDR 4K 0x0005DD99";
-    sink = "alsa_output.usb-Lenovo_ThinkPad_USB-C_Dock_Audio_000000000000-00.analog-stereo";
+    sink = "alsa_output.usb-DisplayLink_ThinkPad_Hybrid_USB-C_with_USB-A_Dock_12235896-02.analog-stereo";
     source = "alsa_input.usb-046d_HD_Pro_Webcam_C920_C18974EF-02.analog-stereo";
   };
   christs = {
     screen = "LG Electronics LG HDR 4K 0x00035DAC";
-    sink = "alsa_output.usb-Lenovo_ThinkPad_USB-C_Dock_Audio_000000000000-00.analog-stereo";
+    sink = "alsa_output.usb-DisplayLink_ThinkPad_Hybrid_USB-C_with_USB-A_Dock_12235896-02.analog-stereo";
     source = "alsa_input.usb-046d_Logitech_Webcam_C925e_8EA2331F-02.analog-stereo";
   };
 
@@ -127,10 +127,10 @@ in
 
               ${workspace "${codews}"}
               wait_for firefox -P github.com
-              # wait_for zeditor
               ${after 3 [ "layout stacking" ]}
 
               ${workspace "${mailws}"}
+              ${workspace_layout tabbed}
               wait_for firefox -P richard.mortier@gmail.com
               wait_for firefox -P 14mortier@gmail.com
               wait_for firefox -P rmm1002@cam.ac.uk

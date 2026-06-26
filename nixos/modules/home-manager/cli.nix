@@ -57,7 +57,7 @@
         # flash # fast inotify replacement, https://github.com/sage-scm/flash/
 
         bat # better cat
-        biff # better date
+        bttf # better date
         bottom # btm ~ better top, htop, etc
         broot # interactive directory navigation
         brush # rusty bash

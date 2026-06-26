@@ -115,6 +115,7 @@
             pgf-pie
             pgfgantt
             pgfplots
+            placeins
             preprint
             ragged2e
             realscripts
