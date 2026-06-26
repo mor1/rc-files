@@ -287,6 +287,21 @@ PROMPT_COMMAND='__prompt_jjgit; _bash_history_sync'
 [ -r ~/src/dockerfiles/dockerfns.sh ] && source ~/src/dockerfiles/dockerfns.sh
 [ -r ~/src/sh-scripts/numfns.sh ] && source ~/src/sh-scripts/numfns.sh
 
+## nix-index
+NIX_INDEX_CONFIG=~/.config/nix-index/config
+[ -r "$NIX_INDEX_CONFIG" ] || {
+  mkdir -p $(dirname "$NIX_INDEX_CONFIG")
+  nix eval --offline --raw nixpkgs#nix-index > "$NIX_INDEX_CONFIG"
+}
+NIX_INDEX=$(< "$NIX_INDEX_CONFIG")
+[ -d "$NIX_INDEX" ] || {
+  nix eval --offline --raw nixpkgs#nix-index >| "$NIX_INDEX_CONFIG"
+}
+NIX_INDEX=$(< "$NIX_INDEX_CONFIG")
+[[ $(which nix-index 2> /dev/null) ]] && {
+  source "$NIX_INDEX/etc/profile.d/command-not-found.sh"
+}
+
 ## OCaml
 if [ -x "$(which opam)" ]; then
   test -r '/home/mort/.opam/opam-init/init.sh' && . '/home/mort/.opam/opam-init/init.sh' > /dev/null 2> /dev/null || true
@@ -307,9 +322,6 @@ fi
 [[ $(which jj 2> /dev/null) ]] && source <(jj util completion bash)
 [[ $(which just 2> /dev/null) ]] && source <(just --completions bash)
 [[ $(which maestral 2> /dev/null) ]] && source <(maestral completion bash)
-# following store path from `$(nix eval --offline --raw nixpkgs#nix-index)`
-NIX_INDEX=/nix/store/wy1fx4nlspny4xrqrcmc0hga1ismdk0a-nix-index-0.1.10
-[[ $(which nix-index 2> /dev/null) ]] && source ${NIX_INDEX}/etc/profile.d/command-not-found.sh
 [[ $(which procs 2> /dev/null) ]] && source <(procs --gen-completion-out bash)
 [[ $(which restic 2> /dev/null) ]] && source <(restic generate --bash-completion -)
 [[ $(which ruff 2> /dev/null) ]] && source <(ruff generate-shell-completion bash)
