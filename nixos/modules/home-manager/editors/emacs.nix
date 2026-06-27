@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.packages = with pkgs; [ emacs-lsp-booster ];
   programs.emacs = {
     enable = true;

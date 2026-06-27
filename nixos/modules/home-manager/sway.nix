@@ -130,7 +130,7 @@ in
               ${after 3 [ "layout stacking" ]}
 
               ${workspace "${mailws}"}
-              ${workspace_layout tabbed}
+              ${msg [ "workspace_layout tabbed" ]}
               wait_for firefox -P richard.mortier@gmail.com
               wait_for firefox -P 14mortier@gmail.com
               wait_for firefox -P rmm1002@cam.ac.uk

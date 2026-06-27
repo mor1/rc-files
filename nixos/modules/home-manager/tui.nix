@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     binsider # analyse and edit ELF binaries
     bluetui # (very simple) bluetooth manager

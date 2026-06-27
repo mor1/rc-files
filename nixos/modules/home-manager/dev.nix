@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.packages =
     with pkgs;
     let
@@ -23,6 +22,7 @@
       ];
 
       ocaml_tools = [
+        gcc
         ocaml
         opam
       ]
