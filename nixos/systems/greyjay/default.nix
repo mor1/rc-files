@@ -202,13 +202,15 @@ in
     enable = true;
     powerOnBoot = true;
   };
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     jack.enable = true;
     pulse.enable = true;
-    raopOpenFirewall = true;
+    # raopOpenFirewall = true;
     wireplumber.enable = true;
   };
 

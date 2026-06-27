@@ -382,7 +382,7 @@ in
               }
             ];
             profile.exec = [
-              "${pactl} set-default-sink ${laptop.sink}"
+              "${pactl} set-default-sink ${christs.sink}"
               "${pactl} set-default-source ${christs.source}"
             ]
             ++ (mwss christs.screen [
