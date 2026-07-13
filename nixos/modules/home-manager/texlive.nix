@@ -89,6 +89,7 @@
             jknapltx
             latexmk
             lineno
+            lipsum
             listings
             lkproof
             llncs
@@ -100,6 +101,7 @@
             natbib
             ncctools
             newtx
+            newunicodechar
             nextpage
             ninecolors
             nomencl
@@ -150,6 +152,7 @@
             unicode-math
             units
             upquote
+            utfsym
             varwidth
             was
             wrapfig
