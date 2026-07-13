@@ -5,10 +5,10 @@
     with pkgs;
     let
       files = [
-        czkawka # detect file duplication, empty directories, &c
+        # kiorg # https://github.com/houqp/kiorg, not yet packaged
+        czkawka # detect file duplication, empty directories, &c; deprecated
         gnome-commander # another possible file manager?
         keybase-gui # keybase
-        # kiorg # https://github.com/houqp/kiorg, not yet packaged
         libreoffice # ~ms office
         nemo-with-extensions # nautilus but for cinnamon; better?
       ];
@@ -26,9 +26,10 @@
         # gthumb # image viewing
         imv # image viewer
         inkscape # vector graphics editing
-        musescore # music score editing
+        kdePackages.elisa # music player
         kdePackages.gwenview # image viewing
         kdePackages.okular # pdf viewer / annotator
+        musescore # music score editing
         pympress # pdf presentations
         rhythmbox
         vlc # video player
@@ -119,7 +120,10 @@
       };
     };
 
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+      # configPath = "~/.config/mozilla/firefox"; # ${config.xdg.configHome
+    };
 
     rio = {
       enable = false;
