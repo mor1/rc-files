@@ -53,10 +53,10 @@ let
     screen = "Panasonic Industry Company Panasonic-TV 0x01010101";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
   };
-  # amp = {
-  #   screen = "ONKYO Corporation TX-SR608 Unknown";
-  #   sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
-  # };
+  amp = {
+    screen = "ONKYO Corporation TX-SR608 Unknown";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+  };
 
   swayfonts = {
     names = [
@@ -123,11 +123,13 @@ in
               }
 
               ${workspace "${mediaws}"}
+              ${after 3 [ "workspace_layout tabbed" ]}
               wait_for "rhythmbox"
+              wait_for "elisa"
 
               ${workspace "${codews}"}
+              ${msg [ "workspace_layout tabbed" ]}
               wait_for firefox -P github.com
-              ${after 3 [ "layout stacking" ]}
 
               ${workspace "${mailws}"}
               ${msg [ "workspace_layout tabbed" ]}
@@ -136,7 +138,6 @@ in
               wait_for firefox -P rmm1002@cam.ac.uk
               wait_for teams-for-linux
               wait_for thunderbird
-              ${after 3 [ "layout stacking" ]}
 
               ${workspace "${chatws}"}
               wait_for slack
@@ -205,10 +206,10 @@ in
               fi
             '';
             f8 = "exec ${net_toggle}/bin/net_toggle.sh";
-            f9 = "exec rhythmbox-client --play-pause";
-            f10 = "exec rhythmbox-client --stop";
-            f11 = "exec rhythmbox-client --previous";
-            f12 = "exec rhythmbox-client --next";
+            f9 = "exec playerctl play-pause";
+            f10 = "exec playerctl stop";
+            f11 = "exec playerctl previous";
+            f12 = "exec playerctl next";
           in
           lib.mkOptionDefault {
             ## bare function keys
@@ -271,6 +272,10 @@ in
             "${modifier}+Ctrl+Left" = "focus parent, focus left, focus child";
             "${modifier}+Ctrl+Right" = "focus parent, focus right, focus child";
             "${modifier}+Ctrl+Up" = "focus parent, focus up, focus child";
+
+            "${modifier}+t" = "workspace tv";
+            "${modifier}+Shift+t" = "move container to workspace tv";
+
           };
 
         # status bars using i3status-rust
@@ -399,6 +404,27 @@ in
           }
 
           {
+            profile.name = "amp";
+            profile.outputs = [
+              {
+                criteria = "${laptop.screen}"; # 3840x2400
+                position = "0,0";
+                scale = 2.0;
+              }
+              {
+                criteria = "${amp.screen}"; # 3840x2160
+                position = "1920,60"; # adjacent, right-hand side, vertically centred
+                scale = 1.0;
+              }
+            ];
+            profile.exec = [
+              "${pactl} set-default-sink ${amp.sink}"
+            ]
+            ++ (mwss amp.screen [ "tv" ])
+            ++ [ ''${sm} "workspace --no-auto-back-and-forth tv"'' ];
+          }
+
+          {
             profile.name = "tv";
             profile.outputs = [
               {
@@ -415,8 +441,8 @@ in
             profile.exec = [
               "${pactl} set-default-sink ${tv.sink}"
             ]
-            ++ (mwss tv.screen [ "10" ])
-            ++ [ ''${sm} "workspace --no-auto-back-and-forth 10"'' ];
+            ++ (mwss tv.screen [ "tv" ])
+            ++ [ ''${sm} "workspace --no-auto-back-and-forth tv"'' ];
           }
         ];
     };

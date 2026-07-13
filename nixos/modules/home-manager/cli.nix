@@ -36,6 +36,7 @@
         pass # password manager
         pdfcpu # `optimize` for PDF optimisation
         pdftk # more PDF manipulation
+        playerctl # CLI control of media players incl. elisa, rhythmbox, vlc
         poppler-utils # pdftotext and friends
         psmisc # process tools
         qpdf # yet more PDF manipulation
