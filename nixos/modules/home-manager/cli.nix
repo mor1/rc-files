@@ -6,6 +6,7 @@
         # headson # https://github.com/kantord/headson
         # kelpsget # https://github.com/davimf721/KelpsGet
         # compendium # strace but better ux
+        # quien # github:retlehs/quien # better whois cli
 
         aria2 # feature rich wget/curl
         cryfs # encrypted filesystem image support
@@ -22,7 +23,7 @@
         html-tidy # tidy HTML
         hwloc # interrogate hardware configuration
         imagemagick # image manipulation tools
-        inetutils
+        inetutils # internet interactions
         inotify-tools # commands using inotify/dnotify APIs
         internetarchive # internet archive
         jdupes # file duplicate finder
@@ -40,7 +41,6 @@
         poppler-utils # pdftotext and friends
         psmisc # process tools
         qpdf # yet more PDF manipulation
-        snitch
         stow # manage dotfiles via symlinks
         subversion # hysterical raisins
         sysstat # system stats
@@ -78,9 +78,10 @@
         just # updated gnumake replacement
         procs # better ps
         ripgrep # rg ~ `grep` replacement
+        snitch # better `ss`/`netstat`
         sudo-rs # memory-safe `sudo`
         uutils-coreutils-noprefix # replaces GNU `coreutils`
-        uutils-findutils
+        uutils-findutils # replaces GNU `findutils`
         viddy # better watch
       ];
     in

@@ -392,7 +392,7 @@ in
 
   # docker
   virtualisation.docker = {
-    enable = true;
+    enable = false;
     enableOnBoot = false;
   };
 

@@ -77,7 +77,6 @@ in
     kanshi # modify sway config on hardware changes
     pwvucontrol # graphical control of AV routing (pipewire)
     shotman # screenshotting
-    slurp # select a compositor region to stdout
     wdisplays # gui for display configuration
     wev # wayland event viewer
     wl-clipboard # pipe to/from clipboard

@@ -12,6 +12,7 @@ in
   };
 
   home.pointerCursor = {
+    enable = true;
     name = "${cursor.name}";
     size = cursor.size;
     package = cursor.package;

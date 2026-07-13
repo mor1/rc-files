@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   imports = [ ./sway.nix ];
 
   home.packages =
@@ -6,8 +6,8 @@
     let
       files = [
         # kiorg # https://github.com/houqp/kiorg, not yet packaged
-        czkawka # detect file duplication, empty directories, &c; deprecated
-        gnome-commander # another possible file manager?
+        # czkawka # detect file dups; use `krokiet` from this package
+        # gnome-commander # another possible file manager?
         keybase-gui # keybase
         libreoffice # ~ms office
         nemo-with-extensions # nautilus but for cinnamon; better?
@@ -46,7 +46,7 @@
 
       themes = [ foot.themes ];
     in
-    fonts ++ files ++ messaging ++ media ++ themes;
+    fonts ++ themes ++ files ++ messaging ++ media;
 
   fonts.fontconfig.enable = true;
 
@@ -122,7 +122,9 @@
 
     firefox = {
       enable = true;
-      # configPath = "~/.config/mozilla/firefox"; # ${config.xdg.configHome
+      package = (pkgs.wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { });
+
+      configPath = "${config.xdg.configHome}/mozilla/firefox"; # "~/.config/mozilla/firefox"; # ${config.xdg.configHome
     };
 
     rio = {

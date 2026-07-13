@@ -2,14 +2,12 @@
   home.packages =
     let
       texlive = (
-        pkgs.texlive.combine {
-          inherit (pkgs.texlive)
-            # start simple...
-            scheme-basic # scheme-medium
+        pkgs.texliveMinimal.withPackages (
+          ps: with ps; [
             texlive-scripts
 
             # add some fonts, including the University's preferred fonts
-            collection-fontsrecommended # font-scripts # latex-fonts
+            collection-fontsrecommended
             opensans
 
             # font packages
@@ -161,8 +159,8 @@
             xstring
             zref
 
-            ;
-        }
+          ]
+        )
       );
     in
     with pkgs;
