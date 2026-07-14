@@ -29,7 +29,7 @@
         kdePackages.elisa # music player
         kdePackages.gwenview # image viewing
         kdePackages.okular # pdf viewer / annotator
-        musescore # music score editing
+        # musescore # music score editing
         pympress # pdf presentations
         rhythmbox
         vlc # video player
