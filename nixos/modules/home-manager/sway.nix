@@ -205,10 +205,10 @@ in
               fi
             '';
             f8 = "exec ${net_toggle}/bin/net_toggle.sh";
-            f9 = "exec playerctl play-pause";
-            f10 = "exec playerctl stop";
-            f11 = "exec playerctl previous";
-            f12 = "exec playerctl next";
+            f9 = "exec ${swayosd} --playerctl play-pause";
+            f10 = "exec ${swayosd} --playerctl stop";
+            f11 = "exec ${swayosd} --playerctl previous";
+            f12 = "exec ${swayosd} --playerctl next";
           in
           lib.mkOptionDefault {
             ## bare function keys
