@@ -2,7 +2,7 @@
   home.packages =
     let
       texlive = (
-        pkgs.texliveMinimal.withPackages (
+        pkgs.texliveBasic.withPackages (
           ps: with ps; [
             texlive-scripts
 
