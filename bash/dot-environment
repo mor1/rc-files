@@ -291,7 +291,7 @@ PROMPT_COMMAND='__prompt_jjgit; _bash_history_sync'
 NIX_INDEX_CONFIG=~/.config/nix-index/config
 [ -r "$NIX_INDEX_CONFIG" ] || {
   mkdir -p $(dirname "$NIX_INDEX_CONFIG")
-  nix eval --offline --raw nixpkgs#nix-index > "$NIX_INDEX_CONFIG"
+  nix eval --offline --raw nixpkgs#nix-index >| "$NIX_INDEX_CONFIG"
 }
 NIX_INDEX=$(< "$NIX_INDEX_CONFIG")
 [ -d "$NIX_INDEX" ] || {
