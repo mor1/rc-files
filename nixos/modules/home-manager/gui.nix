@@ -8,6 +8,7 @@
         # kiorg # https://github.com/houqp/kiorg, not yet packaged
         # czkawka # detect file dups; use `krokiet` from this package
         # gnome-commander # another possible file manager?
+        cryptor # gocryptfs gui
         keybase-gui # keybase
         libreoffice # ~ms office
         nemo-with-extensions # nautilus but for cinnamon; better?
@@ -24,6 +25,7 @@
       media = [
         # digikam # photo manager
         # gthumb # image viewing
+        easyeffects # pipewire equaliser
         imv # image viewer
         inkscape # vector graphics editing
         kdePackages.elisa # music player
@@ -71,6 +73,7 @@
 
         imgapp = "imv.desktop";
         imgs = [
+          "image/heic"
           "image/jpeg"
           "image/jpg"
           "image/png"

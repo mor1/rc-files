@@ -124,7 +124,6 @@ in
               ${workspace "${mediaws}"}
               ${after 3 [ "workspace_layout tabbed" ]}
               wait_for "rhythmbox"
-              wait_for "elisa"
 
               ${workspace "${codews}"}
               ${msg [ "workspace_layout tabbed" ]}

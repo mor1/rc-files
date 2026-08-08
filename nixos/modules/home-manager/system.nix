@@ -1,5 +1,6 @@
 { pkgs, lib, ... }: {
   home.packages = with pkgs; [
+    exfatprogs
     gcr
     gnupg
     hunspellDicts.en_GB-large # en.GB

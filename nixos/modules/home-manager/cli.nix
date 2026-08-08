@@ -9,7 +9,11 @@
         # quien # github:retlehs/quien # better whois cli
 
         aria2 # feature rich wget/curl
-        cryfs # encrypted filesystem image support
+        # cryfs # encrypted filesystem image support # ┃ error: 'cryfs' has been removed
+        # as versions <2.x depend on FUSE 2, which is deprecated and is no longer
+        # available in Nixpkgs. 'cryfs' may be added again in the future once version
+        # 2.0.0 is stabilised. In the meantime, consider using 'gocryptfs'.
+        gocryptfs
         dateutils # fiddle with dates
         dig # because DNS
         doxx # view .docx in terminal

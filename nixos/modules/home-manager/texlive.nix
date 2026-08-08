@@ -70,8 +70,6 @@
             fifo-stack
             filecontents
             float
-            fontawesome
-            fontawesome5
             fontspec
             footmisc
             forest
@@ -89,11 +87,14 @@
             lineno
             lipsum
             listings
+            listingsutf8
             lkproof
             llncs
             makecell
+            marginnote
             mathtools
             microtype
+            minted
             movie15
             multirow
             natbib
@@ -157,6 +158,7 @@
             xcolor
             xkeyval
             xstring
+            xurl
             zref
 
           ]
