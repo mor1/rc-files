@@ -32,6 +32,7 @@ let
     sink = "alsa_output.usb-DisplayLink_ThinkPad_Hybrid_USB-C_with_USB-A_Dock_12235896-02.iec958-stereo";
     source = "alsa_input.usb-046d_HD_Pro_Webcam_C920_C18974EF-02.analog-stereo";
   };
+
   christs = {
     screen = "LG Electronics LG HDR 4K 0x00035DAC";
     sink = "alsa_output.usb-DisplayLink_ThinkPad_Hybrid_USB-C_with_USB-A_Dock_12235896-02.iec958-stereo";
@@ -52,10 +53,19 @@ let
   tv = {
     screen = "Panasonic Industry Company Panasonic-TV 0x01010101";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+    source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
   };
+
   amp = {
     screen = "ONKYO Corporation TX-SR608 Unknown";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+    source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
+  };
+
+  study = {
+    screen = "Dell Inc. DELL S2421HS 14ZZP83";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink";
+    source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
   };
 
   swayfonts = {
@@ -339,6 +349,8 @@ in
             ];
           }
 
+          # office screens
+
           {
             profile.name = "wgb";
             profile.outputs = [
@@ -402,6 +414,39 @@ in
           }
 
           {
+            profile.name = "study";
+            profile.outputs = [
+              {
+                criteria = "${laptop.screen}"; # 3840x2400
+                position = "0,1080"; # laptop sits centrally below screen, no x adjustment
+                scale = 2.0;
+              }
+              {
+                criteria = "${study.screen}"; # 1920x1080
+                position = "0,0";
+                scale = 1.0;
+              }
+            ];
+            profile.exec = [
+              "${pactl} set-default-sink ${study.sink}"
+              "${pactl} set-default-source ${study.source}"
+            ]
+            ++ (mwss study.screen [
+              homews
+              codews
+              chatws
+            ])
+            ++ (mwss study.screen otherws)
+            ++ (mwss laptop.screen [
+              mailws
+              mediaws
+            ])
+            ++ [ ''${sm} "workspace --no-auto-back-and-forth 1"'' ];
+          }
+
+          # tv screens
+
+          {
             profile.name = "amp";
             profile.outputs = [
               {
@@ -442,6 +487,7 @@ in
             ++ (mwss tv.screen [ "tv" ])
             ++ [ ''${sm} "workspace --no-auto-back-and-forth tv"'' ];
           }
+
         ];
     };
 
