@@ -40,6 +40,12 @@ let
   };
 
   # public spaces
+  lt2 = {
+    screen = "Seiko Epson Corporation NV-21-HU 0x01010101";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+    source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
+  };
+
   # fn05 = {
   #   screen = "Sony SONY TV  *07 0x01010101";
   #   sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
@@ -486,6 +492,29 @@ in
             ]
             ++ (mwss tv.screen [ "tv" ])
             ++ [ ''${sm} "workspace --no-auto-back-and-forth tv"'' ];
+          }
+
+          # public screens
+
+          {
+            profile.name = "lt2";
+            profile.outputs = [
+              {
+                criteria = "${laptop.screen}"; # 3840x2400
+                position = "0,1080"; # laptop sits centrally below screen, no x adjustment
+                scale = 2.0;
+              }
+              {
+                criteria = "${lt2.screen}"; # 1920x1080
+                position = "0,0";
+                scale = 1.0;
+              }
+            ];
+            profile.exec = [
+              "${pactl} set-default-sink ${lt2.sink}"
+            ]
+            ++ (mwss lt2.screen [ "lt" ])
+            ++ [ ''${sm} "workspace --no-auto-back-and-forth lt"'' ];
           }
 
         ];
