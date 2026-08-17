@@ -156,25 +156,6 @@ in
     supportedFilesystems = [ "ntfs" ];
   };
 
-  # mount home and swap
-  fileSystems."/mnt/home-desktop" = {
-    device = "//desktop-bqgpfcm/14mor/";
-    fsType = "cifs";
-    options = [
-      "x-systemd.automount"
-      "noauto"
-
-      "x-systemd.idle-timeout=60"
-      "x-systemd.device-timeout=5s"
-      "x-systemd.mount-timeout=5s"
-      "user"
-      "users"
-      "credentials=/etc/secrets/smb.secrets"
-      "uid=1000"
-      "gid=100"
-    ];
-  };
-
   # networking, plus UCAM timeservers
   networking = {
     hostName = "${hostname}";
