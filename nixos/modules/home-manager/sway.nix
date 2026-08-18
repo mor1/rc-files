@@ -40,6 +40,12 @@ let
   };
 
   # public spaces
+  lt1 = {
+    screen = "Seiko Epson Corporation NV-21-HU 0x01010101";
+    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
+    source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
+  };
+
   lt2 = {
     screen = "Seiko Epson Corporation NV-21-HU 0x01010101";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
@@ -496,6 +502,26 @@ in
 
           # public screens
 
+          {
+            profile.name = "lt1";
+            profile.outputs = [
+              {
+                criteria = "${laptop.screen}"; # 3840x2400
+                position = "0,1200"; # laptop sits centrally below screen, no x adjustment
+                scale = 2.0;
+              }
+              {
+                criteria = "${lt1.screen}"; # 1920x1200
+                position = "0,0";
+                scale = 1.0;
+              }
+            ];
+            profile.exec = [
+              "${pactl} set-default-sink ${lt1.sink}"
+            ]
+            ++ (mwss lt1.screen [ "lt" ])
+            ++ [ ''${sm} "workspace --no-auto-back-and-forth lt"'' ];
+          }
           {
             profile.name = "lt2";
             profile.outputs = [
