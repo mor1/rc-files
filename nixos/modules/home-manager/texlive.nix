@@ -70,6 +70,7 @@
             fifo-stack
             filecontents
             float
+            fontawesome
             fontspec
             footmisc
             forest
