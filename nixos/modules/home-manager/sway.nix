@@ -214,7 +214,19 @@ in
             f1 = "exec ${swayosd} --max-volume 130 --output-volume mute-toggle";
             f2 = "exec ${swayosd} --max-volume 130 --output-volume lower";
             f3 = "exec ${swayosd} --max-volume 130 --output-volume raise";
-            f4 = "exec ${swayosd} --input-volume mute-toggle";
+            mute_inputs_toggle = pkgs.writeShellScriptBin "mute_inputs_toggle.sh" ''
+              if [[ $(pactl get-source-mute "@DEFAULT_SOURCE@") =~ yes ]]; then
+                for i in $(pactl list sources short | cut -f1); do
+                  pactl set-source-mute $i 0
+                done
+              else
+                for i in $(pactl list sources short | cut -f1); do
+                  pactl set-source-mute $i 1
+                done
+              fi
+              ${swayosd} --input-volume mute-toggle
+            '';
+            f4 = "exec ${mute_inputs_toggle}/bin/mute_inputs_toggle.sh";
             f5 = "exec brightnessctl -e s 3%-";
             f6 = "exec brightnessctl -e s 3%+";
             f7 = "exec ${swaylock}";
