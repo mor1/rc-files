@@ -211,22 +211,77 @@ in
           let
             swayosd = lib.getExe' pkgs.swayosd "swayosd-client";
 
-            f1 = "exec ${swayosd} --max-volume 130 --output-volume mute-toggle";
+            sinks_mute_btcycle = pkgs.writeShellScriptBin "sinks_mute_btcycle.sh" ''
+              # get sink-ids for bluetooth, dock and speaker if available
+              bluetooth_id=""
+              dock_id=""
+              speaker_id=""
+
+              sink_ids="" #  space separated list of sink IDs
+              while read -r sink; do
+                sink_id=$(cut -f1 <<< "$sink")
+                sink_ids+="$sink_id "
+
+                if [[ $sink =~ bluez ]]; then
+                  bluetooth_id=$sink_id
+                elif [[ $sink =~ Dock ]]; then
+                  dock_id=$sink_id
+                elif [[ $sink =~ Speaker ]]; then
+                  speaker_id=$sink_id
+                fi
+              done <<< "$(pactl list sinks short)"
+
+              # either mute everything; or cycle to next sink and unmute everything
+              if [[ ! $(pactl get-sink-mute "@DEFAULT_SINK@") =~ yes ]]; then
+                # we're unmuted: just mute everything
+                while read -rd" " sink; do
+                  pactl set-sink-mute "$sink" 1
+                done <<< "$sink_ids"
+
+              else
+                # we're muted: cyclme between speaker/dock and blueetoth and unmute everything
+                if [[ $(pactl get-default-sink) =~ bluez ]]; then
+                  # we're using bluetooth; switch to dock or, if no dock, speaker
+                  if [[ $dock_id ]]; then
+                    pactl set-default-sink $dock_id
+                  else
+                    pactl set-default-sink $speaker_id
+                  fi
+                else
+                  # we're not using bluetooth: switch to bluetooth if available
+                  if [[ $bluetooth_id ]]; then
+                    pactl set-default-sink $bluetooth_id
+                  fi
+                fi
+
+                # unmute everything
+                while read -rd" " sink; do
+                  pactl set-sink-mute "$sink" 0
+                done <<< "$sink_ids"
+              fi
+
+              # fire the OSD without changing anything
+              exec ${swayosd} --max-volume 130 --output-volume +0
+            '';
+
+            f1 = "exec ${sinks_mute_btcycle}/bin/sinks_mute_btcycle.sh";
             f2 = "exec ${swayosd} --max-volume 130 --output-volume lower";
             f3 = "exec ${swayosd} --max-volume 130 --output-volume raise";
-            mute_inputs_toggle = pkgs.writeShellScriptBin "mute_inputs_toggle.sh" ''
+            sources_mute_toggle = pkgs.writeShellScriptBin "sources_mute_toggle.sh" ''
               if [[ $(pactl get-source-mute "@DEFAULT_SOURCE@") =~ yes ]]; then
+                # default source is MUTED; unmute all sources
                 for i in $(pactl list sources short | cut -f1); do
                   pactl set-source-mute $i 0
                 done
               else
+                # default source is UNMUTED; mute all sources
                 for i in $(pactl list sources short | cut -f1); do
                   pactl set-source-mute $i 1
                 done
               fi
               ${swayosd} --input-volume mute-toggle
             '';
-            f4 = "exec ${mute_inputs_toggle}/bin/mute_inputs_toggle.sh";
+            f4 = "exec ${sources_mute_toggle}/bin/sources_mute_toggle.sh";
             f5 = "exec brightnessctl -e s 3%-";
             f6 = "exec brightnessctl -e s 3%+";
             f7 = "exec ${swaylock}";
@@ -238,10 +293,10 @@ in
               fi
             '';
             f8 = "exec ${net_toggle}/bin/net_toggle.sh";
-            f9 = "exec ${swayosd} --playerctl play-pause";
-            f10 = "exec ${swayosd} --playerctl stop";
-            f11 = "exec ${swayosd} --playerctl previous";
-            f12 = "exec ${swayosd} --playerctl next";
+            f9 = "exec ${swayosd} --player auto --playerctl play-pause";
+            f10 = "exec ${swayosd} --player auto --playerctl stop";
+            f11 = "exec ${swayosd} --player auto --playerctl prev";
+            f12 = "exec ${swayosd} --player auto --playerctl next";
           in
           lib.mkOptionDefault {
             ## bare function keys
