@@ -7,6 +7,7 @@
     extraPackages =
       epkgs: with epkgs; [
         corfu
+        himalaya
         jinx
         lsp-bridge
         mu4e

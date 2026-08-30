@@ -328,6 +328,7 @@ fi
 [[ $(which shotman_completions 2> /dev/null) ]] && source <(shotman_completions bash)
 [[ $(which tombi 2> /dev/null) ]] && source <(tombi completion bash)
 [[ $(which typst 2> /dev/null) ]] && source <(typst completions bash)
+[[ $(which watchexec 2> /dev/null) ]] && source <(watchexec --completions bash)
 [[ $(which zola 2> /dev/null) ]] && source <(zola completion bash)
 
 [[ $TERM_PROGRAM == "vscode" ]] && source <(codium --locate-shell-integration-path bash)

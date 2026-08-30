@@ -5,10 +5,11 @@
     with pkgs;
     let
       files = [
-        # kiorg # https://github.com/houqp/kiorg, not yet packaged
         # czkawka # detect file dups; use `krokiet` from this package
         # gnome-commander # another possible file manager?
+        # kiorg # https://github.com/houqp/kiorg, not yet packaged
         cryptor # gocryptfs gui
+        fclones-gui # GUI for `fclones` duplicate filefinder
         keybase-gui # keybase
         libreoffice # ~ms office
         nemo-with-extensions # nautilus but for cinnamon; better?
@@ -25,13 +26,13 @@
       media = [
         # digikam # photo manager
         # gthumb # image viewing
+        # musescore # music score editing
         easyeffects # pipewire equaliser
         imv # image viewer
         inkscape # vector graphics editing
         kdePackages.elisa # music player
         kdePackages.gwenview # image viewing
         kdePackages.okular # pdf viewer / annotator
-        # musescore # music score editing
         pympress # pdf presentations
         rhythmbox
         vlc # video player

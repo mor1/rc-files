@@ -3,32 +3,29 @@
     with pkgs;
     let
       cli = [
-        # headson # https://github.com/kantord/headson
-        # kelpsget # https://github.com/davimf721/KelpsGet
         # compendium # strace but better ux
+        # inotify-tools # commands using inotify/dnotify APIs
+        # kelpsget # https://github.com/davimf721/KelpsGet
         # quien # github:retlehs/quien # better whois cli
-
         aria2 # feature rich wget/curl
-        # cryfs # encrypted filesystem image support # ┃ error: 'cryfs' has been removed
-        # as versions <2.x depend on FUSE 2, which is deprecated and is no longer
-        # available in Nixpkgs. 'cryfs' may be added again in the future once version
-        # 2.0.0 is stabilised. In the meantime, consider using 'gocryptfs'.
-        gocryptfs
         dateutils # fiddle with dates
         dig # because DNS
         doxx # view .docx in terminal
         exiftool # manipulate images
         fastfetch # improved `neofetch` system info display
+        fclones # duplicate filefinder
         ffmpeg_7 # manipulate media files
         file # identify filetype by magic
         get_iplayer # download from iPlayer
         ghostscript # ps etc
+        gocryptfs # encrypted filesystem image support, replaces `cryfs'
         handlr # manage XDG Open mappings
+        himalaya # manage emails
         html-tidy # tidy HTML
+        htmlq # `jq` for HTNL
         hwloc # interrogate hardware configuration
         imagemagick # image manipulation tools
         inetutils # internet interactions
-        inotify-tools # commands using inotify/dnotify APIs
         internetarchive # internet archive
         jdupes # file duplicate finder
         jhead # jpeg exif header manipulation tool
@@ -56,15 +53,15 @@
         yt-dlp # youtube download
         zip # what it says on the tin
         zola # static site generation
+        # headson # https://github.com/kantord/headson
       ];
       nu_posix = [
+        # brush # rusty bash
         # flash # fast inotify replacement, https://github.com/sage-scm/flash/
-
         bat # better cat
-        bttf # better date
         bottom # btm ~ better top, htop, etc
         broot # interactive directory navigation
-        brush # rusty bash
+        bttf # better date
         chafa # terminal graphics viewer
         ctpv # terminal file previewer
         cyme # better `lsusb`
@@ -76,6 +73,7 @@
         fd # `find` replacement
         fend # better CLI calculator
         glances # another better `top`, at a glance
+        gptman # GPT partition manager
         hexyl # hex pretty printer
         htop # graphical top
         iotop # io top
@@ -87,6 +85,7 @@
         uutils-coreutils-noprefix # replaces GNU `coreutils`
         uutils-findutils # replaces GNU `findutils`
         viddy # better watch
+        watchexec
       ];
     in
     cli ++ nu_posix;
