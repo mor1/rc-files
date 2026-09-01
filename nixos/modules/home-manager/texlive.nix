@@ -59,6 +59,7 @@
             docmute
             doublestroke
             draftwatermark
+            elsarticle
             enumitem
             environ
             epigraph
