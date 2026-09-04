@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     # impala # wifi mgmt # relies on iwd which is crap
+
     binsider # analyse and edit ELF binaries
     bluetui # (very simple) bluetooth manager
     disktui # disk partition/fs manager, depends on `parted`

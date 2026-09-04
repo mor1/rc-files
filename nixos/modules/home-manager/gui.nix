@@ -8,6 +8,7 @@
         # czkawka # detect file dups; use `krokiet` from this package
         # gnome-commander # another possible file manager?
         # kiorg # https://github.com/houqp/kiorg, not yet packaged
+
         cryptor # gocryptfs gui
         fclones-gui # GUI for `fclones` duplicate filefinder
         keybase-gui # keybase
@@ -26,11 +27,12 @@
       media = [
         # digikam # photo manager
         # gthumb # image viewing
+        # kdePackages.elisa # music player
         # musescore # music score editing
+
         easyeffects # pipewire equaliser
         imv # image viewer
         inkscape # vector graphics editing
-        kdePackages.elisa # music player
         kdePackages.gwenview # image viewing
         kdePackages.okular # pdf viewer / annotator
         pympress # pdf presentations
