@@ -4,9 +4,11 @@
     let
       cli = [
         # compendium # strace but better ux
+        # headson # https://github.com/kantord/headson
         # inotify-tools # commands using inotify/dnotify APIs
         # kelpsget # https://github.com/davimf721/KelpsGet
         # quien # github:retlehs/quien # better whois cli
+
         aria2 # feature rich wget/curl
         dateutils # fiddle with dates
         dig # because DNS
@@ -53,11 +55,11 @@
         yt-dlp # youtube download
         zip # what it says on the tin
         zola # static site generation
-        # headson # https://github.com/kantord/headson
       ];
       nu_posix = [
         # brush # rusty bash
         # flash # fast inotify replacement, https://github.com/sage-scm/flash/
+
         bat # better cat
         bottom # btm ~ better top, htop, etc
         broot # interactive directory navigation
