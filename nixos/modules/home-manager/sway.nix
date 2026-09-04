@@ -352,7 +352,9 @@ in
             "${modifier}+Shift+p" = "exec shotman --capture region";
             "${modifier}+Ctrl+p" = "exec shotman --capture output";
 
+            "${modifier}+comma" = "focus output down";
             "${modifier}+less" = "move workspace to output down";
+            "${modifier}+period" = "focus output up";
             "${modifier}+greater" = "move workspace to output up";
 
             "${modifier}+Ctrl+Down" = "focus parent, focus down, focus child";
