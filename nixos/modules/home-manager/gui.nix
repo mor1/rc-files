@@ -1,4 +1,5 @@
 { pkgs, config, ... }: {
+
   imports = [ ./sway.nix ];
 
   home.packages =
@@ -15,6 +16,14 @@
 
       themes = [ foot.themes ];
 
+      messaging = [
+        signal-desktop # signal private messaging
+        slack # slack
+        teams-for-linux # ms teams in electron
+        whatsapp-electron # i finally gave in because others insisted on it
+        # zoom-us # zoom vc
+      ];
+
       files = [
         # czkawka # detect file dups; use `krokiet` from this package
         # gnome-commander # another possible file manager?
@@ -24,14 +33,6 @@
         fclones-gui # GUI for `fclones` duplicate filefinder
         keybase-gui # keybase
         nemo-with-extensions # nautilus but for cinnamon; better?
-      ];
-
-      messaging = [
-        signal-desktop # signal private messaging
-        slack # slack
-        teams-for-linux # ms teams in electron
-        whatsapp-electron # i finally gave in because others insisted on it
-        zoom-us # zoom vc
       ];
 
       media = [
@@ -134,9 +135,7 @@
 
     firefox = {
       enable = true;
-      package = (pkgs.wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { });
-
-      configPath = "${config.xdg.configHome}/mozilla/firefox"; # "~/.config/mozilla/firefox"; # ${config.xdg.configHome
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
     };
 
     rio = {
