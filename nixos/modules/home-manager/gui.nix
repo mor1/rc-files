@@ -4,6 +4,17 @@
   home.packages =
     with pkgs;
     let
+      fonts = [
+        atkinson-hyperlegible-mono
+        atkinson-hyperlegible-next
+        corefonts
+        gyre-fonts
+        powerline-symbols
+        vista-fonts
+      ];
+
+      themes = [ foot.themes ];
+
       files = [
         # czkawka # detect file dups; use `krokiet` from this package
         # gnome-commander # another possible file manager?
@@ -12,7 +23,6 @@
         cryptor # gocryptfs gui
         fclones-gui # GUI for `fclones` duplicate filefinder
         keybase-gui # keybase
-        libreoffice # ~ms office
         nemo-with-extensions # nautilus but for cinnamon; better?
       ];
 
@@ -40,18 +50,14 @@
         vlc # video player
       ];
 
-      fonts = [
-        atkinson-hyperlegible-mono
-        atkinson-hyperlegible-next
-        corefonts
-        gyre-fonts
-        powerline-symbols
-        vista-fonts
+      office = [
+        libreoffice # ~ms office
+        hunspellDicts.en_GB-large # en.GB spelling
+        hyphenDicts.en_GB # en.GB hyphenation
       ];
 
-      themes = [ foot.themes ];
     in
-    fonts ++ themes ++ files ++ messaging ++ media;
+    fonts ++ themes ++ files ++ messaging ++ media ++ office;
 
   fonts.fontconfig.enable = true;
 

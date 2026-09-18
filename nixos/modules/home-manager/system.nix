@@ -6,7 +6,6 @@
     gcr
     gnupg
     hdparm
-    hunspellDicts.en_GB-large # en.GB
     localsend # cross-platform airdrop
     maestral # dropbox client
     pciutils
