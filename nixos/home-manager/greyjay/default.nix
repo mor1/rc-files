@@ -13,6 +13,7 @@ in
     ../../modules/home-manager/typst.nix
     ../../modules/home-manager/tui.nix
     ../../modules/home-manager/unfree.nix
+    ../../modules/home-manager/insecure.nix
   ];
 
   home = {
