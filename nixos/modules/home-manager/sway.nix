@@ -40,13 +40,7 @@ let
   };
 
   # public spaces
-  lt1 = {
-    screen = "Seiko Epson Corporation NV-21-HU 0x01010101";
-    sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
-    source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
-  };
-
-  lt2 = {
+  lt12 = {
     screen = "Seiko Epson Corporation NV-21-HU 0x01010101";
     sink = "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink";
     source = "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source";
@@ -279,7 +273,9 @@ in
                   pactl set-source-mute $i 1
                 done
               fi
-              ${swayosd} --input-volume mute-toggle
+
+              # fire the OSD without changing anything
+              ${swayosd} --input-volume +0
             '';
             f4 = "exec ${sources_mute_toggle}/bin/sources_mute_toggle.sh";
             f5 = "exec brightnessctl -e s 3%-";
@@ -364,6 +360,8 @@ in
 
             "${modifier}+t" = "workspace tv";
             "${modifier}+Shift+t" = "move container to workspace tv";
+            "${modifier}+l" = "workspace lt";
+            "${modifier}+Shift+l" = "move container to workspace lt";
 
           };
 
@@ -572,7 +570,7 @@ in
           # public screens
 
           {
-            profile.name = "lt1";
+            profile.name = "lt12";
             profile.outputs = [
               {
                 criteria = "${laptop.screen}"; # 3840x2400
@@ -580,36 +578,16 @@ in
                 scale = 2.0;
               }
               {
-                criteria = "${lt1.screen}"; # 1920x1200
+                criteria = "${lt12.screen}"; # 1920x1200
                 position = "0,0";
                 scale = 1.0;
               }
             ];
-            profile.exec = [
-              "${pactl} set-default-sink ${lt1.sink}"
-            ]
-            ++ (mwss lt1.screen [ "lt" ])
-            ++ [ ''${sm} "workspace --no-auto-back-and-forth lt"'' ];
-          }
-          {
-            profile.name = "lt2";
-            profile.outputs = [
-              {
-                criteria = "${laptop.screen}"; # 3840x2400
-                position = "0,1080"; # laptop sits centrally below screen, no x adjustment
-                scale = 2.0;
-              }
-              {
-                criteria = "${lt2.screen}"; # 1920x1080
-                position = "0,0";
-                scale = 1.0;
-              }
+            profile.exec = (mwss lt12.screen [ "lt" ]) ++ [
+              "${pactl} set-default-sink ${lt12.sink}"
+              ''${sm} "workspace --no-auto-back-and-forth lt"''
+              ''${sm} "output HDMI-A-1 resolution 1920x1200"''
             ];
-            profile.exec = [
-              "${pactl} set-default-sink ${lt2.sink}"
-            ]
-            ++ (mwss lt2.screen [ "lt" ])
-            ++ [ ''${sm} "workspace --no-auto-back-and-forth lt"'' ];
           }
 
         ];
