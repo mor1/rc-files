@@ -3,7 +3,6 @@
     apfs-fuse
     dmidecode
     exfatprogs
-    gcr
     gnupg
     hdparm
     localsend # cross-platform airdrop

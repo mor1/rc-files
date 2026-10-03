@@ -21,7 +21,6 @@
         slack # slack
         teams-for-linux # ms teams in electron
         whatsapp-electron # i finally gave in because others insisted on it
-        # zoom-us # zoom vc
       ];
 
       files = [
@@ -58,7 +57,7 @@
       ];
 
     in
-    fonts ++ themes ++ files ++ messaging ++ media ++ office;
+    fonts ++ themes ++ messaging ++ files ++ media ++ office;
 
   fonts.fontconfig.enable = true;
 

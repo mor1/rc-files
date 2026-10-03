@@ -203,7 +203,6 @@ in
     dbus = {
       enable = true;
       packages = with pkgs; [
-        gcr
         networkmanager
         strongswanNM
       ];
@@ -236,14 +235,6 @@ in
       enable = true;
       nssmdns4 = true;
       # openFirewall = true;
-    };
-
-    printing = {
-      enable = true;
-      clientConf = ''
-        ServerName cups-serv.cl.cam.ac.uk
-        User rmm1002
-      '';
     };
   };
 
@@ -365,11 +356,6 @@ in
         backup-wgb = backup "wgb";
       };
   };
-
-  # printing
-  services.printing.extraFilesConf = ''
-    SystemGroup root wheel lpadmin
-  '';
 
   # docker
   virtualisation.docker = {
